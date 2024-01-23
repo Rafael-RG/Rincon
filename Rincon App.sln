@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rincon.Models", "Rincon.Mod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rincon.DataAccess", "Rincon.DataAccess\Rincon.DataAccess.csproj", "{2EBA692E-B8BC-4C3C-8CF8-D630ABB82982}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rincon.Core", "Rincon.Core\Rincon.Core.csproj", "{57102FD0-1EDE-48AC-BDC1-375DFE91B210}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,10 +35,6 @@ Global
 		{2EBA692E-B8BC-4C3C-8CF8-D630ABB82982}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EBA692E-B8BC-4C3C-8CF8-D630ABB82982}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EBA692E-B8BC-4C3C-8CF8-D630ABB82982}.Release|Any CPU.Build.0 = Release|Any CPU
-		{57102FD0-1EDE-48AC-BDC1-375DFE91B210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{57102FD0-1EDE-48AC-BDC1-375DFE91B210}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{57102FD0-1EDE-48AC-BDC1-375DFE91B210}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{57102FD0-1EDE-48AC-BDC1-375DFE91B210}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
