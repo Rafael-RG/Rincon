@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:BaseContentPage
+    x:Class="Rincon.Pages.ItemCollectionPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="clr-namespace:Rincon.Extensions"
+    xmlns:pages="clr-namespace:Rincon.Common.Pages;assembly=Rincon.Common"
+    xmlns:viewModels="clr-namespace:Rincon.ViewModels"
+    x:DataType="viewModels:ItemCollectionViewModel"
+    x:TypeArguments="viewModels:ItemCollectionViewModel">
+
+    <StackLayout />
+
+</pages:BaseContentPage>
