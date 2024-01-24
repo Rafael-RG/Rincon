@@ -61,7 +61,7 @@ namespace Rincon.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Mobile Template.
+        ///   Busca una cadena traducida similar a Rincón.
         /// </summary>
         internal static string AppTitle {
             get {
@@ -88,20 +88,29 @@ namespace Rincon.Resources.Strings {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Iniciar sesión con Active Directory.
-        /// </summary>
-        internal static string LoginWithActiveDirectory {
-            get {
-                return ResourceManager.GetString("LoginWithActiveDirectory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Contraseña.
         /// </summary>
         internal static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Olvidaste tu contraseña?.
+        /// </summary>
+        internal static string RecoverPassword {
+            get {
+                return ResourceManager.GetString("RecoverPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Regístrate.
+        /// </summary>
+        internal static string SignUp {
+            get {
+                return ResourceManager.GetString("SignUp", resourceCulture);
             }
         }
         

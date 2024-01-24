@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppTitle" xml:space="preserve">
-    <value>Mobile Template</value>
+    <value>Rincón</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -126,11 +126,14 @@
   <data name="Login" xml:space="preserve">
     <value>Iniciar sesión</value>
   </data>
-  <data name="LoginWithActiveDirectory" xml:space="preserve">
-    <value>Iniciar sesión con Active Directory</value>
-  </data>
   <data name="Password" xml:space="preserve">
     <value>Contraseña</value>
+  </data>
+  <data name="RecoverPassword" xml:space="preserve">
+    <value>¿Olvidaste tu contraseña?</value>
+  </data>
+  <data name="SignUp" xml:space="preserve">
+    <value>Regístrate</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Usuario</value>

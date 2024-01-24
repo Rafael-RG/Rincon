@@ -8,14 +8,15 @@
     xmlns:viewModels="clr-namespace:Rincon.ViewModels"
     x:DataType="viewModels:LoginViewModel"
     x:TypeArguments="viewModels:LoginViewModel"
-    Shell.NavBarIsVisible="false">
+    Shell.NavBarIsVisible="false"
+    BackgroundColor="#AAA">
 
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
-        <StackLayout HeightRequest="200" HorizontalOptions="CenterAndExpand">
-            <Image Source="dotnet_bot" />
+        <StackLayout  HorizontalOptions="CenterAndExpand">
+            <Image Source="rincon_login.png" WidthRequest="300"/>
         </StackLayout>
 
-        <StackLayout Margin="0,12,0,0" HeightRequest="32">
+        <StackLayout Margin="0,12,0,0" HeightRequest="32" WidthRequest="400">
             <ActivityIndicator
                 HeightRequest="32"
                 IsRunning="True"
@@ -23,39 +24,51 @@
                 WidthRequest="32" />
         </StackLayout>
 
-        <StackLayout Spacing="0">
-            <Label Text="{extensions:Localize Username}" />
+        <Frame Margin="0,20,0,0" CornerRadius="30" BackgroundColor="Grey" BorderColor="Transparent" HeightRequest="50" Padding="0,-10,0,-10">
             <Entry
+                
+                BackgroundColor="Transparent"
+                HeightRequest="60"
+                PlaceholderColor="Black"
                 AutomationId="userNameEntry"
                 HorizontalOptions="FillAndExpand"
                 IsEnabled="{Binding IsEnabled}"
                 MaxLength="25"
                 Placeholder="{extensions:Localize Username}"
                 Text="{Binding Username}" />
-        </StackLayout>
+        </Frame>
 
-        <StackLayout Margin="0,12,0,0" Spacing="0">
-            <Label Text="{extensions:Localize Password}" />
+        <Frame Margin="0,20,0,10" CornerRadius="30" BackgroundColor="Gray" BorderColor="Transparent" HeightRequest="50" Padding="0,-10,0,-10">
             <Entry
+                VerticalOptions="Center"
+                HeightRequest="60"
+                PlaceholderColor="Black"
                 HorizontalOptions="FillAndExpand"
                 IsEnabled="{Binding IsEnabled}"
                 IsPassword="true"
                 MaxLength="50"
                 Placeholder="{extensions:Localize Password}"
                 Text="{Binding Password}" />
-        </StackLayout>
-
+        </Frame>
+        
+        <Label Text="{extensions:Localize RecoverPassword}" HorizontalTextAlignment="End" TextColor="Black"/>
+        
+        
         <Button
-            Margin="0,12,0,0"
+            BackgroundColor="#F5F5F5"
+            Margin="0,60,0,0"
+            TextColor="Black"
             Command="{Binding LoginCommand}"
             Text="{extensions:Localize Login}" />
 
 
         <Button
-            Margin="0,12,0,0"
+            BackgroundColor="Grey"
+            Margin="0,20,0,0"
+            TextColor="Black"
             Command="{Binding LoginWithActiveDirectoryCommand}"
-            Text="{extensions:Localize LoginWithActiveDirectory}" />
-
+            Text="{extensions:Localize SignUp}" />
+        
     </StackLayout>
 
 </pages:BaseContentPage>
