@@ -61,11 +61,38 @@ namespace Rincon.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Respuesta.
+        /// </summary>
+        internal static string Answer {
+            get {
+                return ResourceManager.GetString("Answer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Rincón.
         /// </summary>
         internal static string AppTitle {
             get {
                 return ResourceManager.GetString("AppTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cancelar.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Registrarse.
+        /// </summary>
+        internal static string Checkin {
+            get {
+                return ResourceManager.GetString("Checkin", resourceCulture);
             }
         }
         
@@ -97,6 +124,15 @@ namespace Rincon.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Debe ingresar la contraseña.
+        /// </summary>
+        internal static string PasswordEmpty {
+            get {
+                return ResourceManager.GetString("PasswordEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a ¿Olvidaste tu contraseña?.
         /// </summary>
         internal static string RecoverPassword {
@@ -111,6 +147,15 @@ namespace Rincon.Resources.Strings {
         internal static string SignUp {
             get {
                 return ResourceManager.GetString("SignUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Debe ingresar nombre de usuario.
+        /// </summary>
+        internal static string UserEmpty {
+            get {
+                return ResourceManager.GetString("UserEmpty", resourceCulture);
             }
         }
         

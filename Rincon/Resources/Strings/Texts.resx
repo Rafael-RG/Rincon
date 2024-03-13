@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Answer" xml:space="preserve">
+    <value>Respuesta</value>
+  </data>
   <data name="AppTitle" xml:space="preserve">
     <value>Rincón</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="Checkin" xml:space="preserve">
+    <value>Registrarse</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -129,11 +138,17 @@
   <data name="Password" xml:space="preserve">
     <value>Contraseña</value>
   </data>
+  <data name="PasswordEmpty" xml:space="preserve">
+    <value>Debe ingresar la contraseña</value>
+  </data>
   <data name="RecoverPassword" xml:space="preserve">
     <value>¿Olvidaste tu contraseña?</value>
   </data>
   <data name="SignUp" xml:space="preserve">
     <value>Regístrate</value>
+  </data>
+  <data name="UserEmpty" xml:space="preserve">
+    <value>Debe ingresar nombre de usuario</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Usuario</value>

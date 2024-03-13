@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:BaseContentPage
+    x:Class="Rincon.Pages.CheckinPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="clr-namespace:Rincon.Extensions"
+    xmlns:pages="clr-namespace:Rincon.Common.Pages;assembly=Rincon.Common"
+    xmlns:viewModels="clr-namespace:Rincon.ViewModels"
+    x:DataType="viewModels:CheckinViewModel"
+    x:TypeArguments="viewModels:CheckinViewModel"
+    BackgroundColor="#AAA">
+
+    <StackLayout>
+        <StackLayout Margin="0,12,0,0" HeightRequest="32" WidthRequest="400">
+            <ActivityIndicator
+                HeightRequest="32"
+                IsRunning="True"
+                IsVisible="{Binding IsBusy}"
+                WidthRequest="32" />
+        </StackLayout>
+
+        <Entry   
+            BackgroundColor="Transparent"
+            HeightRequest="60"
+            PlaceholderColor="Black"
+            AutomationId="userNameEntry"
+            HorizontalOptions="FillAndExpand"
+            IsEnabled="{Binding IsEnabled}"
+            MaxLength="25"
+            Placeholder="{extensions:Localize Username}"
+            Text="{Binding Username}" />
+
+        <Entry   
+            BackgroundColor="Transparent"
+            HeightRequest="60"
+            PlaceholderColor="Black"
+            AutomationId="userNameEntry"
+            HorizontalOptions="FillAndExpand"
+            IsEnabled="{Binding IsEnabled}"
+            MaxLength="25"
+            Placeholder="{extensions:Localize Password}"
+            Text="{Binding Password}" />
+
+        <Entry   
+            BackgroundColor="Transparent"
+            HeightRequest="60"
+            PlaceholderColor="Black"
+            AutomationId="userNameEntry"
+            HorizontalOptions="FillAndExpand"
+            IsEnabled="{Binding IsEnabled}"
+            MaxLength="25"
+            Placeholder="{extensions:Localize Password}"
+            Text="{Binding Password}" />
+
+        <Picker Title="Pregunta de seguridad" ItemsSource="{Binding Questions}">
+        </Picker>
+
+        <Entry   
+            BackgroundColor="Transparent"
+            HeightRequest="60"
+            PlaceholderColor="Black"
+            AutomationId="userNameEntry"
+            HorizontalOptions="FillAndExpand"
+            IsEnabled="{Binding IsEnabled}"
+            MaxLength="25"
+            Placeholder="{extensions:Localize Answer}"
+            Text="{Binding Answer}" />
+
+        <Button
+            BackgroundColor="#F5F5F5"
+            Margin="0,60,0,0"
+            TextColor="Black"
+            Command="{Binding CheckinCommand}"
+            Text="{extensions:Localize Checkin}" />
+
+
+        <Button
+            BackgroundColor="Grey"
+            Margin="0,20,0,0"
+            TextColor="Black"
+            Command="{Binding CancelCheckinCommand}"
+            Text="{extensions:Localize Cancel}" />
+
+    </StackLayout>
+
+</pages:BaseContentPage>

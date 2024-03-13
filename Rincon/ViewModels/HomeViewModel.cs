@@ -1,5 +1,4 @@
-﻿using Rincon.Common.Interfaces;
-using Rincon.Common.ViewModels;
+﻿using Rincon.Common.ViewModels;
 
 namespace Rincon.ViewModels
 {

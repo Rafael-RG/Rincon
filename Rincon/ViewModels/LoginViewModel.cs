@@ -31,7 +31,18 @@ namespace Rincon.ViewModels
         private async void Login()
         {
             if (this.IsBusy) return;
-            if (!AreCredentialComplete()) return;
+
+            if (string.IsNullOrWhiteSpace(this.Username))
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), GetText("UserEmpty"), GetText("Close"));
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(this.Password))
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), GetText("PasswordEmpty"), GetText("Close"));
+                return;
+            }
+            
             try
             {
                 this.IsBusy = true;
@@ -63,21 +74,12 @@ namespace Rincon.ViewModels
         /// Login with active directory
         /// </summary>
         [RelayCommand]
-        private async void LoginWithActiveDirectory()
+        private async void Checkin()
         {
-            await this.NavigationService.Close(this);
+            await this.NavigationService.Navigate<CheckinViewModel>();
         }
 
 
-
-        /// <summary>
-        /// Validates if the user submitted the credentials
-        /// </summary>
-        /// <returns></returns>
-        private bool AreCredentialComplete()
-        {
-            return this.Username.Length > 0 || this.Password.Length > 0;
-        }
 
 
         /// <summary>
@@ -105,9 +107,9 @@ namespace Rincon.ViewModels
                 //await NotificationService.NotifyAsync(GetText("Error"), (ex.Message), GetText("Close"));
                 await LogExceptionAsync(ex);
             }
-            
+
         }
-       
+
 
     }
 }
