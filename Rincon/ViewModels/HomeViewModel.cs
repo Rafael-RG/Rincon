@@ -1,4 +1,6 @@
 ﻿using Rincon.Common.ViewModels;
+using Rincon.Models;
+using System.Collections.ObjectModel;
 
 namespace Rincon.ViewModels
 {
@@ -8,9 +10,9 @@ namespace Rincon.ViewModels
     public class HomeViewModel : BaseViewModel
     {
         ///// <summary>
-        ///// Menu
+        ///// Cards
         ///// </summary>
-        //public List<MenuOption> Menu { get; private set; }
+        public ObservableCollection<CardStock> Cards { get;  set; }
 
 
         /// <summary>
@@ -18,11 +20,79 @@ namespace Rincon.ViewModels
         /// </summary>
         public HomeViewModel(IServiceProvider provider) :  base(provider)
         {
+            
         }
 
 
         public override async void OnAppearing()
         {
+            this.Cards = new ObservableCollection<CardStock>()
+            {
+                new CardStock()
+                {
+                    Id = 111111,
+                    Description = "2” x 1” x 3,30m.",
+                    StockAvailable = 10000,
+                    StockReserved = 10000,
+                    Icon = "cr"
+                },
+                new CardStock()
+                {
+                    Id = 222222,
+                    Description = "2” x 1” x 3,30m.",
+                    StockAvailable = 10000,
+                    StockReserved = 10000,
+                    Icon = "cr"
+                },
+                new CardStock()
+                {
+                    Id = 333333,
+                    Description = "2” x 1” x 3,30m.",
+                    StockAvailable = 10000,
+                    StockReserved = 10000,
+                    Icon = "cr"
+                },
+                new CardStock()
+                {
+                    Id = 444444,
+                    Description = "2” x 1” x 3,30m.",
+                    StockAvailable = 10000,
+                    StockReserved = 10000,
+                    Icon = "cr"
+                },
+                new CardStock()
+                {
+                    Id = 555555,
+                    Description = "2” x 1” x 3,30m.",
+                    StockAvailable = 10000,
+                    StockReserved = 10000,
+                    Icon = "cr"
+                },
+                new CardStock()
+                {
+                    Id = 6666666,
+                    Description = "2” x 1” x 3,30m.",
+                    StockAvailable = 10000,
+                    StockReserved = 10000,
+                    Icon = "cr"
+                },
+                new CardStock()
+                {
+                    Id = 77777777,
+                    Description = "2” x 1” x 3,30m.",
+                    StockAvailable = 10000,
+                    StockReserved = 10000,
+                    Icon = "cr"
+                },
+                new CardStock()
+                {
+                    Id = 88888888,
+                    Description = "2” x 1” x 3,30m.",
+                    StockAvailable = 10000,
+                    StockReserved = 10000,
+                    Icon = "cr"
+                }
+            };
             if (!this.AuthenticationService.IsAuthenticated())
             {
                 await this.NavigationService.Navigate<LoginViewModel>();

@@ -53,9 +53,9 @@ namespace Rincon.ViewModels
                     return;
                 }
 
-                if (await this.DataService.MustSynchronizeAsync())
+                if (true)
                 {
-                    await this.NavigationService.Navigate<SynchronizationViewModel>();
+                    await this.NavigationService.Navigate<HomeViewModel>();
                 }
                 else
                 {
