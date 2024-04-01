@@ -45,13 +45,34 @@
 		<MauiImage Update="Resources\Images\add_direct_home.svg">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiImage>
+		<MauiImage Update="Resources\Images\add_stock_icon_small.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\bad_emoji_icon.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
 		<MauiImage Update="Resources\Images\change_direct_home.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\consult_stock_icon_small.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\delete_item_icon.svg">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiImage>
 		<MauiImage Update="Resources\Images\edit_direct_home.svg">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiImage>
+		<MauiImage Update="Resources\Images\edit_stock_icon_small.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\inventory_icon_small.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
 		<MauiImage Update="Resources\Images\logo_login.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\new_movement_icon_small.svg">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiImage>
 		<MauiImage Update="Resources\Images\operator_login_icon.svg">
@@ -160,6 +181,10 @@
 	  <MauiXaml Update="Pages\SynchronizationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="CustomControls\" />
 	</ItemGroup>
 
 </Project>

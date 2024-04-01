@@ -97,18 +97,18 @@ namespace Rincon.Common.Services
 
 
         ///// <inheritdoc />
-        //public Task<bool> ConfirmAsync(string title, string message, string buttonOk, string buttonCancel, Action<bool> callback)
-        //{
-        //    MainThread.BeginInvokeOnMainThread(async () =>
-        //    {
-        //        if (Application.Current.MainPage != null)
-        //        {
-        //            var result = await Application.Current.MainPage.DisplayAlert(GetText(title), GetText(message), GetText(buttonOk), GetText(buttonCancel));
-        //            callback(result);
-        //        }
-        //    });
-        //    return Task.FromResult(true);
-        //}
+        public Task<bool> ConfirmAsync(string title, string message, string buttonOk, string buttonCancel, Action<bool> callback)
+        {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                if (Application.Current.MainPage != null)
+                {
+                    var result = await Application.Current.MainPage.DisplayAlert(GetText(title), GetText(message), GetText(buttonOk), GetText(buttonCancel));
+                    callback(result);
+                }
+            });
+            return Task.FromResult(true);
+        }
 
         ///// <inheritdoc />
         //public Task<bool> ConfirmWithMessageAsync(string title, string message, string buttonOk, string buttonCancel, Action<bool> callback)

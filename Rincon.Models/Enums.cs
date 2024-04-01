@@ -14,4 +14,36 @@ namespace Rincon.Models
         Admin,
         Operator
     }
+
+    /// <summary>
+    /// Product type
+    /// </summary>
+    public enum ProductType
+    {
+        Tirante,
+        Polin,
+        Tabla
+    }
+
+    /// <summary>
+    /// Wood state
+    /// </summary>
+    public enum WoodState
+    {
+
+        Cepillado,
+        Curado,
+        CepilladoCurado
+    }
+
+    /// <summary>
+    /// Machimbre
+    /// </summary>
+    public enum Machimbre
+    {
+        machimbre1,
+        machimbre2,
+        machimbre3,
+        machimbre4
+    }
 }

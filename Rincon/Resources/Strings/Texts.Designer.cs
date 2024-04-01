@@ -115,6 +115,15 @@ namespace Rincon.Resources.Strings {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No.
+        /// </summary>
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Contraseña.
         /// </summary>
         internal static string Password {
@@ -138,6 +147,15 @@ namespace Rincon.Resources.Strings {
         internal static string RecoverPassword {
             get {
                 return ResourceManager.GetString("RecoverPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Yes.
+        /// </summary>
+        internal static string Si {
+            get {
+                return ResourceManager.GetString("Si", resourceCulture);
             }
         }
         

@@ -1,146 +1,513 @@
-﻿using Rincon.Common.ViewModels;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Rincon.Common.ViewModels;
 using Rincon.Models;
+
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace Rincon.ViewModels
 {
     /// <summary>
     /// Home logic
     /// </summary>
-    public class HomeViewModel : BaseViewModel
+    public partial class HomeViewModel : BaseViewModel
     {
+        #region Properties
         ///// <summary>
         ///// Cards
         ///// </summary>
-        public ObservableCollection<CardStock> Cards { get;  set; }
+        [ObservableProperty]
+        private List<CardStock> cards;
 
+        ///// <summary>
+        ///// Home View
+        ///// </summary>
+        [ObservableProperty]
+        private bool isHomeView;
+
+        ///// <summary>
+        ///// Magement Stock View
+        ///// </summary>
+        [ObservableProperty]
+        private bool isMagementStockView;
+
+        ///// <summary>
+        ///// Tasks View
+        ///// </summary>
+        [ObservableProperty]
+        private bool isTasksView;
+
+        ///// <summary>
+        ///// Orders View
+        ///// </summary>
+        [ObservableProperty]
+        private bool isOrdersView;
+
+        ///// <summary>
+        ///// History View
+        ///// </summary>
+        [ObservableProperty]
+        private bool isHistoryView;
+
+        ///// <summary>
+        ///// Add Product View
+        ///// </summary>
+        [ObservableProperty]
+        private bool isAddProductView;
+
+        ///// <summary>
+        ///// Add stock View
+        ///// </summary>
+        [ObservableProperty]
+        private bool isAddStockView;
+
+        ///// <summary>
+        ///// Is Tirante
+        ///// </summary>
+
+        private bool isTiranteSelect;
+
+        public bool IsTiranteSelect
+        {
+            get { return isTiranteSelect; }
+            set
+            {
+                if (SetProperty(ref isTiranteSelect, value))
+                {
+                    OnPropertyChanged(nameof(IsMeasureSelect));
+                }
+            }
+        }
+
+        ///// <summary>
+        ///// Is Polin
+        ///// </summary>
+        [ObservableProperty]
+        private bool isPolinSelect;
+
+        ///// <summary>
+        ///// Is Tabla
+        ///// </summary>
+
+        private bool isTablaSelect;
+
+        public bool IsTablaSelect
+        {
+            get { return isTablaSelect; }
+            set
+            {
+                if (SetProperty(ref isTablaSelect, value))
+                {
+                    OnPropertyChanged(nameof(IsMeasureSelect));
+                }
+            }
+        }
+
+        ///// <summary>
+        /// Is Measure
+        /// </summary>
+        public bool? IsMeasureSelect
+        {
+            get
+            {
+                return IsTiranteSelect || IsTablaSelect;
+            }
+        }
+
+        ///// <summary>
+        ///// Cards
+        ///// </summary>
+        [ObservableProperty]
+        private List<string> states;
+
+        ///// <summary>
+        ///// Thickness
+        ///// </summary>
+        [ObservableProperty]
+        private double thickness;
+
+        ///// <summary>
+        ///// Thickness
+        ///// </summary>
+        [ObservableProperty]
+        private double diameter;
+
+        ///// <summary>
+        ///// Length
+        ///// </summary>
+        [ObservableProperty]
+        private double length;
+
+        ///// <summary>
+        ///// Width
+        ///// </summary>
+        [ObservableProperty]
+        private double width;
+
+        ///// <summary>
+        ///// Location
+        ///// </summary>
+        [ObservableProperty]
+        private string location;
+
+        ///// <summary>
+        ///// Comments
+        ///// </summary>
+        [ObservableProperty]
+        private string comments;
+
+        ///// <summary>
+        ///// Supplier
+        ///// </summary>
+        [ObservableProperty]
+        private string supplier;
+
+        ///// <summary>
+        ///// IsMachimbre
+        ///// </summary>
+        [ObservableProperty]
+        private bool isMachimbre;
+
+        ///// <summary>
+        ///// ProductCode
+        ///// </summary>
+        [ObservableProperty]
+        private string productCode;
+
+        ///// <summary>
+        ///// Products to add
+        ///// </summary>
+
+        private List<ProductToAdd> productsToAdd;
+
+        public List<ProductToAdd> ProductsToAdd
+        {
+            get { return productsToAdd; }
+            set
+            {
+                if (SetProperty(ref productsToAdd, value))
+                {
+                    OnPropertyChanged(nameof(ProductsToAdd));
+                }
+            }
+        }
+
+        ///// <summary>
+        ///// List of products
+        ///// </summary>
+        [ObservableProperty]
+        private List<Product> products;
+
+        ///// <summary>
+        ///// Selected product to add
+        ///// </summary>
+
+        private Product selectedProductToAdd;
+
+        public Product SelectedProductToAdd
+        {
+            get { return selectedProductToAdd; }
+            set
+            {
+                if (SetProperty(ref selectedProductToAdd, value))
+                {
+                    OnPropertyChanged(nameof(SelectedProductToAdd));
+
+                    LoadProductToAddCommand.Execute(value);
+
+                    SelectedProductToAdd = null;
+                }
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// Gets by DI the required services
         /// </summary>
-        public HomeViewModel(IServiceProvider provider) :  base(provider)
+        public HomeViewModel(IServiceProvider provider) : base(provider)
         {
-            
-        }
 
+        }
 
         public override async void OnAppearing()
         {
-            this.Cards = new ObservableCollection<CardStock>()
+            this.ChangeViewCommand.Execute("Home");
+
+            this.Cards = new List<CardStock>()
             {
-                new CardStock()
+                new ()
                 {
                     Id = 111111,
                     Description = "2” x 1” x 3,30m.",
                     StockAvailable = 10000,
                     StockReserved = 10000,
-                    Icon = "cr"
+                    Icon = "cr.png"
                 },
-                new CardStock()
+                new ()
                 {
                     Id = 222222,
                     Description = "2” x 1” x 3,30m.",
                     StockAvailable = 10000,
                     StockReserved = 10000,
-                    Icon = "cr"
+                    Icon = "cr.png"
                 },
-                new CardStock()
+                new ()
                 {
                     Id = 333333,
                     Description = "2” x 1” x 3,30m.",
                     StockAvailable = 10000,
                     StockReserved = 10000,
-                    Icon = "cr"
+                    Icon = "cr.png"
                 },
-                new CardStock()
+                new ()
                 {
                     Id = 444444,
                     Description = "2” x 1” x 3,30m.",
                     StockAvailable = 10000,
                     StockReserved = 10000,
-                    Icon = "cr"
+                    Icon = "cr.png"
                 },
-                new CardStock()
+                new ()
                 {
                     Id = 555555,
                     Description = "2” x 1” x 3,30m.",
                     StockAvailable = 10000,
                     StockReserved = 10000,
-                    Icon = "cr"
+                    Icon = "cr.png"
                 },
-                new CardStock()
+                new ()
                 {
                     Id = 6666666,
                     Description = "2” x 1” x 3,30m.",
                     StockAvailable = 10000,
                     StockReserved = 10000,
-                    Icon = "cr"
+                    Icon = "cr.png"
                 },
-                new CardStock()
+                new ()
                 {
                     Id = 77777777,
                     Description = "2” x 1” x 3,30m.",
                     StockAvailable = 10000,
                     StockReserved = 10000,
-                    Icon = "cr"
+                    Icon = "cr.png"
                 },
-                new CardStock()
+                new ()
                 {
                     Id = 88888888,
                     Description = "2” x 1” x 3,30m.",
                     StockAvailable = 10000,
                     StockReserved = 10000,
-                    Icon = "cr"
+                    Icon = "cr.png"
                 }
             };
+
+            this.States = new List<string>()
+            {
+                "Estado 1",
+                "Esatdo 2",
+                "Estado 3"
+            };
+
+            this.Products = await this.DataService.LoadItemsAsync();
+
             if (!this.AuthenticationService.IsAuthenticated())
             {
                 await this.NavigationService.Navigate<LoginViewModel>();
             }
         }
 
-        ///// <summary>
-        ///// Prepares the local variables
-        ///// </summary>
-        //public override void Prepare()
-        //{
-        //    this.Menu = new List<MenuOption>(new List<MenuOption> {
-        //        new MenuOption
-        //        {
-        //            Text = GetText("Option"),
-        //            Icon = IconConstants.Alert,
-        //            Command = new MvxCommand(() =>
-        //            {                        
-        //            }),
-        //        },
-        //        new MenuOption
-        //        {
-        //            Text = GetText("EntryForm"),
-        //            Icon = IconConstants.FileDocumentEdit,
-        //            Command = new MvxCommand(async () =>
-        //            {
-        //                 await this.NavigationService.Navigate<EntryFormViewModel>();
-        //            }),
-        //        },
-        //        new MenuOption
-        //        {
-        //            Text = GetText("Camera"),
-        //            Icon = IconConstants.Camera,
-        //            Command = new MvxCommand(() =>
-        //            {                       
-        //            }),
-        //        },
-        //        new MenuOption
-        //        {
-        //            Text = GetText("Synchronize"),
-        //            Icon = IconConstants.Refresh,
-        //            Command = new MvxCommand(async () =>
-        //            {
-        //                await this.NavigationService.Navigate<SynchronizationViewModel>();
-        //            }),
-        //        },
-        //    });
-        //}
+        public ICommand ChangeViewCommand => new Command<string>((view) =>
+        {
+            switch (view)
+            {
+                case "Home":
+                    this.IsHomeView = true;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    break;
+                case "MagementStock":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = true;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    break;
+                case "Tasks":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = true;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    break;
+                case "Orders":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = true;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    break;
+                case "History":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = true;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    break;
+                case "AddProduct":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = true;
+                    this.IsAddStockView = false;
+                    break;
+                case "AddStock":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = true;
+                    break;
+            }
+        });
 
+        public ICommand CancelAddProductCommand => new Command(async () =>
+        {
+            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Yes", "No", async (response) =>
+            {
+                if (response)
+                {
+                    ClearViewAddProduct();
+                    this.ChangeViewCommand.Execute("Home");
+                }
+            });
+
+        });
+
+        public ICommand SaveProductCommand => new Command(async () =>
+        {
+            await NotificationService.ConfirmAsync("Guardar", "¿Está seguro que desea guardar el producto?", "Yes", "No", async (response) =>
+            {
+                if (response)
+                {
+                    try
+                    {
+                        if (string.IsNullOrEmpty(this.ProductCode))
+                        {
+                            await NotificationService.NotifyAsync("Falta completar campos", "Código no pueden ser vacio", "Cerrar");
+                            return;
+                        }
+                        else if (this.IsTiranteSelect)
+                        {
+                            if (this.Thickness == 0 || this.Width == 0 || this.Length == 0)
+                            {
+                                await NotificationService.NotifyAsync("Falta completar campos", "Grosor, Ancho y Largo  no pueden ser 0", "Cerrar");
+                                return;
+                            }
+                        }
+                        else if (this.IsPolinSelect)
+                        {
+                            if (this.Diameter == 0 )
+                            {
+                               await NotificationService.NotifyAsync("Falta completar campos", "El diametro no puede ser 0", "Cerrar");
+                                return;
+                            }
+                        }
+                        else if (this.IsTablaSelect)
+                        {
+                            if (this.Thickness == 0 || this.Width == 0 || this.Length == 0)
+                            {
+                                await NotificationService.NotifyAsync("Falta completar campos", "Grosor, Ancho y Largo  no pueden ser 0", "Cerrar");
+                                return;
+                            }
+                        }
+
+
+                        var product = new Product()
+                        {
+                            Comment = this.Comments,
+                            Diameter = this?.Diameter,
+                            Length = this?.Length,
+                            Location = this?.Location,
+                            Id = this.ProductCode,
+                            Supplier = this?.Supplier,
+                            Thickness = this?.Thickness,
+                            Width = this?.Width,
+                            Machimbre = this.IsMachimbre,
+                            ProductType = this.IsTiranteSelect ? ProductType.Tirante : this.IsPolinSelect ? ProductType.Polin : ProductType.Tabla,
+                            WoodState = WoodState.Cepillado,
+                            MachimbreSate = Machimbre.machimbre3,
+                            Description = this.IsPolinSelect ? $"{this.Diameter}" : $"{this.thickness} x {this.Length} x {this.Width}",
+
+                        };
+
+                        var result = await this.DataService.InsertOrUpdateItemsAsync<Product>(product);
+
+                    }
+                    catch
+                    {
+                        await NotificationService.NotifyAsync("Error", "Hubo un error al crear el product. Vuleva a intentar.", "Cerrar");
+                        return;
+                    }
+
+                    await NotificationService.NotifyAsync("Creado", "Ha creado un nuevo producto", "Volver");
+
+                    ClearViewAddProduct();
+
+                    return;
+                }
+            });
+        });
+
+        private void ClearViewAddProduct()
+        {
+            this.Comments = string.Empty;
+            this.Diameter = 0;
+            this.Length = 0;
+            this.Location = string.Empty;
+            this.ProductCode = string.Empty;
+            this.Supplier = string.Empty;
+            this.Thickness = 0;
+            this.Width = 0;
+            this.IsMachimbre = false;
+            this.IsPolinSelect = false;
+            this.IsTablaSelect = false;
+            this.IsTiranteSelect = false;
+        }
+
+        public ICommand LoadProductToAddCommand => new Command<Product>((product) =>
+        {
+            this.ProductsToAdd ??= new List<ProductToAdd>();
+
+            if (product != null)
+            {
+                this.ProductsToAdd.Add(new ProductToAdd()
+                {
+                    Product = product,
+                    Quantity = 1
+                });
+            }
+        });
+
+        public ICommand RemoveProductToAddedCommand => new Command<ProductToAdd>((product) =>
+        {
+            this.ProductsToAdd.Remove(product);
+        });
     }
 }

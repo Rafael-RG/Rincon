@@ -7,6 +7,8 @@
     {
         public static string DatabaseName = "Rincon.db";
 
+        public static string ConnectionString = "Server=tcp:rincon-server.database.windows.net,1433;Initial Catalog=RinconDB;Persist Security Info=False;User ID=rincon;Password=Rafarg12.@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
         public const string BaseUri = "https://";
 
         public static string WebApiKeyHeader => "x-functions-key";

@@ -31,7 +31,7 @@ namespace Rincon.Common.Interfaces
         ///// <summary>
         ///// Shows a pop up to the user with confirmation (Xamarin.Forms DisplayAlert)
         ///// </summary>   
-        //Task<bool> ConfirmAsync(string title, string message, Action<bool> callback);
+        Task<bool> ConfirmAsync(string title, string message, string buttonOk, string buttonCancel, Action<bool> callback);
 
 
         ///// <summary>

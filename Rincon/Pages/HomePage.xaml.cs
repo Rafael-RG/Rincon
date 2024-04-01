@@ -9,8 +9,7 @@ namespace Rincon.Pages;
 /// </summary>
 public partial class HomePage
 {
-	int count = 0;
-
+	
 	/// <summary>
 	/// Receives the depedencies by DI
 	/// </summary>

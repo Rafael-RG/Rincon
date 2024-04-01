@@ -29,6 +29,8 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
         builder.Services.AddLocalization();
+		builder.Services.AddDbContext<DatabaseContext>();
+		builder.Services.AddSingleton<IDataService, DataService>();
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
         return builder.Build();
 	}

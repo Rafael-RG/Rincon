@@ -25,7 +25,7 @@ namespace Rincon.DataAccess
             var count = 0;
             using (var databaseContext = new DatabaseContext())
             {
-                count = await databaseContext.Items.CountAsync();
+                count = await databaseContext.Product.CountAsync();
             }
             return count == 0;
         }
@@ -71,11 +71,11 @@ namespace Rincon.DataAccess
 
 
         ///<inheritdoc/>
-        public async Task<List<Item>> LoadItemsAsync()
+        public async Task<List<Product>> LoadItemsAsync()
         {
             using (var databaseContext = new DatabaseContext())
             {
-                var items = await databaseContext.Items.ToListAsync().ConfigureAwait(false);
+                var items = await databaseContext.Product.ToListAsync().ConfigureAwait(false);
                 return items;
             }
         }
