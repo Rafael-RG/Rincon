@@ -1,6 +1,9 @@
 ﻿
+using Mopups.Interfaces;
 using Rincon.Common.Pages;
+using Rincon.CustomPopups;
 using Rincon.ViewModels;
+using System.Windows.Input;
 
 namespace Rincon.Pages;
 
@@ -9,14 +12,23 @@ namespace Rincon.Pages;
 /// </summary>
 public partial class HomePage
 {
-	
+	IPopupNavigation popupNavigation;
+
 	/// <summary>
 	/// Receives the depedencies by DI
 	/// </summary>
-	public HomePage(HomeViewModel viewModel) : base(viewModel, "Home")
+	public HomePage(HomeViewModel viewModel,IPopupNavigation popupNavigation) : base(viewModel, "Home")
 	{
 		InitializeComponent();
-		//this.BindingContext = viewModel;
-	}
-}
 
+		this.popupNavigation = popupNavigation;
+	}
+
+	/// <summary>
+	/// Popups confirm added stock.
+	/// </summary>
+	private async void AddStock_Clicked(object sender, EventArgs e)
+	{
+        await popupNavigation.PushAsync(new ConfirmAddStockPage(this.popupNavigation, ViewModel.ProductsStock.ToList(),ViewModel.OkAddStockCommand));
+    }
+}

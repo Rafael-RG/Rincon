@@ -14,6 +14,8 @@ namespace Rincon.DataAccess
 
         public DbSet<Product> Product { get; set; }
 
+        public DbSet<ProductStock> ProductStock { get; set; }
+
 
         /// <summary>   |
         /// Initializes sqlite

@@ -57,6 +57,16 @@ namespace Rincon.DataAccess
             }
         }
 
+        ///<inheritdoc/>
+        public async Task<int> InsertOrUpdateStockAsync(List<ProductStock> stock)
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                var count = await databaseContext.UpsertRange<ProductStock>(stock).RunAsync();
+                return count;
+            }
+        }
+
 
         ///<inheritdoc/>
         public async Task<int> DeleteItemAsync<T>(T item) where T : class

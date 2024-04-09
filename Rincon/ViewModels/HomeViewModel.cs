@@ -177,20 +177,8 @@ namespace Rincon.ViewModels
         ///// <summary>
         ///// Products to add
         ///// </summary>
-
-        private List<ProductToAdd> productsToAdd;
-
-        public List<ProductToAdd> ProductsToAdd
-        {
-            get { return productsToAdd; }
-            set
-            {
-                if (SetProperty(ref productsToAdd, value))
-                {
-                    OnPropertyChanged(nameof(ProductsToAdd));
-                }
-            }
-        }
+        [ObservableProperty]
+        private ObservableCollection<ProductStock> productsStock;
 
         ///// <summary>
         ///// List of products
@@ -213,9 +201,11 @@ namespace Rincon.ViewModels
                 {
                     OnPropertyChanged(nameof(SelectedProductToAdd));
 
-                    LoadProductToAddCommand.Execute(value);
+                    if (value != null)
+                    {
+                        this.LoadProductToAddCommand.Execute(value);
+                    }
 
-                    SelectedProductToAdd = null;
                 }
             }
         }
@@ -423,9 +413,9 @@ namespace Rincon.ViewModels
                         }
                         else if (this.IsPolinSelect)
                         {
-                            if (this.Diameter == 0 )
+                            if (this.Diameter == 0)
                             {
-                               await NotificationService.NotifyAsync("Falta completar campos", "El diametro no puede ser 0", "Cerrar");
+                                await NotificationService.NotifyAsync("Falta completar campos", "El diametro no puede ser 0", "Cerrar");
                                 return;
                             }
                         }
@@ -475,6 +465,86 @@ namespace Rincon.ViewModels
             });
         });
 
+        public ICommand LoadProductToAddCommand => new Command<Product>(async (product) =>
+        {
+            this.ProductsStock ??= new ObservableCollection<ProductStock>();
+
+            if (product != null)
+            {
+                var exist = false;
+                
+                foreach (var item in this.ProductsStock)
+                {
+                    if (item.Product == product) 
+                    {
+                        exist = true;
+                    }
+
+                }
+
+                if (!exist)
+                {
+                    this.ProductsStock.Add(new ProductStock()
+                    {
+                        Id = product.Id,
+                        Product = product,
+                        Quantity = 1
+                    });
+                }
+                else 
+                {
+                    await NotificationService.NotifyAsync("Error", "El producto ya fue agregado", "Cerrar");
+                }
+
+                this.SelectedProductToAdd = null;
+
+            }
+        });
+
+        public ICommand RemoveProductToAddedCommand => new Command<ProductStock>((product) =>
+        {
+            this.ProductsStock.Remove(product);
+        });
+
+        public ICommand CancelAddStockCommand => new Command(async () =>
+        {
+            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Yes", "No", async (response) =>
+            {
+                if (response)
+                {
+                    ClearViewAddStock();
+                    this.ChangeViewCommand.Execute("Home");
+                }
+            });
+        });
+
+        public ICommand OkAddStockCommand => new Command(async () =>
+       {
+           try
+           {
+               if (!this.ProductsStock.Any())
+               {
+                   await NotificationService.NotifyAsync("Error", "No se a cargado ningun producto", "Cerrar");
+                   return;
+               }
+
+               var result = await this.DataService.InsertOrUpdateStockAsync(this.ProductsStock.ToList());
+
+           }
+           catch
+           {
+               await NotificationService.NotifyAsync("Error", "Hubo un error al agregar stock. Vuleva a intentar.", "Cerrar");
+               return;
+           }
+
+           await NotificationService.NotifyAsync("Operacion Exitosa", "Stock actualizado", "Volver");
+
+           ClearViewAddProduct();
+
+           return;
+       });
+
+
         private void ClearViewAddProduct()
         {
             this.Comments = string.Empty;
@@ -491,23 +561,9 @@ namespace Rincon.ViewModels
             this.IsTiranteSelect = false;
         }
 
-        public ICommand LoadProductToAddCommand => new Command<Product>((product) =>
+        private void ClearViewAddStock()
         {
-            this.ProductsToAdd ??= new List<ProductToAdd>();
-
-            if (product != null)
-            {
-                this.ProductsToAdd.Add(new ProductToAdd()
-                {
-                    Product = product,
-                    Quantity = 1
-                });
-            }
-        });
-
-        public ICommand RemoveProductToAddedCommand => new Command<ProductToAdd>((product) =>
-        {
-            this.ProductsToAdd.Remove(product);
-        });
+            this.ProductsStock = null;
+        }
     }
 }

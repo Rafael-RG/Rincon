@@ -1,4 +1,7 @@
 ﻿using CommunityToolkit.Maui;
+using Mopups.Hosting;
+using Mopups.Interfaces;
+using Mopups.Services;
 using Rincon.Common.Extensions;
 using Rincon.Common.Interfaces;
 using Rincon.Common.Services;
@@ -21,7 +24,8 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder
-			.UseMauiApp<App>()	
+			.UseMauiApp<App>()
+			.ConfigureMopups()
 			.RegisterViewModelsAndServices()
             .ConfigureFonts(fonts =>
 			{
@@ -31,6 +35,7 @@ public static class MauiProgram
         builder.Services.AddLocalization();
 		builder.Services.AddDbContext<DatabaseContext>();
 		builder.Services.AddSingleton<IDataService, DataService>();
+		builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
         return builder.Build();
 	}

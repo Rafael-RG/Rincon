@@ -9,7 +9,8 @@
     x:DataType="viewModels:LoginViewModel"
     x:TypeArguments="viewModels:LoginViewModel"
     Shell.NavBarIsVisible="false"
-    BackgroundColor="#AD6B2A">
+    BackgroundColor="#AD6B2A"
+    Shell.NavBarHasShadow="False" NavigationPage.HasBackButton="False" >
     
 
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="0" Padding="0">

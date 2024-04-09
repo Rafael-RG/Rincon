@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+    x:Class="Rincon.CustomPopups.ConfirmAddStockPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:Rincon.Models;assembly=Rincon.Models"
+    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+    Title="ConfirmAddStockPage"
+    BackgroundColor="#80000000"
+    CloseWhenBackgroundIsClicked="False">
+
+    <Border
+        Margin="200,100,200,100"
+        Padding="40"
+        BackgroundColor="White">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="18,18,18,18" />
+        </Border.StrokeShape>
+
+        <Grid
+            BackgroundColor="White"
+            HorizontalOptions="FillAndExpand"
+            RowDefinitions="auto,auto,auto,auto,*,auto"
+            VerticalOptions="FillAndExpand">
+            <Label
+                Margin="0,0,0,10"
+                FontSize="26"
+                HorizontalOptions="Start"
+                Text="Carga de stock"
+                TextColor="#79280F"
+                VerticalOptions="Center" />
+
+            <BoxView
+                Grid.Row="1"
+                Margin="0,0,0,20"
+                HeightRequest="2"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Start"
+                Color="#79280F" />
+
+            <HorizontalStackLayout Grid.Row="2" Margin="30,0,0,0">
+                <Label Text="#Codigo" TextColor="#79280F" />
+                <Label
+                    Margin="245,0,0,0"
+                    Text="Descripcion"
+                    TextColor="#79280F" />
+                <Label
+                    Margin="220,0,0,0"
+                    Text="Estado"
+                    TextColor="#79280F" />
+                <Label
+                    Margin="50,0,0,0"
+                    Text="Cantidad"
+                    TextColor="#79280F" />
+            </HorizontalStackLayout>
+            <CollectionView
+                x:Name="ProductsStockToAdd"
+                Grid.Row="3"
+                Margin="30,0,30,0"
+                SelectionMode="Single"
+                VerticalOptions="FillAndExpand"
+                VerticalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ProductStock">
+                        <Grid
+                            ColumnDefinitions="300,300,*,100,auto"
+                            RowDefinitions="*"
+                            RowSpacing="10"
+                            VerticalOptions="Start">
+                            <Label
+                                Text="{Binding Product.Id}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding Product.Description}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                            <Label
+                                Grid.Column="2"
+                                Text="{Binding Product.WoodState}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                            <Label
+                                Grid.Column="3"
+                                Text="{Binding Quantity}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+            <BoxView
+                Grid.Row="4"
+                HeightRequest="2"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="EndAndExpand"
+                Color="#79280F" />
+
+            <HorizontalStackLayout
+                Grid.Row="5"
+                Margin="0,20,0,0"
+                HorizontalOptions="Center"
+                VerticalOptions="Start">
+                <Button
+                    Margin="20,0,20,0"
+                    BackgroundColor="#D3AA84"
+                    HeightRequest="35"
+                    HorizontalOptions="Center"
+                    Clicked="OkAddStock_Clicked"
+                    Text="Confirmar"
+                    TextColor="#000000"
+                    WidthRequest="260" />
+                <Button
+                    Margin="20,0,20,0"
+                    BackgroundColor="#FFF6ED"
+                    Clicked="CancelAddStock_Clicked"
+                    HeightRequest="35"
+                    HorizontalOptions="Center"
+                    Text="Cancelar"
+                    TextColor="#000000"
+                    WidthRequest="260" />
+            </HorizontalStackLayout>
+        </Grid>
+    </Border>
+
+
+</mopups:PopupPage>

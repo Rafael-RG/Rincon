@@ -759,10 +759,7 @@
                 Padding="0"
                 BackgroundColor="Transparent"
                 BorderColor="#797979">
-                <StackLayout
-                    HorizontalOptions="FillAndExpand"
-                    Orientation="Horizontal"
-                    VerticalOptions="FillAndExpand">
+                <HorizontalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                     <Image
                         Margin="12,12,12,12"
                         HeightRequest="15"
@@ -775,24 +772,42 @@
                         SelectedItem="{Binding SelectedProductToAdd}"
                         TextColor="Black"
                         VerticalOptions="FillAndExpand" />
-                </StackLayout>
+                </HorizontalStackLayout>
             </Frame>
 
             <HorizontalStackLayout Grid.Row="3" Margin="30,0,0,0">
-                <Label Text="#Codigo" TextColor="#79280F"/>
-                <Label Text="Descripcion" TextColor="#79280F" Margin="245,0,0,0"/>
-                <Label Text="Estado" TextColor="#79280F" Margin="220,0,0,0"/>
-                <Label Text="Cantidad" TextColor="#79280F" Margin="200,0,0,0"/>
+                <Label Text="#Codigo" TextColor="#79280F" />
+                <Label
+                    Margin="245,0,0,0"
+                    Text="Descripcion"
+                    TextColor="#79280F" />
+                <Label
+                    Margin="220,0,0,0"
+                    Text="Estado"
+                    TextColor="#79280F" />
+                <Label
+                    Margin="200,0,0,0"
+                    Text="Cantidad"
+                    TextColor="#79280F" />
             </HorizontalStackLayout>
 
             <CollectionView
                 Grid.Row="4"
                 Margin="30,0,30,0"
-                VerticalScrollBarVisibility="Never"
-                ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=ProductsToAdd}">
+                ItemsSource="{Binding ProductsStock, Mode=TwoWay}"
+                SelectionMode="Single"
+                VerticalOptions="FillAndExpand"
+                VerticalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:ProductToAdd">
-                        <Grid ColumnDefinitions="300,300,*,100,auto" RowDefinitions="*" RowSpacing="10" VerticalOptions="Start">
+                    <DataTemplate x:DataType="models:ProductStock">
+                        <Grid
+                            ColumnDefinitions="300,300,*,100,auto"
+                            RowDefinitions="*"
+                            RowSpacing="10"
+                            VerticalOptions="Start">
                             <Label
                                 Text="{Binding Product.Id}"
                                 TextColor="#000000"
@@ -812,8 +827,8 @@
 
                             <Frame
                                 Grid.Column="3"
-                                Padding="0"
                                 Margin="0,0,0,5"
+                                Padding="0"
                                 BackgroundColor="Transparent">
                                 <Entry
                                     HorizontalOptions="FillAndExpand"
@@ -838,6 +853,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
+
             <BoxView
                 Grid.Row="5"
                 HeightRequest="2"
@@ -855,8 +871,7 @@
                     Grid.Column="4"
                     Margin="20,0,20,0"
                     BackgroundColor="#D3AA84"
-                    Command="{Binding SaveProductCommand}"
-                    CommandParameter="AddProduct"
+                    Clicked="AddStock_Clicked"
                     HeightRequest="35"
                     HorizontalOptions="Center"
                     Text="Cargar Stock"
@@ -867,7 +882,7 @@
                     Grid.Column="4"
                     Margin="20,0,20,0"
                     BackgroundColor="#FFF6ED"
-                    Command="{Binding CancelAddProductCommand}"
+                    Command="{Binding CancelAddStockCommand}"
                     HeightRequest="35"
                     HorizontalOptions="Center"
                     Text="Cancelar"
