@@ -108,17 +108,23 @@
             <HorizontalStackLayout
                 Grid.Row="5"
                 Margin="0,20,0,0"
-                HorizontalOptions="Center"
+                HorizontalOptions="FillAndExpand"
                 VerticalOptions="Start">
+                <Label
+                    x:Name="DateTime"
+                    Margin="0,0,30,0"
+                    HorizontalOptions="Start"
+                    TextColor="#79280F"
+                    VerticalOptions="Center" />
                 <Button
                     Margin="20,0,20,0"
                     BackgroundColor="#D3AA84"
+                    Clicked="OkAddStock_Clicked"
                     HeightRequest="35"
                     HorizontalOptions="Center"
-                    Clicked="OkAddStock_Clicked"
                     Text="Confirmar"
                     TextColor="#000000"
-                    WidthRequest="260" />
+                    WidthRequest="220" />
                 <Button
                     Margin="20,0,20,0"
                     BackgroundColor="#FFF6ED"
@@ -127,7 +133,18 @@
                     HorizontalOptions="Center"
                     Text="Cancelar"
                     TextColor="#000000"
-                    WidthRequest="260" />
+                    WidthRequest="220" />
+
+                <ImageButton
+                    Margin="30,0,0,0"
+                    Padding="3"
+                    BackgroundColor="#79280F"
+                    Clicked="SavePDF_Clicked"
+                    CornerRadius="7"
+                    HeightRequest="35"
+                    HorizontalOptions="EndAndExpand"
+                    Source="download_icon.png"
+                    WidthRequest="35" />
             </HorizontalStackLayout>
         </Grid>
     </Border>

@@ -1,8 +1,18 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Storage;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using iText.IO.Image;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Draw;
+using iText.Layout;
+using iText.Layout.Element;
 using Rincon.Common.ViewModels;
 using Rincon.Models;
 
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Text;
+using System.Threading;
 using System.Windows.Input;
 
 namespace Rincon.ViewModels
@@ -13,6 +23,9 @@ namespace Rincon.ViewModels
     public partial class HomeViewModel : BaseViewModel
     {
         #region Properties
+
+        IFileSaver fileSaver;
+
         ///// <summary>
         ///// Cards
         ///// </summary>
@@ -215,9 +228,9 @@ namespace Rincon.ViewModels
         /// <summary>
         /// Gets by DI the required services
         /// </summary>
-        public HomeViewModel(IServiceProvider provider) : base(provider)
+        public HomeViewModel(IServiceProvider provider, IFileSaver fileSaver) : base(provider)
         {
-
+            this.fileSaver = fileSaver;
         }
 
         public override async void OnAppearing()
@@ -544,6 +557,27 @@ namespace Rincon.ViewModels
            return;
        });
 
+        public ICommand SavePDFCommand => new Command(async () =>
+        {
+            try
+            {  
+
+               var result = await this.CreateSavePDFAsync(this.ProductsStock.ToList());
+
+                if (result) 
+                {
+                    await NotificationService.NotifyAsync("Operacion Exitosa", "PDF guardado", "Volver");
+
+                    return;
+                }
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al guardar el PDF. Vuleva a intentar.", "Cerrar");
+                return;
+            }
+        });
+
 
         private void ClearViewAddProduct()
         {
@@ -564,6 +598,65 @@ namespace Rincon.ViewModels
         private void ClearViewAddStock()
         {
             this.ProductsStock = null;
+        }
+
+        private async Task<bool> CreateSavePDFAsync(List<ProductStock> productsStock)
+        {
+            var pdfName = $"Stock_{DateTime.Now.ToString("ddMMyyyy")}.pdf";
+
+            var stream = new MemoryStream();
+
+            using (PdfWriter writer = new PdfWriter(stream))
+            {
+
+                PdfDocument pdf = new PdfDocument(writer);
+
+                Document document = new Document(pdf);
+
+                Paragraph header = new Paragraph("Productos agregados")
+                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                    .SetFontSize(20);
+
+                document.Add(header);
+                Paragraph subHeader = new Paragraph($"Fecha: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}")
+                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                    .SetFontSize(15);
+                document.Add(subHeader);
+
+                LineSeparator ls = new LineSeparator(new SolidLine());
+                document.Add(ls);
+
+                var imagStream = await ConvertImageSourceToStreamAsync("logo_login.svg");
+
+                iText.Layout.Element.Image image = new iText.Layout.Element.Image(ImageDataFactory
+                    .Create(imagStream))
+                    .SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER)
+                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+
+                document.Add(image);
+
+                Paragraph footer = new Paragraph("Rincon")
+                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                    .SetFontSize(10);
+                document.Add(footer);
+
+                document.Close();
+
+                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+                var fileSaverResult = await this.fileSaver.SaveAsync(pdfName, stream, cancellationTokenSource.Token);
+
+                return fileSaverResult.IsSuccessful;
+                
+            }
+        }
+
+        private async Task<byte[]> ConvertImageSourceToStreamAsync(string imageName)
+        {
+            using var ms = new MemoryStream();
+            using (var stream = await FileSystem.OpenAppPackageFileAsync(imageName))
+                await stream.CopyToAsync(ms);
+            return ms.ToArray();
         }
     }
 }

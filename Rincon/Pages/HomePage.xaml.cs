@@ -29,6 +29,6 @@ public partial class HomePage
 	/// </summary>
 	private async void AddStock_Clicked(object sender, EventArgs e)
 	{
-        await popupNavigation.PushAsync(new ConfirmAddStockPage(this.popupNavigation, ViewModel.ProductsStock.ToList(),ViewModel.OkAddStockCommand));
+        await popupNavigation.PushAsync(new ConfirmAddStockPage(this.popupNavigation, ViewModel.ProductsStock.ToList(),ViewModel.OkAddStockCommand,ViewModel.SavePDFCommand));
     }
 }

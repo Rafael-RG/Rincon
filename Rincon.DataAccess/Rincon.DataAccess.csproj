@@ -19,13 +19,22 @@
 
 	<ItemGroup>
 	  <PackageReference Include="FlexLabs.EntityFrameworkCore.Upsert" Version="8.0.0" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.8" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.4" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+	  <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.20" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Rincon.Common\Rincon.Common.csproj" />
 	  <ProjectReference Include="..\Rincon.Models\Rincon.Models.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.20" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.Maui.Controls" Version="8.0.20" />
 	</ItemGroup>
 
 </Project>

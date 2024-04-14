@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Storage;
 using Mopups.Hosting;
 using Mopups.Interfaces;
 using Mopups.Services;
@@ -35,7 +36,8 @@ public static class MauiProgram
         builder.Services.AddLocalization();
 		builder.Services.AddDbContext<DatabaseContext>();
 		builder.Services.AddSingleton<IDataService, DataService>();
-		builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
+        builder.Services.AddSingleton<IFileSaver>(FileSaver.Default);
+        builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
         builder.UseMauiApp<App>().UseMauiCommunityToolkit();
         return builder.Build();
 	}
