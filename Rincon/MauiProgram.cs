@@ -1,5 +1,5 @@
-﻿using CommunityToolkit.Maui;
-using CommunityToolkit.Maui.Storage;
+﻿//using CommunityToolkit.Maui;
+//using CommunityToolkit.Maui.Storage;
 using Mopups.Hosting;
 using Mopups.Interfaces;
 using Mopups.Services;
@@ -26,7 +26,8 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.ConfigureMopups()
+            //.UseMauiCommunityToolkit()
+            .ConfigureMopups()
 			.RegisterViewModelsAndServices()
             .ConfigureFonts(fonts =>
 			{
@@ -36,9 +37,8 @@ public static class MauiProgram
         builder.Services.AddLocalization();
 		builder.Services.AddDbContext<DatabaseContext>();
 		builder.Services.AddSingleton<IDataService, DataService>();
-        builder.Services.AddSingleton<IFileSaver>(FileSaver.Default);
+        //builder.Services.AddSingleton<IFileSaver>(FileSaver.Default);
         builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
-        builder.UseMauiApp<App>().UseMauiCommunityToolkit();
         return builder.Build();
 	}
 }

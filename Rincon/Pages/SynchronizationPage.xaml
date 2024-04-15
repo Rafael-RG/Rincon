@@ -3,7 +3,6 @@
     x:Class="Rincon.Pages.SynchronizationPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:extensions="clr-namespace:Rincon.Extensions"
     xmlns:models="clr-namespace:Rincon.Models;assembly=Rincon.Models"
     xmlns:pages="clr-namespace:Rincon.Common.Pages;assembly=Rincon.Common"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -11,11 +10,7 @@
     x:DataType="viewModels:SynchronizationViewModel"
     x:TypeArguments="viewModels:SynchronizationViewModel">
 
-    <pages:BaseContentPage.Resources>
-        <ResourceDictionary>
-            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
-        </ResourceDictionary>
-    </pages:BaseContentPage.Resources>
+    
 
     <StackLayout VerticalOptions="FillAndExpand">
 

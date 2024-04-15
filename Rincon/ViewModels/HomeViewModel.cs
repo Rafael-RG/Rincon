@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Maui.Storage;
+﻿//using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using iText.IO.Image;
@@ -24,7 +24,7 @@ namespace Rincon.ViewModels
     {
         #region Properties
 
-        IFileSaver fileSaver;
+        //IFileSaver fileSaver;
 
         ///// <summary>
         ///// Cards
@@ -228,9 +228,9 @@ namespace Rincon.ViewModels
         /// <summary>
         /// Gets by DI the required services
         /// </summary>
-        public HomeViewModel(IServiceProvider provider, IFileSaver fileSaver) : base(provider)
+        public HomeViewModel(IServiceProvider provider /*,IFileSaver fileSaver*/) : base(provider)
         {
-            this.fileSaver = fileSaver;
+            //this.fileSaver = fileSaver;
         }
 
         public override async void OnAppearing()
@@ -644,9 +644,9 @@ namespace Rincon.ViewModels
 
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
-                var fileSaverResult = await this.fileSaver.SaveAsync(pdfName, stream, cancellationTokenSource.Token);
+                //var fileSaverResult = await this.fileSaver.SaveAsync(pdfName, stream, cancellationTokenSource.Token);
 
-                return fileSaverResult.IsSuccessful;
+                return true;//fileSaverResult.IsSuccessful;
                 
             }
         }
