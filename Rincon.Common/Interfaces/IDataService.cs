@@ -38,8 +38,13 @@ namespace Rincon.Common.Interfaces
 
 
         /// <summary>
-        /// Loads items from the local storage
+        /// Loads products
         /// </summary>
-        Task<List<Product>> LoadItemsAsync();
+        Task<List<Product>> LoadProductsAsync();
+
+        /// <summary>
+        /// Loads stock
+        /// </summary>
+        Task<List<ProductStock>> LoadStockAsync();
     }
 }

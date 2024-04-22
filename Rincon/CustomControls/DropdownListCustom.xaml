@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Rincon.Models;assembly=Rincon.Models"
+             x:Class="Rincon.CustomControls.DropdownListCustom">
+    <VerticalStackLayout >
+        <Frame BackgroundColor="LightGray" HeightRequest="55" CornerRadius="24" Margin="0" Padding="10,-3,10,-3">
+            <SearchBar BackgroundColor="Red"
+                       HeightRequest="55"
+                               Unfocused="SearchBar_Unfocused"
+                               Focused="SearchBar_Focused"
+                               HorizontalOptions="StartAndExpand"
+                               x:Name="SearchBar"
+                               TextChanged="OnTextChanged"/>
+
+        </Frame>
+            
+               
+            <Frame x:Name="FrameList" CornerRadius="24">
+                <CollectionView x:Name="Products" SelectionMode="Single">
+
+                    <CollectionView.Background>
+
+                         <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Offset="0.1" Color="#FFFFFF" />
+                        <GradientStop Offset="1.0" Color="#FFF6ED" />
+                    </LinearGradientBrush>
+                    </CollectionView.Background>
+
+                    <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate >
+                    <DataTemplate x:DataType="models:Product">
+                    <Grid
+                            ColumnDefinitions="*,*,*"
+                            RowDefinitions="*"
+                            RowSpacing="10"
+                            VerticalOptions="Start">
+                    <Label
+                                Text="{Binding Id}"
+                                TextColor="#000000"
+                                FontSize="18"
+                                VerticalOptions="Start" />
+
+                            <Label
+                                Grid.Column="1" 
+                                Text="{Binding Description}"
+                                TextColor="#000000"
+                                FontSize="18"
+                                VerticalOptions="Start" />    
+
+                            <Label
+                                    FontSize="18"
+                                Grid.Column="2"
+                                Text="{Binding WoodState}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                        </Grid>
+                            </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="No se encontraron productos" TextColor="Black"/>
+
+                </CollectionView.EmptyView>
+                </CollectionView>
+            </Frame>
+
+    </VerticalStackLayout>
+            
+</ContentView>
+

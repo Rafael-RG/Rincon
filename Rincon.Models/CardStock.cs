@@ -2,7 +2,7 @@
 {
     public class CardStock
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public int StockAvailable { get; set; }
         public string Description { get; set; }
         public int StockReserved { get; set; }

@@ -24,13 +24,15 @@ namespace Rincon.ViewModels
     {
         #region Properties
 
+
+
         //IFileSaver fileSaver;
 
         ///// <summary>
         ///// Cards
         ///// </summary>
         [ObservableProperty]
-        private List<CardStock> cards;
+        private ObservableCollection<CardStock> cards;
 
         ///// <summary>
         ///// Home View
@@ -73,6 +75,18 @@ namespace Rincon.ViewModels
         ///// </summary>
         [ObservableProperty]
         private bool isAddStockView;
+
+        ///// <summary>
+        ///// Add stock View
+        ///// </summary>
+        [ObservableProperty]
+        private bool isInventoryView;
+
+        ///// <summary>
+        ///// Add stock View
+        ///// </summary>
+        [ObservableProperty]
+        private bool isCheckStockView;
 
         ///// <summary>
         ///// Is Tirante
@@ -132,6 +146,12 @@ namespace Rincon.ViewModels
         ///// </summary>
         [ObservableProperty]
         private List<string> states;
+
+        ///// <summary>
+        ///// Check stock quantity pages
+        ///// </summary>
+        [ObservableProperty]
+        private List<int> checkStockQuantityPages;
 
         ///// <summary>
         ///// Thickness
@@ -194,6 +214,12 @@ namespace Rincon.ViewModels
         private ObservableCollection<ProductStock> productsStock;
 
         ///// <summary>
+        ///// Products to add
+        ///// </summary>
+        [ObservableProperty]
+        private ObservableCollection<ProductStock> stock;
+
+        ///// <summary>
         ///// List of products
         ///// </summary>
         [ObservableProperty]
@@ -223,6 +249,12 @@ namespace Rincon.ViewModels
             }
         }
 
+        ///// <summary>
+        ///// Is visible list add stock
+        ///// </summary>
+        [ObservableProperty]
+        private bool isVisibleListAddStock;
+
         #endregion
 
         /// <summary>
@@ -233,92 +265,28 @@ namespace Rincon.ViewModels
             //this.fileSaver = fileSaver;
         }
 
-        public override async void OnAppearing()
+        public override Task Initialize()
         {
-            this.ChangeViewCommand.Execute("Home");
-
-            this.Cards = new List<CardStock>()
+            return Task.Run(() =>
             {
-                new ()
-                {
-                    Id = 111111,
-                    Description = "2” x 1” x 3,30m.",
-                    StockAvailable = 10000,
-                    StockReserved = 10000,
-                    Icon = "cr.png"
-                },
-                new ()
-                {
-                    Id = 222222,
-                    Description = "2” x 1” x 3,30m.",
-                    StockAvailable = 10000,
-                    StockReserved = 10000,
-                    Icon = "cr.png"
-                },
-                new ()
-                {
-                    Id = 333333,
-                    Description = "2” x 1” x 3,30m.",
-                    StockAvailable = 10000,
-                    StockReserved = 10000,
-                    Icon = "cr.png"
-                },
-                new ()
-                {
-                    Id = 444444,
-                    Description = "2” x 1” x 3,30m.",
-                    StockAvailable = 10000,
-                    StockReserved = 10000,
-                    Icon = "cr.png"
-                },
-                new ()
-                {
-                    Id = 555555,
-                    Description = "2” x 1” x 3,30m.",
-                    StockAvailable = 10000,
-                    StockReserved = 10000,
-                    Icon = "cr.png"
-                },
-                new ()
-                {
-                    Id = 6666666,
-                    Description = "2” x 1” x 3,30m.",
-                    StockAvailable = 10000,
-                    StockReserved = 10000,
-                    Icon = "cr.png"
-                },
-                new ()
-                {
-                    Id = 77777777,
-                    Description = "2” x 1” x 3,30m.",
-                    StockAvailable = 10000,
-                    StockReserved = 10000,
-                    Icon = "cr.png"
-                },
-                new ()
-                {
-                    Id = 88888888,
-                    Description = "2” x 1” x 3,30m.",
-                    StockAvailable = 10000,
-                    StockReserved = 10000,
-                    Icon = "cr.png"
-                }
-            };
+                this.IsBusy = true;
 
-            this.States = new List<string>()
-            {
-                "Estado 1",
-                "Esatdo 2",
-                "Estado 3"
-            };
+               MainThread.BeginInvokeOnMainThread(() =>
+               {
+                   this.LoadDataCommand.Execute(null);
+               });
 
-            this.Products = await this.DataService.LoadItemsAsync();
-
-            if (!this.AuthenticationService.IsAuthenticated())
-            {
-                await this.NavigationService.Navigate<LoginViewModel>();
-            }
+                this.IsBusy = false;
+            });
         }
+
+        //public override void OnAppearing()
+        //{
+        //    MainThread.BeginInvokeOnMainThread(() =>
+        //    {
+        //        this.LoadDataCommand.Execute(null);
+        //    });
+        //}
 
         public ICommand ChangeViewCommand => new Command<string>((view) =>
         {
@@ -332,6 +300,8 @@ namespace Rincon.ViewModels
                     this.IsHistoryView = false;
                     this.IsAddProductView = false;
                     this.IsAddStockView = false;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = false;
                     break;
                 case "MagementStock":
                     this.IsHomeView = false;
@@ -341,6 +311,8 @@ namespace Rincon.ViewModels
                     this.IsHistoryView = false;
                     this.IsAddProductView = false;
                     this.IsAddStockView = false;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = false;
                     break;
                 case "Tasks":
                     this.IsHomeView = false;
@@ -350,6 +322,8 @@ namespace Rincon.ViewModels
                     this.IsHistoryView = false;
                     this.IsAddProductView = false;
                     this.IsAddStockView = false;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = false;
                     break;
                 case "Orders":
                     this.IsHomeView = false;
@@ -359,6 +333,8 @@ namespace Rincon.ViewModels
                     this.IsHistoryView = false;
                     this.IsAddProductView = false;
                     this.IsAddStockView = false;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = false;
                     break;
                 case "History":
                     this.IsHomeView = false;
@@ -368,6 +344,8 @@ namespace Rincon.ViewModels
                     this.IsHistoryView = true;
                     this.IsAddProductView = false;
                     this.IsAddStockView = false;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = false;
                     break;
                 case "AddProduct":
                     this.IsHomeView = false;
@@ -377,6 +355,8 @@ namespace Rincon.ViewModels
                     this.IsHistoryView = false;
                     this.IsAddProductView = true;
                     this.IsAddStockView = false;
+
+                    this.IsTiranteSelect = true;
                     break;
                 case "AddStock":
                     this.IsHomeView = false;
@@ -386,9 +366,38 @@ namespace Rincon.ViewModels
                     this.IsHistoryView = false;
                     this.IsAddProductView = false;
                     this.IsAddStockView = true;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = false;
+
+                    this.IsVisibleListAddStock = false;
                     break;
+                case "Inventory":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    this.IsInventoryView = true;
+                    this.IsCheckStockView = false;
+                    break;
+                case "CheckStock":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = true;
+                    break;
+
             }
         });
+
+        #region Addproduct
 
         public ICommand CancelAddProductCommand => new Command(async () =>
         {
@@ -478,6 +487,10 @@ namespace Rincon.ViewModels
             });
         });
 
+        #endregion
+
+        #region AddStock
+
         public ICommand LoadProductToAddCommand => new Command<Product>(async (product) =>
         {
             this.ProductsStock ??= new ObservableCollection<ProductStock>();
@@ -501,7 +514,7 @@ namespace Rincon.ViewModels
                     {
                         Id = product.Id,
                         Product = product,
-                        Quantity = 1
+                        Quantity = 1,
                     });
                 }
                 else 
@@ -576,6 +589,75 @@ namespace Rincon.ViewModels
                 await NotificationService.NotifyAsync("Error", "Hubo un error al guardar el PDF. Vuleva a intentar.", "Cerrar");
                 return;
             }
+        });
+
+        #endregion
+
+        #region CheckStock
+
+
+        #endregion
+
+        public ICommand LoadDataCommand => new Command(async () =>
+        {
+            try
+            {
+                if (!this.AuthenticationService.IsAuthenticated())
+                {
+                    await this.NavigationService.Navigate<LoginViewModel>();
+                }
+
+                this.ChangeViewCommand.Execute("Home");
+
+                this.States = new List<string>()
+            {
+                "Estado 1",
+                "Esatdo 2",
+                "Estado 3"
+            };
+
+                this.Products = await this.DataService.LoadProductsAsync();
+
+                this.Stock = new ObservableCollection<ProductStock>(await this.DataService.LoadStockAsync());
+
+                this.CheckStockQuantityPages = new List<int>();
+
+                if (this.Stock.Any())
+                {
+                    var count = 0;
+
+                    this.Cards = new ObservableCollection<CardStock>();
+
+                    this.Stock.ToList().ForEach(product =>
+                    {
+                        this.Cards.Add(
+                            new CardStock
+                            {
+                                Id = product.Id,
+                                //Description = product.Product.Description,
+                                StockAvailable = product.Available,
+                                StockReserved = product.Reserved
+                                //Icon = $"{product.Product.WoodState}.png"
+                            });
+
+                        if (count == 0)
+                        {
+                            this.CheckStockQuantityPages.Add(1);
+                        }
+                        else if (count % 10 == 0)
+                        {
+                            this.CheckStockQuantityPages.Add((count / 10) + 1);
+                        }
+
+                        count++;
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                //Error
+            }
+
         });
 
 

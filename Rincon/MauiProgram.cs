@@ -1,5 +1,5 @@
-﻿//using CommunityToolkit.Maui;
-//using CommunityToolkit.Maui.Storage;
+﻿using CommunityToolkit.Maui;
+using CommunityToolkit.Maui.Storage;
 using Mopups.Hosting;
 using Mopups.Interfaces;
 using Mopups.Services;
@@ -26,7 +26,7 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-            //.UseMauiCommunityToolkit()
+            .UseMauiCommunityToolkit()
             .ConfigureMopups()
 			.RegisterViewModelsAndServices()
             .ConfigureFonts(fonts =>

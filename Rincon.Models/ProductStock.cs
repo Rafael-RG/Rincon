@@ -19,5 +19,8 @@ namespace Rincon.Models
         public Product Product { get; set; }
         public int Quantity { get; set; }
         public string DateTime { get; set; }
+        public int Available { get; set; }
+        public int Reserved { get; set; }
+        public int Process { get; set; }
     }
 }

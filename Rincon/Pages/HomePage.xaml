@@ -6,6 +6,7 @@
     xmlns:extensions="clr-namespace:Rincon.Extensions"
     xmlns:local="clr-namespace:Rincon.Converters"
     xmlns:models="clr-namespace:Rincon.Models;assembly=Rincon.Models"
+    xmlns:customControls="clr-namespace:Rincon.CustomControls"
     xmlns:pages="clr-namespace:Rincon.Common.Pages;assembly=Rincon.Common"
     xmlns:viewModels="clr-namespace:Rincon.ViewModels"
     x:DataType="viewModels:HomeViewModel"
@@ -15,89 +16,135 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:ActiveToColorConverter x:Key="ActiveToColorConverter" />
+            <local:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <Grid
         BackgroundColor="#AD6B2A"
-        ColumnDefinitions="*,*,*,*,auto"
+        ColumnDefinitions="*,*,*,*,*"
         ColumnSpacing="0"
-        RowDefinitions="60,60,*"
+        RowDefinitions="80,90,*"
         RowSpacing="0"
         VerticalOptions="FillAndExpand">
+
         <ImageButton
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="4"
-            Margin="20,0,0,0"
+            Margin="20,40,20,20"
             BackgroundColor="#AD6B2A"
             Command="{Binding ChangeViewCommand}"
             CommandParameter="Home"
-            HeightRequest="48.49"
+            HeightRequest="60"
             HorizontalOptions="StartAndExpand"
-            MaximumWidthRequest="232.53"
             Source="rincon_home.png"
-            WidthRequest="232.53" />
+            WidthRequest="273" />
         <Button
             Grid.Row="1"
+            CornerRadius="14"
             Grid.Column="0"
             Margin="20,0,20,0"
             BackgroundColor="{Binding IsMagementStockView, Converter={StaticResource ActiveToColorConverter}}"
             Command="{Binding ChangeViewCommand}"
             CommandParameter="MagementStock"
-            HeightRequest="45"
+            HeightRequest="55"
+            FontSize="22"
             HorizontalOptions="FillAndExpand"
             Text="Gestión de stock"
-            TextColor="#000000"
-            WidthRequest="216" />
+            TextColor="#000000" >
+            <Button.Shadow>
+            <Shadow Brush="Black"
+                   Offset="5,5"
+                   Radius="10"
+                   Opacity="0.4"/>
+             </Button.Shadow>
+
+        </Button>
         <Button
             Grid.Row="1"
+            CornerRadius="14"
             Grid.Column="1"
             Margin="20,0,20,0"
             BackgroundColor="{Binding IsTasksView, Converter={StaticResource ActiveToColorConverter}}"
             Command="{Binding ChangeViewCommand}"
             CommandParameter="Tasks"
-            HeightRequest="45"
+            HeightRequest="55"
+            FontSize="22"
             HorizontalOptions="FillAndExpand"
             Text="Tareas"
-            TextColor="#000000"
-            WidthRequest="216" />
+            TextColor="#000000" >
+            <Button.Shadow>
+            <Shadow Brush="Black"
+                   Offset="5,5"
+                   Radius="10"
+                   Opacity="0.4"/>
+             </Button.Shadow>
+
+        </Button>
         <Button
             Grid.Row="1"
+            CornerRadius="14"
             Grid.Column="2"
+            FontSize="22"
             Margin="20,0,20,0"
             BackgroundColor="{Binding IsOrdersView, Converter={StaticResource ActiveToColorConverter}}"
             Command="{Binding ChangeViewCommand}"
             CommandParameter="Orders"
-            HeightRequest="45"
+            HeightRequest="55"
             HorizontalOptions="FillAndExpand"
             Text="Pedidos"
-            TextColor="#000000"
-            WidthRequest="216" />
+            TextColor="#000000">
+            <Button.Shadow>
+            <Shadow Brush="Black"
+                   Offset="5,5"
+                   Radius="10"
+                   Opacity="0.4"/>
+             </Button.Shadow>
+
+        </Button>
         <Button
             Grid.Row="1"
             Grid.Column="3"
             Margin="20,0,20,0"
+            CornerRadius="14"
+            FontSize="22"
             BackgroundColor="{Binding IsHistoryView, Converter={StaticResource ActiveToColorConverter}}"
             Command="{Binding ChangeViewCommand}"
             CommandParameter="History"
-            HeightRequest="45"
+            HeightRequest="55"
             HorizontalOptions="FillAndExpand"
             Text="Historial"
-            TextColor="#000000"
-            WidthRequest="216" />
+            TextColor="#000000" >
+            <Button.Shadow>
+            <Shadow Brush="Black"
+                   Offset="5,5"
+                   Radius="10"
+                   Opacity="0.4"/>
+             </Button.Shadow>
+
+        </Button>
         <Button
             Grid.Row="1"
             Grid.Column="4"
+            CornerRadius="14"
             Margin="20,0,20,0"
             BackgroundColor="{Binding IsAddProductView, Converter={StaticResource ActiveToColorConverter}}"
             Command="{Binding ChangeViewCommand}"
             CommandParameter="AddProduct"
-            HeightRequest="45"
+            HeightRequest="55"
             HorizontalOptions="FillAndExpand"
             Text="Añadir producto"
             TextColor="#000000"
-            WidthRequest="260" />
+            FontSize="22">
+            <Button.Shadow>
+            <Shadow Brush="Black"
+                   Offset="5,5"
+                   Radius="10"
+                   Opacity="0.4"/>
+             </Button.Shadow>
+
+        </Button>
 
         <!--  Home  -->
         <Grid
@@ -122,19 +169,18 @@
                     <ImageButton
                         Grid.Column="0"
                         HorizontalOptions="FillAndExpand"
-                        MaximumWidthRequest="100"
                         Source="add_direct_home.png"
+                        Command="{Binding ChangeViewCommand}"
+                        CommandParameter="AddStock"
                         VerticalOptions="FillAndExpand" />
                     <ImageButton
                         Grid.Column="1"
                         HorizontalOptions="FillAndExpand"
-                        MaximumWidthRequest="100"
                         Source="change_direct_home.png"
                         VerticalOptions="FillAndExpand" />
                     <ImageButton
                         Grid.Column="2"
                         HorizontalOptions="FillAndExpand"
-                        MaximumWidthRequest="100"
                         Source="edit_direct_home.png"
                         VerticalOptions="FillAndExpand" />
                 </Grid>
@@ -228,7 +274,8 @@
                 Grid.Row="2"
                 Grid.Column="0"
                 Margin="40,30,0,10"
-                HeightRequest="27"
+                HeightRequest="50"
+                WidthRequest="50"
                 HorizontalOptions="Start"
                 Source="add_stock_icon_small.png">
                 <Image.GestureRecognizers>
@@ -238,9 +285,10 @@
             <Label
                 Grid.Row="2"
                 Grid.Column="1"
-                Margin="40,30,0,10"
+                Margin="60,20,0,10"
                 HorizontalOptions="Start"
                 Text="Carga de stock "
+                FontSize="22"
                 TextColor="#303030"
                 VerticalOptions="Center">
                 <Label.GestureRecognizers>
@@ -250,14 +298,17 @@
             <Image
                 Grid.Row="3"
                 Grid.Column="0"
-                Margin="40,0,0,10"
-                HeightRequest="27"
+                Margin="40,20,0,10"
+                HeightRequest="50"
+                WidthRequest="50"
+              
                 HorizontalOptions="Start"
                 Source="new_movement_icon_small.png" />
             <Label
                 Grid.Row="3"
                 Grid.Column="1"
-                Margin="40,0,0,10"
+                Margin="60,20,0,10"
+                FontSize="22"
                 HorizontalOptions="Start"
                 Text="Nuevo movimiento "
                 TextColor="#303030"
@@ -265,48 +316,70 @@
             <Image
                 Grid.Row="4"
                 Grid.Column="0"
-                Margin="40,0,0,10"
-                HeightRequest="27"
+                Margin="40,20,0,10"
+                HeightRequest="50"
+                WidthRequest="50"
                 HorizontalOptions="Start"
-                Source="consult_stock_icon_small.png" />
+                Source="consult_stock_icon_small.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CheckStock" />
+                </Image.GestureRecognizers>
+            </Image>
             <Label
                 Grid.Row="4"
                 Grid.Column="1"
-                Margin="40,0,0,10"
+                Margin="60,20,0,10"
                 HorizontalOptions="Start"
+                FontSize="22"
                 Text="Consulta de stock"
                 TextColor="#303030"
-                VerticalOptions="Center" />
+                VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CheckStock" />
+                </Label.GestureRecognizers>
+            </Label>
             <Image
                 Grid.Row="5"
                 Grid.Column="0"
-                Margin="40,0,0,10"
-                HeightRequest="27"
+                Margin="40,20,0,10"
+                HeightRequest="50"
+                WidthRequest="50"
                 HorizontalOptions="Start"
                 Source="edit_stock_icon_small.png" />
             <Label
                 Grid.Row="5"
                 Grid.Column="1"
-                Margin="40,0,0,10"
+                Margin="60,20,0,10"
                 HorizontalOptions="Start"
                 Text="Editar stock"
                 TextColor="#303030"
+                FontSize="22"
                 VerticalOptions="Center" />
             <Image
                 Grid.Row="6"
                 Grid.Column="0"
-                Margin="40,0,0,10"
-                HeightRequest="27"
+                Margin="40,20,0,10"
+                HeightRequest="50"
+                WidthRequest="50"
                 HorizontalOptions="Start"
-                Source="inventory_icon_small.png" />
+                Source="inventory_icon_small.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="Inventory" />
+                </Image.GestureRecognizers>
+            </Image>
             <Label
                 Grid.Row="6"
                 Grid.Column="1"
-                Margin="40,0,0,10"
+                Margin="60,20,0,10"
                 HorizontalOptions="Start"
                 Text="Inventario"
+                FontSize="22"
                 TextColor="#303030"
-                VerticalOptions="Center" />
+                VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="Inventory" />
+                </Label.GestureRecognizers>
+            </Label>
         </Grid>
 
         <!--  Añadir producto  -->
@@ -328,6 +401,7 @@
                 HorizontalOptions="Start"
                 Text="Nuevo Producto"
                 TextColor="#79280F"
+                FontAttributes="Bold"
                 VerticalOptions="Center" />
 
             <BoxView
@@ -348,13 +422,16 @@
                     <Label
                         Grid.Column="0"
                         Margin="20,0,0,20"
+                        FontSize="18"
                         HorizontalOptions="StartAndExpand"
                         Text="Descripción"
                         TextColor="Black" />
 
                     <Label
                         Grid.Column="1"
+                        FontSize="18"
                         Margin="0,0,10,0"
+                        VerticalOptions="Center"
                         HorizontalOptions="EndAndExpand"
                         Text="Codigo"
                         TextColor="Black" />
@@ -363,12 +440,12 @@
                         Grid.Column="2"
                         Padding="0"
                         BackgroundColor="Transparent"
-                        BorderColor="#797979"
-                        WidthRequest="60">
+                        BorderColor="#797979">
                         <Entry
                             HorizontalOptions="FillAndExpand"
                             Placeholder="Codigo del producto"
                             Text="{Binding ProductCode}"
+                            FontSize="18"
                             TextColor="Black"
                             VerticalOptions="FillAndExpand" />
                     </Frame>
@@ -377,59 +454,42 @@
 
                 <HorizontalStackLayout>
                     <Label
-                        Margin="35,0,0,0"
+                        Margin="35,0,0,20"
                         HorizontalTextAlignment="Start"
                         Text="Tipo"
+                        FontSize="18"
                         TextColor="#79280F"
                         VerticalOptions="Center" />
 
                     <RadioButton
-                        Margin="82,0,0,0"
+                        Margin="40,0,0,0"
                         GroupName="Type"
+                        Content="Tirante"
                         HorizontalOptions="Start"
+                        FontSize="24"
                         IsChecked="{Binding IsTiranteSelect}"
-                        TextColor="Black"
                         Value="Tirante" />
 
-                    <Label
-                        Margin="-75,0,35,0"
-                        HorizontalOptions="Start"
-                        Text="Tirante"
-                        TextColor="Black"
-                        VerticalOptions="Center" />
-
                     <RadioButton
-                        Margin="0,0,0,0"
+                        Margin="30,0,30,0"
                         GroupName="Type"
+                        Content="Polin"
+                        FontSize="18"
                         HorizontalOptions="End"
                         IsChecked="{Binding IsPolinSelect}"
-                        TextColor="Black"
                         Value="Polin" />
-
-                    <Label
-                        Margin="-75,0,35,0"
-                        HorizontalOptions="Start"
-                        Text="Polin"
-                        TextColor="Black"
-                        VerticalOptions="Center" />
 
                     <RadioButton
                         GroupName="Type"
                         HorizontalOptions="End"
+                        Content="Tabla"
+                        FontSize="18"
                         IsChecked="{Binding IsTablaSelect}"
-                        TextColor="Black"
                         Value="Tabla" />
-
-                    <Label
-                        Margin="-75,0,0,0"
-                        HorizontalOptions="Start"
-                        Text="Tabla"
-                        TextColor="Black"
-                        VerticalOptions="Center" />
                 </HorizontalStackLayout>
 
                 <Grid
-                    Margin="35,20,0,0"
+                    Margin="35,40,0,0"
                     ColumnDefinitions="auto,auto,auto,auto"
                     IsVisible="{Binding IsMeasureSelect}"
                     RowDefinitions="auto,auto">
@@ -437,6 +497,7 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Text="Medida"
+                        FontSize="18"
                         TextColor="#79280F"
                         VerticalOptions="Center" />
 
@@ -453,6 +514,7 @@
                             HorizontalTextAlignment="End"
                             Keyboard="Numeric"
                             MaxLength="9"
+                            FontSize="18"
                             Text="{Binding Thickness}"
                             TextColor="Black"
                             VerticalOptions="FillAndExpand" />
@@ -462,6 +524,7 @@
                         Grid.Row="1"
                         Grid.Column="1"
                         Margin="90,0,0,0"
+                        FontSize="18"
                         Text="Grosor"
                         TextColor="Black"
                         VerticalOptions="Center" />
@@ -480,6 +543,7 @@
                             Keyboard="Numeric"
                             MaxLength="9"
                             Text="{Binding Width}"
+                            FontSize="18"
                             TextColor="Black"
                             VerticalOptions="FillAndExpand" />
                     </Frame>
@@ -487,6 +551,7 @@
                     <Label
                         Grid.Row="1"
                         Grid.Column="2"
+                        FontSize="18"
                         Margin="75,0,0,0"
                         Text="Ancho"
                         TextColor="Black"
@@ -505,6 +570,7 @@
                             HorizontalTextAlignment="End"
                             Keyboard="Numeric"
                             MaxLength="9"
+                            FontSize="18"
                             Text="{Binding Length}"
                             TextColor="Black"
                             VerticalOptions="FillAndExpand" />
@@ -515,13 +581,14 @@
                         Grid.Row="1"
                         Grid.Column="3"
                         Margin="75,0,0,0"
+                        FontSize="18"
                         Text="Largo"
                         TextColor="Black"
                         VerticalOptions="Center" />
                 </Grid>
 
                 <Grid
-                    Margin="35,20,0,0"
+                    Margin="35,40,0,0"
                     ColumnDefinitions="auto,auto"
                     IsVisible="{Binding IsPolinSelect}"
                     RowDefinitions="auto,auto">
@@ -529,6 +596,7 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Text="Medida"
+                        FontSize="18"
                         TextColor="#79280F"
                         VerticalOptions="Center" />
                     <Frame
@@ -542,6 +610,7 @@
                         <Entry
                             Grid.Row="0"
                             Grid.Column="1"
+                            FontSize="18"
                             HorizontalOptions="FillAndExpand"
                             HorizontalTextAlignment="End"
                             MaxLength="9"
@@ -556,13 +625,15 @@
                         HorizontalOptions="Start"
                         Text="Diámetro"
                         TextColor="Black"
+                        FontSize="18"
                         VerticalOptions="Center" />
 
                 </Grid>
 
-                <HorizontalStackLayout Margin="35,20,0,0">
+                <HorizontalStackLayout Margin="35,40,0,0">
                     <Label
                         Text="Estado"
+                        FontSize="18"
                         TextColor="#79280F"
                         VerticalOptions="Center" />
 
@@ -573,6 +644,7 @@
                         BorderColor="#797979"
                         WidthRequest="190">
                         <Picker
+                            FontSize="18"
                             HorizontalOptions="FillAndExpand"
                             ItemsSource="{Binding States}"
                             TextColor="Black"
@@ -582,17 +654,20 @@
 
                 </HorizontalStackLayout>
 
-                <HorizontalStackLayout Margin="35,20,0,0" IsVisible="{Binding IsTiranteSelect}">
+                <HorizontalStackLayout Margin="35,60,0,0" IsVisible="{Binding IsTiranteSelect}">
                     <Label
                         Text="Machimbre"
+                        FontSize="18"
                         TextColor="#79280F"
                         VerticalOptions="Center" />
 
                     <CheckBox
                         Margin="35,0,0,0"
+                        HeightRequest="45"
+                        WidthRequest="45"
                         HorizontalOptions="End"
                         IsChecked="{Binding IsMachimbre}"
-                        Color="White" />
+                        Color="#79280F" />
                     <Frame
                         Margin="65,0,0,0"
                         Padding="0"
@@ -603,13 +678,14 @@
                         <Picker
                             ItemsSource="{Binding States}"
                             TextColor="Black"
+                            FontSize="18"
                             VerticalOptions="Start" />
                     </Frame>
 
                 </HorizontalStackLayout>
 
                 <Grid
-                    Margin="0,20,0,0"
+                    Margin="0,200,0,0"
                     ColumnDefinitions="auto,auto,auto,auto"
                     RowDefinitions="auto,auto">
                     <Label
@@ -618,6 +694,7 @@
                         HorizontalOptions="Start"
                         MaximumHeightRequest="60"
                         Text="Ubicación "
+                        FontSize="18"
                         TextColor="Black"
                         VerticalOptions="Center" />
 
@@ -631,6 +708,7 @@
                         MaximumHeightRequest="35"
                         WidthRequest="250">
                         <Entry
+                            FontSize="18"
                             HorizontalOptions="FillAndExpand"
                             Text="{Binding Location}"
                             TextColor="Black" />
@@ -639,6 +717,8 @@
                     <Label
                         Grid.Row="0"
                         Grid.Column="2"
+                        FontSize="18"
+                        Margin="90,0,0,0"
                         HorizontalOptions="Start"
                         Text="Comentarios"
                         TextColor="Black"
@@ -654,6 +734,7 @@
                         BorderColor="#797979"
                         WidthRequest="250">
                         <Editor
+                            FontSize="18"
                             AutoSize="TextChanges"
                             HeightRequest="75"
                             HorizontalOptions="FillAndExpand"
@@ -664,6 +745,7 @@
 
                     <Label
                         Grid.Row="1"
+                        FontSize="18"
                         Grid.Column="0"
                         HorizontalOptions="Start"
                         Text="Proveedor"
@@ -679,6 +761,7 @@
                         BorderColor="#797979"
                         WidthRequest="250">
                         <Entry
+                            FontSize="18"
                             HorizontalOptions="FillAndExpand"
                             Keyboard="Text"
                             Text="{Binding Supplier}"
@@ -709,10 +792,11 @@
                     BackgroundColor="#D3AA84"
                     Command="{Binding SaveProductCommand}"
                     CommandParameter="AddProduct"
-                    HeightRequest="35"
+                    HeightRequest="45"
                     HorizontalOptions="Center"
                     Text="Crear Producto"
                     TextColor="#000000"
+                    FontSize="18"
                     WidthRequest="260" />
                 <Button
                     Grid.Row="1"
@@ -720,7 +804,8 @@
                     Margin="20,0,20,0"
                     BackgroundColor="#FFF6ED"
                     Command="{Binding CancelAddProductCommand}"
-                    HeightRequest="35"
+                    HeightRequest="45"
+                    FontSize="18"
                     HorizontalOptions="Center"
                     Text="Cancelar"
                     TextColor="#000000"
@@ -736,6 +821,224 @@
             BackgroundColor="White"
             ColumnDefinitions="*"
             IsVisible="{Binding IsAddStockView}"
+            RowDefinitions="auto,auto,auto,*,auto,auto"
+            RowSpacing="5">
+
+            <Label
+                Margin="0,0,0,10"
+                FontSize="26"
+                HorizontalOptions="Start"
+                Text="Carga de stock"
+                TextColor="#79280F"
+                VerticalOptions="Center" />
+
+            <BoxView
+                Grid.Row="1"
+                Margin="0,0,0,20"
+                HeightRequest="2"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Start"
+                Color="#79280F" />
+
+            <VerticalStackLayout Grid.Row="2" Margin="0,0,0,20" Padding="0,0,0,0">
+                <Frame BackgroundColor="LightGray" HeightRequest="55" CornerRadius="24" Margin="0" Padding="10,-3,10,-3">
+                    <SearchBar BackgroundColor="LightGray"
+                               HeightRequest="55"
+                               CancelButtonColor="Black"
+                               Placeholder="Buscar producto"
+                                       Unfocused="SearchBar_Unfocused"
+                                       Focused="SearchBar_Focused"
+                                       TextColor="Black"
+                                       HorizontalOptions="StartAndExpand"
+                                       x:Name="SearchBarAddStock"
+                                       TextChanged="OnAddStockTextChanged"/>
+
+                </Frame>
+            
+               
+               <Frame x:Name="FrameListAddStock" CornerRadius="24" IsVisible="{Binding IsVisibleListAddStock}">
+                    <Frame.Background> 
+                         <LinearGradientBrush EndPoint="0,1">
+                            <GradientStop Offset="0.1" Color="#FFFFFF" />
+                            <GradientStop Offset="1.0" Color="#FFF6ED" />
+                        </LinearGradientBrush>
+                    </Frame.Background>
+                  <CollectionView x:Name="ProductsAddStock" SelectionChanged="Collection_SelectionChanged" ItemsSource="{Binding Products}" SelectionMode="Single" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10"/>
+                     </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Product">
+                        <Grid
+                                ColumnDefinitions="*,*,*"
+                                RowDefinitions="*"
+                                RowSpacing="10"
+                                VerticalOptions="Start">
+                        <Label
+                                Text="{Binding Id}"
+                                TextColor="#000000"
+                                FontSize="18"
+                                VerticalOptions="Start" />
+
+                            <Label
+                                Grid.Column="1" 
+                                Text="{Binding Description}"
+                                TextColor="#000000"
+                                FontSize="18"
+                                VerticalOptions="Start" />    
+
+                            <Label
+                                  FontSize="18"
+                                Grid.Column="2"
+                                Text="{Binding WoodState}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                        </Grid>
+                            </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                         <Label Text="No se encontraron productos" TextColor="Black" FontSize="18" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+               </Frame>
+
+            </VerticalStackLayout>
+            
+            <CollectionView
+                Grid.Row="3"
+                Margin="30,0,30,0"
+                ItemsSource="{Binding ProductsStock, Mode=TwoWay}"
+                SelectionMode="Single"
+                VerticalOptions="FillAndExpand"
+                VerticalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.Header>
+                    <HorizontalStackLayout Margin="30,0,0,20">
+                        <Label Text="#Codigo" TextColor="#79280F" FontSize="18"/>
+                        <Label
+                            FontSize="18"
+                            Margin="228,0,0,0"
+                            Text="Descripcion"
+                            TextColor="#79280F" />
+                        <Label
+                                    FontSize="18"
+                            Margin="203,0,0,0"
+                            Text="Estado"
+                            TextColor="#79280F" />
+                        <Label
+                            Margin="600,0,0,0"
+                            FontSize="18"
+                            Text="Cantidad"
+                            TextColor="#79280F" />
+            </HorizontalStackLayout>
+                </CollectionView.Header>
+                <CollectionView.EmptyView> 
+                    <Label Text="No se han cargado productos" TextColor="Black" FontSize="18"/>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ProductStock">
+                        <Grid
+                            ColumnDefinitions="300,300,*,100,auto"
+                            RowDefinitions="*"
+                            RowSpacing="10"
+                            VerticalOptions="Start">
+                            <Label
+                                Text="{Binding Product.Id}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding Product.Description}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                            <Label
+                                Grid.Column="2"
+                                Text="{Binding Product.WoodState}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                            <Frame
+                                Grid.Column="3"
+                                Margin="0,0,0,5"
+                                Padding="0"
+                                BackgroundColor="Transparent">
+                                <Entry
+                                    HorizontalOptions="FillAndExpand"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding Quantity, Mode=TwoWay}"
+                                    TextColor="#000000"
+                                    VerticalOptions="FillAndExpand" />
+                            </Frame>
+
+
+                            <ImageButton
+                                Grid.Column="4"
+                                Margin="30,0,0,0"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=RemoveProductToAddedCommand}"
+                                CommandParameter="{Binding .}"
+                                HeightRequest="15"
+                                Source="delete_item_icon.png"
+                                WidthRequest="15" />
+
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+            <BoxView
+                Grid.Row="4"
+                HeightRequest="2"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="EndAndExpand"
+                Color="#79280F" />
+
+            <HorizontalStackLayout
+                Grid.Row="5"
+                Margin="0,20,0,0"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Start">
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="4"
+                    Margin="20,0,20,0"
+                    BackgroundColor="#D3AA84"
+                    Clicked="AddStock_Clicked"
+                    HeightRequest="35"
+                    HorizontalOptions="Center"
+                    Text="Cargar Stock"
+                    TextColor="#000000"
+                    WidthRequest="260" />
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="4"
+                    Margin="20,0,20,0"
+                    BackgroundColor="#FFF6ED"
+                    Command="{Binding CancelAddStockCommand}"
+                    HeightRequest="35"
+                    HorizontalOptions="Center"
+                    Text="Cancelar"
+                    TextColor="#000000"
+                    WidthRequest="260" />
+            </HorizontalStackLayout>
+
+
+        </Grid>
+
+        <!--  Inventario  -->
+        <Grid
+            Grid.Row="2"
+            Grid.ColumnSpan="4"
+            Padding="20"
+            BackgroundColor="White"
+            ColumnDefinitions="*"
+            IsVisible="{Binding IsInventoryView}"
             RowDefinitions="auto,auto,35,auto,*,auto,auto"
             RowSpacing="5">
             <Label
@@ -893,23 +1196,200 @@
 
         </Grid>
 
+        <!--  Consultar stock  -->
+        <Grid
+            Grid.Row="2"
+            Grid.ColumnSpan="4"
+            Padding="20"
+            BackgroundColor="White"
+            ColumnDefinitions="*"
+            IsVisible="{Binding IsCheckStockView}"
+            RowDefinitions="auto,auto,35,auto,*,auto,auto"
+            RowSpacing="5">
+            <Label
+                Margin="0,0,0,10"
+                FontSize="26"
+                HorizontalOptions="Start"
+                Text="Consulta de stock"
+                TextColor="#79280F"
+                VerticalOptions="Center" />
+
+            <BoxView
+                Grid.Row="1"
+                Margin="0,0,0,20"
+                HeightRequest="2"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Start"
+                Color="#79280F" />
+
+            <Frame
+                Grid.Row="2"
+                Padding="0"
+                BackgroundColor="Transparent"
+                BorderColor="#797979">
+                <HorizontalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <Image
+                        Margin="12,12,12,12"
+                        HeightRequest="15"
+                        HorizontalOptions="Start"
+                        Source="search_icon.png"
+                        VerticalOptions="FillAndExpand" />
+                    <Picker
+                        HorizontalOptions="FillAndExpand"
+                        ItemsSource="{Binding Products}"
+                        SelectedItem="{Binding SelectedProductToAdd}"
+                        TextColor="Black"
+                        VerticalOptions="FillAndExpand" />
+                </HorizontalStackLayout>
+            </Frame>
+
+            <HorizontalStackLayout Grid.Row="3" Margin="30,0,0,0">
+                <Label Text="#Codigo" TextColor="#79280F" />
+                <Label
+                    Margin="245,0,0,0"
+                    Text="Descripcion"
+                    TextColor="#79280F" />
+                <Label
+                    Margin="220,0,0,0"
+                    Text="Estado"
+                    TextColor="#79280F" />
+                <Label
+                    Margin="200,0,0,0"
+                    Text="disponible"
+                    TextColor="#79280F" />
+                <Label
+                    Margin="200,0,0,0"
+                    Text="Reserva/Proceso"
+                    TextColor="#79280F" />
+                <Label
+                    Margin="200,0,0,0"
+                    Text="Total"
+                    TextColor="#79280F" />
+            </HorizontalStackLayout>
+
+            <CollectionView
+                Grid.Row="4"
+                Margin="30,0,30,0"
+                ItemsSource="{Binding ProductsStock, Mode=TwoWay}"
+                SelectionMode="Single"
+                VerticalOptions="FillAndExpand"
+                VerticalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ProductStock">
+                        <Grid
+                            ColumnDefinitions="300,300,*,100,auto"
+                            RowDefinitions="*"
+                            RowSpacing="10"
+                            VerticalOptions="Start">
+                            <Label
+                                Text="{Binding Product.Id}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding Product.Description}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                            <Label
+                                Grid.Column="2"
+                                Text="{Binding Product.WoodState}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                            <Label
+                                Grid.Column="2"
+                                Text="{Binding Available}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                            <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Margin="0,0,6,0"
+                                    FontAttributes="Bold"
+                                    TextColor="#61a60e">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding Reserved}"/>
+                                            <Span Text="/"/>
+                                            <Span Text="{Binding Process}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                            <Label
+                                Grid.Column="2"
+                                Text="{Binding Quantity}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+            <BoxView
+                Grid.Row="5"
+                HeightRequest="2"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="EndAndExpand"
+                Color="#79280F" />
+
+            <HorizontalStackLayout
+                Grid.Row="6"
+                Margin="0,20,0,0"
+                HorizontalOptions="Center"
+                VerticalOptions="Start">
+                <CollectionView
+                    Grid.Row="4"
+                    Margin="30,0,30,0"
+                    ItemsSource="{Binding CheckStockQuantityPages, Mode=TwoWay}"
+                    SelectionMode="Single"
+                    WidthRequest="500"
+                    VerticalOptions="FillAndExpand"
+                    VerticalScrollBarVisibility="Never">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Horizontal" VerticalItemSpacing="5" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="x:Int32">
+                            <Label Text="Page"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                     </CollectionView>
+            </HorizontalStackLayout>
+        </Grid>
+
         <!--  Barra lateral  -->
         <Grid
             Grid.Row="2"
             Grid.Column="4"
-            Padding="-100,0,-100,0"
+            Padding="0,0,0,0"
             BackgroundColor="#D3AA84"
             ColumnDefinitions="*"
             RowDefinitions="auto,*">
+            <ActivityIndicator
+                HeightRequest="32"
+                IsRunning="True"
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.RowSpan="2"
+                IsVisible="{Binding IsBusy}"
+                WidthRequest="32" />
             <Frame
                 Grid.Row="0"
-                Margin="0,15,0,15"
-                Padding="0,-10,0,-10"
+                Margin="10,15,10,15"
+                Padding="0,0,0,0"
                 BackgroundColor="#FAFAFA"
                 BorderColor="Transparent"
                 CornerRadius="12"
-                HeightRequest="30"
-                WidthRequest="275">
+                HeightRequest="45">
                 <StackLayout Orientation="Horizontal">
                     <Image
                         Margin="15,0,0,0"
@@ -921,28 +1401,21 @@
                         HeightRequest="35"
                         HorizontalOptions="FillAndExpand"
                         MaxLength="25"
+                        FontSize="18"
                         TextColor="#303030" />
                 </StackLayout>
             </Frame>
             <CollectionView
                 Grid.Row="1"
-                Margin="-100,-10,-100,0"
+                Margin="10,10,10,10"
                 ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=Cards}"
                 SelectionMode="Single"
                 VerticalOptions="FillAndExpand"
                 VerticalScrollBarVisibility="Never"
-                WidthRequest="300">
+                >
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5" />
                 </CollectionView.ItemsLayout>
-                <CollectionView.EmptyView>
-                    <Label
-                        Margin="20"
-                        HorizontalOptions="CenterAndExpand"
-                        Text="No hay productos"
-                        TextColor="#AD6B2A"
-                        VerticalOptions="End" />
-                </CollectionView.EmptyView>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:CardStock">
                         <Frame
@@ -1030,6 +1503,40 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+        </Grid>
+
+        <!-- Tareas -->
+        <Grid
+            Grid.Row="2"
+            Grid.ColumnSpan="4"
+            Padding="20"
+            IsVisible="{Binding IsTasksView}"
+            BackgroundColor="#FFF6ED">
+
+            <Image Source="working_page.png" HeightRequest="300" WidthRequest="500" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+
+        </Grid>
+
+        <!-- Pedidos -->
+        <Grid
+            Grid.Row="2"
+            Grid.ColumnSpan="4"
+            Padding="20"
+            IsVisible="{Binding IsOrdersView}"
+            BackgroundColor="#FFF6ED">
+            <Image Source="working_page.png" HeightRequest="300" WidthRequest="500" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+
+        </Grid>
+
+        <!-- Historial -->
+        <Grid
+            Grid.Row="2"
+            Grid.ColumnSpan="4"
+            Padding="20"
+            IsVisible="{Binding IsHistoryView}"
+            BackgroundColor="#FFF6ED">
+            <Image Source="working_page.png" HeightRequest="300" WidthRequest="500" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+
         </Grid>
     </Grid>
 

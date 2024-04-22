@@ -23,7 +23,7 @@ namespace Rincon.DataAccess
         public DatabaseContext()
         {
             SQLitePCL.Batteries_V2.Init();
-
+            //this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
         }
 

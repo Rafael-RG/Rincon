@@ -81,11 +81,21 @@ namespace Rincon.DataAccess
 
 
         ///<inheritdoc/>
-        public async Task<List<Product>> LoadItemsAsync()
+        public async Task<List<Product>> LoadProductsAsync()
         {
             using (var databaseContext = new DatabaseContext())
             {
                 var items = await databaseContext.Product.ToListAsync().ConfigureAwait(false);
+                return items;
+            }
+        }
+
+        ///<inheritdoc/>
+        public async Task<List<ProductStock>> LoadStockAsync()
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                var items = await databaseContext.ProductStock.ToListAsync().ConfigureAwait(false);
                 return items;
             }
         }
