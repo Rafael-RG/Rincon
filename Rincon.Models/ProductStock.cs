@@ -19,7 +19,11 @@ namespace Rincon.Models
         public Product Product { get; set; }
         public int Quantity { get; set; }
         public string DateTime { get; set; }
-        public int Available { get; set; }
+        [NotMapped]
+        public int Available
+        {
+            get { return Quantity - Reserved - Process; }
+        }
         public int Reserved { get; set; }
         public int Process { get; set; }
     }

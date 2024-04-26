@@ -28,6 +28,7 @@
         RowSpacing="0"
         VerticalOptions="FillAndExpand">
 
+        <!--#region Botones principales-->
         <ImageButton
             Grid.Row="0"
             Grid.Column="0"
@@ -145,6 +146,7 @@
              </Button.Shadow>
 
         </Button>
+        <!--#endregion-->
 
         <!--  Home  -->
         <Grid
@@ -732,7 +734,7 @@
                         Padding="0"
                         BackgroundColor="Transparent"
                         BorderColor="#797979"
-                        WidthRequest="250">
+                        WidthRequest="550">
                         <Editor
                             FontSize="18"
                             AutoSize="TextChanges"
@@ -1045,7 +1047,7 @@
                 Margin="0,0,0,10"
                 FontSize="26"
                 HorizontalOptions="Start"
-                Text="Carga de stock"
+                Text="Inventario"
                 TextColor="#79280F"
                 VerticalOptions="Center" />
 
@@ -1062,57 +1064,58 @@
                 Padding="0"
                 BackgroundColor="Transparent"
                 BorderColor="#797979">
-                <HorizontalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                    <Image
-                        Margin="12,12,12,12"
-                        HeightRequest="15"
-                        HorizontalOptions="Start"
-                        Source="search_icon.png"
-                        VerticalOptions="FillAndExpand" />
-                    <Picker
-                        HorizontalOptions="FillAndExpand"
-                        ItemsSource="{Binding Products}"
-                        SelectedItem="{Binding SelectedProductToAdd}"
-                        TextColor="Black"
-                        VerticalOptions="FillAndExpand" />
-                </HorizontalStackLayout>
+                  <SearchBar BackgroundColor="LightGray"
+                               HeightRequest="55"
+                               CancelButtonColor="Black"
+                               Placeholder="Buscar producto"
+                                       TextColor="Black"
+                                       HorizontalOptions="StartAndExpand"
+                                       x:Name="SearchBarInventory"
+                                       TextChanged="OnSearchStockTextChanged"/>
             </Frame>
 
-            <HorizontalStackLayout Grid.Row="3" Margin="30,0,0,0">
+            <HorizontalStackLayout
+                Grid.Row="3"
+                Margin="30,0,0,0">
                 <Label Text="#Codigo" TextColor="#79280F" />
                 <Label
-                    Margin="245,0,0,0"
+                    Margin="175,0,0,0"
                     Text="Descripcion"
                     TextColor="#79280F" />
                 <Label
-                    Margin="220,0,0,0"
+                    Margin="155,0,0,0"
                     Text="Estado"
                     TextColor="#79280F" />
                 <Label
-                    Margin="200,0,0,0"
-                    Text="Cantidad"
+                    Margin="190,0,0,0"
+                    Text="Disponible"
+                    TextColor="#79280F" />
+                <Label
+                    Margin="120,0,0,0"
+                    Text="Ubicación"
                     TextColor="#79280F" />
             </HorizontalStackLayout>
 
             <CollectionView
                 Grid.Row="4"
                 Margin="30,0,30,0"
-                ItemsSource="{Binding ProductsStock, Mode=TwoWay}"
+                x:Name="ProductsSearchStockInventory"
+                ItemsSource="{Binding Stock, Mode=TwoWay}"
                 SelectionMode="Single"
                 VerticalOptions="FillAndExpand"
                 VerticalScrollBarVisibility="Never">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5" />
-                </CollectionView.ItemsLayout>
+                        <GridItemsLayout VerticalItemSpacing="10
+                                         " Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:ProductStock">
                         <Grid
-                            ColumnDefinitions="300,300,*,100,auto"
+                            ColumnDefinitions="230,230,240,190,140,*,60"
                             RowDefinitions="*"
-                            RowSpacing="10"
                             VerticalOptions="Start">
                             <Label
-                                Text="{Binding Product.Id}"
+                                Text="{Binding Id}"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
 
@@ -1128,28 +1131,20 @@
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
 
-                            <Frame
+                            <Label
                                 Grid.Column="3"
-                                Margin="0,0,0,5"
-                                Padding="0"
-                                BackgroundColor="Transparent">
-                                <Entry
-                                    HorizontalOptions="FillAndExpand"
-                                    HorizontalTextAlignment="Center"
-                                    Text="{Binding Quantity, Mode=TwoWay}"
-                                    TextColor="#000000"
-                                    VerticalOptions="FillAndExpand" />
-                            </Frame>
+                                Text="{Binding Available}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
 
-
-                            <ImageButton
+                            <Label
                                 Grid.Column="4"
-                                Margin="30,0,0,0"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=RemoveProductToAddedCommand}"
-                                CommandParameter="{Binding .}"
-                                HeightRequest="15"
-                                Source="delete_item_icon.png"
-                                WidthRequest="15" />
+                                Text="{Binding Product.Location}"
+                                TextColor="#000000"
+                                VerticalOptions="Start" />
+
+                            <Button ImageSource="visibility.png" Grid.Column="5" BackgroundColor="Transparent" HorizontalOptions="End" Clicked="VisivilityProduct_Clicked"/>
+                            <Button ImageSource="delete_item_icon.png" Grid.Column="6" BackgroundColor="Transparent" Clicked="DeleteProduct_Clicked"/>
 
                         </Grid>
                     </DataTemplate>
@@ -1166,31 +1161,118 @@
 
             <HorizontalStackLayout
                 Grid.Row="6"
-                Margin="0,20,0,0"
+                Margin="0,20,0,30"
                 HorizontalOptions="Center"
-                VerticalOptions="Start">
-                <Button
-                    Grid.Row="1"
+                VerticalOptions="Start"
+                HeightRequest="30">
+                <Button ImageSource="left_dir.png"  VerticalOptions="Start" BackgroundColor="Transparent"/> 
+                <CollectionView
+                    Margin="0,0,0,0"
+                    ItemsSource="{Binding CheckStockQuantityPages, Mode=TwoWay}"
+                    SelectionMode="Single"
+                    MaximumWidthRequest="60"
+                    BackgroundColor="Transparent"
+                    HeightRequest="20"
+                    VerticalOptions="End"
+                    VerticalScrollBarVisibility="Never">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Horizontal" VerticalItemSpacing="5" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="x:Int32">
+                            <Label Text="{Binding .}" TextColor="#79280F" FontSize="26"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                     </CollectionView>
+               <Button ImageSource="rigth_dir.png"  VerticalOptions="Start" BackgroundColor="Transparent"/> 
+            </HorizontalStackLayout>
+
+
+        </Grid>
+
+        <!-- Inventario vista de productos -->
+        <Grid
+            Grid.Row="2"
+            Grid.ColumnSpan="4"
+            Padding="20"
+            BackgroundColor="White"
+            ColumnDefinitions="*"
+            IsVisible="{Binding IsInventoryEditView}"
+            RowDefinitions="auto,auto,auto,*,*,*,auto"
+            RowSpacing="5">
+            <Label
+                Margin="0,0,0,10"
+                FontSize="26"
+                HorizontalOptions="Start"
+                Text="Inventario"
+                TextColor="#79280F"
+                VerticalOptions="Center" />
+
+            <BoxView
+                Grid.Row="1"
+                Margin="0,0,0,20"
+                HeightRequest="2"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Start"
+                Color="#79280F" />
+
+            <Grid
+                Grid.Row="2"
+                RowDefinitions="*,*"
+                ColumnDefinitions="*,*,*,*,*"
+                Margin="30,0,0,0">
+                <Label
+                    Text="Codigo"
+                    TextColor="#79280F" FontSize="24"/>
+                <Label Text="{Binding SelectedProductStock.Id}" Grid.Row="1" FontSize="24"/>
+                <Label
+                    Grid.Column="1"
+                    Text="Descripcion"
+                    TextColor="#79280F" FontSize="24"/>
+                <Label Text="{Binding SelectedProductStock.Product.Description}" Grid.Row="1" Grid.Column="1" FontSize="24"/>
+                <Label
+                    Grid.Column="2"
+                    Text="Estado"
+                    TextColor="#79280F" FontSize="24"/>
+                <Label Text="{Binding SelectedProductStock.Product.WoodState}" Grid.Row="1" Grid.Column="2" FontSize="24"/>
+                <Label
+                    Grid.Column="3"
+                    Text="Disponible"
+                    TextColor="#79280F" FontSize="24"/>
+                <Label Text="{Binding SelectedProductStock.Available}" Grid.Row="1" Grid.Column="3" FontSize="24"/>
+                <Label
                     Grid.Column="4"
-                    Margin="20,0,20,0"
-                    BackgroundColor="#D3AA84"
-                    Clicked="AddStock_Clicked"
-                    HeightRequest="35"
-                    HorizontalOptions="Center"
-                    Text="Cargar Stock"
-                    TextColor="#000000"
-                    WidthRequest="260" />
-                <Button
-                    Grid.Row="1"
-                    Grid.Column="4"
-                    Margin="20,0,20,0"
-                    BackgroundColor="#FFF6ED"
-                    Command="{Binding CancelAddStockCommand}"
-                    HeightRequest="35"
-                    HorizontalOptions="Center"
-                    Text="Cancelar"
-                    TextColor="#000000"
-                    WidthRequest="260" />
+                    Text="Ubicación"
+                    TextColor="#79280F" FontSize="24"/>
+                <Label Text="{Binding SelectedProductStock.Product.Location}" Grid.Row="1" Grid.Column="4" FontSize="24"/>
+            </Grid>
+
+            <VerticalStackLayout Grid.Row="3" Margin="30,90,0,0">
+                <Label Text="Comentarios:" TextColor="#79280F" VerticalOptions="EndAndExpand" FontSize="24"/>
+                <Label Text="{Binding SelectedProductStock.Product.Comment}" FontSize="24"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="4" VerticalOptions="CenterAndExpand" Margin="30,0,0,0">
+                <Label Text="Proveedor:" TextColor="#79280F" FontSize="24"/>
+                <Label Text="{Binding SelectedProductStock.Product.Supplier}" FontSize="24"/>
+            </VerticalStackLayout>
+
+            <BoxView
+                Grid.Row="5"
+                HeightRequest="2"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="EndAndExpand"
+                Color="#79280F" />
+
+            <HorizontalStackLayout
+                Grid.Row="6"
+                Margin="0,20,0,30"
+                Spacing="50"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                HeightRequest="30">
+                <Button Text="Volver" TextColor="Black" FontSize="18" VerticalOptions="Start" BackgroundColor="#D3AA84" WidthRequest="300" HeightRequest="50"/> 
+               <Button Text="Editar" TextColor="Black" FontSize="18" VerticalOptions="Start" BackgroundColor="#FFF6ED" WidthRequest="300"  HeightRequest="50"/> 
             </HorizontalStackLayout>
 
 
@@ -1204,7 +1286,7 @@
             BackgroundColor="White"
             ColumnDefinitions="*"
             IsVisible="{Binding IsCheckStockView}"
-            RowDefinitions="auto,auto,35,auto,*,auto,auto"
+            RowDefinitions="auto,auto,auto,auto,*,auto,auto"
             RowSpacing="5">
             <Label
                 Margin="0,0,0,10"
@@ -1227,42 +1309,38 @@
                 Padding="0"
                 BackgroundColor="Transparent"
                 BorderColor="#797979">
-                <HorizontalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                    <Image
-                        Margin="12,12,12,12"
-                        HeightRequest="15"
-                        HorizontalOptions="Start"
-                        Source="search_icon.png"
-                        VerticalOptions="FillAndExpand" />
-                    <Picker
-                        HorizontalOptions="FillAndExpand"
-                        ItemsSource="{Binding Products}"
-                        SelectedItem="{Binding SelectedProductToAdd}"
-                        TextColor="Black"
-                        VerticalOptions="FillAndExpand" />
-                </HorizontalStackLayout>
+                  <SearchBar BackgroundColor="LightGray"
+                               HeightRequest="55"
+                               CancelButtonColor="Black"
+                               Placeholder="Buscar producto"
+                                       TextColor="Black"
+                                       HorizontalOptions="StartAndExpand"
+                                       x:Name="SearchBarSeachStock"
+                                       TextChanged="OnSearchStockTextChanged"/>
             </Frame>
 
-            <HorizontalStackLayout Grid.Row="3" Margin="30,0,0,0">
+            <HorizontalStackLayout
+                Grid.Row="3"
+                Margin="30,0,0,0">
                 <Label Text="#Codigo" TextColor="#79280F" />
                 <Label
-                    Margin="245,0,0,0"
+                    Margin="175,0,0,0"
                     Text="Descripcion"
                     TextColor="#79280F" />
                 <Label
-                    Margin="220,0,0,0"
+                    Margin="155,0,0,0"
                     Text="Estado"
                     TextColor="#79280F" />
                 <Label
-                    Margin="200,0,0,0"
+                    Margin="190,0,0,0"
                     Text="disponible"
                     TextColor="#79280F" />
                 <Label
-                    Margin="200,0,0,0"
+                    Margin="120,0,0,0"
                     Text="Reserva/Proceso"
                     TextColor="#79280F" />
                 <Label
-                    Margin="200,0,0,0"
+                    Margin="165,0,0,0"
                     Text="Total"
                     TextColor="#79280F" />
             </HorizontalStackLayout>
@@ -1270,22 +1348,23 @@
             <CollectionView
                 Grid.Row="4"
                 Margin="30,0,30,0"
-                ItemsSource="{Binding ProductsStock, Mode=TwoWay}"
-                SelectionMode="Single"
+                x:Name="ProductsSearchStock"
+                ItemsSource="{Binding Stock, Mode=TwoWay}"
+                SelectionMode="None"
                 VerticalOptions="FillAndExpand"
                 VerticalScrollBarVisibility="Never">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5" />
-                </CollectionView.ItemsLayout>
+                        <GridItemsLayout VerticalItemSpacing="10
+                                         " Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:ProductStock">
                         <Grid
-                            ColumnDefinitions="300,300,*,100,auto"
+                            ColumnDefinitions="*,*,*,*,*,*"
                             RowDefinitions="*"
-                            RowSpacing="10"
                             VerticalOptions="Start">
                             <Label
-                                Text="{Binding Product.Id}"
+                                Text="{Binding Id}"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
 
@@ -1302,17 +1381,16 @@
                                 VerticalOptions="Start" />
 
                             <Label
-                                Grid.Column="2"
+                                Grid.Column="3"
                                 Text="{Binding Available}"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
 
                             <Label
-                                    Grid.Row="0"
-                                    Grid.Column="1"
+                                    Grid.Column="4"
                                     Margin="0,0,6,0"
                                     FontAttributes="Bold"
-                                    TextColor="#61a60e">
+                                    TextColor="black">
                                     <Label.FormattedText>
                                         <FormattedString>
                                             <Span Text="{Binding Reserved}"/>
@@ -1323,7 +1401,7 @@
                                 </Label>
 
                             <Label
-                                Grid.Column="2"
+                                Grid.Column="5"
                                 Text="{Binding Quantity}"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
@@ -1343,26 +1421,30 @@
 
             <HorizontalStackLayout
                 Grid.Row="6"
-                Margin="0,20,0,0"
+                Margin="0,20,0,30"
                 HorizontalOptions="Center"
-                VerticalOptions="Start">
+                VerticalOptions="Start"
+                HeightRequest="30">
+                <Button ImageSource="left_dir.png"  VerticalOptions="Start" BackgroundColor="Transparent"/> 
                 <CollectionView
-                    Grid.Row="4"
-                    Margin="30,0,30,0"
+                    Margin="0,0,0,0"
                     ItemsSource="{Binding CheckStockQuantityPages, Mode=TwoWay}"
                     SelectionMode="Single"
-                    WidthRequest="500"
-                    VerticalOptions="FillAndExpand"
+                    MaximumWidthRequest="60"
+                    BackgroundColor="Transparent"
+                    HeightRequest="20"
+                    VerticalOptions="End"
                     VerticalScrollBarVisibility="Never">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Horizontal" VerticalItemSpacing="5" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="x:Int32">
-                            <Label Text="Page"/>
+                            <Label Text="{Binding .}" TextColor="#79280F" FontSize="26"/>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                      </CollectionView>
+               <Button ImageSource="rigth_dir.png"  VerticalOptions="Start" BackgroundColor="Transparent"/> 
             </HorizontalStackLayout>
         </Grid>
 

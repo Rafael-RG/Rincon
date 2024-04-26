@@ -67,4 +67,45 @@ public partial class HomePage
     {
         this.SearchBarAddStock.Unfocus();
     }
+
+    private void OnSearchStockTextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(e.NewTextValue))
+        {
+            ProductsSearchStock.ItemsSource = this.ViewModel.Stock;
+        }
+        else
+        {
+            ProductsSearchStock.ItemsSource = this.ViewModel.Stock.Where(x => x.Id.ToLower().Contains(e.NewTextValue.ToLower())
+                || x.Product.Description.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+        }
+    }
+
+    /// <summary>
+	/// Popups delete product.
+	/// </summary>
+	private async void DeleteProduct_Clicked(object sender, EventArgs e)
+    {
+
+        var button = ((Button)sender);
+        var productStock = (ProductStock)button.BindingContext;
+
+        var product = productStock.Product;
+        await popupNavigation.PushAsync(new DeleteProductsQuestionPage(this.popupNavigation, product, ViewModel.OkDeleteProductCommand));
+    }
+
+    /// <summary>
+	/// Popups delete product.
+	/// </summary>
+	private void VisivilityProduct_Clicked(object sender, EventArgs e)
+    {
+
+        var button = ((Button)sender);
+        var productStock = (ProductStock)button.BindingContext;
+
+        this.ViewModel.SelectedProductStock = productStock;
+
+        this.ViewModel.IsInventoryEditView = true;
+
+    }
 }

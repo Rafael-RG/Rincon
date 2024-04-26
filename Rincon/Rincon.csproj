@@ -102,6 +102,21 @@
 		<MauiImage Update="Resources\Images\working_page.svg">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiImage>
+		<MauiImage Update="Resources\Images\left_dir.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\rigth_dir.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\visibility.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\check_icon.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\alert_icon.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -112,6 +127,11 @@
 	  <None Remove="Resources\Splash\%24placeholder%24.scale-400.png" />
 	  <None Remove="Resources\Images\drop_down.svg" />
 	  <None Remove="Resources\Images\working_page.svg" />
+	  <None Remove="Resources\Images\rigth_dir.svg" />
+	  <None Remove="Resources\Images\left_dir.svg" />
+	  <None Remove="Resources\Images\visibility.svg" />
+	  <None Remove="Resources\Images\check_icon.svg" />
+	  <None Remove="Resources\Images\alert_icon.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -224,5 +244,12 @@
 	  <BundleResource Include="Resources\Images\working_page.svg">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </BundleResource>
+	  <BundleResource Include="Resources\Images\rigth_dir.svg" />
+	  <BundleResource Include="Resources\Images\left_dir.svg" />
+	  <BundleResource Include="Resources\Images\visibility.svg">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </BundleResource>
+	  <BundleResource Include="Resources\Images\check_icon.svg" />
+	  <BundleResource Include="Resources\Images\alert_icon.svg" />
 	</ItemGroup>
 </Project>

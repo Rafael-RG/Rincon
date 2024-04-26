@@ -62,7 +62,12 @@ namespace Rincon.DataAccess
         {
             using (var databaseContext = new DatabaseContext())
             {
-                var count = await databaseContext.UpsertRange<ProductStock>(stock).RunAsync();
+                var count = 0;
+                foreach(var item in stock)
+                {
+                    count += await databaseContext.UpsertRange<ProductStock>(item).RunAsync();
+                }
+                
                 return count;
             }
         }

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        x:Class="Rincon.CustomPopups.DeleteProductsQuestionPage"
+        xmlns:models="clr-namespace:Rincon.Models;assembly=Rincon.Models"
+        xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+        BackgroundColor="#80000000"
+        Title="DeleteProduct"
+        CloseWhenBackgroundIsClicked="False">
+
+
+    <Border
+        Margin="400,400,400,400"
+        HeightRequest="400"
+        WidthRequest="800"
+        Padding="40"
+        BackgroundColor="White">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="18,18,18,18" />
+        </Border.StrokeShape>
+        <Grid RowDefinitions="*,*,*,*">
+            <Image Source="alert_icon.png" HorizontalOptions="Center" VerticalOptions="Start" HeightRequest="80" WidthRequest="80"/>
+            <Label Text="¿Quiere eliminar este producto?" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontSize="24" FontAttributes="Bold"/>
+            <Label
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Grid.Row="2"
+                Margin="0,0,6,0"
+                FontSize="16"
+                FontAttributes="Bold"
+                TextColor="black">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span x:Name="ProductId"/>
+                        <Span Text="     "/>
+                        <Span x:Name="ProductDescription"/>
+                        <Span Text="     "/>
+                        <Span x:Name="ProductState"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" VerticalOptions="End" Spacing="30">
+                <Button Text="No" BackgroundColor="#D3AA84" Clicked="CancelDeleteProduct_Clicked" WidthRequest="150" TextColor="Black" FontSize="16"/>
+                <Button Text="Si" BackgroundColor="#FFF6ED" Clicked="OkDeleteProduct_Clicked" WidthRequest="150" TextColor="Black" FontSize="16"/>
+            </HorizontalStackLayout>
+        </Grid>
+    </Border>
+</mopups:PopupPage>
+
