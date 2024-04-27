@@ -2,6 +2,7 @@
 using Rincon.CustomPopups;
 using Rincon.Models;
 using Rincon.ViewModels;
+using StoreKit;
 
 namespace Rincon.Pages;
 
@@ -107,5 +108,38 @@ public partial class HomePage
 
         this.ViewModel.IsInventoryEditView = true;
 
+    }
+
+    void BackToInventory_Clicked(System.Object sender, System.EventArgs e)
+    {
+        this.ViewModel.ChangeViewCommand.Execute("Inventory");
+    }
+
+    void EditProductPage_Clicked(System.Object sender, System.EventArgs e)
+    {
+        this.ViewModel.ProductCommentEdit = this.ViewModel.SelectedProductStock.Product.Comment;
+
+        this.ViewModel.ProductLocationEdit = this.ViewModel.SelectedProductStock.Product.Location;
+
+        this.ViewModel.ProduSupplierEdit = this.ViewModel.SelectedProductStock.Product.Supplier;
+
+        this.ViewModel.ChangeViewCommand.Execute("EditProductDetaildInventory");
+
+    }
+
+    async void CancelEditProductPage_Clicked(System.Object sender, System.EventArgs e)
+    {
+        await popupNavigation.PushAsync(new ConfirmCancelEditProductPage(this.popupNavigation, this.ViewModel.ChangeViewCommand));
+    }
+
+    async void SaveEditProductPage_Clicked(System.Object sender, System.EventArgs e)
+    {
+        this.ViewModel.SelectedProductStock.Product.Comment = this.ViewModel.ProductCommentEdit;
+        this.ViewModel.SelectedProductStock.Product.Location = this.ViewModel.ProductLocationEdit;
+        this.ViewModel.SelectedProductStock.Product.Supplier = this.ViewModel.ProduSupplierEdit;
+
+        this.ViewModel.UpdateProductCommand.Execute(this.ViewModel.SelectedProductStock.Product);
+
+        await popupNavigation.PushAsync(new SuccessEditProductPage(this.popupNavigation, this.ViewModel.ChangeViewCommand));
     }
 }

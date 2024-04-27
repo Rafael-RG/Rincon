@@ -92,6 +92,12 @@ namespace Rincon.ViewModels
         ///// Add stock View
         ///// </summary>
         [ObservableProperty]
+        private bool isInventoryEditProductView;
+
+        ///// <summary>
+        ///// Add stock View
+        ///// </summary>
+        [ObservableProperty]
         private bool isCheckStockView;
 
         ///// <summary>
@@ -267,6 +273,26 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private bool isVisibleListAddStock;
 
+        //// <summary>
+        ///// Is visible list add stock
+        ///// </summary>
+        [ObservableProperty]
+        private string productLocationEdit;
+
+        //// <summary>
+        ///// Is visible list add stock
+        ///// </summary>
+        [ObservableProperty]
+        private string productCommentEdit;
+
+        //// <summary>
+        ///// Is visible list add stock
+        ///// </summary>
+        [ObservableProperty]
+        private string produSupplierEdit;
+
+
+
         #endregion
 
         /// <summary>
@@ -315,6 +341,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
                     break;
                 case "MagementStock":
                     this.IsHomeView = false;
@@ -327,6 +354,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
                     break;
                 case "Tasks":
                     this.IsHomeView = false;
@@ -339,6 +367,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
                     break;
                 case "Orders":
                     this.IsHomeView = false;
@@ -351,6 +380,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
                     break;
                 case "History":
                     this.IsHomeView = false;
@@ -363,6 +393,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
                     break;
                 case "AddProduct":
                     this.IsHomeView = false;
@@ -373,6 +404,7 @@ namespace Rincon.ViewModels
                     this.IsAddProductView = true;
                     this.IsAddStockView = false;
                     this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
 
                     this.IsTiranteSelect = true;
                     break;
@@ -387,6 +419,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
 
                     this.IsVisibleListAddStock = false;
                     break;
@@ -401,6 +434,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryView = true;
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
                     break;
                 case "CheckStock":
                     this.IsHomeView = false;
@@ -413,6 +447,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryView = false;
                     this.IsCheckStockView = true;
                     this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
                     break;
                 case "EditProductInventory":
                     this.IsHomeView = false;
@@ -425,6 +460,20 @@ namespace Rincon.ViewModels
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = true;
+                    this.IsInventoryEditProductView = false;
+                    break;
+                case "EditProductDetaildInventory":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = false;
+                    this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = true;
                     break;
 
             }
@@ -658,17 +707,38 @@ namespace Rincon.ViewModels
 
                     this.Products.Remove(product);
                     this.Stock.Remove(productStock);
-
-                    return;
                 }
             }
             catch
             {
                 await NotificationService.NotifyAsync("Error", "Hubo un error al eliminar el producto. Vuleva a intentar.", "Cerrar");
-                return;
-            }
+             }
         });
 
+        public ICommand UpdateProductCommand => new Command<Product>(async (product) =>
+        {
+            try
+            {
+
+                var result = await this.DataService.InsertOrUpdateItemsAsync<Product>(product);
+
+                if (result > 0)
+                {
+
+                    this.Stock.ToList().ForEach(x =>
+                    {
+                        if (x.Product.Id == product.Id)
+                        {
+                            x.Product = product;
+                        }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al actualizar el producto. Vuleva a intentar.", "Cerrar");
+            }
+        });
         #endregion
 
 

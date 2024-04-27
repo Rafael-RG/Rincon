@@ -1271,8 +1271,96 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Start"
                 HeightRequest="30">
-                <Button Text="Volver" TextColor="Black" FontSize="18" VerticalOptions="Start" BackgroundColor="#D3AA84" WidthRequest="300" HeightRequest="50"/> 
-               <Button Text="Editar" TextColor="Black" FontSize="18" VerticalOptions="Start" BackgroundColor="#FFF6ED" WidthRequest="300"  HeightRequest="50"/> 
+                <Button Text="Volver" TextColor="Black" FontSize="18" VerticalOptions="Start" BackgroundColor="#D3AA84" WidthRequest="300" HeightRequest="50" Clicked="BackToInventory_Clicked" /> 
+               <Button Text="Editar" TextColor="Black" FontSize="18" VerticalOptions="Start" BackgroundColor="#FFF6ED" WidthRequest="300"  HeightRequest="50" Clicked="EditProductPage_Clicked"/> 
+            </HorizontalStackLayout>
+
+
+        </Grid>
+
+        <!-- Inventario vista de edicion de productos -->
+        <Grid
+            Grid.Row="2"
+            Grid.ColumnSpan="4"
+            Padding="20"
+            BackgroundColor="White"
+            ColumnDefinitions="*"
+            IsVisible="{Binding IsInventoryEditProductView}"
+            RowDefinitions="auto,auto,auto,*,*,*,auto"
+            RowSpacing="5">
+            <Label
+                Margin="0,0,0,10"
+                FontSize="26"
+                HorizontalOptions="Start"
+                Text="Inventario"
+                TextColor="#79280F"
+                VerticalOptions="Center" />
+
+            <BoxView
+                Grid.Row="1"
+                Margin="0,0,0,20"
+                HeightRequest="2"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Start"
+                Color="#79280F" />
+
+            <Grid
+                Grid.Row="2"
+                RowDefinitions="*,*"
+                ColumnDefinitions="*,*,*,*,*"
+                Margin="30,0,0,0">
+                <Label
+                    Text="Codigo"
+                    TextColor="#79280F" FontSize="24"/>
+                <Label Text="{Binding SelectedProductStock.Id}" Grid.Row="1" FontSize="24"/>
+                <Label
+                    Grid.Column="1"
+                    Text="Descripcion"
+                    TextColor="#79280F" FontSize="24"/>
+                <Label Text="{Binding SelectedProductStock.Product.Description}" Grid.Row="1" Grid.Column="1" FontSize="24"/>
+                <Label
+                    Grid.Column="2"
+                    Text="Estado"
+                    TextColor="#79280F" FontSize="24"/>
+                <Label Text="{Binding SelectedProductStock.Product.WoodState}" Grid.Row="1" Grid.Column="2" FontSize="24"/>
+                <Label
+                    Grid.Column="3"
+                    Text="Disponible"
+                    TextColor="#79280F" FontSize="24"/>
+                <Label Text="{Binding SelectedProductStock.Available}" Grid.Row="1" Grid.Column="3" FontSize="24"/>
+                <Label
+                    Grid.Column="4"
+                    Text="Ubicación"
+                    TextColor="#79280F" FontSize="24"/>
+                <Entry Text="{Binding ProductLocationEdit}" Grid.Row="1" Grid.Column="4" FontSize="24"/>
+            </Grid>
+
+            <VerticalStackLayout Grid.Row="3" Margin="30,90,0,0">
+                <Label Text="Comentarios:" TextColor="#79280F" VerticalOptions="EndAndExpand" FontSize="24"/>
+                <Editor Text="{Binding ProductCommentEdit}" FontSize="24"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="4" VerticalOptions="CenterAndExpand" Margin="30,0,0,0">
+                <Label Text="Proveedor:" TextColor="#79280F" FontSize="24"/>
+                <Entry Text="{Binding ProduSupplierEdit}" FontSize="24"/>
+            </VerticalStackLayout>
+
+            <BoxView
+                Grid.Row="5"
+                HeightRequest="2"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="EndAndExpand"
+                Color="#79280F" />
+
+            <HorizontalStackLayout
+                Grid.Row="6"
+                Margin="0,20,0,30"
+                Spacing="50"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                HeightRequest="30">
+                <Button Text="Guardar" TextColor="Black" FontSize="18" VerticalOptions="Start" BackgroundColor="#D3AA84" WidthRequest="300" HeightRequest="50" Clicked="SaveEditProductPage_Clicked" /> 
+               <Button Text="Cancelar" TextColor="Black" FontSize="18" VerticalOptions="Start" BackgroundColor="#FFF6ED" WidthRequest="300"  HeightRequest="50" Clicked="CancelEditProductPage_Clicked"/> 
             </HorizontalStackLayout>
 
 

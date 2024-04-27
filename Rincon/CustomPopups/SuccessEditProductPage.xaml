@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Rincon.CustomPopups.SuccessEditProductPage"
+    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+    BackgroundColor="#80000000"
+    Title="SuccessEditProduct"
+    CloseWhenBackgroundIsClicked="False">
+
+    <Border
+        Margin="400,400,400,400"
+        HeightRequest="400"
+        WidthRequest="800"
+        Padding="40"
+        BackgroundColor="White">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="18,18,18,18" />
+        </Border.StrokeShape>
+        <Grid RowDefinitions="*,*,*">
+            <Image Source="check_icon.png" HorizontalOptions="Center" VerticalOptions="Start" HeightRequest="80" WidthRequest="80"/>
+            <Label Text="Producto editado con exito" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontSize="24" FontAttributes="Bold"/>
+            <Button Grid.Row="2" Text="Volver" BackgroundColor="#D3AA84" Clicked="CloseEditProduct_Clicked" WidthRequest="150" HeightRequest="60" TextColor="Black" FontSize="16"/>
+           
+        </Grid>
+    </Border>
+
+
+</mopups:PopupPage>
+

@@ -117,6 +117,9 @@
 		<MauiImage Update="Resources\Images\alert_icon.svg">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiImage>
+		<MauiImage Update="Resources\Images\splash.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -132,6 +135,7 @@
 	  <None Remove="Resources\Images\visibility.svg" />
 	  <None Remove="Resources\Images\check_icon.svg" />
 	  <None Remove="Resources\Images\alert_icon.svg" />
+	  <None Remove="Resources\Images\splash.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -251,5 +255,8 @@
 	  </BundleResource>
 	  <BundleResource Include="Resources\Images\check_icon.svg" />
 	  <BundleResource Include="Resources\Images\alert_icon.svg" />
+	  <BundleResource Include="Resources\Images\splash.svg">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </BundleResource>
 	</ItemGroup>
 </Project>
