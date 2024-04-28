@@ -1560,29 +1560,24 @@
                 BorderColor="Transparent"
                 CornerRadius="12"
                 HeightRequest="45">
-                <StackLayout Orientation="Horizontal">
-                    <Image
-                        Margin="15,0,0,0"
-                        Source="search_icon.png"
-                        WidthRequest="19" />
-                    <Entry
-                        AutomationId="userNameEntry"
-                        BackgroundColor="Transparent"
-                        HeightRequest="35"
-                        HorizontalOptions="FillAndExpand"
-                        MaxLength="25"
-                        FontSize="18"
-                        TextColor="#303030" />
-                </StackLayout>
+                  <SearchBar BackgroundColor="White"
+                               HeightRequest="45"
+                               CancelButtonColor="Black"
+                               Placeholder="Buscar"
+                                       TextColor="Black"
+                                       HorizontalOptions="StartAndExpand"
+                                       x:Name="SearchBarLateralBar"
+                                       TextChanged="SearchBarLateralBar_TextChanged"/>
             </Frame>
+            
             <CollectionView
                 Grid.Row="1"
+                x:Name="LateraBarStock"
                 Margin="10,10,10,10"
                 ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=Cards}"
                 SelectionMode="Single"
                 VerticalOptions="FillAndExpand"
-                VerticalScrollBarVisibility="Never"
-                >
+                VerticalScrollBarVisibility="Never">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5" />
                 </CollectionView.ItemsLayout>

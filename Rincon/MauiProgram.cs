@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Maui.Storage;
+using Microsoft.Maui.Hosting;
 using Mopups.Hosting;
 using Mopups.Interfaces;
 using Mopups.Services;
@@ -31,9 +32,17 @@ public static class MauiProgram
 			.RegisterViewModelsAndServices()
             .ConfigureFonts(fonts =>
 			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
+				fonts.AddFont("Inter-Black.ttf", "InterBlack");
+				fonts.AddFont("Inter-Bold.ttf", "InterBold");
+				fonts.AddFont("Inter-ExtraBold.ttf", "InterExtraBold");
+				fonts.AddFont("Inter-ExtraLight.ttf", "InterExtraLight");
+				fonts.AddFont("Inter-Light.ttf", "InterLight");
+				fonts.AddFont("Inter-Medium.ttf", "InterMedium");
+				fonts.AddFont("Inter-Regular.ttf", "InterRegular");
+				fonts.AddFont("Inter-SemiBold.ttf", "InterSemiBold");
+				fonts.AddFont("Inter-Thin.ttf", "InterThin");
+
+            });
         builder.Services.AddLocalization();
 		builder.Services.AddDbContext<DatabaseContext>();
 		builder.Services.AddSingleton<IDataService, DataService>();

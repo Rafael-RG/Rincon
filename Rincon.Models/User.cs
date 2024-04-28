@@ -10,11 +10,13 @@ namespace Rincon.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string UserId { get; set; }
-
         public string Name { get; set; }
 
         public string Password { get; set; }
+
+        public string Question { get; set; }
+
+        public string Answer { get; set; }
 
         public Role Role { get; set; }
     }

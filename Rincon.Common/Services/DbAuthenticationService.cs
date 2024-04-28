@@ -18,7 +18,6 @@ namespace Rincon.Common.Services
             await Task.Delay(250);
             this.User = new User
             {
-                UserId = "0",
                 Name = username
             };
             return true;

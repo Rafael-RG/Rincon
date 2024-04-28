@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Rincon.Common.ViewModels;
-using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Rincon.Models;
 
 namespace Rincon.ViewModels
 {
@@ -14,13 +14,19 @@ namespace Rincon.ViewModels
         private List<string> questions;
 
         [ObservableProperty]
-        private List<string> username;
+        private string username;
 
         [ObservableProperty]
-        private List<string> password;
-        
+        private string password;
+
         [ObservableProperty]
-        private List<string> answer;
+        private string repeatPassword;
+
+        [ObservableProperty]
+        private string answer;
+
+        [ObservableProperty]
+        private string seletedQuestion;
 
 
         /// <summary>
@@ -28,11 +34,12 @@ namespace Rincon.ViewModels
         /// </summary>
         public CheckinViewModel(IServiceProvider provider) : base(provider)
         {
-            questions = new List<string>
+            this.Questions = new List<string>
             {
-                new ("Opción 1"),
-                new ("Opción 2"),
-                new ("Opción 3")
+                new ("Cual es el nombre de tu cancion favorita?"),
+                new ("Cual es tu juego favorito?"),
+                new ("Cual es el nombre de tu primer mascota?"),
+                new ("Cual es el nombre del barrio en que naciste?")
             };
         }
 
@@ -40,19 +47,66 @@ namespace Rincon.ViewModels
         /// <summary>
         /// DB login
         /// </summary>
-        [RelayCommand]
-        private async void Checkin()
+        public ICommand CheckinCommand => new Command(async () =>
         {
-       
-        }
+            try
+            {
+                if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(RepeatPassword) || string.IsNullOrEmpty(Answer) || string.IsNullOrEmpty(SeletedQuestion) )
+                {
+                    await NotificationService.NotifyAsync("Error", "Faltan completar campos", "Cerrar");
+                    return;
+                }
+
+                if (Password != RepeatPassword)
+                {
+                    await NotificationService.NotifyAsync("Error", "Las contraseñas no coinciden", "Cerrar");
+                    return;
+                }
+
+                var user = new User()
+                {
+                     Name = this.Username,
+                     Password = this.Password,
+                     Question = this.SeletedQuestion,
+                     Answer = this.Answer,
+                     Role= Role.Admin
+                };
+
+                var result = await this.DataService.InsertOrUpdateItemsAsync<User>(user);
+
+                if (result > 0)
+                {
+                    await NotificationService.NotifyAsync("Creado", "Se creo el usuario", "Cerrar");
+                    this.CleanData();
+                    await this.NavigationService.Navigate<LoginViewModel>();
+                }
+                else
+                {
+                    await NotificationService.NotifyAsync("Error", "Hubo un error al crear el usuario. Por favor vuelva a intentar", "Cerrar");
+                }
+            }
+            catch
+            {
+
+            }
+        });
 
         /// <summary>
         /// DB login
         /// </summary>
-        [RelayCommand]
-        private async void CancelCheckin()
+        public ICommand CancelCheckinCommand => new Command(async () =>
         {
+            this.CleanData();
+            await this.NavigationService.Navigate<LoginViewModel>();
+        });
 
+        private void CleanData()
+        {
+            this.Username = string.Empty;
+            this.Password = string.Empty;
+            this.RepeatPassword = string.Empty;
+            this.Answer = string.Empty;
+            this.SeletedQuestion = this.Questions.First();
         }
     }
 }

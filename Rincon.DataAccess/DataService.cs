@@ -104,5 +104,47 @@ namespace Rincon.DataAccess
                 return items;
             }
         }
+
+        ///<inheritdoc/>
+        public async Task<User> LoadUserAsync(string userName, string password)
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                var user = await databaseContext.User.Where(x => x.Name == userName && x.Password == password).FirstOrDefaultAsync();
+                return user;
+            }
+        }
+
+        ///<inheritdoc/>
+        public async Task<User> LoadLocalUserAsync()
+        {
+            using (var databaseContext = new LocalDataBaseContext())
+            {
+                var user = await databaseContext.User.FirstOrDefaultAsync();
+                return user;
+            }
+        }
+
+        ///<inheritdoc/>
+        public async Task<bool> DeleteLocalUserAsync(User user)
+        {
+            using (var databaseContext = new LocalDataBaseContext())
+            {
+                databaseContext.Remove(user);
+                var itemsCount = await databaseContext.SaveChangesAsync().ConfigureAwait(false);
+                return itemsCount > 0;
+            }
+        }
+
+        ///<inheritdoc/>
+        ///<inheritdoc/>
+        public async Task<bool> SaveLocalUserAsync(User user)
+        {
+            using (var databaseContext = new LocalDataBaseContext())
+            {
+                var itemsCount = await databaseContext.UpsertRange(user).RunAsync();
+                return itemsCount > 0;
+            }
+        }
     }
 }

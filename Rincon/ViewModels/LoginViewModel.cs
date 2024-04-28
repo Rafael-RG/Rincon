@@ -42,30 +42,33 @@ namespace Rincon.ViewModels
                 await NotificationService.NotifyAsync(GetText("Error"), GetText("PasswordEmpty"), GetText("Close"));
                 return;
             }
-            
+
             try
             {
                 this.IsBusy = true;
-                var result = await this.AuthenticationService.AuthenticateAsync(this.Username, this.Password);
-                if (!result)
+                var user = await this.DataService.LoadUserAsync(this.Username, this.Password);
+
+                if (user == null)
                 {
-                    //await NotificationService.NotifyAsync("LoginErrorTitle", "LoginError", "Close");
+                    await NotificationService.NotifyAsync("LoginErrorTitle", "LoginError", "Close");
                     return;
                 }
 
-                if (true)
+                var result = await this.DataService.SaveLocalUserAsync(user);
+
+                if (result)
                 {
                     await this.NavigationService.Navigate<HomeViewModel>();
-                }
-                else
-                {
-                    await this.NavigationService.Close(this);       
                 }
             }
             catch (Exception ex)
             {
-                //await NotificationService.NotifyAsync(GetText("Error"), (ex.Message), GetText("Close"));
+                await NotificationService.NotifyAsync(GetText("Error"), (ex.Message), GetText("Close"));
                 await LogExceptionAsync(ex);
+            }
+            finally
+            {
+                this.IsBusy = false;
             }
         }
 

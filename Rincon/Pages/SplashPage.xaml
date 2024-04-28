@@ -9,8 +9,8 @@
     x:TypeArguments="viewModels:SplashViewModel"
     Shell.NavBarIsVisible="false">
 
-    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" RowDefinitions="*,*">
-        <Image Source="splash.png" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HeightRequest="600" WidthRequest="600"/>
+    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" RowDefinitions="auto,*">
+        <Image Source="splash.png" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HeightRequest="700" WidthRequest="700"/>
         <Label Margin="0,0,0,40" Grid.Row="1" Text="App RINCÓN Maderas - Versión 1.0" FontSize="24" TextColor ="#4A744C" VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand"/>
     </Grid>
 

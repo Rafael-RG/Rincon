@@ -318,14 +318,6 @@ namespace Rincon.ViewModels
             });
         }
 
-        //public override void OnAppearing()
-        //{
-        //    MainThread.BeginInvokeOnMainThread(() =>
-        //    {
-        //        this.LoadDataCommand.Execute(null);
-        //    });
-        //}
-
         public ICommand ChangeViewCommand => new Command<string>((view) =>
         {
             switch (view)
@@ -483,7 +475,7 @@ namespace Rincon.ViewModels
 
         public ICommand CancelAddProductCommand => new Command(async () =>
         {
-            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Yes", "No", async (response) =>
+            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Si", "No", async (response) =>
             {
                 if (response)
                 {
@@ -496,7 +488,7 @@ namespace Rincon.ViewModels
 
         public ICommand SaveProductCommand => new Command(async () =>
         {
-            await NotificationService.ConfirmAsync("Guardar", "¿Está seguro que desea guardar el producto?", "Yes", "No", async (response) =>
+            await NotificationService.ConfirmAsync("Guardar", "¿Está seguro que desea guardar el producto?", "Si", "No", async (response) =>
             {
                 if (response)
                 {
@@ -546,7 +538,7 @@ namespace Rincon.ViewModels
                             Machimbre = this.IsMachimbre,
                             ProductType = this.IsTiranteSelect ? ProductType.Tirante : this.IsPolinSelect ? ProductType.Polin : ProductType.Tabla,
                             WoodState = WoodState.Cepillado,
-                            MachimbreSate = Machimbre.machimbre3,
+                            MachimbreSate = Machimbre.Deck,
                             Description = this.IsPolinSelect ? $"{this.Diameter}" : $"{this.Thickness} x {this.Length} x {this.Width}",
 
                         };
@@ -616,7 +608,7 @@ namespace Rincon.ViewModels
 
         public ICommand CancelAddStockCommand => new Command(async () =>
         {
-            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Yes", "No", async (response) =>
+            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Si", "No", async (response) =>
             {
                 if (response)
                 {
@@ -647,7 +639,7 @@ namespace Rincon.ViewModels
                var result = await this.DataService.InsertOrUpdateStockAsync(this.ProductsStock.ToList());
 
            }
-           catch(Exception ex)
+           catch
            {
                await NotificationService.NotifyAsync("Error", "Hubo un error al agregar stock. Vuleva a intentar.", "Cerrar");
                return;
@@ -746,7 +738,8 @@ namespace Rincon.ViewModels
         {
             try
             {
-                if (!this.AuthenticationService.IsAuthenticated())
+                var user = await this.DataService.LoadLocalUserAsync();
+                if (user == null)
                 {
                     await this.NavigationService.Navigate<LoginViewModel>();
                 }

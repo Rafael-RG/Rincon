@@ -46,5 +46,25 @@ namespace Rincon.Common.Interfaces
         /// Loads stock
         /// </summary>
         Task<List<ProductStock>> LoadStockAsync();
+
+        /// <summary>
+        /// Loads user
+        /// </summary>
+        Task<User> LoadUserAsync(string userName, string password);
+
+        /// <summary>
+        /// Load local user
+        /// </summary>
+        Task<User> LoadLocalUserAsync();
+
+        /// <summary>
+        /// Load local user
+        /// </summary>
+        Task<bool> DeleteLocalUserAsync(User user);
+
+        /// <summary>
+        /// Save local user
+        /// </summary>
+        Task<bool> SaveLocalUserAsync(User user);
     }
 }

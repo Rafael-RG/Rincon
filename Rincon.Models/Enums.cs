@@ -30,10 +30,11 @@ namespace Rincon.Models
     /// </summary>
     public enum WoodState
     {
-
+        Fresco,
+        Rustico,
+        RusticoTratado,
         Cepillado,
-        Curado,
-        CepilladoCurado
+        CepilladoTratado
     }
 
     /// <summary>
@@ -41,9 +42,9 @@ namespace Rincon.Models
     /// </summary>
     public enum Machimbre
     {
-        machimbre1,
-        machimbre2,
-        machimbre3,
-        machimbre4
+        Deck,
+        FrenteIngles,
+        Entrepiso,
+        Piso
     }
 }

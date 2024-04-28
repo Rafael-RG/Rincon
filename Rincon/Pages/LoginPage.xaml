@@ -47,7 +47,7 @@
                 
                 <StackLayout Orientation="Vertical" VerticalOptions="Center" >
                     <ImageButton Source="operator_login_icon.png" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="300" WidthRequest="300" BackgroundColor="#4A744C"></ImageButton>
-                    <Label Text="Operarios" HorizontalTextAlignment="Center" FontSize="23"/>
+                    <Label Text="Operarios" HorizontalTextAlignment="Center" FontSize="23" TextColor="White"/>
                 </StackLayout>
             </Frame>
             <Frame Grid.Column="1" HasShadow="True" BackgroundColor="#D3AA84" HeightRequest="550" WidthRequest="700" BorderColor="#40000000" CornerRadius="24">

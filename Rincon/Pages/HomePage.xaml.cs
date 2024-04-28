@@ -2,7 +2,6 @@
 using Rincon.CustomPopups;
 using Rincon.Models;
 using Rincon.ViewModels;
-using StoreKit;
 
 namespace Rincon.Pages;
 
@@ -19,7 +18,6 @@ public partial class HomePage
 	public HomePage(HomeViewModel viewModel,IPopupNavigation popupNavigation) : base(viewModel, "Home")
 	{
 		InitializeComponent();
-
 		this.popupNavigation = popupNavigation;
     }
 
@@ -141,5 +139,18 @@ public partial class HomePage
         this.ViewModel.UpdateProductCommand.Execute(this.ViewModel.SelectedProductStock.Product);
 
         await popupNavigation.PushAsync(new SuccessEditProductPage(this.popupNavigation, this.ViewModel.ChangeViewCommand));
+    }
+
+    void SearchBarLateralBar_TextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(e.NewTextValue))
+        {
+            this.LateraBarStock.ItemsSource = this.ViewModel.Cards;
+        }
+        else
+        {
+            LateraBarStock.ItemsSource = this.ViewModel.Cards.Where(x => x.Id.ToLower().Contains(e.NewTextValue.ToLower())
+                || x.Description.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+        }
     }
 }
