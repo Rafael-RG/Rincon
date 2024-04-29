@@ -19,8 +19,24 @@
             <local:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+    <StackLayout Margin="0,0,0,0" Padding="0,0,0,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
-    <Grid
+        <StackLayout.Background>
+            <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Offset="0.1" Color="#AD6B2A" />
+                <GradientStop Offset="1.0" Color="#D3AA84" />
+            </LinearGradientBrush>
+        </StackLayout.Background>
+        <ActivityIndicator
+            VerticalOptions="CenterAndExpand"
+            HorizontalOptions="CenterAndExpand"
+                HeightRequest="32"
+                IsRunning="True"
+                IsVisible="{Binding IsUserLogin, Converter={StaticResource InvertedBoolConverter}}"
+                WidthRequest="32" />
+
+        <Grid
+        IsVisible="{Binding IsUserLogin}"
         BackgroundColor="#AD6B2A"
         ColumnDefinitions="*,*,*,*,*"
         ColumnSpacing="0"
@@ -146,6 +162,151 @@
              </Button.Shadow>
 
         </Button>
+        <Button
+            Grid.Row="0"
+            Grid.Column="4"
+            Margin="0,20,20,10"
+            BackgroundColor="#79280F"
+            HorizontalOptions="EndAndExpand"
+            Command="{Binding LogoutViewCommand}"
+            Text="Cerrar Sesion"
+            TextColor="#000000"
+            FontSize="22"/>
+
+        <!--  Barra lateral  -->
+        <Grid
+            Grid.Row="2"
+            Grid.Column="4"
+            Padding="0,0,0,0"
+            BackgroundColor="#D3AA84"
+            ColumnDefinitions="*"
+            RowDefinitions="auto,*">
+            <ActivityIndicator
+                HeightRequest="32"
+                IsRunning="True"
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.RowSpan="2"
+                IsVisible="{Binding IsBusy}"
+                WidthRequest="32" />
+            <Frame
+                Grid.Row="0"
+                Margin="10,15,10,15"
+                Padding="0,0,0,0"
+                BackgroundColor="#FAFAFA"
+                BorderColor="Transparent"
+                CornerRadius="12"
+                HeightRequest="45">
+                  <SearchBar BackgroundColor="White"
+                               HeightRequest="45"
+                               CancelButtonColor="Black"
+                               Placeholder="Buscar"
+                                       TextColor="Black"
+                                       HorizontalOptions="StartAndExpand"
+                                       x:Name="SearchBarLateralBar"
+                                       TextChanged="SearchBarLateralBar_TextChanged"/>
+            </Frame>
+            
+            <CollectionView
+                Grid.Row="1"
+                x:Name="LateraBarStock"
+                Margin="10,10,10,10"
+                ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=Cards}"
+                SelectionMode="Single"
+                VerticalOptions="FillAndExpand"
+                VerticalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:CardStock">
+                        <Frame
+                            BackgroundColor="#EAEAEA"
+                            BorderColor="Transparent"
+                            CornerRadius="12"
+                            HeightRequest="90"
+                            WidthRequest="280">
+                            <Grid
+                                Padding="-10"
+                                ColumnSpacing="15"
+                                HorizontalOptions="CenterAndExpand"
+                                RowSpacing="1"
+                                VerticalOptions="CenterAndExpand">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="*" />
+
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Margin="0,0,20,3"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding Id}"
+                                    TextColor="#79280F"
+                                    VerticalOptions="Start" />
+                                <Image
+                                    Grid.Row="1"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    HeightRequest="34"
+                                    HorizontalOptions="Start"
+                                    Source="{Binding Icon}" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    FontSize="15"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding Description}"
+                                    TextColor="#303030"
+                                    VerticalOptions="CenterAndExpand" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    FontSize="11"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="Stock Disponible"
+                                    TextColor="#000000" />
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    FontAttributes="Bold"
+                                    FontSize="13"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="{Binding StockAvailable}"
+                                    TextColor="#000000" />
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    FontSize="11"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="Reservado"
+                                    TextColor="#000000" />
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    FontSize="13"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="{Binding StockReserved}"
+                                    TextColor="#000000" />
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
         <!--#endregion-->
 
         <!--  Home  -->
@@ -159,6 +320,16 @@
             IsVisible="{Binding IsHomeView}"
             RowDefinitions="*,*,*,*"
             RowSpacing="20">
+            <ActivityIndicator
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Grid.RowSpan="4"
+                BackgroundColor="White"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"
+                IsRunning="True"
+                IsVisible="{Binding IsBusy}"/>
             <Frame
                 Grid.Row="0"
                 Padding="10"
@@ -489,8 +660,7 @@
                         IsChecked="{Binding IsTablaSelect}"
                         Value="Tabla" />
                 </HorizontalStackLayout>
-
-                <Grid
+                     <Grid
                     Margin="35,40,0,0"
                     ColumnDefinitions="auto,auto,auto,auto"
                     IsVisible="{Binding IsMeasureSelect}"
@@ -589,6 +759,9 @@
                         VerticalOptions="Center" />
                 </Grid>
 
+             
+               
+
                 <Grid
                     Margin="35,40,0,0"
                     ColumnDefinitions="auto,auto"
@@ -631,30 +804,52 @@
                         VerticalOptions="Center" />
 
                 </Grid>
-
-                <HorizontalStackLayout Margin="35,40,0,0">
+                <HorizontalStackLayout  Margin="35,40,0,0">
                     <Label
                         Text="Estado"
                         FontSize="18"
                         TextColor="#79280F"
                         VerticalOptions="Center" />
 
-                    <Frame
-                        Margin="65,0,0,0"
-                        Padding="0"
-                        BackgroundColor="Transparent"
-                        BorderColor="#797979"
-                        WidthRequest="190">
-                        <Picker
-                            FontSize="18"
-                            HorizontalOptions="FillAndExpand"
-                            ItemsSource="{Binding States}"
-                            TextColor="Black"
-                            VerticalOptions="FillAndExpand" />
-                    </Frame>
+                    <StackLayout HorizontalOptions="Start" WidthRequest="270" Margin="70,20,0,20" VerticalOptions="Start">
+                        <Frame BackgroundColor="White" HeightRequest="40" CornerRadius="18" Margin="0" Padding="10,-3,10,-3">
+                            <Label Text="{Binding SelectedState, Mode=TwoWay}" VerticalOptions="Center" FontSize="14" >
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectStateCommand}"/>
+                                </Label.GestureRecognizers>
+
+                            </Label>
+                        </Frame>
+                    <Frame CornerRadius="24" IsVisible="{Binding IsVisibleListStates}" VerticalOptions="Start" HeightRequest="140">
+                            <Frame.Background> 
+                                 <LinearGradientBrush EndPoint="0,1">
+                                    <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                    <GradientStop Offset="1.0" Color="#FFF6ED" />
+                                </LinearGradientBrush>
+                            </Frame.Background>
+                          <CollectionView x:Name="StatesList" HeightRequest="140" SelectionChanged="States_SelectionChanged" ItemsSource="{Binding States}" SelectionMode="Single" HorizontalOptions="Start" VerticalOptions="Start">
+
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10"/>
+                             </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                <Label
+                                        FontSize="18"
+                                        Grid.Column="2"
+                                        Text="{Binding .}"
+                                        TextColor="#000000"
+                                        VerticalOptions="Start" />
+                                    </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                       </Frame>
+                </StackLayout>
 
 
                 </HorizontalStackLayout>
+                
+                
 
                 <HorizontalStackLayout Margin="35,60,0,0" IsVisible="{Binding IsTiranteSelect}">
                     <Label
@@ -670,24 +865,46 @@
                         HorizontalOptions="End"
                         IsChecked="{Binding IsMachimbre}"
                         Color="#79280F" />
-                    <Frame
-                        Margin="65,0,0,0"
-                        Padding="0"
-                        BackgroundColor="Transparent"
-                        BorderColor="#797979"
-                        IsVisible="{Binding IsMachimbre}"
-                        WidthRequest="190">
-                        <Picker
-                            ItemsSource="{Binding States}"
-                            TextColor="Black"
-                            FontSize="18"
-                            VerticalOptions="Start" />
-                    </Frame>
+                    <StackLayout IsVisible="{Binding IsMachimbre}" HorizontalOptions="Start" WidthRequest="270" Margin="0,20,0,20">
+                        <Frame BackgroundColor="White" HeightRequest="40" CornerRadius="18" Margin="0" Padding="10,-3,10,-3">
+                            <Label Text="{Binding SelectedMachimbre, Mode=TwoWay}" VerticalOptions="Center" FontSize="14">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectMachimbreCommand}"/>
 
+                                </Label.GestureRecognizers>
+
+                            </Label>
+                        </Frame>
+                    <Frame x:Name="FrameListMachimbres" CornerRadius="24" IsVisible="{Binding IsVisibleListMachimbres}" VerticalOptions="Start" HeightRequest="140">
+                            <Frame.Background> 
+                                 <LinearGradientBrush EndPoint="0,1">
+                                    <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                    <GradientStop Offset="1.0" Color="#FFF6ED" />
+                                </LinearGradientBrush>
+                            </Frame.Background>
+                          <CollectionView x:Name="MachimbreList" HeightRequest="140" SelectionChanged="Machimbres_SelectionChanged" ItemsSource="{Binding Machimbres}" SelectionMode="Single" HorizontalOptions="Start" VerticalOptions="Start">
+
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10"/>
+                             </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                <Label
+                                        FontSize="18"
+                                        Grid.Column="2"
+                                        Text="{Binding .}"
+                                        TextColor="#000000"
+                                        VerticalOptions="Start" />
+                                    </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                       </Frame>
+                </StackLayout>
+    
                 </HorizontalStackLayout>
 
                 <Grid
-                    Margin="0,200,0,0"
+                    Margin="30,150,0,0"
                     ColumnDefinitions="auto,auto,auto,auto"
                     RowDefinitions="auto,auto">
                     <Label
@@ -1071,7 +1288,7 @@
                                        TextColor="Black"
                                        HorizontalOptions="StartAndExpand"
                                        x:Name="SearchBarInventory"
-                                       TextChanged="OnSearchStockTextChanged"/>
+                                       TextChanged="OnSearchStockInventoryTextChanged"/>
             </Frame>
 
             <HorizontalStackLayout
@@ -1116,29 +1333,34 @@
                             VerticalOptions="Start">
                             <Label
                                 Text="{Binding Id}"
+                                FontSize="16"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
 
                             <Label
                                 Grid.Column="1"
+                                FontSize="16"
                                 Text="{Binding Product.Description}"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
 
                             <Label
                                 Grid.Column="2"
+                                FontSize="16"
                                 Text="{Binding Product.WoodState}"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
 
                             <Label
                                 Grid.Column="3"
+                                FontSize="16"
                                 Text="{Binding Available}"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
 
                             <Label
                                 Grid.Column="4"
+                                FontSize="16"
                                 Text="{Binding Product.Location}"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
@@ -1159,33 +1381,6 @@
                 VerticalOptions="EndAndExpand"
                 Color="#79280F" />
 
-            <HorizontalStackLayout
-                Grid.Row="6"
-                Margin="0,20,0,30"
-                HorizontalOptions="Center"
-                VerticalOptions="Start"
-                HeightRequest="30">
-                <Button ImageSource="left_dir.png"  VerticalOptions="Start" BackgroundColor="Transparent"/> 
-                <CollectionView
-                    Margin="0,0,0,0"
-                    ItemsSource="{Binding CheckStockQuantityPages, Mode=TwoWay}"
-                    SelectionMode="Single"
-                    MaximumWidthRequest="60"
-                    BackgroundColor="Transparent"
-                    HeightRequest="20"
-                    VerticalOptions="End"
-                    VerticalScrollBarVisibility="Never">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Horizontal" VerticalItemSpacing="5" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="x:Int32">
-                            <Label Text="{Binding .}" TextColor="#79280F" FontSize="26"/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                     </CollectionView>
-               <Button ImageSource="rigth_dir.png"  VerticalOptions="Start" BackgroundColor="Transparent"/> 
-            </HorizontalStackLayout>
 
 
         </Grid>
@@ -1442,7 +1637,7 @@
                 VerticalOptions="FillAndExpand"
                 VerticalScrollBarVisibility="Never">
                 <CollectionView.ItemsLayout>
-                        <GridItemsLayout VerticalItemSpacing="10
+                        <GridItemsLayout VerticalItemSpacing="20
                                          " Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
@@ -1453,29 +1648,34 @@
                             VerticalOptions="Start">
                             <Label
                                 Text="{Binding Id}"
+                                FontSize="16"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
 
                             <Label
                                 Grid.Column="1"
+                                FontSize="16"
                                 Text="{Binding Product.Description}"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
 
                             <Label
                                 Grid.Column="2"
+                                FontSize="16"
                                 Text="{Binding Product.WoodState}"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
 
                             <Label
                                 Grid.Column="3"
+                                FontSize="16"
                                 Text="{Binding Available}"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
 
                             <Label
                                     Grid.Column="4"
+                                    FontSize="16"
                                     Margin="0,0,6,0"
                                     FontAttributes="Bold"
                                     TextColor="black">
@@ -1490,6 +1690,7 @@
 
                             <Label
                                 Grid.Column="5"
+                                FontSize="16"
                                 Text="{Binding Quantity}"
                                 TextColor="#000000"
                                 VerticalOptions="Start" />
@@ -1506,168 +1707,6 @@
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="EndAndExpand"
                 Color="#79280F" />
-
-            <HorizontalStackLayout
-                Grid.Row="6"
-                Margin="0,20,0,30"
-                HorizontalOptions="Center"
-                VerticalOptions="Start"
-                HeightRequest="30">
-                <Button ImageSource="left_dir.png"  VerticalOptions="Start" BackgroundColor="Transparent"/> 
-                <CollectionView
-                    Margin="0,0,0,0"
-                    ItemsSource="{Binding CheckStockQuantityPages, Mode=TwoWay}"
-                    SelectionMode="Single"
-                    MaximumWidthRequest="60"
-                    BackgroundColor="Transparent"
-                    HeightRequest="20"
-                    VerticalOptions="End"
-                    VerticalScrollBarVisibility="Never">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Horizontal" VerticalItemSpacing="5" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="x:Int32">
-                            <Label Text="{Binding .}" TextColor="#79280F" FontSize="26"/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                     </CollectionView>
-               <Button ImageSource="rigth_dir.png"  VerticalOptions="Start" BackgroundColor="Transparent"/> 
-            </HorizontalStackLayout>
-        </Grid>
-
-        <!--  Barra lateral  -->
-        <Grid
-            Grid.Row="2"
-            Grid.Column="4"
-            Padding="0,0,0,0"
-            BackgroundColor="#D3AA84"
-            ColumnDefinitions="*"
-            RowDefinitions="auto,*">
-            <ActivityIndicator
-                HeightRequest="32"
-                IsRunning="True"
-                Grid.Row="0"
-                Grid.Column="0"
-                Grid.RowSpan="2"
-                IsVisible="{Binding IsBusy}"
-                WidthRequest="32" />
-            <Frame
-                Grid.Row="0"
-                Margin="10,15,10,15"
-                Padding="0,0,0,0"
-                BackgroundColor="#FAFAFA"
-                BorderColor="Transparent"
-                CornerRadius="12"
-                HeightRequest="45">
-                  <SearchBar BackgroundColor="White"
-                               HeightRequest="45"
-                               CancelButtonColor="Black"
-                               Placeholder="Buscar"
-                                       TextColor="Black"
-                                       HorizontalOptions="StartAndExpand"
-                                       x:Name="SearchBarLateralBar"
-                                       TextChanged="SearchBarLateralBar_TextChanged"/>
-            </Frame>
-            
-            <CollectionView
-                Grid.Row="1"
-                x:Name="LateraBarStock"
-                Margin="10,10,10,10"
-                ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=Cards}"
-                SelectionMode="Single"
-                VerticalOptions="FillAndExpand"
-                VerticalScrollBarVisibility="Never">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:CardStock">
-                        <Frame
-                            BackgroundColor="#EAEAEA"
-                            BorderColor="Transparent"
-                            CornerRadius="12"
-                            HeightRequest="90"
-                            WidthRequest="280">
-                            <Grid
-                                Padding="-10"
-                                ColumnSpacing="15"
-                                HorizontalOptions="CenterAndExpand"
-                                RowSpacing="1"
-                                VerticalOptions="CenterAndExpand">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition Height="*" />
-
-                                </Grid.RowDefinitions>
-
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-
-                                <Label
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    Margin="0,0,20,3"
-                                    HorizontalOptions="Start"
-                                    Text="{Binding Id}"
-                                    TextColor="#79280F"
-                                    VerticalOptions="Start" />
-                                <Image
-                                    Grid.Row="1"
-                                    Grid.RowSpan="2"
-                                    Grid.Column="0"
-                                    HeightRequest="34"
-                                    HorizontalOptions="Start"
-                                    Source="{Binding Icon}" />
-                                <Label
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    Grid.ColumnSpan="2"
-                                    FontSize="15"
-                                    HorizontalOptions="Start"
-                                    Text="{Binding Description}"
-                                    TextColor="#303030"
-                                    VerticalOptions="CenterAndExpand" />
-                                <Label
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    FontSize="11"
-                                    HorizontalOptions="CenterAndExpand"
-                                    Text="Stock Disponible"
-                                    TextColor="#000000" />
-                                <Label
-                                    Grid.Row="2"
-                                    Grid.Column="1"
-                                    FontAttributes="Bold"
-                                    FontSize="13"
-                                    HorizontalOptions="CenterAndExpand"
-                                    Text="{Binding StockAvailable}"
-                                    TextColor="#000000" />
-                                <Label
-                                    Grid.Row="1"
-                                    Grid.Column="2"
-                                    FontSize="11"
-                                    HorizontalOptions="CenterAndExpand"
-                                    Text="Reservado"
-                                    TextColor="#000000" />
-                                <Label
-                                    Grid.Row="2"
-                                    Grid.Column="2"
-                                    FontSize="13"
-                                    HorizontalOptions="CenterAndExpand"
-                                    Text="{Binding StockReserved}"
-                                    TextColor="#000000" />
-
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
         </Grid>
 
         <!-- Tareas -->
@@ -1704,5 +1743,8 @@
 
         </Grid>
     </Grid>
+
+    </StackLayout>
+    
 
 </pages:BaseContentPage>

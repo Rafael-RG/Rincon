@@ -83,6 +83,15 @@ namespace Rincon.ViewModels
         }
 
 
+        /// <summary>
+        /// Login with active directory
+        /// </summary>
+        [RelayCommand]
+        private async void RecoveryPassword()
+        {
+            await this.NavigationService.Navigate<RecoverPasswordViewModel>();
+        }
+
 
 
         /// <summary>

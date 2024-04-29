@@ -146,5 +146,15 @@ namespace Rincon.DataAccess
                 return itemsCount > 0;
             }
         }
+
+        ///<inheritdoc/>
+        public async Task<User> LoadRecoveryUserAsync(string userName)
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                var user = await databaseContext.User.Where(x => x.Name == userName).FirstOrDefaultAsync();
+                return user;
+            }
+        }
     }
 }

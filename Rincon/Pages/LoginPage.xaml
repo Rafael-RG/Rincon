@@ -82,7 +82,12 @@
                             Text="{Binding Password}" />
                     </Frame>
 
-                    <Label Text="{extensions:Localize RecoverPassword}" FontSize="18" HorizontalTextAlignment="End" TextColor="#79280F" VerticalOptions="Start" Margin="30,0,40,0"/>
+                    <Label Text="{extensions:Localize RecoverPassword}" FontSize="18" HorizontalTextAlignment="End" TextColor="#79280F" VerticalOptions="Start" Margin="30,0,40,0">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RecoveryPasswordCommand}"/>
+                        </Label.GestureRecognizers>
+
+                    </Label>
 
 
                     <Button

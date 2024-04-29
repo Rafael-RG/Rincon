@@ -153,4 +153,29 @@ public partial class HomePage
                 || x.Description.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
         }
     }
+
+    void States_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    {
+        this.ViewModel.SelectedState = (string)StatesList.SelectedItem;
+        this.ViewModel.IsVisibleListStates = false;
+    }
+
+    void Machimbres_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    {
+        this.ViewModel.SelectedMachimbre = (string)MachimbreList.SelectedItem;
+        this.ViewModel.IsVisibleListMachimbres = false;
+    }
+
+    void OnSearchStockInventoryTextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
+    {
+        if (string.IsNullOrWhiteSpace(e.NewTextValue))
+        {
+            ProductsSearchStockInventory.ItemsSource = this.ViewModel.Stock;
+        }
+        else
+        {
+            ProductsSearchStockInventory.ItemsSource = this.ViewModel.Stock.Where(x => x.Id.ToLower().Contains(e.NewTextValue.ToLower())
+                || x.Product.Description.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+        }
+    }
 }

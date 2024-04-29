@@ -32,6 +32,9 @@
 		<string>external-accessory</string>
 		<string>fetch</string>
 		<string>processing</string>
+		<string>bluetooth-central</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>

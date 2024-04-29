@@ -66,5 +66,10 @@ namespace Rincon.Common.Interfaces
         /// Save local user
         /// </summary>
         Task<bool> SaveLocalUserAsync(User user);
+
+        /// <summary>
+        /// Loads user
+        /// </summary>
+        Task<User> LoadRecoveryUserAsync(string userName);
     }
 }

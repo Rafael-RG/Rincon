@@ -101,6 +101,12 @@ namespace Rincon.ViewModels
         private bool isCheckStockView;
 
         ///// <summary>
+        ///// Add stock View
+        ///// </summary>
+        [ObservableProperty]
+        private bool isUserLogin;
+
+        ///// <summary>
         ///// Is Tirante
         ///// </summary>
 
@@ -159,6 +165,13 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private List<string> states;
 
+
+        ///// <summary>
+        ///// machimbres
+        ///// </summary>
+        [ObservableProperty]
+        private List<string> machimbres;
+
         ///// <summary>
         ///// Check stock quantity pages
         ///// </summary>
@@ -211,7 +224,31 @@ namespace Rincon.ViewModels
         ///// IsMachimbre
         ///// </summary>
         [ObservableProperty]
-        private bool isMachimbre;
+        private bool isMachimbre; 
+
+        ///// <summary>
+        ///// IsMachimbre
+        ///// </summary>
+        [ObservableProperty]
+        private bool isVisibleListMachimbres;
+
+        ///// <summary>
+        ///// IsMachimbre
+        ///// </summary>
+        [ObservableProperty]
+        private bool isVisibleListStates;
+
+        ///// <summary>
+        ///// IsMachimbre
+        ///// </summary>
+        [ObservableProperty]
+        private string selectedMachimbre;
+
+        ///// <summary>
+        ///// IsMachimbre
+        ///// </summary>
+        [ObservableProperty]
+        private string selectedState;
 
         ///// <summary>
         ///// ProductCode
@@ -291,6 +328,13 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private string produSupplierEdit;
 
+        //// <summary>
+        ///// Is visible list add stock
+        ///// </summary>
+        [ObservableProperty]
+        private int selectedIndexSeachStock;
+
+
 
 
         #endregion
@@ -309,6 +353,8 @@ namespace Rincon.ViewModels
             {
                 this.IsBusy = true;
 
+                this.IsUserLogin = false;
+
                MainThread.BeginInvokeOnMainThread(() =>
                {
                    this.LoadDataCommand.Execute(null);
@@ -317,6 +363,23 @@ namespace Rincon.ViewModels
                 this.IsBusy = false;
             });
         }
+
+
+        public ICommand LogoutViewCommand => new Command(async () =>
+        {
+
+            await NotificationService.ConfirmAsync("Cerrar Sesion", "¿Está seguro que desea cerrar sesion?", "Si", "No", async (response) =>
+            {
+                if (response)
+                {
+                    var user = await this.DataService.LoadLocalUserAsync();
+
+                    await this.DataService.DeleteLocalUserAsync(user);
+
+                    await this.NavigationService.Navigate<LoginViewModel>();
+                }
+            });
+        });
 
         public ICommand ChangeViewCommand => new Command<string>((view) =>
         {
@@ -427,6 +490,7 @@ namespace Rincon.ViewModels
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
+                    this.SelectedIndexSeachStock = 1;
                     break;
                 case "CheckStock":
                     this.IsHomeView = false;
@@ -440,6 +504,8 @@ namespace Rincon.ViewModels
                     this.IsCheckStockView = true;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
+
+                    this.SelectedIndexSeachStock = 1;
                     break;
                 case "EditProductInventory":
                     this.IsHomeView = false;
@@ -483,6 +549,18 @@ namespace Rincon.ViewModels
                     this.ChangeViewCommand.Execute("Home");
                 }
             });
+
+        });
+
+        public ICommand SelectStateCommand => new Command(async () =>
+        {
+            this.IsVisibleListStates = !this.IsVisibleListStates;
+
+        });
+
+        public ICommand SelectMachimbreCommand => new Command(async () =>
+        {
+            this.IsVisibleListMachimbres = !this.IsVisibleListMachimbres;
 
         });
 
@@ -537,8 +615,8 @@ namespace Rincon.ViewModels
                             Width = this?.Width,
                             Machimbre = this.IsMachimbre,
                             ProductType = this.IsTiranteSelect ? ProductType.Tirante : this.IsPolinSelect ? ProductType.Polin : ProductType.Tabla,
-                            WoodState = WoodState.Cepillado,
-                            MachimbreSate = Machimbre.Deck,
+                            WoodState =  (WoodState)Enum.Parse(typeof(WoodState),this.SelectedState),
+                            MachimbreSate = (Machimbre)Enum.Parse(typeof(Machimbre),this.SelectedMachimbre),
                             Description = this.IsPolinSelect ? $"{this.Diameter}" : $"{this.Thickness} x {this.Length} x {this.Width}",
 
                         };
@@ -647,7 +725,9 @@ namespace Rincon.ViewModels
 
            await NotificationService.NotifyAsync("Operacion Exitosa", "Stock actualizado", "Volver");
 
-           ClearViewAddProduct();
+           ClearViewAddStock();
+
+           await RefreshBar();
 
            return;
        });
@@ -695,9 +775,12 @@ namespace Rincon.ViewModels
                 {
 
                     var productStock = this.Stock.Where(x => x.Product.Id == product.Id).First();
+
+                    var cardStock = this.Cards.Where(x=>x.Id==product.Id).First();
                     await this.DataService.DeleteItemAsync<ProductStock>(productStock);
 
                     this.Products.Remove(product);
+                    this.Cards.Remove(cardStock);
                     this.Stock.Remove(productStock);
                 }
             }
@@ -743,65 +826,44 @@ namespace Rincon.ViewModels
                 {
                     await this.NavigationService.Navigate<LoginViewModel>();
                 }
+                else
+                {
+                    this.IsUserLogin = user != null;
+                    this.ChangeViewCommand.Execute("Home");
+                }
 
-                this.ChangeViewCommand.Execute("Home");
 
-                this.States = new List<string>()
-            {
-                "Estado 1",
-                "Esatdo 2",
-                "Estado 3"
-            };
+                this.IsBusy = true;
+
+                this.States = new List<string>();
+
+                foreach (var item in Enum.GetValues(typeof(WoodState)))
+                {
+                    this.States.Add(item.ToString());
+                }
+
+                this.SelectedState = this.States.First();
+
+                this.Machimbres = new List<string>();
+
+                foreach (var item in Enum.GetValues(typeof(Machimbre)))
+                {
+                    this.Machimbres.Add(item.ToString());
+                }
+
+                this.SelectedMachimbre = this.Machimbres.First();
 
                 this.Products = await this.DataService.LoadProductsAsync();
 
-                var stock = await this.DataService.LoadStockAsync();
-
-                if (stock != null && stock.Any())
-                {
-                    this.Stock = new ObservableCollection<ProductStock>(stock);
-                }
-                
-
-                this.CheckStockQuantityPages = new List<int>();
-
-                if (this.Stock != null && this.Stock.Any())
-                {
-                    var count = 0;
-
-                    this.Cards = new ObservableCollection<CardStock>();
-
-                    this.Stock.ToList().ForEach(product =>
-                    {
-
-                        product.Product = this.Products.Find(x=>x.Id == product.Id);
-
-                        this.Cards.Add(
-                            new CardStock
-                            {
-                                Id = product.Id,
-                                Description = product.Product.Description,
-                                StockAvailable = product.Available,
-                                StockReserved = product.Reserved,
-                                Icon = $"cr.png"
-                            });
-
-                        if (count == 0)
-                        {
-                            this.CheckStockQuantityPages.Add(1);
-                        }
-                        else if (count % 10 == 0)
-                        {
-                            this.CheckStockQuantityPages.Add((count / 10) + 1);
-                        }
-
-                        count++;
-                    });
-                }
+                await RefreshBar();
             }
             catch (Exception ex)
             {
                 //Error
+            }
+            finally
+            {
+                this.IsBusy = false;
             }
 
         });
@@ -820,12 +882,59 @@ namespace Rincon.ViewModels
             this.IsMachimbre = false;
             this.IsPolinSelect = false;
             this.IsTablaSelect = false;
-            this.IsTiranteSelect = false;
+            this.IsTiranteSelect = true;
         }
 
         private void ClearViewAddStock()
         {
             this.ProductsStock = null;
+        }
+
+        private async Task RefreshBar()
+        {
+            var stock = await this.DataService.LoadStockAsync();
+
+            if (stock != null && stock.Any())
+            {
+                this.Stock = new ObservableCollection<ProductStock>(stock);
+            }
+
+
+            this.CheckStockQuantityPages = new List<int>();
+
+            if (this.Stock != null && this.Stock.Any())
+            {
+                var count = 0;
+
+                this.Cards = new ObservableCollection<CardStock>();
+
+                this.Stock.ToList().ForEach(product =>
+                {
+
+                    product.Product = this.Products.Find(x => x.Id == product.Id);
+
+                    this.Cards.Add(
+                        new CardStock
+                        {
+                            Id = product.Id,
+                            Description = product.Product.Description,
+                            StockAvailable = product.Available,
+                            StockReserved = product.Reserved,
+                            Icon = $"cr.png"
+                        });
+
+                    if (count == 0)
+                    {
+                        this.CheckStockQuantityPages.Add(1);
+                    }
+                    else if (count % 10 == 0)
+                    {
+                        this.CheckStockQuantityPages.Add((count / 10) + 1);
+                    }
+
+                    count++;
+                });
+            }
         }
 
         private async Task<bool> CreateSavePDFAsync(List<ProductStock> productsStock)
