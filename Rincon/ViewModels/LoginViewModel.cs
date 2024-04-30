@@ -50,7 +50,7 @@ namespace Rincon.ViewModels
 
                 if (user == null)
                 {
-                    await NotificationService.NotifyAsync("LoginErrorTitle", "LoginError", "Close");
+                    await NotificationService.NotifyAsync("Error", "Credenciales invalidas", "Cerrar");
                     return;
                 }
 

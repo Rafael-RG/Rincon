@@ -28,6 +28,9 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private string seletedQuestion;
 
+        [ObservableProperty]
+        private bool isVisibleListQuestions;
+
 
         /// <summary>
         /// Gets by DI the required services
@@ -41,6 +44,8 @@ namespace Rincon.ViewModels
                 new ("Cual es el nombre de tu primer mascota?"),
                 new ("Cual es el nombre del barrio en que naciste?")
             };
+
+            this.SeletedQuestion = this.Questions.First();
         }
 
 
@@ -98,6 +103,14 @@ namespace Rincon.ViewModels
         {
             this.CleanData();
             await this.NavigationService.Navigate<LoginViewModel>();
+        });
+
+        /// <summary>
+        /// DB login
+        /// </summary>
+        public ICommand SelectQuestionCommand => new Command(() =>
+        {
+            this.IsVisibleListQuestions = !this.IsVisibleListQuestions;
         });
 
         private void CleanData()

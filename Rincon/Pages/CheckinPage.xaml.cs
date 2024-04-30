@@ -15,5 +15,11 @@ public partial class CheckinPage
 	{
 		InitializeComponent();
 	}
+
+    void Questions_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    {
+        this.ViewModel.SeletedQuestion = (string)Questions.SelectedItem;
+        this.ViewModel.IsVisibleListQuestions = false;
+    }
 }
 
