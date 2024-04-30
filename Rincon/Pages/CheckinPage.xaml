@@ -76,20 +76,17 @@
 
                 <HorizontalStackLayout Grid.Row="5" HorizontalOptions="Center">
                     <Button
-                        BackgroundColor="#4A744C"
-                        Margin="0,60,0,0"
-                        TextColor="White"
-                        Command="{Binding CheckinCommand}"
-                        Text="{extensions:Localize Checkin}" />
-
-
-                    <Button
                         BackgroundColor="#AD6B2A"
                         Margin="0,20,0,0"
                         TextColor="#FFF6ED"
                         Command="{Binding CancelCheckinCommand}"
                         Text="{extensions:Localize Cancel}" />
-
+                    <Button
+                        BackgroundColor="#4A744C"
+                        Margin="0,60,0,0"
+                        TextColor="White"
+                        Command="{Binding CheckinCommand}"
+                        Text="{extensions:Localize Checkin}" />
                 </HorizontalStackLayout>
 
             </Grid>

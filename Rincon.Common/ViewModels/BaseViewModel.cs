@@ -22,7 +22,6 @@ namespace Rincon.Common.ViewModels
     {
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(IsEnabled))]
         private bool isBusy;
         //private readonly IMvxTextProviderBuilder textProviderBuilder;
 
@@ -62,7 +61,7 @@ namespace Rincon.Common.ViewModels
         /// Gets if the ViewModel is enabled.
         /// It's the inverse of IsBusy for easier binding. (If IsBusy = true them IsEnabled = false)
         /// </summary>
-        public bool IsEnabled { get => !this.isBusy; }
+        //public bool IsEnabled { get => !this.isBusy; }
         //{
         //    get => !this.isBusy;
         //    set
@@ -210,14 +209,14 @@ namespace Rincon.Common.ViewModels
         /// <summary>
         /// Show an error message and logs an exception message
         /// </summary>
-        public async Task ShowErrorErrorMessageAsyc(Exception ex)
-        {
-            //await InvokeOnMainThreadAsync(async () =>
-            //{
-            //    await LogExceptionAsync(ex);
-            //    await this.NotificationService.NotifyErrorAsync("Attention", ex.Message);
-            //});
-        }
+        //public async Task ShowErrorErrorMessageAsyc(Exception ex)
+        //{
+        //    //await InvokeOnMainThreadAsync(async () =>
+        //    //{
+        //    //    await LogExceptionAsync(ex);
+        //    //    await this.NotificationService.NotifyErrorAsync("Attention", ex.Message);
+        //    //});
+        //}
 
 
         /// <summary>

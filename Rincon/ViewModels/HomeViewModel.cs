@@ -148,9 +148,7 @@ namespace Rincon.ViewModels
             }
         }
 
-        ///// <summary>
-        /// Is Measure
-        /// </summary>
+        
         public bool? IsMeasureSelect
         {
             get
@@ -272,7 +270,7 @@ namespace Rincon.ViewModels
         ///// Products to add
         ///// </summary>
         [ObservableProperty]
-        private ProductStock selectedProductStock;
+        private Product selectedProduct;
 
         ///// <summary>
         ///// List of products
@@ -541,7 +539,7 @@ namespace Rincon.ViewModels
 
         public ICommand CancelAddProductCommand => new Command(async () =>
         {
-            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Si", "No", async (response) =>
+            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Si", "No",  (response) =>
             {
                 if (response)
                 {
@@ -552,13 +550,13 @@ namespace Rincon.ViewModels
 
         });
 
-        public ICommand SelectStateCommand => new Command(async () =>
+        public ICommand SelectStateCommand => new Command(() =>
         {
             this.IsVisibleListStates = !this.IsVisibleListStates;
 
         });
 
-        public ICommand SelectMachimbreCommand => new Command(async () =>
+        public ICommand SelectMachimbreCommand => new Command(() =>
         {
             this.IsVisibleListMachimbres = !this.IsVisibleListMachimbres;
 
@@ -623,6 +621,12 @@ namespace Rincon.ViewModels
 
                         var result = await this.DataService.InsertOrUpdateItemsAsync<Product>(product);
 
+                        if (result > 0)
+                        {
+                            this.Products.Add(product);
+                        }
+                        
+
                     }
                     catch
                     {
@@ -686,7 +690,7 @@ namespace Rincon.ViewModels
 
         public ICommand CancelAddStockCommand => new Command(async () =>
         {
-            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Si", "No", async (response) =>
+            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Si", "No", (response) =>
             {
                 if (response)
                 {
@@ -708,16 +712,17 @@ namespace Rincon.ViewModels
 
                this.ProductsStock.ToList().ForEach(x =>
                {
-                   if (this.Stock?.Where(y => y.Id == x.Id)?.First() != null)
+                   var existStock = this.Stock?.Where(y => y.Id == x.Id)?.FirstOrDefault();
+                   if (existStock != null)
                    {
-                       x.Quantity = x.Quantity + this.Stock.Where(y => y.Id == x.Id).First().Quantity;
+                       x.Quantity = x.Quantity + existStock.Quantity;
                    }
                });
                
                var result = await this.DataService.InsertOrUpdateStockAsync(this.ProductsStock.ToList());
 
            }
-           catch
+           catch (Exception ex)
            {
                await NotificationService.NotifyAsync("Error", "Hubo un error al agregar stock. Vuleva a intentar.", "Cerrar");
                return;
@@ -753,7 +758,11 @@ namespace Rincon.ViewModels
             }
         });
 
+        public ICommand SelectProductCommand => new Command(() =>
+        {
+            this.IsVisibleListAddStock = !this.IsVisibleListAddStock;
 
+        });
 
         #endregion
 
@@ -763,6 +772,23 @@ namespace Rincon.ViewModels
         #endregion
 
         #region Inventario
+        public ICommand LBProductDetaildCommand => new Command<CardStock>(async (card) =>
+        {
+            try
+            {
+                var product = this.Products.Where(x => x.Id == card.Id).FirstOrDefault();
+
+                if (product != null)
+                {
+                    this.SelectedProduct = product;
+                    this.ChangeViewCommand.Execute("EditProductInventory");
+                }
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al actualizar el producto. Vuleva a intentar.", "Cerrar");
+            }
+        });
 
         public ICommand OkDeleteProductCommand => new Command<Product>(async (product) =>
         {
@@ -809,7 +835,7 @@ namespace Rincon.ViewModels
                     });
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 await NotificationService.NotifyAsync("Error", "Hubo un error al actualizar el producto. Vuleva a intentar.", "Cerrar");
             }
@@ -920,7 +946,7 @@ namespace Rincon.ViewModels
                             Description = product.Product.Description,
                             StockAvailable = product.Available,
                             StockReserved = product.Reserved,
-                            Icon = $"cr.png"
+                            Icon = $"{product.Product.WoodState.ToString().ToLower()}.png"
                         });
 
                     if (count == 0)

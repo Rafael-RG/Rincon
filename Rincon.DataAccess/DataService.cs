@@ -38,7 +38,7 @@ namespace Rincon.DataAccess
             {
                 if (!string.IsNullOrEmpty(tableName))
                 {
-                    await databaseContext.Database.ExecuteSqlRawAsync($"DELETE FROM {tableName}");
+                    await databaseContext.Database.ExecuteSqlAsync($"DELETE FROM {tableName}");
                 }
                 await databaseContext.Set<T>().AddRangeAsync(items);
                 var itemsCount = await databaseContext.SaveChangesAsync().ConfigureAwait(false);

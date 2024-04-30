@@ -54,7 +54,7 @@ public partial class HomePage
 
     void SearchBar_Focused(System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e)
     {
-        this.ViewModel.IsVisibleListAddStock = true;
+        this.ViewModel.IsVisibleListAddStock = !this.ViewModel.IsVisibleListAddStock;
     }
 
     void SearchBar_Unfocused(System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e)
@@ -87,9 +87,8 @@ public partial class HomePage
     {
 
         var button = ((Button)sender);
-        var productStock = (ProductStock)button.BindingContext;
+        var product = (Product)button.BindingContext;
 
-        var product = productStock.Product;
         await popupNavigation.PushAsync(new DeleteProductsQuestionPage(this.popupNavigation, product, ViewModel.OkDeleteProductCommand));
     }
 
@@ -100,9 +99,9 @@ public partial class HomePage
     {
 
         var button = ((Button)sender);
-        var productStock = (ProductStock)button.BindingContext;
+        var product = (Product)button.BindingContext;
 
-        this.ViewModel.SelectedProductStock = productStock;
+        this.ViewModel.SelectedProduct = product;
 
         this.ViewModel.IsInventoryEditView = true;
 
@@ -115,11 +114,11 @@ public partial class HomePage
 
     void EditProductPage_Clicked(System.Object sender, System.EventArgs e)
     {
-        this.ViewModel.ProductCommentEdit = this.ViewModel.SelectedProductStock.Product.Comment;
+        this.ViewModel.ProductCommentEdit = this.ViewModel.SelectedProduct.Comment;
 
-        this.ViewModel.ProductLocationEdit = this.ViewModel.SelectedProductStock.Product.Location;
+        this.ViewModel.ProductLocationEdit = this.ViewModel.SelectedProduct.Location;
 
-        this.ViewModel.ProduSupplierEdit = this.ViewModel.SelectedProductStock.Product.Supplier;
+        this.ViewModel.ProduSupplierEdit = this.ViewModel.SelectedProduct.Supplier;
 
         this.ViewModel.ChangeViewCommand.Execute("EditProductDetaildInventory");
 
@@ -132,26 +131,38 @@ public partial class HomePage
 
     async void SaveEditProductPage_Clicked(System.Object sender, System.EventArgs e)
     {
-        this.ViewModel.SelectedProductStock.Product.Comment = this.ViewModel.ProductCommentEdit;
-        this.ViewModel.SelectedProductStock.Product.Location = this.ViewModel.ProductLocationEdit;
-        this.ViewModel.SelectedProductStock.Product.Supplier = this.ViewModel.ProduSupplierEdit;
+        this.ViewModel.SelectedProduct.Comment = this.ViewModel.ProductCommentEdit;
+        this.ViewModel.SelectedProduct.Location = this.ViewModel.ProductLocationEdit;
+        this.ViewModel.SelectedProduct.Supplier = this.ViewModel.ProduSupplierEdit;
 
-        this.ViewModel.UpdateProductCommand.Execute(this.ViewModel.SelectedProductStock.Product);
+        this.ViewModel.UpdateProductCommand.Execute(this.ViewModel.SelectedProduct);
+
+        this.ProductsSearchStockInventory.ItemsSource = this.ViewModel.Products;
+
+        this.ProductsSearchStockInventory.SelectedItem = this.ViewModel.SelectedProduct;
 
         await popupNavigation.PushAsync(new SuccessEditProductPage(this.popupNavigation, this.ViewModel.ChangeViewCommand));
     }
 
     void SearchBarLateralBar_TextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(e.NewTextValue))
+        try
         {
-            this.LateraBarStock.ItemsSource = this.ViewModel.Cards;
+            if (string.IsNullOrWhiteSpace(e.NewTextValue))
+            {
+                this.LateraBarStock.ItemsSource = this.ViewModel.Cards;
+            }
+            else
+            {
+                LateraBarStock.ItemsSource = this.ViewModel.Cards.Where(x => x.Id.ToLower().Contains(e.NewTextValue.ToLower())
+                    || x.Description.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+            }
         }
-        else
+        catch
         {
-            LateraBarStock.ItemsSource = this.ViewModel.Cards.Where(x => x.Id.ToLower().Contains(e.NewTextValue.ToLower())
-                || x.Description.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+
         }
+        
     }
 
     void States_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
@@ -168,14 +179,27 @@ public partial class HomePage
 
     void OnSearchStockInventoryTextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(e.NewTextValue))
+        try
         {
-            ProductsSearchStockInventory.ItemsSource = this.ViewModel.Stock;
+            if (string.IsNullOrWhiteSpace(e.NewTextValue))
+            {
+                ProductsSearchStockInventory.ItemsSource = this.ViewModel.Products;
+            }
+            else
+            {
+                ProductsSearchStockInventory.ItemsSource = this.ViewModel.Products.Where(x => x.Id.ToLower().Contains(e.NewTextValue.ToLower())
+                    || x.Description.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+            }
         }
-        else
+        catch
         {
-            ProductsSearchStockInventory.ItemsSource = this.ViewModel.Stock.Where(x => x.Id.ToLower().Contains(e.NewTextValue.ToLower())
-                || x.Product.Description.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
-        }
+
+        }        
+    }
+
+    void LateraBarStock_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    {
+        var productCard = (CardStock)this.LateraBarStock.SelectedItem;
+        this.ViewModel.LBProductDetaildCommand.Execute(productCard);
     }
 }

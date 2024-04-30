@@ -123,6 +123,30 @@
 		<MauiImage Update="Resources\Images\rincon_white.svg">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiImage>
+		<MauiImage Update="Resources\Images\cepillado.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\cepilladotratado.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\fresco.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\rustico.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\rusticotratado.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\sintratar.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\tratado.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
+		<MauiImage Update="Resources\Images\add_circle_button.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -149,6 +173,14 @@
 	  <None Remove="Resources\Fonts\Inter-SemiBold.ttf" />
 	  <None Remove="Resources\Fonts\Inter-Thin.ttf" />
 	  <None Remove="Resources\Images\rincon_white.svg" />
+	  <None Remove="Resources\Images\sintratar.svg" />
+	  <None Remove="Resources\Images\tratado.svg" />
+	  <None Remove="Resources\Images\cepilladotratado.svg" />
+	  <None Remove="Resources\Images\cepillado.svg" />
+	  <None Remove="Resources\Images\rusticotratado.svg" />
+	  <None Remove="Resources\Images\rustico.svg" />
+	  <None Remove="Resources\Images\fresco.svg" />
+	  <None Remove="Resources\Images\add_circle_button.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -284,6 +316,16 @@
 	  <BundleResource Include="Resources\Fonts\Inter-SemiBold.ttf" />
 	  <BundleResource Include="Resources\Fonts\Inter-Thin.ttf" />
 	  <BundleResource Include="Resources\Images\rincon_white.svg">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </BundleResource>
+	  <BundleResource Include="Resources\Images\sintratar.svg" />
+	  <BundleResource Include="Resources\Images\tratado.svg" />
+	  <BundleResource Include="Resources\Images\cepilladotratado.svg" />
+	  <BundleResource Include="Resources\Images\cepillado.svg" />
+	  <BundleResource Include="Resources\Images\rusticotratado.svg" />
+	  <BundleResource Include="Resources\Images\rustico.svg" />
+	  <BundleResource Include="Resources\Images\fresco.svg" />
+	  <BundleResource Include="Resources\Images\add_circle_button.svg">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </BundleResource>
 	</ItemGroup>

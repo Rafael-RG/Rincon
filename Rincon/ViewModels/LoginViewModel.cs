@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Rincon.Common.ViewModels;
 
@@ -27,8 +28,7 @@ namespace Rincon.ViewModels
         /// <summary>
         /// DB login
         /// </summary>
-        [RelayCommand]
-        private async void Login()
+        public ICommand LoginCommand => new Command(async () =>
         {
             if (this.IsBusy) return;
 
@@ -70,27 +70,25 @@ namespace Rincon.ViewModels
             {
                 this.IsBusy = false;
             }
-        }
+        });
 
 
         /// <summary>
         /// Login with active directory
         /// </summary>
-        [RelayCommand]
-        private async void Checkin()
+        public ICommand CheckinCommand => new Command(async () =>
         {
             await this.NavigationService.Navigate<CheckinViewModel>();
-        }
+        });
 
 
         /// <summary>
         /// Login with active directory
         /// </summary>
-        [RelayCommand]
-        private async void RecoveryPassword()
+        public ICommand RecoveryPasswordCommand => new Command(async () =>
         {
             await this.NavigationService.Navigate<RecoverPasswordViewModel>();
-        }
+        });
 
 
 

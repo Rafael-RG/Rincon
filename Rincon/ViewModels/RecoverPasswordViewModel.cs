@@ -163,7 +163,7 @@ namespace Rincon.ViewModels
         /// <summary>
         /// DB login
         /// </summary>
-        public ICommand BackFirstFormCommand => new Command(async () =>
+        public ICommand BackFirstFormCommand => new Command(() =>
         {
             this.IsVisibleFirstForm = true;
             this.IsVisibleNewPassword = false;
@@ -172,7 +172,7 @@ namespace Rincon.ViewModels
         /// <summary>
         /// DB login
         /// </summary>
-        public ICommand SelectQuestionCommand => new Command(async () =>
+        public ICommand SelectQuestionCommand => new Command(() =>
         {
             this.IsVisibleListQuestions = !this.IsVisibleListQuestions;
         });
