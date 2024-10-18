@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+    x:Class="Rincon.CustomPopups.MenuPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:Rincon.Models;assembly=Rincon.Models"
+    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+    Title="MenuPage"
+    BackgroundColor="#80000000"
+    CloseWhenBackgroundIsClicked="true">
+
+    <Border
+        VerticalOptions="Start"
+        HorizontalOptions="EndAndExpand"
+        Margin="10,30,0,0"
+        Padding="30"
+        BackgroundColor="#FFF6ED"
+        HeightRequest="300"
+        WidthRequest="300">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="0,0,0,0" />
+        </Border.StrokeShape>
+
+        <Grid
+            BackgroundColor="Transparent"
+            ColumnDefinitions="*"
+            HorizontalOptions="FillAndExpand"
+            RowDefinitions="auto,auto,auto,auto"
+            VerticalOptions="FillAndExpand">
+            <StackLayout Orientation="Horizontal">
+                <Image
+                    Margin="10,0,0,0"
+                    HeightRequest="30"
+                    WidthRequest="30"
+                    Source="account_brawn.png" />
+                <Label
+                    x:Name="UserName"
+                    FontSize="22"
+                    Margin="10,0,0,0"
+                    HorizontalOptions="Start"
+                    TextColor="#AD6B2A"
+                    VerticalOptions="Center" />
+            </StackLayout>
+
+            <Button
+                Margin="0,20,0,0"
+                Grid.Row="1"
+                BackgroundColor="Transparent"
+                Clicked="Configuration_Clicked"
+                HorizontalOptions="Start"
+                Text="Configuracion"
+                TextColor="#000000"
+                VerticalOptions="EndAndExpand" />
+
+            <Button
+                Grid.Row="2"
+                BackgroundColor="Transparent"
+                Clicked="ManagementOperators_Clicked"
+                HorizontalOptions="Start"
+                Text="Administrar operarios"
+                TextColor="#000000"
+                VerticalOptions="EndAndExpand" />
+
+            <Button
+                Grid.Row="3"
+                Margin="0,30,0,0"
+                BackgroundColor="Transparent"
+                Clicked="Logout_Clicked"
+                HorizontalOptions="Start"
+                Text="Cerrar sesion"
+                TextColor="#79280F"
+                VerticalOptions="EndAndExpand" />
+        </Grid>
+    </Border>
+
+
+</mopups:PopupPage>

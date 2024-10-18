@@ -126,6 +126,16 @@ namespace Rincon.DataAccess
         }
 
         ///<inheritdoc/>
+        public async Task<List<Note>> LoadNotesAsync()
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                var notes = await databaseContext.Note.OrderByDescending(x=>x.CreatedAt).ToListAsync();
+                return notes;
+            }
+        }
+
+        ///<inheritdoc/>
         public async Task<bool> DeleteLocalUserAsync(User user)
         {
             using (var databaseContext = new LocalDataBaseContext())

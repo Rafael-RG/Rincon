@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+    x:Class="Rincon.CustomPopups.AddNotePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:Rincon.Models;assembly=Rincon.Models"
+    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+    Title="AddNotePage"
+    BackgroundColor="#80000000"
+    CloseWhenBackgroundIsClicked="False">
+
+    <Border
+        Margin="400,200,400,200"
+        WidthRequest="800"
+        Padding="40"
+        BackgroundColor="White">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="18,18,18,18" />
+        </Border.StrokeShape>
+
+        <Grid
+            BackgroundColor="White"
+            ColumnDefinitions="*"
+            HorizontalOptions="FillAndExpand"
+            RowDefinitions="auto,auto,auto,auto,*,auto"
+            VerticalOptions="FillAndExpand">
+            <Label
+                Margin="0,0,0,10"
+                FontSize="26"
+                HorizontalOptions="Start"
+                Text="Nueva Nota"
+                TextColor="#79280F"
+                VerticalOptions="Center" />
+
+            <BoxView
+                Grid.Row="1"
+                Margin="0,0,0,20"
+                HeightRequest="2"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Start"
+                Color="#79280F" />
+
+            <StackLayout Grid.Row="2" Margin="30,10,0,0">
+                <Label Text="Titulo" TextColor="#79280F" />
+                <Frame
+                    Padding="0"
+                    BackgroundColor="Transparent"
+                    BorderColor="#797979">
+                    <Entry
+                        x:Name="NoteTitle"
+                        FontSize="18"
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="Ingresa un titulo"
+                        TextColor="Black"
+                        VerticalOptions="FillAndExpand" />
+                </Frame>
+
+                <Label
+                    Margin="0,20,0,0"
+                    Text="Descripción"
+                    TextColor="#79280F" />
+                <Frame
+                    Margin="0,0,0,0"
+                    Padding="0"
+                    BackgroundColor="Transparent"
+                    BorderColor="#797979">
+                    <Editor
+                        x:Name="NoteDescription"
+                        AutoSize="TextChanges"
+                        FontSize="18"
+                        HeightRequest="250"
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="Ingresa la descripcion"
+                        TextColor="Black"
+                        VerticalOptions="FillAndExpand" />
+                </Frame>
+            </StackLayout>
+            <BoxView
+                Grid.Row="4"
+                HeightRequest="2"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="EndAndExpand"
+                Color="#79280F" />
+
+            <HorizontalStackLayout
+                Grid.Row="5"
+                Margin="0,20,0,0"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="FillAndExpand">
+                <Button
+                    BackgroundColor="#D3AA84"
+                    Clicked="OkAddNote_Clicked"
+                    HeightRequest="35"
+                    HorizontalOptions="Center"
+                    Text="Confirmar"
+                    TextColor="#000000"
+                    WidthRequest="220" />
+                <Button
+                    Margin="20,0,20,0"
+                    BackgroundColor="#FFF6ED"
+                    Clicked="CancelAddNote_Clicked"
+                    HeightRequest="35"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Cancelar"
+                    TextColor="#000000"
+                    WidthRequest="220" />
+            </HorizontalStackLayout>
+        </Grid>
+    </Border>
+
+
+</mopups:PopupPage>

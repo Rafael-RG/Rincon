@@ -71,5 +71,10 @@ namespace Rincon.Common.Interfaces
         /// Loads user
         /// </summary>
         Task<User> LoadRecoveryUserAsync(string userName);
+
+        /// <summary>
+        /// Loads note
+        /// </summary>
+        Task<List<Note>> LoadNotesAsync();
     }
 }

@@ -29,6 +29,15 @@ public partial class HomePage
         await popupNavigation.PushAsync(new ConfirmAddStockPage(this.popupNavigation, ViewModel.ProductsStock.ToList(),ViewModel.OkAddStockCommand,ViewModel.SavePDFCommand));
     }
 
+
+    /// <summary>
+	/// Popups added note.
+	/// </summary>
+	private async void AddNote_Clicked(object sender, EventArgs e)
+    {
+        await popupNavigation.PushAsync(new AddNotePage(this.popupNavigation, ViewModel.AddedNoteCommand));
+    }
+
     private void OnAddStockTextChanged(object sender, TextChangedEventArgs e)
     {
         this.ViewModel.IsVisibleListAddStock = true;
@@ -104,6 +113,32 @@ public partial class HomePage
         this.ViewModel.SelectedProduct = product;
 
         this.ViewModel.IsInventoryEditView = true;
+
+    }
+    
+    /// <summary>
+	/// Popups delete product.
+	/// </summary>
+	private async void VisivilityNote_Clicked(object sender, EventArgs e)
+    {
+
+        var button = ((Button)sender);
+        var note = (Note)button.BindingContext;
+
+        await popupNavigation.PushAsync(new AddNotePage(this.popupNavigation, ViewModel.AddedNoteCommand, note));
+
+    }
+
+    /// <summary>
+	/// Popups delete product.
+	/// </summary>
+	private void DeleteNote_Clicked(object sender, EventArgs e)
+    {
+
+        var button = ((Button)sender);
+        var note = (Note)button.BindingContext;
+
+        this.ViewModel.DeleteNoteCommand.Execute(note);
 
     }
 
@@ -201,5 +236,10 @@ public partial class HomePage
     {
         var productCard = (CardStock)this.LateraBarStock.SelectedItem;
         this.ViewModel.LBProductDetaildCommand.Execute(productCard);
+    }
+
+    private void Menu_Clicked(object sender, EventArgs e)
+    {
+        popupNavigation.PushAsync(new MenuPage(this.popupNavigation, this.ViewModel.User, this.ViewModel.LogoutViewCommand,this.ViewModel.ConfigurationCommand, this.ViewModel.ManagementOperatorsCommand));
     }
 }

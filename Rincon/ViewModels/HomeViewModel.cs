@@ -1,6 +1,7 @@
 ﻿//using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using iText.IO.Image;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Draw;
@@ -24,7 +25,13 @@ namespace Rincon.ViewModels
     {
         #region Properties
 
+        //IFileSaver fileSaver;
 
+        ///// <summary>
+        ///// User logged
+        ///// </summary>
+        [ObservableProperty]
+        private User user;
 
         //IFileSaver fileSaver;
 
@@ -332,6 +339,18 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private int selectedIndexSeachStock;
 
+        //// <summary>
+        ///// New note
+        ///// </summary>
+        [ObservableProperty]
+        private Note newNote;
+
+
+        //// <summary>
+        ///// Notes
+        ///// </summary>
+        [ObservableProperty]
+        private ObservableCollection<Note> notes;
 
 
 
@@ -842,19 +861,97 @@ namespace Rincon.ViewModels
         });
         #endregion
 
+        #region Notas
+
+        [RelayCommand]
+        private async Task LoadNotes()
+        {
+            try
+            {
+                var notes = await this.DataService.LoadNotesAsync();
+
+                if(notes!=null && notes.Any()) 
+                {
+                    this.Notes = new ObservableCollection<Note>(notes);
+                } 
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar las notas. Vuleva a intentar.", "Cerrar");
+            }
+        }
+
+        [RelayCommand]
+        private async Task<bool> AddedNote(object[] note) 
+        {
+            try
+            {
+                if (note[2] == null)
+                {
+                    this.NewNote = new Note
+                    {
+                        UserName = this.User.Name,
+                        CreatedAt = DateTime.Now,
+                        Id = Guid.NewGuid(),
+                        Title = note[0].ToString(),
+                        Content = note[1].ToString()
+                    };
+                }
+                else 
+                {
+                    this.NewNote = (Note)note[2];
+                    this.NewNote.CreatedAt = DateTime.Now;
+                }
+
+                var result = await this.DataService.InsertOrUpdateItemsAsync<Note>(this.NewNote);
+
+
+                await LoadNotes();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al crear la nota. Vuleva a intentar.", "Cerrar");
+                return false;
+            }
+        }
+
+        [RelayCommand]
+        private async Task<bool> DeleteNoteAsync(Note note)
+        {
+            try
+            {
+                var result = await this.DataService.DeleteItemAsync<Note>(note);
+
+                if (result > 0)
+                {
+                    this.Notes.Remove(note);
+                }
+
+                return true;
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al eliminar la nota. Vuleva a intentar.", "Cerrar");
+                return false;
+            }
+        }
+
+        #endregion
 
         public ICommand LoadDataCommand => new Command(async () =>
         {
             try
             {
-                var user = await this.DataService.LoadLocalUserAsync();
-                if (user == null)
+                this.User = await this.DataService.LoadLocalUserAsync();
+                if (this.User == null)
                 {
                     await this.NavigationService.Navigate<LoginViewModel>();
                 }
                 else
                 {
-                    this.IsUserLogin = user != null;
+                    this.IsUserLogin = this.User != null;
                     this.ChangeViewCommand.Execute("Home");
                 }
 
@@ -880,7 +977,9 @@ namespace Rincon.ViewModels
                 this.SelectedMachimbre = this.Machimbres.First();
 
                 this.Products = await this.DataService.LoadProductsAsync();
-
+                
+                await LoadNotes();
+                
                 await RefreshBar();
             }
             catch (Exception ex)
@@ -894,6 +993,17 @@ namespace Rincon.ViewModels
 
         });
 
+        [RelayCommand]
+        private async Task Configuration() 
+        {
+
+        }
+
+        [RelayCommand]
+        private async Task ManagementOperators()
+        {
+
+        }
 
         private void ClearViewAddProduct()
         {

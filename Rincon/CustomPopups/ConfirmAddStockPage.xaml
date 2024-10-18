@@ -19,9 +19,9 @@
 
         <Grid
             BackgroundColor="White"
+            ColumnDefinitions="*"
             HorizontalOptions="FillAndExpand"
             RowDefinitions="auto,auto,auto,auto,*,auto"
-            ColumnDefinitions="*"
             VerticalOptions="FillAndExpand">
             <Label
                 Margin="0,0,0,10"
