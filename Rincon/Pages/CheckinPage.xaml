@@ -13,11 +13,15 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <local:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
+            <local:InvertedBoolConverter x:Key="InvertedBoolConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0" Padding="0">
+    <StackLayout
+        Margin="0"
+        Padding="0"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
         <StackLayout.Background>
             <LinearGradientBrush EndPoint="0,1">
                 <GradientStop Offset="0.1" Color="#AD6B2A" />
@@ -25,7 +29,10 @@
             </LinearGradientBrush>
         </StackLayout.Background>
 
-        <StackLayout Margin="0,12,0,0" HeightRequest="32" WidthRequest="400">
+        <StackLayout
+            Margin="0,12,0,0"
+            HeightRequest="32"
+            WidthRequest="400">
             <ActivityIndicator
                 HeightRequest="32"
                 IsRunning="True"
@@ -33,116 +40,193 @@
                 WidthRequest="32" />
         </StackLayout>
 
-        <Image Source="rincon_white.png" HeightRequest="100" WidthRequest="400" HorizontalOptions="Start" Margin="160,50,0,0" />
+        <Image
+            Margin="160,50,0,0"
+            HeightRequest="100"
+            HorizontalOptions="Start"
+            Source="rincon_white.png"
+            WidthRequest="400" />
 
-        <Frame CornerRadius="18" BackgroundColor="#D3AA84" Margin="260,100,260,300">
-            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <Label Text="Registro" TextColor="Black" FontSize="26" FontAttributes="Bold" Margin="30,30,0,0"/>
-            <Grid RowDefinitions="auto,auto,auto,*,auto,*" HorizontalOptions="FillAndExpand" ColumnDefinitions="*" VerticalOptions="FillAndExpand" Margin="30,30,0,0">
-                    <Frame CornerRadius="18" HeightRequest="40" BackgroundColor="White" Margin="0,20,0,0" Padding="0,0,0,0" WidthRequest="300" HorizontalOptions="Start">
+        <Frame
+            Margin="260,100,260,300"
+            BackgroundColor="#D3AA84"
+            CornerRadius="18">
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Label
+                    Margin="30,30,0,0"
+                    FontAttributes="Bold"
+                    FontSize="26"
+                    Text="Registro"
+                    TextColor="Black" />
+                <Grid
+                    Margin="30,30,0,0"
+                    ColumnDefinitions="*"
+                    HorizontalOptions="FillAndExpand"
+                    RowDefinitions="auto,auto,auto,*,auto,*"
+                    VerticalOptions="FillAndExpand">
+                    <Frame
+                        Margin="0,20,0,0"
+                        Padding="0,0,0,0"
+                        BackgroundColor="White"
+                        CornerRadius="18"
+                        HeightRequest="40"
+                        HorizontalOptions="Start"
+                        WidthRequest="300">
                         <Entry
                             BackgroundColor="White"
                             HeightRequest="60"
-                            WidthRequest="300"
-                            PlaceholderColor="Black"
                             HorizontalOptions="Start"
                             MaxLength="25"
                             Placeholder="{extensions:Localize Username}"
-                            Text="{Binding Username}" />
+                            PlaceholderColor="Black"
+                            Text="{Binding Username}"
+                            WidthRequest="300" />
                     </Frame>
 
-                    <Frame Grid.Row="1" CornerRadius="18" HeightRequest="40" BackgroundColor="White" Margin="0,20,0,0" Padding="0,0,0,0" WidthRequest="300" HorizontalOptions="Start">
+                    <Frame
+                        Grid.Row="1"
+                        Margin="0,20,0,0"
+                        Padding="0,0,0,0"
+                        BackgroundColor="White"
+                        CornerRadius="18"
+                        HeightRequest="40"
+                        HorizontalOptions="Start"
+                        WidthRequest="300">
                         <Entry
                             BackgroundColor="Transparent"
                             HeightRequest="60"
-                            WidthRequest="300"
-                            PlaceholderColor="Black"
                             HorizontalOptions="FillAndExpand"
                             MaxLength="25"
                             Placeholder="{extensions:Localize Password}"
-                            Text="{Binding Password}" />
+                            PlaceholderColor="Black"
+                            Text="{Binding Password}"
+                            WidthRequest="300" />
                     </Frame>
 
-                    <Frame Grid.Row="2" CornerRadius="18" HeightRequest="40" BackgroundColor="White" Margin="0,20,0,0" Padding="0,0,0,0" WidthRequest="300" HorizontalOptions="Start">
+                    <Frame
+                        Grid.Row="2"
+                        Margin="0,20,0,0"
+                        Padding="0,0,0,0"
+                        BackgroundColor="White"
+                        CornerRadius="18"
+                        HeightRequest="40"
+                        HorizontalOptions="Start"
+                        WidthRequest="300">
                         <Entry
                             BackgroundColor="Transparent"
                             HeightRequest="60"
-                            WidthRequest="300"
-                            PlaceholderColor="Black"
                             HorizontalOptions="FillAndExpand"
                             MaxLength="25"
                             Placeholder="Repetir contraseña"
-                            Text="{Binding RepeatPassword}" />
+                            PlaceholderColor="Black"
+                            Text="{Binding RepeatPassword}"
+                            WidthRequest="300" />
                     </Frame>
 
-                    <StackLayout Grid.Row="3" HorizontalOptions="Start" WidthRequest="470" Margin="0,20,0,20">
-                        <Frame BackgroundColor="White" HeightRequest="40" CornerRadius="18" Margin="0" Padding="10,-3,10,-3">
-                            <Label Text="{Binding SeletedQuestion, Mode=TwoWay}" VerticalOptions="Center" FontSize="14">
+                    <StackLayout
+                        Grid.Row="3"
+                        Margin="0,20,0,20"
+                        HorizontalOptions="Start"
+                        WidthRequest="470">
+                        <Frame
+                            Margin="0"
+                            Padding="10,-3,10,-3"
+                            BackgroundColor="White"
+                            CornerRadius="18"
+                            HeightRequest="40">
+                            <Label
+                                FontSize="14"
+                                Text="{Binding SeletedQuestion, Mode=TwoWay}"
+                                VerticalOptions="Center">
                                 <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding SelectQuestionCommand}"/>
+                                    <TapGestureRecognizer Command="{Binding SelectQuestionCommand}" />
 
                                 </Label.GestureRecognizers>
 
                             </Label>
                         </Frame>
-                    <Frame x:Name="FrameListQuestions" CornerRadius="24" IsVisible="{Binding IsVisibleListQuestions}" VerticalOptions="Start" HeightRequest="140">
-                            <Frame.Background> 
-                                 <LinearGradientBrush EndPoint="0,1">
+                        <Frame
+                            x:Name="FrameListQuestions"
+                            CornerRadius="24"
+                            HeightRequest="140"
+                            IsVisible="{Binding IsVisibleListQuestions}"
+                            VerticalOptions="Start">
+                            <Frame.Background>
+                                <LinearGradientBrush EndPoint="0,1">
                                     <GradientStop Offset="0.1" Color="#FFFFFF" />
                                     <GradientStop Offset="1.0" Color="#FFF6ED" />
                                 </LinearGradientBrush>
                             </Frame.Background>
-                          <CollectionView HeightRequest="140" x:Name="Questions" SelectionChanged="Questions_SelectionChanged" ItemsSource="{Binding Questions}" SelectionMode="Single" HorizontalOptions="Start" VerticalOptions="Start">
+                            <CollectionView
+                                x:Name="Questions"
+                                HeightRequest="140"
+                                HorizontalOptions="Start"
+                                ItemsSource="{Binding Questions}"
+                                SelectionChanged="Questions_SelectionChanged"
+                                SelectionMode="Single"
+                                VerticalOptions="Start">
 
-                            <CollectionView.ItemsLayout>
-                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10"/>
-                             </CollectionView.ItemsLayout>
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="x:String">
-                                <Label
-                                        FontSize="18"
-                                        Grid.Column="2"
-                                        Text="{Binding .}"
-                                        TextColor="#000000"
-                                        VerticalOptions="Start" />
+                                <CollectionView.ItemsLayout>
+                                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="x:String">
+                                        <Label
+                                            Grid.Column="2"
+                                            FontSize="18"
+                                            Text="{Binding .}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
                                     </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                       </Frame>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Frame>
 
-                </StackLayout>
+                    </StackLayout>
 
-                    <Frame Grid.Row="4" IsVisible="{Binding IsVisibleListQuestions, Converter={StaticResource InvertedBoolConverter}}" CornerRadius="18" HeightRequest="40" BackgroundColor="White" Margin="0,0,0,0" Padding="0,0,0,0" WidthRequest="300" HorizontalOptions="Start">
+                    <Frame
+                        Grid.Row="4"
+                        Margin="0,0,0,0"
+                        Padding="0,0,0,0"
+                        BackgroundColor="White"
+                        CornerRadius="18"
+                        HeightRequest="40"
+                        HorizontalOptions="Start"
+                        IsVisible="{Binding IsVisibleListQuestions, Converter={StaticResource InvertedBoolConverter}}"
+                        WidthRequest="300">
                         <Entry
-                            
                             BackgroundColor="Transparent"
                             HeightRequest="60"
-                            WidthRequest="300"
-                            PlaceholderColor="Black"
                             HorizontalOptions="FillAndExpand"
                             MaxLength="25"
                             Placeholder="{extensions:Localize Answer}"
-                            Text="{Binding Answer}" />
+                            PlaceholderColor="Black"
+                            Text="{Binding Answer}"
+                            WidthRequest="300" />
                     </Frame>
 
-                    <HorizontalStackLayout Grid.Row="5" HorizontalOptions="EndAndExpand" Spacing="30" VerticalOptions="EndAndExpand">
-                    <Button
-                        BackgroundColor="#AD6B2A"
-                        Margin="0,20,0,50"
-                        HeightRequest="45"
-                        WidthRequest="200"
-                        TextColor="#FFF6ED"
-                        Command="{Binding CancelCheckinCommand}"
-                        Text="{extensions:Localize Cancel}" />
-                    <Button
-                        BackgroundColor="#4A744C"
-                        Margin="0,20,55,50"
-                        HeightRequest="45"
-                        WidthRequest="200"
-                        TextColor="White"
-                        Command="{Binding CheckinCommand}"
-                        Text="{extensions:Localize Checkin}" />
-                </HorizontalStackLayout>
+                    <HorizontalStackLayout
+                        Grid.Row="5"
+                        HorizontalOptions="EndAndExpand"
+                        Spacing="30"
+                        VerticalOptions="EndAndExpand">
+                        <Button
+                            Margin="0,20,0,50"
+                            BackgroundColor="#AD6B2A"
+                            Command="{Binding CancelCheckinCommand}"
+                            HeightRequest="45"
+                            Text="{extensions:Localize Cancel}"
+                            TextColor="#FFF6ED"
+                            WidthRequest="200" />
+                        <Button
+                            Margin="0,20,55,50"
+                            BackgroundColor="#4A744C"
+                            Command="{Binding CheckinCommand}"
+                            HeightRequest="45"
+                            Text="{extensions:Localize Checkin}"
+                            TextColor="White"
+                            WidthRequest="200" />
+                    </HorizontalStackLayout>
 
                 </Grid>
             </StackLayout>

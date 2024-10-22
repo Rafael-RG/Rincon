@@ -6,11 +6,24 @@ namespace Rincon.Models
     /// <summary>
     /// User details
     /// </summary>
-    public class User
+    public class User : BindableItem
     {
+        private string name;
+
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string Name { get; set; }
+        public string UserId { get; set; }
+
+        public string Name 
+        {
+            get => this.name;
+            set
+            {
+                this.name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
 
         public string Password { get; set; }
 

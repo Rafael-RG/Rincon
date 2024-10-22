@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <mopups:PopupPage
-    x:Class="Rincon.CustomPopups.SuccessEditProductPage"
+    x:Class="Rincon.CustomPopups.SuccessEditUserPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
-    Title="SuccessEditProduct"
+    Title="SuccessEditUser"
     BackgroundColor="#80000000"
     CloseWhenBackgroundIsClicked="False">
 
     <Border
-        Margin="400,400,400,400"
+        Margin="400,400,400,200"
         Padding="40"
         BackgroundColor="White"
         HeightRequest="400"
@@ -29,22 +29,19 @@
                 FontAttributes="Bold"
                 FontSize="24"
                 HorizontalOptions="Center"
-                Text="Producto editado con exito"
+                Text="Sus cambios han sido guardados"
                 TextColor="Black"
                 VerticalOptions="Center" />
             <Button
                 Grid.Row="2"
                 BackgroundColor="#D3AA84"
-                Clicked="CloseEditProduct_Clicked"
+                Clicked="ConfirmEditUser_Clicked"
                 FontSize="16"
                 HeightRequest="60"
-                Text="Volver"
+                Text="Cerrar"
                 TextColor="Black"
                 WidthRequest="150" />
-
         </Grid>
     </Border>
-
-
 </mopups:PopupPage>
 

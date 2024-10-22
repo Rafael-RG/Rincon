@@ -70,7 +70,8 @@ namespace Rincon.ViewModels
 
                 var user = new User()
                 {
-                     Name = this.Username,
+                    UserId = Guid.NewGuid().ToString(),
+                    Name = this.Username,
                      Password = this.Password,
                      Question = this.SeletedQuestion,
                      Answer = this.Answer,

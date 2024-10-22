@@ -60,7 +60,7 @@ namespace Rincon.Common.Interfaces
         /// <summary>
         /// Load local user
         /// </summary>
-        Task<bool> DeleteLocalUserAsync(User user);
+        Task<bool> DeleteLocalUserAsync();
 
         /// <summary>
         /// Save local user

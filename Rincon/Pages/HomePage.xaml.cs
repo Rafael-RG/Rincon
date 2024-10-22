@@ -10,23 +10,23 @@ namespace Rincon.Pages;
 /// </summary>
 public partial class HomePage
 {
-	IPopupNavigation popupNavigation;
+    IPopupNavigation popupNavigation;
 
-	/// <summary>
-	/// Receives the depedencies by DI
-	/// </summary>
-	public HomePage(HomeViewModel viewModel,IPopupNavigation popupNavigation) : base(viewModel, "Home")
-	{
-		InitializeComponent();
-		this.popupNavigation = popupNavigation;
+    /// <summary>
+    /// Receives the depedencies by DI
+    /// </summary>
+    public HomePage(HomeViewModel viewModel, IPopupNavigation popupNavigation) : base(viewModel, "Home")
+    {
+        InitializeComponent();
+        this.popupNavigation = popupNavigation;
     }
 
-	/// <summary>
-	/// Popups confirm added stock.
-	/// </summary>
-	private async void AddStock_Clicked(object sender, EventArgs e)
-	{
-        await popupNavigation.PushAsync(new ConfirmAddStockPage(this.popupNavigation, ViewModel.ProductsStock.ToList(),ViewModel.OkAddStockCommand,ViewModel.SavePDFCommand));
+    /// <summary>
+    /// Popups confirm added stock.
+    /// </summary>
+    private async void AddStock_Clicked(object sender, EventArgs e)
+    {
+        await popupNavigation.PushAsync(new ConfirmAddStockPage(this.popupNavigation, ViewModel.ProductsStock.ToList(), ViewModel.OkAddStockCommand, ViewModel.SavePDFCommand));
     }
 
 
@@ -115,11 +115,11 @@ public partial class HomePage
         this.ViewModel.IsInventoryEditView = true;
 
     }
-    
+
     /// <summary>
-	/// Popups delete product.
-	/// </summary>
-	private async void VisivilityNote_Clicked(object sender, EventArgs e)
+    /// Popups delete product.
+    /// </summary>
+    private async void VisivilityNote_Clicked(object sender, EventArgs e)
     {
 
         var button = ((Button)sender);
@@ -197,7 +197,7 @@ public partial class HomePage
         {
 
         }
-        
+
     }
 
     void States_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
@@ -229,7 +229,7 @@ public partial class HomePage
         catch
         {
 
-        }        
+        }
     }
 
     void LateraBarStock_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
@@ -240,6 +240,27 @@ public partial class HomePage
 
     private void Menu_Clicked(object sender, EventArgs e)
     {
-        popupNavigation.PushAsync(new MenuPage(this.popupNavigation, this.ViewModel.User, this.ViewModel.LogoutViewCommand,this.ViewModel.ConfigurationCommand, this.ViewModel.ManagementOperatorsCommand));
+        popupNavigation.PushAsync(new MenuPage(this.popupNavigation, this.ViewModel.User, this.ViewModel.LogoutViewCommand, this.ViewModel.ConfigurationCommand, this.ViewModel.ManagementOperatorsCommand));
+    }
+
+    void Questions_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    {
+        this.ViewModel.SelectedQuestionConfigurations = (string)Questions.SelectedItem;
+        this.ViewModel.IsVisibleListQuestions = false;
+    }
+
+    async void ConfirmChange_Clicked(object sender, EventArgs e)
+    {
+        this.ViewModel.OkConfirmConfigurationCommand.Execute(null);
+
+        var command = this.ViewModel.OkConfirmConfigurationCommand;
+        var result = await (Task<bool>)command.ExecuteAsync(null);
+
+        if (result)
+        {
+            await popupNavigation.PushAsync(new SuccessEditUserPage(this.popupNavigation));
+            this.ViewModel.ChangeViewCommand.Execute("Home");
+        }
+        
     }
 }

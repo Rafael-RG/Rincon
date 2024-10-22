@@ -136,12 +136,12 @@ namespace Rincon.DataAccess
         }
 
         ///<inheritdoc/>
-        public async Task<bool> DeleteLocalUserAsync(User user)
+        public async Task<bool> DeleteLocalUserAsync()
         {
             using (var databaseContext = new LocalDataBaseContext())
             {
-                databaseContext.Remove(user);
-                var itemsCount = await databaseContext.SaveChangesAsync().ConfigureAwait(false);
+                //delete all
+                var itemsCount = await databaseContext.Database.ExecuteSqlRawAsync("DELETE FROM User");
                 return itemsCount > 0;
             }
         }

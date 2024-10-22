@@ -105,6 +105,12 @@ namespace Rincon.ViewModels
         ///// Add stock View
         ///// </summary>
         [ObservableProperty]
+        private bool isConfigurationView;
+
+        ///// <summary>
+        ///// Add stock View
+        ///// </summary>
+        [ObservableProperty]
         private bool isCheckStockView;
 
         ///// <summary>
@@ -353,6 +359,56 @@ namespace Rincon.ViewModels
         private ObservableCollection<Note> notes;
 
 
+        //// <summary>
+        ///// New note
+        ///// </summary>
+        [ObservableProperty]
+        private string nameConfigurations;
+
+        //// <summary>
+        ///// New note
+        ///// </summary>
+        [ObservableProperty]
+        private string passwordConfigurations;
+
+        //// <summary>
+        ///// New note
+        ///// </summary>
+        [ObservableProperty]
+        private string repeatPasswordConfigrations;
+
+        //// <summary>
+        ///// New note
+        ///// </summary>
+        [ObservableProperty]
+        private string selectedQuestionConfigurations;
+
+        //// <summary>
+        ///// New note
+        ///// </summary>
+        [ObservableProperty]
+        private string responseConfigurations;
+
+        //// <summary>
+        ///// New note
+        ///// </summary>
+        [ObservableProperty]
+        private string confirmUserConfigurations;
+
+        //// <summary>
+        ///// New note
+        ///// </summary>
+        [ObservableProperty]
+        private string confirmPasswordConfigurations;
+
+        [ObservableProperty]
+        private List<string> questions;
+
+        [ObservableProperty]
+        private bool isVisibleListQuestions;
+
+        [ObservableProperty]
+        private bool confirmUserChanges;
 
         #endregion
 
@@ -362,6 +418,16 @@ namespace Rincon.ViewModels
         public HomeViewModel(IServiceProvider provider /*,IFileSaver fileSaver*/) : base(provider)
         {
             //this.fileSaver = fileSaver;
+
+            this.Questions = new List<string>
+            {
+                new ("Cual es el nombre de tu cancion favorita?"),
+                new ("Cual es tu juego favorito?"),
+                new ("Cual es el nombre de tu primer mascota?"),
+                new ("Cual es el nombre del barrio en que naciste?")
+            };
+
+            this.SelectedQuestionConfigurations = this.Questions.First();
         }
 
         public override Task Initialize()
@@ -389,9 +455,7 @@ namespace Rincon.ViewModels
             {
                 if (response)
                 {
-                    var user = await this.DataService.LoadLocalUserAsync();
-
-                    await this.DataService.DeleteLocalUserAsync(user);
+                    await this.DataService.DeleteLocalUserAsync();
 
                     await this.NavigationService.Navigate<LoginViewModel>();
                 }
@@ -414,6 +478,7 @@ namespace Rincon.ViewModels
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
                     break;
                 case "MagementStock":
                     this.IsHomeView = false;
@@ -427,6 +492,7 @@ namespace Rincon.ViewModels
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
                     break;
                 case "Tasks":
                     this.IsHomeView = false;
@@ -440,6 +506,7 @@ namespace Rincon.ViewModels
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
                     break;
                 case "Orders":
                     this.IsHomeView = false;
@@ -453,6 +520,7 @@ namespace Rincon.ViewModels
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
                     break;
                 case "History":
                     this.IsHomeView = false;
@@ -466,6 +534,7 @@ namespace Rincon.ViewModels
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
                     break;
                 case "AddProduct":
                     this.IsHomeView = false;
@@ -477,6 +546,7 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
 
                     this.IsTiranteSelect = true;
                     break;
@@ -492,6 +562,7 @@ namespace Rincon.ViewModels
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
 
                     this.IsVisibleListAddStock = false;
                     break;
@@ -507,6 +578,8 @@ namespace Rincon.ViewModels
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
+
                     this.SelectedIndexSeachStock = 1;
                     break;
                 case "CheckStock":
@@ -521,6 +594,7 @@ namespace Rincon.ViewModels
                     this.IsCheckStockView = true;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
 
                     this.SelectedIndexSeachStock = 1;
                     break;
@@ -536,6 +610,7 @@ namespace Rincon.ViewModels
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = true;
                     this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
                     break;
                 case "EditProductDetaildInventory":
                     this.IsHomeView = false;
@@ -549,6 +624,21 @@ namespace Rincon.ViewModels
                     this.IsCheckStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = true;
+                    this.IsConfigurationView = false;
+                    break;
+                case "Configuration":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = false;
+                    this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = true;
                     break;
 
             }
@@ -996,7 +1086,125 @@ namespace Rincon.ViewModels
         [RelayCommand]
         private async Task Configuration() 
         {
+            this.NameConfigurations = this.User.Name;
+            this.PasswordConfigurations = "";
+            this.RepeatPasswordConfigrations = "";
+            this.SelectedQuestionConfigurations = "";
+            this.ResponseConfigurations = "";
+            this.ConfirmUserConfigurations = "";
+            this.ConfirmPasswordConfigurations = "";
 
+            this.ConfirmUserChanges = false;
+
+            this.ChangeViewCommand.Execute("Configuration");
+        }
+
+        public ICommand SelectQuestionCommand => new Command(() =>
+        {
+            this.IsVisibleListQuestions = !this.IsVisibleListQuestions;
+        });
+
+        [RelayCommand]
+        private async Task CancelConfiguration()
+        {
+            this.ChangeViewCommand.Execute("Home");
+        }
+
+        public ICommand UpdateDataUserCommand => new Command(async () =>
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(this.NameConfigurations) || string.IsNullOrEmpty(this.PasswordConfigurations) || string.IsNullOrEmpty(this.RepeatPasswordConfigrations) || string.IsNullOrEmpty(this.ResponseConfigurations) || string.IsNullOrEmpty(this.SelectedQuestionConfigurations))
+                {
+                    await NotificationService.NotifyAsync("Error", "Faltan completar campos", "Cerrar");
+                    return;
+                }
+
+                if (this.PasswordConfigurations != this.RepeatPasswordConfigrations)
+                {
+                    await NotificationService.NotifyAsync("Error", "Las contraseñas no coinciden", "Cerrar");
+                    return;
+                }
+
+                this.ConfirmUserChanges = true;
+
+            }
+            catch
+            {
+
+            }
+        });
+
+        [RelayCommand]
+        private async Task CancelConfirmConfiguration()
+        {
+            this.ConfirmUserChanges = false;
+        }
+
+        [RelayCommand]
+        private async Task<bool> OkConfirmConfiguration()
+        {
+            if (string.IsNullOrWhiteSpace(this.ConfirmUserConfigurations))
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), GetText("UserEmpty"), GetText("Close"));
+                return false;
+            }
+            else if (string.IsNullOrWhiteSpace(this.ConfirmPasswordConfigurations))
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), GetText("PasswordEmpty"), GetText("Close"));
+                return false;
+            }
+
+            try
+            {
+                this.IsBusy = true;
+                var user = await this.DataService.LoadUserAsync(this.ConfirmUserConfigurations, this.ConfirmPasswordConfigurations);
+
+                var localUser = await this.DataService.LoadLocalUserAsync();
+
+
+                if (user == null || (user.Name != localUser.Name && user.Password != localUser.Password))
+                {
+                    await NotificationService.NotifyAsync("Error", "Credenciales invalidas", "Cerrar");
+                    this.IsBusy = false;
+                    return false;
+                }
+
+                user.Name = this.NameConfigurations;
+                user.Password = this.PasswordConfigurations;
+                user.Question = this.SelectedQuestionConfigurations;
+                user.Answer = this.ResponseConfigurations;
+
+                var result = await this.DataService.InsertOrUpdateItemsAsync<User>(user);
+
+                if (result == 0)
+                {
+                    await NotificationService.NotifyAsync("Error", "Hubo un error al actualizar el usuario. Por favor vuelva a intentar", "Cerrar");
+                    this.IsBusy = false;
+                    return false;
+                }
+
+                await this.DataService.DeleteLocalUserAsync();
+                await this.DataService.SaveLocalUserAsync(user);
+
+                this.User.Name = user.Name;
+                this.User.Password = user.Password;
+                this.User.Question = user.Question;
+                this.User.Answer = user.Answer;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), (ex.Message), GetText("Close"));
+                this.IsBusy = false;
+                await LogExceptionAsync(ex);
+                return false;
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
         [RelayCommand]
