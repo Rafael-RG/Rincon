@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage
+    x:Class="Rincon.CustomPopups.SuccessMessagePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+    Title="SuccessEditUser"
+    BackgroundColor="#80000000"
+    CloseWhenBackgroundIsClicked="False">
+
+    <Border
+        Margin="400,400,400,200"
+        Padding="40"
+        BackgroundColor="White"
+        HeightRequest="400"
+        WidthRequest="800">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="18,18,18,18" />
+        </Border.StrokeShape>
+        <Grid RowDefinitions="*,*,*">
+            <Image
+                HeightRequest="80"
+                HorizontalOptions="Center"
+                Source="check_icon.png"
+                VerticalOptions="Start"
+                WidthRequest="80" />
+            <Label
+                x:Name="Message"
+                Grid.Row="1"
+                FontAttributes="Bold"
+                FontSize="24"
+                HorizontalOptions="Center"
+                TextColor="Black"
+                VerticalOptions="Center" />
+            <Button
+                Grid.Row="2"
+                BackgroundColor="#D3AA84"
+                Clicked="ConfirmEditUser_Clicked"
+                FontSize="16"
+                HeightRequest="60"
+                Text="Cerrar"
+                TextColor="Black"
+                WidthRequest="150" />
+        </Grid>
+    </Border>
+</mopups:PopupPage>
+

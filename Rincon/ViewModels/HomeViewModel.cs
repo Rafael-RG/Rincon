@@ -7,6 +7,7 @@ using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Draw;
 using iText.Layout;
 using iText.Layout.Element;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Rincon.Common.ViewModels;
 using Rincon.Models;
 
@@ -106,6 +107,12 @@ namespace Rincon.ViewModels
         ///// </summary>
         [ObservableProperty]
         private bool isConfigurationView;
+
+        ///// <summary>
+        ///// Add stock View
+        ///// </summary>
+        [ObservableProperty]
+        private bool isManagementOperatorsView;
 
         ///// <summary>
         ///// Add stock View
@@ -410,6 +417,50 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private bool confirmUserChanges;
 
+
+        //// <summary>
+        ///// Notes
+        ///// </summary>
+        [ObservableProperty]
+        private ObservableCollection<Operator> operators;
+
+        [ObservableProperty]
+        private bool isEditOperatorView;
+
+        [ObservableProperty]
+        private bool isAddOperatorView;
+
+        [ObservableProperty]
+        private bool isOperatorsView;
+
+        [ObservableProperty]
+        private bool anyOperators;
+
+
+        [ObservableProperty]
+        private string operatorName;
+
+        [ObservableProperty]
+        private string operatorLastName;
+
+        [ObservableProperty]
+        private string operatorPin;
+
+        [ObservableProperty]
+        private string repeatOperatorPin;
+
+        [ObservableProperty]
+        private bool validateAddOperator;
+
+        [ObservableProperty]
+        private bool validateEditOperator;
+
+        [ObservableProperty]
+        private bool validateDeleteOperator;
+
+        [ObservableProperty]
+        private Operator operatorToDelete;
+
         #endregion
 
         /// <summary>
@@ -479,6 +530,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
                     break;
                 case "MagementStock":
                     this.IsHomeView = false;
@@ -493,6 +545,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
                     break;
                 case "Tasks":
                     this.IsHomeView = false;
@@ -507,6 +560,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
                     break;
                 case "Orders":
                     this.IsHomeView = false;
@@ -521,6 +575,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
                     break;
                 case "History":
                     this.IsHomeView = false;
@@ -535,6 +590,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
                     break;
                 case "AddProduct":
                     this.IsHomeView = false;
@@ -547,6 +603,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
 
                     this.IsTiranteSelect = true;
                     break;
@@ -563,6 +620,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
 
                     this.IsVisibleListAddStock = false;
                     break;
@@ -579,6 +637,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
 
                     this.SelectedIndexSeachStock = 1;
                     break;
@@ -595,6 +654,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
 
                     this.SelectedIndexSeachStock = 1;
                     break;
@@ -611,6 +671,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditView = true;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
                     break;
                 case "EditProductDetaildInventory":
                     this.IsHomeView = false;
@@ -625,6 +686,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = true;
                     this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
                     break;
                 case "Configuration":
                     this.IsHomeView = false;
@@ -639,6 +701,22 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = true;
+                    this.IsManagementOperatorsView = false;
+                    break;
+                case "Operators":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = false;
+                    this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = true;
                     break;
 
             }
@@ -1210,8 +1288,243 @@ namespace Rincon.ViewModels
         [RelayCommand]
         private async Task ManagementOperators()
         {
+            this.IsOperatorsView = true;
+            this.IsEditOperatorView = false;
+            this.IsAddOperatorView = false;
+            this.ValidateAddOperator = false;
+            this.ValidateEditOperator = false;
 
+            this.AnyOperators = this.Operators!=null && this.Operators.Any()? true : false;
+
+            var operators = await this.DataService.LoadOperatorsAsync();
+
+            if (operators != null && operators.Any())
+            {
+                this.Operators = new ObservableCollection<Operator>(operators);
+            }
+
+            this.ChangeViewCommand.Execute("Operators");
         }
+
+        [RelayCommand]
+        private async Task AddOperator()
+        {
+            this.OperatorName = "";
+            this.OperatorLastName = "";
+            this.OperatorPin = "";
+            this.RepeatOperatorPin = "";
+
+            this.IsAddOperatorView = true;
+            this.IsEditOperatorView = false;
+            this.IsOperatorsView = false;
+            this.ValidateAddOperator = false;
+            this.ValidateEditOperator = false;
+        }
+
+        [RelayCommand]
+        private async Task CancelAddOperator()
+        {
+            this.IsAddOperatorView = false;
+            this.IsEditOperatorView = false;
+            this.IsOperatorsView = true;
+            this.ValidateAddOperator = false;
+            this.ValidateEditOperator = false;
+        }
+
+        [RelayCommand]
+        private async Task OkAddOperator()
+        {
+            if (string.IsNullOrEmpty(this.OperatorName) || string.IsNullOrEmpty(this.OperatorLastName) || string.IsNullOrEmpty(this.OperatorPin) || string.IsNullOrEmpty(this.RepeatOperatorPin))
+            {
+                await NotificationService.NotifyAsync("Error", "Faltan completar campos", "Cerrar");
+                return;
+            }
+
+            if (this.OperatorPin != this.RepeatOperatorPin)
+            {
+                await NotificationService.NotifyAsync("Error", "Los pines no coinciden", "Cerrar");
+                return;
+            }
+
+            this.IsAddOperatorView = false;
+            this.IsEditOperatorView = false;
+            this.IsOperatorsView = false;
+            this.ValidateAddOperator = true;
+            this.ValidateEditOperator = false;
+
+            this.ConfirmUserConfigurations = "";
+            this.ConfirmPasswordConfigurations = "";
+        }
+
+        [RelayCommand]
+        private async Task CancelValidateAddOperator()
+        {
+            this.IsAddOperatorView = true;
+            this.IsEditOperatorView = false;
+            this.IsOperatorsView = false;
+            this.ValidateAddOperator = false;
+            this.ValidateEditOperator = false;
+        }
+
+        [RelayCommand]
+        private async Task<bool> OkConfirmAddOperator()
+        {
+            if (string.IsNullOrWhiteSpace(this.ConfirmUserConfigurations))
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), GetText("UserEmpty"), GetText("Close"));
+                return false;
+            }
+            else if (string.IsNullOrWhiteSpace(this.ConfirmPasswordConfigurations))
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), GetText("PasswordEmpty"), GetText("Close"));
+                return false;
+            }
+
+            try
+            {
+                this.IsBusy = true;
+                var user = await this.DataService.LoadUserAsync(this.ConfirmUserConfigurations, this.ConfirmPasswordConfigurations);
+
+                var localUser = await this.DataService.LoadLocalUserAsync();
+
+
+                if (user == null || (user.Name != localUser.Name && user.Password != localUser.Password))
+                {
+                    await NotificationService.NotifyAsync("Error", "Credenciales invalidas", "Cerrar");
+                    this.IsBusy = false;
+                    return false;
+                }
+
+                var operatorNew = new Operator
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = this.OperatorName,
+                    LastName = this.OperatorLastName,
+                    Pin = this.OperatorPin,
+                    CreateDate = DateTime.Now,
+                };
+
+                var result = await this.DataService.InsertOrUpdateItemsAsync<Operator>(operatorNew);
+
+                if (result > 0)
+                {
+                    this.Operators ??= new ObservableCollection<Operator>();
+                    this.Operators.Add(operatorNew);
+
+                }
+                else
+                {
+                    await NotificationService.NotifyAsync("Error", "Hubo un error al agregar el operador. Por favor vuelva a intentar", "Cerrar");
+                    this.IsBusy = false;
+                    return false;
+                }
+
+                this.IsAddOperatorView = false;
+                this.IsEditOperatorView = false;
+                this.IsOperatorsView = true;
+                this.ValidateAddOperator = false;
+                this.ValidateEditOperator = false;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), (ex.Message), GetText("Close"));
+                this.IsBusy = false;
+                await LogExceptionAsync(ex);
+                return false;
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        private async Task<bool> DeleteOperatorAsync()
+        {
+            if (string.IsNullOrWhiteSpace(this.ConfirmUserConfigurations))
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), GetText("UserEmpty"), GetText("Close"));
+                return false;
+            }
+            else if (string.IsNullOrWhiteSpace(this.ConfirmPasswordConfigurations))
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), GetText("PasswordEmpty"), GetText("Close"));
+                return false;
+            }
+
+            try
+            {
+                this.IsBusy = true;
+                var user = await this.DataService.LoadUserAsync(this.ConfirmUserConfigurations, this.ConfirmPasswordConfigurations);
+
+                var localUser = await this.DataService.LoadLocalUserAsync();
+
+
+                if (user == null || (user.Name != localUser.Name && user.Password != localUser.Password))
+                {
+                    await NotificationService.NotifyAsync("Error", "Credenciales invalidas", "Cerrar");
+                    this.IsBusy = false;
+                    return false;
+                }
+
+                var result = await this.DataService.DeleteItemAsync<Operator>(this.OperatorToDelete);
+
+                if (result > 0)
+                {
+                    this.Operators.Remove(this.OperatorToDelete);
+
+                    this.IsAddOperatorView = false;
+                    this.IsEditOperatorView = false;
+                    this.IsOperatorsView = true;
+                    this.ValidateAddOperator = false;
+                    this.ValidateEditOperator = false;
+                    this.ValidateDeleteOperator = false;
+
+                    this.IsBusy = false;
+                    return true;
+                }
+                else 
+                {
+                    await NotificationService.NotifyAsync("Error", "Hubo un error al eliminar el operador. Vuleva a intentar.", "Cerrar");
+                    this.IsBusy = false;
+                    return false;
+                }
+            }
+            catch
+            {
+                this.IsBusy = false;
+                await NotificationService.NotifyAsync("Error", "Hubo un error al eliminar el operador. Vuleva a intentar.", "Cerrar");
+                return false;
+            }
+            this.IsBusy = false;
+        }
+        
+        [RelayCommand]
+        private async Task CancelDeleteOperator()
+        {
+            this.IsAddOperatorView = false;
+            this.IsEditOperatorView = false;
+            this.IsOperatorsView = true;
+            this.ValidateAddOperator = false;
+            this.ValidateEditOperator = false;
+            this.ValidateDeleteOperator = false;
+        }
+
+
+        public ICommand ValidateDeleteOperatorAsyncCommand => new Command(async () =>
+        {
+            this.IsAddOperatorView = false;
+            this.IsEditOperatorView = false;
+            this.IsOperatorsView = false;
+            this.ValidateAddOperator = false;
+            this.ValidateEditOperator = false;
+            this.ValidateDeleteOperator = true;
+
+            this.ConfirmUserConfigurations = "";
+            this.ConfirmPasswordConfigurations = "";
+        });
 
         private void ClearViewAddProduct()
         {

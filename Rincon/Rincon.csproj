@@ -78,6 +78,9 @@
 		<MauiImage Update="Resources\Images\edit_direct_home.svg">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiImage>
+		<MauiImage Update="Resources\Images\edit_operators.svg">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</MauiImage>
 		<MauiImage Update="Resources\Images\edit_stock_icon_small.svg">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</MauiImage>
@@ -222,6 +225,12 @@
 	  <Compile Update="CustomPopups\AddNotePage.xaml.cs">
 	    <DependentUpon>AddNotePage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="CustomPopups\DeleteMessagePage.xaml.cs">
+	    <DependentUpon>DeleteMessagePage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="CustomPopups\SuccessMessagePage .xaml.cs">
+	    <DependentUpon>SuccessMessagePage .xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="CustomPopups\SuccessEditUserPage.xaml.cs">
 	    <DependentUpon>SuccessEditUserPage.xaml</DependentUpon>
 	  </Compile>
@@ -271,6 +280,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="CustomPopups\ConfirmAddStockPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="CustomPopups\DeleteMessagePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="CustomPopups\SuccessMessagePage .xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="CustomPopups\SuccessEditUserPage.xaml">

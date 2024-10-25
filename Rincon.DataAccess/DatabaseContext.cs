@@ -17,6 +17,8 @@ namespace Rincon.DataAccess
 
         public DbSet<Note> Note { get; set; }
 
+        public DbSet<Operator> Operator { get; set; }
+
 
         /// <summary>   |
         /// Initializes sqlite

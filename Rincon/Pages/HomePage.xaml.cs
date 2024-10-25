@@ -251,7 +251,7 @@ public partial class HomePage
 
     async void ConfirmChange_Clicked(object sender, EventArgs e)
     {
-        this.ViewModel.OkConfirmConfigurationCommand.Execute(null);
+        //this.ViewModel.OkConfirmConfigurationCommand.Execute(null);
 
         var command = this.ViewModel.OkConfirmConfigurationCommand;
         var result = await (Task<bool>)command.ExecuteAsync(null);
@@ -262,5 +262,41 @@ public partial class HomePage
             this.ViewModel.ChangeViewCommand.Execute("Home");
         }
         
+    }
+
+    async void ConfirmAddOperator_Clicked(object sender, EventArgs e)
+    {
+        var command = this.ViewModel.OkConfirmAddOperatorCommand;
+        var result = await (Task<bool>)command.ExecuteAsync(null);
+
+        if (result)
+        {
+            await popupNavigation.PushAsync(new SuccessMessagePage(this.popupNavigation,"Nuevo operario creado con exito"));
+        }
+
+    }
+    
+    async void ConfirmDeleteOperator_Clicked(object sender, EventArgs e)
+    {
+        var button = ((Button)sender);
+        var operatorToDelete = (Operator)button.BindingContext;
+
+        this.ViewModel.OperatorToDelete = operatorToDelete;
+
+        
+        await popupNavigation.PushAsync(new DeleteMessagePage(this.popupNavigation, $"¿Desea eliminar al Operario “{operatorToDelete.Name}”?", this.ViewModel.ValidateDeleteOperatorAsyncCommand));
+
+    }
+
+    async void OkDeleteOperator_Clicked(object sender, EventArgs e)
+    {
+        var command = this.ViewModel.DeleteOperatorCommand;
+        var result = await (Task<bool>)command.ExecuteAsync(null);
+
+        if (result)
+        {
+            await popupNavigation.PushAsync(new SuccessMessagePage(this.popupNavigation, $"El Operario “{this.ViewModel.OperatorToDelete.Name}” ha sido eliminado"));
+        }
+
     }
 }

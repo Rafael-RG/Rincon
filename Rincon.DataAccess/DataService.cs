@@ -104,6 +104,16 @@ namespace Rincon.DataAccess
                 return items;
             }
         }
+        
+        ///<inheritdoc/>
+        public async Task<List<Operator>> LoadOperatorsAsync()
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                var items = await databaseContext.Operator.ToListAsync().ConfigureAwait(false);
+                return items;
+            }
+        }
 
         ///<inheritdoc/>
         public async Task<User> LoadUserAsync(string userName, string password)
