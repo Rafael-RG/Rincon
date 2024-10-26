@@ -533,7 +533,8 @@
                             Grid.Row="4"
                             Margin="0,10,0,0"
                             ItemsSource="{Binding Notes}"
-                            SelectionMode="Single"
+                            SelectionMode="None"
+                            BackgroundColor="Transparent"
                             VerticalOptions="FillAndExpand"
                             VerticalScrollBarVisibility="Never">
                             <CollectionView.ItemsLayout>
@@ -558,6 +559,8 @@
 
                                             <Label
                                                 Grid.Row="1"
+                                                MaxLines="2"
+                                                LineBreakMode="TailTruncation"
                                                 FontSize="12"
                                                 Text="{Binding Content}"
                                                 TextColor="#000000"
@@ -2157,7 +2160,7 @@
                         WidthRequest="400" />
 
                     <Frame
-                        Margin="260,100,260,300"
+                        Margin="560,200,560,300"
                         BackgroundColor="#D3AA84"
                         CornerRadius="18"
                         IsVisible="{Binding ConfirmUserChanges, Converter={StaticResource InvertedBoolConverter}}">
@@ -2171,7 +2174,7 @@
                             <Grid
                                 Margin="30,30,0,0"
                                 ColumnDefinitions="auto,*"
-                                ColumnSpacing="100"
+                                ColumnSpacing="60"
                                 HorizontalOptions="FillAndExpand"
                                 RowDefinitions="auto,auto,auto,*,auto,*"
                                 VerticalOptions="FillAndExpand">
@@ -2196,7 +2199,7 @@
                                         HorizontalOptions="Start"
                                         MaxLength="25"
                                         Placeholder="Nombre"
-                                        PlaceholderColor="Black"
+                                        PlaceholderColor="#848484"
                                         Text="{Binding NameConfigurations}"
                                         TextColor="Black"
                                         WidthRequest="300" />
@@ -2223,7 +2226,7 @@
                                         HorizontalOptions="FillAndExpand"
                                         MaxLength="25"
                                         Placeholder="{extensions:Localize Password}"
-                                        PlaceholderColor="Black"
+                                        PlaceholderColor="#848484"
                                         Text="{Binding PasswordConfigurations}"
                                         TextColor="Black"
                                         WidthRequest="300" />
@@ -2244,7 +2247,7 @@
                                         HorizontalOptions="FillAndExpand"
                                         MaxLength="25"
                                         Placeholder="Repetir contraseña"
-                                        PlaceholderColor="Black"
+                                        PlaceholderColor="#848484"
                                         Text="{Binding RepeatPasswordConfigrations}"
                                         TextColor="Black"
                                         WidthRequest="300" />
@@ -2275,7 +2278,6 @@
                                             VerticalOptions="Center">
                                             <Label.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding SelectQuestionCommand}" />
-
                                             </Label.GestureRecognizers>
 
                                         </Label>
@@ -2286,12 +2288,12 @@
                                         HeightRequest="140"
                                         IsVisible="{Binding IsVisibleListQuestions}"
                                         VerticalOptions="Start">
-                                        <Frame.Background>
-                                            <LinearGradientBrush EndPoint="0,1">
-                                                <GradientStop Offset="0.1" Color="#FFFFFF" />
-                                                <GradientStop Offset="1.0" Color="#FFF6ED" />
-                                            </LinearGradientBrush>
-                                        </Frame.Background>
+                                        <Frame.Background> 
+                                 <LinearGradientBrush EndPoint="0,1">
+                                    <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                    <GradientStop Offset="1.0" Color="#FFF6ED" />
+                                </LinearGradientBrush>
+                            </Frame.Background>
                                         <CollectionView
                                             x:Name="Questions"
                                             HeightRequest="140"
@@ -2307,7 +2309,6 @@
                                             <CollectionView.ItemTemplate>
                                                 <DataTemplate x:DataType="x:String">
                                                     <Label
-                                                        Grid.Column="2"
                                                         FontSize="18"
                                                         Text="{Binding .}"
                                                         TextColor="#000000"
@@ -2341,7 +2342,7 @@
                                         HorizontalOptions="FillAndExpand"
                                         MaxLength="25"
                                         Placeholder="{extensions:Localize Answer}"
-                                        PlaceholderColor="Black"
+                                        PlaceholderColor="#848484"
                                         Text="{Binding ResponseConfigurations}"
                                         TextColor="Black"
                                         WidthRequest="300" />
@@ -2375,7 +2376,7 @@
                         </StackLayout>
                     </Frame>
                     <Frame
-                        Margin="560,100,560,300"
+                        Margin="560,200,560,300"
                         BackgroundColor="#FFF6ED"
                         CornerRadius="18"
                         IsVisible="{Binding ConfirmUserChanges}">
@@ -2392,6 +2393,7 @@
                                 RowSpacing="20">
                                 <Label
                                     Text="Usuario"
+                                    FontSize="16"
                                     TextColor="Black"
                                     VerticalOptions="Center" />
                                 <Frame
@@ -2410,12 +2412,13 @@
                                         HorizontalOptions="Start"
                                         MaxLength="25"
                                         Placeholder="Nombre de usuario"
-                                        PlaceholderColor="Black"
+                                        PlaceholderColor="#848484"
                                         Text="{Binding ConfirmUserConfigurations}"
                                         TextColor="Black"
                                         WidthRequest="300" />
                                 </Frame>
                                 <Label
+                                    FontSize="16"
                                     Grid.Row="1"
                                     Text="Contraseña"
                                     TextColor="Black"
@@ -2436,7 +2439,7 @@
                                         HorizontalOptions="Start"
                                         MaxLength="25"
                                         Placeholder="Contraseña"
-                                        PlaceholderColor="Black"
+                                        PlaceholderColor="#848484"
                                         Text="{Binding ConfirmPasswordConfigurations}"
                                         TextColor="Black"
                                         WidthRequest="300" />
@@ -2459,7 +2462,7 @@
                                     BackgroundColor="#79280F"
                                     Clicked="ConfirmChange_Clicked"
                                     HeightRequest="45"
-                                    Text="Guardar Cambios"
+                                    Text="Confirmar Cambios"
                                     TextColor="White"
                                     WidthRequest="200" />
                             </HorizontalStackLayout>
@@ -2508,16 +2511,17 @@
 
                     <!--  Operators  -->
                     <Frame
-                        Margin="260,150,260,30"
+                        Margin="560,200,560,300"
                         BackgroundColor="White"
+                        VerticalOptions="FillAndExpand"
                         CornerRadius="18"
                         IsVisible="{Binding IsOperatorsView}">
                         <Grid
-                            Padding="20"
+                            Padding="40,40,40,20"
                             BackgroundColor="White"
                             ColumnDefinitions="*"
                             HorizontalOptions="FillAndExpand"
-                            RowDefinitions="*,*,30,*,auto,auto"
+                            RowDefinitions="auto,auto,30,*,*,auto"
                             RowSpacing="5"
                             VerticalOptions="FillAndExpand">
 
@@ -2536,6 +2540,7 @@
                                     Margin="0,0,0,0"
                                     Command="{Binding AddOperatorCommand}"
                                     HeightRequest="60"
+                                    BackgroundColor="transparent"
                                     HorizontalOptions="EndAndExpand"
                                     ImageSource="add_circle_button.png"
                                     VerticalOptions="Start"
@@ -2551,18 +2556,18 @@
                                 VerticalOptions="Start"
                                 Color="Black" />
 
-                            <HorizontalStackLayout Grid.Row="2" Margin="30,0,0,0">
+                            <HorizontalStackLayout Grid.Row="2" Margin="50,0,0,0">
                                 <Label
                                     FontSize="18"
                                     Text="Nombre"
                                     TextColor="#79280F" />
                                 <Label
-                                    Margin="148,0,0,0"
+                                    Margin="188,0,0,0"
                                     FontSize="18"
                                     Text="Apellido"
                                     TextColor="#79280F" />
                                 <Label
-                                    Margin="135,0,0,0"
+                                    Margin="165,0,0,0"
                                     FontSize="18"
                                     Text="Fecha de creacion"
                                     TextColor="#79280F" />
@@ -2570,10 +2575,10 @@
 
                             <CollectionView
                                 Grid.Row="3"
-                                Margin="30,0,30,0"
+                                Margin="50,0,30,0"
                                 IsVisible="{Binding AnyOperators}"
                                 ItemsSource="{Binding Operators}"
-                                SelectionMode="Single"
+                                SelectionMode="None"
                                 VerticalOptions="FillAndExpand"
                                 VerticalScrollBarVisibility="Never">
                                 <CollectionView.ItemsLayout>
@@ -2582,7 +2587,7 @@
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="models:Operator">
                                         <Grid
-                                            ColumnDefinitions="230,230,240,140,*,60"
+                                            ColumnDefinitions="260,234,180,140,*,60"
                                             RowDefinitions="*"
                                             VerticalOptions="Start">
 
@@ -2646,13 +2651,13 @@
 
                             <Button
                                 Grid.Row="5"
-                                Margin="0,20,0,50"
+                                Margin="0,20,0,0"
                                 BackgroundColor="#AD6B2A"
                                 Command="{Binding CancelConfigurationCommand}"
                                 HeightRequest="45"
                                 Text="Volver"
                                 TextColor="#FFF6ED"
-                                VerticalOptions="End"
+                                VerticalOptions="EndAndExpand"
                                 WidthRequest="200" />
 
                         </Grid>
@@ -2660,7 +2665,7 @@
 
                     <!--  Add operator  -->
                     <Frame
-                        Margin="260,100,260,300"
+                        Margin="760,200,760,300"
                         BackgroundColor="#D3AA84"
                         CornerRadius="18"
                         IsVisible="{Binding IsAddOperatorView}">
@@ -2676,7 +2681,7 @@
                                 ColumnDefinitions="auto,*"
                                 ColumnSpacing="100"
                                 HorizontalOptions="FillAndExpand"
-                                RowDefinitions="auto,auto,auto,*,auto,*"
+                                RowDefinitions="auto,auto,auto,*,auto"
                                 VerticalOptions="FillAndExpand">
                                 <Label
                                     Margin="0,20,0,0"
@@ -2751,7 +2756,7 @@
                                         HeightRequest="60"
                                         HorizontalOptions="FillAndExpand"
                                         MaxLength="25"
-                                        Placeholder="Escriba un PIN de 4 digitos"
+                                        Placeholder="Escriba un PIN"
                                         PlaceholderColor="Black"
                                         Text="{Binding OperatorPin}"
                                         TextColor="Black"
@@ -2759,7 +2764,7 @@
                                 </Frame>
 
                                 <Frame
-                                    Grid.Row="4"
+                                    Grid.Row="3"
                                     Grid.Column="1"
                                     Margin="0,20,0,0"
                                     Padding="0,0,0,0"
@@ -2781,13 +2786,14 @@
                                 </Frame>
 
                                 <HorizontalStackLayout
-                                    Grid.Row="5"
+                                    Grid.Row="4"
                                     Grid.Column="1"
-                                    HorizontalOptions="EndAndExpand"
+                                    Margin="0,50,0,0"
+                                    HorizontalOptions="StartAndExpand"
                                     Spacing="30"
                                     VerticalOptions="EndAndExpand">
                                     <Button
-                                        Margin="0,20,0,50"
+                                        Margin="0,20,0,0"
                                         BackgroundColor="#AD6B2A"
                                         Command="{Binding CancelAddOperatorCommand}"
                                         HeightRequest="45"
@@ -2795,7 +2801,7 @@
                                         TextColor="#FFF6ED"
                                         WidthRequest="200" />
                                     <Button
-                                        Margin="0,20,55,50"
+                                        Margin="0,20,55,0"
                                         BackgroundColor="#4A744C"
                                         Command="{Binding OkAddOperatorCommand}"
                                         HeightRequest="45"
@@ -2808,7 +2814,7 @@
                         </StackLayout>
                     </Frame>
                     <Frame
-                        Margin="560,100,560,300"
+                        Margin="560,200,560,300"
                         BackgroundColor="#FFF6ED"
                         CornerRadius="18"
                         IsVisible="{Binding ValidateAddOperator}">
@@ -2825,6 +2831,7 @@
                                 RowSpacing="20">
                                 <Label
                                     Text="Usuario"
+                                    FontSize="16"
                                     TextColor="Black"
                                     VerticalOptions="Center" />
                                 <Frame
@@ -2843,13 +2850,14 @@
                                         HorizontalOptions="Start"
                                         MaxLength="25"
                                         Placeholder="Nombre de usuario"
-                                        PlaceholderColor="Black"
+                                        PlaceholderColor="#848484"
                                         Text="{Binding ConfirmUserConfigurations}"
                                         TextColor="Black"
                                         WidthRequest="300" />
                                 </Frame>
                                 <Label
                                     Grid.Row="1"
+                                    FontSize="16"
                                     Text="Contraseña"
                                     TextColor="Black"
                                     VerticalOptions="Center" />
@@ -2869,7 +2877,7 @@
                                         HorizontalOptions="Start"
                                         MaxLength="25"
                                         Placeholder="Contraseña"
-                                        PlaceholderColor="Black"
+                                        PlaceholderColor="#848484"
                                         Text="{Binding ConfirmPasswordConfigurations}"
                                         TextColor="Black"
                                         WidthRequest="300" />
@@ -2901,7 +2909,7 @@
 
                     <!--  Delete Operator  -->
                     <Frame
-                        Margin="560,100,560,300"
+                        Margin="560,200,560,300"
                         BackgroundColor="#FFF6ED"
                         CornerRadius="18"
                         IsVisible="{Binding ValidateDeleteOperator}">
@@ -2917,6 +2925,7 @@
                                 RowDefinitions="*,*"
                                 RowSpacing="20">
                                 <Label
+                                    FontSize="16"
                                     Text="Usuario"
                                     TextColor="Black"
                                     VerticalOptions="Center" />
@@ -2936,13 +2945,14 @@
                                         HorizontalOptions="Start"
                                         MaxLength="25"
                                         Placeholder="Nombre de usuario"
-                                        PlaceholderColor="Black"
+                                        PlaceholderColor="#848484"
                                         Text="{Binding ConfirmUserConfigurations}"
                                         TextColor="Black"
                                         WidthRequest="300" />
                                 </Frame>
                                 <Label
                                     Grid.Row="1"
+                                    FontSize="16"
                                     Text="Contraseña"
                                     TextColor="Black"
                                     VerticalOptions="Center" />
@@ -2962,7 +2972,7 @@
                                         HorizontalOptions="Start"
                                         MaxLength="25"
                                         Placeholder="Contraseña"
-                                        PlaceholderColor="Black"
+                                        PlaceholderColor="#848484"
                                         Text="{Binding ConfirmPasswordConfigurations}"
                                         TextColor="Black"
                                         WidthRequest="300" />
@@ -2994,9 +3004,10 @@
 
                     <!--  Edit Operator  -->
                     <Frame
-                        Margin="260,100,260,300"
+                        Margin="760,200,760,300"
                         BackgroundColor="#D3AA84"
                         CornerRadius="18"
+                        Padding="30"
                         IsVisible="{Binding IsEditOperatorView}">
                         <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                             <Label
@@ -3010,7 +3021,7 @@
                                 ColumnDefinitions="auto,*"
                                 ColumnSpacing="100"
                                 HorizontalOptions="FillAndExpand"
-                                RowDefinitions="auto,auto,auto,*,auto,*"
+                                RowDefinitions="auto,auto,auto,auto,auto"
                                 VerticalOptions="FillAndExpand">
                                 <Label
                                     Margin="0,20,0,0"
@@ -3085,7 +3096,7 @@
                                         HeightRequest="60"
                                         HorizontalOptions="FillAndExpand"
                                         MaxLength="25"
-                                        Placeholder="Escriba un PIN de 4 digitos"
+                                        Placeholder="Escriba un PIN"
                                         PlaceholderColor="Black"
                                         Text="{Binding OperatorPin}"
                                         TextColor="Black"
@@ -3093,7 +3104,7 @@
                                 </Frame>
 
                                 <Frame
-                                    Grid.Row="4"
+                                    Grid.Row="3"
                                     Grid.Column="1"
                                     Margin="0,20,0,0"
                                     Padding="0,0,0,0"
@@ -3115,13 +3126,14 @@
                                 </Frame>
 
                                 <HorizontalStackLayout
-                                    Grid.Row="5"
+                                    Grid.Row="4"
+                                    Margin="0,50,0,0"
                                     Grid.Column="1"
-                                    HorizontalOptions="EndAndExpand"
+                                    HorizontalOptions="StartAndExpand"
                                     Spacing="30"
                                     VerticalOptions="EndAndExpand">
                                     <Button
-                                        Margin="0,20,0,50"
+                                        Margin="0,20,0,0"
                                         BackgroundColor="#AD6B2A"
                                         Command="{Binding CancelAddOperatorCommand}"
                                         HeightRequest="45"
@@ -3129,7 +3141,7 @@
                                         TextColor="#FFF6ED"
                                         WidthRequest="200" />
                                     <Button
-                                        Margin="0,20,55,50"
+                                        Margin="0,20,55,0"
                                         BackgroundColor="#4A744C"
                                         Command="{Binding OkValidateEditOperatorCommand}"
                                         HeightRequest="45"
@@ -3142,7 +3154,7 @@
                         </StackLayout>
                     </Frame>
                     <Frame
-                        Margin="560,100,560,300"
+                        Margin="560,200,560,300"
                         BackgroundColor="#FFF6ED"
                         CornerRadius="18"
                         IsVisible="{Binding ValidateEditOperator}">
@@ -3159,6 +3171,7 @@
                                 RowSpacing="20">
                                 <Label
                                     Text="Usuario"
+                                    FontSize="16"
                                     TextColor="Black"
                                     VerticalOptions="Center" />
                                 <Frame
@@ -3177,13 +3190,14 @@
                                         HorizontalOptions="Start"
                                         MaxLength="25"
                                         Placeholder="Nombre de usuario"
-                                        PlaceholderColor="Black"
+                                        PlaceholderColor="#848484"
                                         Text="{Binding ConfirmUserConfigurations}"
                                         TextColor="Black"
                                         WidthRequest="300" />
                                 </Frame>
                                 <Label
                                     Grid.Row="1"
+                                    FontSize="16"
                                     Text="Contraseña"
                                     TextColor="Black"
                                     VerticalOptions="Center" />
@@ -3203,7 +3217,7 @@
                                         HorizontalOptions="Start"
                                         MaxLength="25"
                                         Placeholder="Contraseña"
-                                        PlaceholderColor="Black"
+                                        PlaceholderColor="#848484"
                                         Text="{Binding ConfirmPasswordConfigurations}"
                                         TextColor="Black"
                                         WidthRequest="300" />

@@ -22,6 +22,7 @@ namespace Rincon.ViewModels
         /// </summary>
         public LoginViewModel(IServiceProvider provider) : base(provider)
         {
+            this.IsBusy = false;
         }
 
 
@@ -108,6 +109,7 @@ namespace Rincon.ViewModels
                     this.Username = this.AuthenticationService.User.Name;
                     this.Password = "*******";
                     await Task.Delay(250);
+                    this.IsBusy = false;
                     await this.NavigationService.Close(this);
                 }
             }

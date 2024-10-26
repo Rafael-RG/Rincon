@@ -10,7 +10,7 @@
     CloseWhenBackgroundIsClicked="False">
 
     <Border
-        Margin="400,200,400,200"
+        Margin="760,300,760,400"
         WidthRequest="800"
         Padding="40"
         BackgroundColor="White">

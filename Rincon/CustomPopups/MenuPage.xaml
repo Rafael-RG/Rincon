@@ -12,7 +12,7 @@
     <Border
         VerticalOptions="Start"
         HorizontalOptions="EndAndExpand"
-        Margin="10,30,0,0"
+        Margin="10,0,0,0"
         Padding="30"
         BackgroundColor="#FFF6ED"
         HeightRequest="300"
@@ -45,6 +45,7 @@
             <Button
                 Margin="0,20,0,0"
                 Grid.Row="1"
+                FontSize ="18"
                 BackgroundColor="Transparent"
                 Clicked="Configuration_Clicked"
                 HorizontalOptions="Start"
@@ -54,6 +55,7 @@
 
             <Button
                 Grid.Row="2"
+                FontSize ="18"
                 BackgroundColor="Transparent"
                 Clicked="ManagementOperators_Clicked"
                 HorizontalOptions="Start"
@@ -63,6 +65,7 @@
 
             <Button
                 Grid.Row="3"
+                FontSize ="18"
                 Margin="0,30,0,0"
                 BackgroundColor="Transparent"
                 Clicked="Logout_Clicked"

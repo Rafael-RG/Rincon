@@ -1155,6 +1155,7 @@ namespace Rincon.ViewModels
             }
             catch (Exception ex)
             {
+                this.IsBusy = false;
                 //Error
             }
             finally
@@ -1172,7 +1173,8 @@ namespace Rincon.ViewModels
             this.NameConfigurations = this.User.Name;
             this.PasswordConfigurations = "";
             this.RepeatPasswordConfigrations = "";
-            this.SelectedQuestionConfigurations = "";
+            this.SelectedQuestionConfigurations = this.Questions.First();
+            this.IsVisibleListQuestions = false;
             this.ResponseConfigurations = "";
             this.ConfirmUserConfigurations = "";
             this.ConfirmPasswordConfigurations = "";
@@ -1303,14 +1305,15 @@ namespace Rincon.ViewModels
             this.ValidateAddOperator = false;
             this.ValidateEditOperator = false;
 
-            this.AnyOperators = this.Operators!=null && this.Operators.Any()? true : false;
+            var operatorsList = await this.DataService.LoadOperatorsAsync();
 
-            var operators = await this.DataService.LoadOperatorsAsync();
-
-            if (operators != null && operators.Any())
+            if (operatorsList != null && operatorsList.Any())
             {
-                this.Operators = new ObservableCollection<Operator>(operators);
+                this.Operators = new ObservableCollection<Operator>(operatorsList);
+
             }
+
+            this.AnyOperators = this.Operators!=null && this.Operators.Any()? true : false;
 
             this.ChangeViewCommand.Execute("Operators");
         }
