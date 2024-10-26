@@ -299,4 +299,28 @@ public partial class HomePage
         }
 
     }
+    
+    async void OkEditOperator_Clicked(object sender, EventArgs e)
+    {
+        var command = this.ViewModel.OkEditOperatorCommand;
+        var result = await (Task<bool>)command.ExecuteAsync(null);
+
+        if (result)
+        {
+            await popupNavigation.PushAsync(new SuccessMessagePage(this.popupNavigation, $"Edición guardada correctamente"));
+        }
+
+    }
+
+
+    async void ViewEditOperator_Clicked(object sender, EventArgs e)
+    {
+        var button = ((Button)sender);
+        var operatorToUpdate = (Operator)button.BindingContext;
+
+        this.ViewModel.OperatorToUpdate = operatorToUpdate;
+
+        this.ViewModel.EditOperatorCommand.Execute(null);
+
+    }
 }

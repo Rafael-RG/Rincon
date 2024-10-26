@@ -461,6 +461,9 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private Operator operatorToDelete;
 
+        [ObservableProperty]
+        private Operator operatorToUpdate;
+
         #endregion
 
         /// <summary>
@@ -1161,6 +1164,8 @@ namespace Rincon.ViewModels
 
         });
 
+        #region Configurations
+
         [RelayCommand]
         private async Task Configuration() 
         {
@@ -1285,6 +1290,10 @@ namespace Rincon.ViewModels
             }
         }
 
+        #endregion
+
+
+        #region ManagementOperators
         [RelayCommand]
         private async Task ManagementOperators()
         {
@@ -1525,6 +1534,119 @@ namespace Rincon.ViewModels
             this.ConfirmUserConfigurations = "";
             this.ConfirmPasswordConfigurations = "";
         });
+
+        [RelayCommand]
+        private async Task EditOperatorAsync()
+        {
+            this.OperatorName = this.OperatorToUpdate.Name;
+            this.OperatorLastName = this.OperatorToUpdate.LastName;
+            this.OperatorPin = this.OperatorToUpdate.Pin;
+            this.RepeatOperatorPin = this.OperatorToUpdate.Pin;
+
+            this.IsAddOperatorView = false;
+            this.IsEditOperatorView = true;
+            this.IsOperatorsView = false;
+            this.ValidateAddOperator = false;
+            this.ValidateEditOperator = false;
+        }
+
+        [RelayCommand]
+        private async Task OkValidateEditOperator()
+        {
+            if (string.IsNullOrEmpty(this.OperatorName) || string.IsNullOrEmpty(this.OperatorLastName) || string.IsNullOrEmpty(this.OperatorPin) || string.IsNullOrEmpty(this.RepeatOperatorPin))
+            {
+                await NotificationService.NotifyAsync("Error", "Faltan completar campos", "Cerrar");
+                return;
+            }
+
+            if (this.OperatorPin != this.RepeatOperatorPin)
+            {
+                await NotificationService.NotifyAsync("Error", "Los pines no coinciden", "Cerrar");
+                return;
+            }
+
+            this.IsAddOperatorView = false;
+            this.IsEditOperatorView = false;
+            this.IsOperatorsView = false;
+            this.ValidateAddOperator = false;
+            this.ValidateEditOperator = true;
+            this.ValidateDeleteOperator = false;
+
+
+            this.ConfirmUserConfigurations = "";
+            this.ConfirmPasswordConfigurations = "";
+        }
+
+        [RelayCommand]
+        private async Task<bool> OkEditOperatorAsync()
+        {
+            if (string.IsNullOrWhiteSpace(this.ConfirmUserConfigurations))
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), GetText("UserEmpty"), GetText("Close"));
+                return false;
+            }
+            else if (string.IsNullOrWhiteSpace(this.ConfirmPasswordConfigurations))
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), GetText("PasswordEmpty"), GetText("Close"));
+                return false;
+            }
+
+            try
+            {
+                this.IsBusy = true;
+                var user = await this.DataService.LoadUserAsync(this.ConfirmUserConfigurations, this.ConfirmPasswordConfigurations);
+
+                var localUser = await this.DataService.LoadLocalUserAsync();
+
+
+                if (user == null || (user.Name != localUser.Name && user.Password != localUser.Password))
+                {
+                    await NotificationService.NotifyAsync("Error", "Credenciales invalidas", "Cerrar");
+                    this.IsBusy = false;
+                    return false;
+                }
+
+                this.OperatorToUpdate.Name = this.OperatorName;
+                this.OperatorToUpdate.LastName = this.OperatorLastName;
+                this.OperatorToUpdate.Pin = this.OperatorPin;
+
+                var result = await this.DataService.InsertOrUpdateItemsAsync<Operator>(this.OperatorToUpdate);
+
+                if (result > 0)
+                {
+                    this.Operators ??= new ObservableCollection<Operator>();
+
+                }
+                else
+                {
+                    await NotificationService.NotifyAsync("Error", "Hubo un error al editar el operador. Por favor vuelva a intentar", "Cerrar");
+                    this.IsBusy = false;
+                    return false;
+                }
+
+                this.IsAddOperatorView = false;
+                this.IsEditOperatorView = false;
+                this.IsOperatorsView = true;
+                this.ValidateAddOperator = false;
+                this.ValidateEditOperator = false;
+                this.ValidateDeleteOperator = false;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), (ex.Message), GetText("Close"));
+                this.IsBusy = false;
+                await LogExceptionAsync(ex);
+                return false;
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        }
+
+        #endregion
 
         private void ClearViewAddProduct()
         {

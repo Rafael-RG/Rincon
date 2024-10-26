@@ -33,7 +33,11 @@
                 TextColor="Black"
                 VerticalOptions="Center" />
 
-            <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Spacing="60">
+            <StackLayout
+                Grid.Row="2"
+                HorizontalOptions="CenterAndExpand"
+                Orientation="Horizontal"
+                Spacing="60">
                 <Button
                     BackgroundColor="#D3AA84"
                     Clicked="BackDeleteOperator_Clicked"
