@@ -2175,6 +2175,7 @@
                                 Margin="30,30,0,0"
                                 ColumnDefinitions="auto,*"
                                 ColumnSpacing="60"
+                                RowSpacing="20"
                                 HorizontalOptions="FillAndExpand"
                                 RowDefinitions="auto,auto,auto,*,auto,*"
                                 VerticalOptions="FillAndExpand">
@@ -2282,10 +2283,12 @@
 
                                         </Label>
                                     </Frame>
-                                    <Frame
+                                    <Frame CornerRadius="24"
+                                        HeightRequest="180" IsVisible="{Binding IsVisibleListQuestions}" Padding="0" BackgroundColor="Transparent">
+                                        <Frame
                                         x:Name="FrameListQuestions"
                                         CornerRadius="24"
-                                        HeightRequest="140"
+                                        HeightRequest="180"
                                         IsVisible="{Binding IsVisibleListQuestions}"
                                         VerticalOptions="Start">
                                         <Frame.Background> 
@@ -2297,11 +2300,12 @@
                                         <CollectionView
                                             x:Name="Questions"
                                             HeightRequest="140"
+                                            Margin="0,5,0,5"
                                             HorizontalOptions="Start"
                                             ItemsSource="{Binding Questions}"
                                             SelectionChanged="Questions_SelectionChanged"
                                             SelectionMode="Single"
-                                            VerticalOptions="Start">
+                                            VerticalOptions="StartAndExpand">
 
                                             <CollectionView.ItemsLayout>
                                                 <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
@@ -2309,7 +2313,7 @@
                                             <CollectionView.ItemTemplate>
                                                 <DataTemplate x:DataType="x:String">
                                                     <Label
-                                                        FontSize="18"
+                                                        FontSize="14"
                                                         Text="{Binding .}"
                                                         TextColor="#000000"
                                                         VerticalOptions="Start" />
@@ -2317,7 +2321,7 @@
                                             </CollectionView.ItemTemplate>
                                         </CollectionView>
                                     </Frame>
-
+                                    </Frame>
                                 </StackLayout>
                                 <Label
                                     Grid.Row="4"
