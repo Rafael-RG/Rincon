@@ -22,6 +22,7 @@ namespace Rincon.Models
     {
         Tirante,
         Polin,
+        MedioPolin,
         Tabla
     }
 
@@ -44,7 +45,6 @@ namespace Rincon.Models
     /// </summary>
     public enum Machimbre
     {
-        Deck,
         FrenteIngles,
         Entrepiso,
         Piso

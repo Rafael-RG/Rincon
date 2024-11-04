@@ -140,6 +140,9 @@ namespace Rincon.ViewModels
                 if (SetProperty(ref isTiranteSelect, value))
                 {
                     OnPropertyChanged(nameof(IsMeasureSelect));
+                    OnPropertyChanged(nameof(IsMachimbreOption));
+                    OnPropertyChanged(nameof(IsDeckOption));
+                    ReloadStates();
                 }
             }
         }
@@ -147,8 +150,40 @@ namespace Rincon.ViewModels
         ///// <summary>
         ///// Is Polin
         ///// </summary>
-        [ObservableProperty]
         private bool isPolinSelect;
+
+        public bool IsPolinSelect
+        {
+            get { return isPolinSelect; }
+            set
+            {
+                if (SetProperty(ref isPolinSelect, value))
+                {
+                    OnPropertyChanged(nameof(IsMachimbreOption));
+                    OnPropertyChanged(nameof(IsDeckOption));
+                    ReloadStates();
+                }
+            }
+        }
+
+        ///// <summary>
+        ///// Is Polin
+        ///// </summary>
+        private bool isMedioPolinSelect;
+
+        public bool IsMedioPolinSelect
+        {
+            get { return isMedioPolinSelect; }
+            set
+            {
+                if (SetProperty(ref isMedioPolinSelect, value))
+                {
+                    OnPropertyChanged(nameof(IsMachimbreOption));
+                    OnPropertyChanged(nameof(IsDeckOption));
+                    ReloadStates();
+                }
+            }
+        }
 
         ///// <summary>
         ///// Is Tabla
@@ -164,10 +199,28 @@ namespace Rincon.ViewModels
                 if (SetProperty(ref isTablaSelect, value))
                 {
                     OnPropertyChanged(nameof(IsMeasureSelect));
+                    OnPropertyChanged(nameof(IsMachimbreOption));
+                    OnPropertyChanged(nameof(IsDeckOption));
+                    ReloadStates();
                 }
             }
         }
 
+        public bool? IsMachimbreOption
+        {
+            get
+            {
+                return IsPolinSelect || IsTablaSelect || IsMedioPolinSelect;
+            }
+        }
+
+        public bool? IsDeckOption
+        {
+            get
+            {
+                return IsTablaSelect;
+            }
+        }
         
         public bool? IsMeasureSelect
         {
@@ -241,8 +294,45 @@ namespace Rincon.ViewModels
         ///// <summary>
         ///// IsMachimbre
         ///// </summary>
-        [ObservableProperty]
         private bool isMachimbre; 
+
+        public bool IsMachimbre
+        {
+            get { return isMachimbre; }
+            set
+            {
+                if (SetProperty(ref isMachimbre, value))
+                {
+                    OnPropertyChanged(nameof(IsMachimbre));
+                    if (value)
+                    {
+                        this.IsDeck = false;
+                    }
+                }
+            }
+        }
+
+        ///// <summary>
+        ///// IsMachimbre
+        ///// </summary>
+        private bool isDeck; 
+
+        public bool IsDeck
+        {
+            get { return isDeck; }
+            set
+            {
+                if (SetProperty(ref isDeck, value))
+                {
+                    OnPropertyChanged(nameof(IsDeck));
+
+                    if (value)
+                    {
+                        this.IsMachimbre = false;
+                    }
+                }
+            }
+        }
 
         ///// <summary>
         ///// IsMachimbre
@@ -775,9 +865,17 @@ namespace Rincon.ViewModels
                         }
                         else if (this.IsPolinSelect)
                         {
-                            if (this.Diameter == 0)
+                            if (this.Diameter == 0 || this.Length == 0)
                             {
-                                await NotificationService.NotifyAsync("Falta completar campos", "El diametro no puede ser 0", "Cerrar");
+                                await NotificationService.NotifyAsync("Falta completar campos", "El diametro y Largo no pueden ser 0", "Cerrar");
+                                return;
+                            }
+                        }
+                        else if (this.IsMedioPolinSelect)
+                        {
+                            if (this.Diameter == 0 || this.Length == 0)
+                            {
+                                await NotificationService.NotifyAsync("Falta completar campos", "El diametro y Largo no pueden ser 0", "Cerrar");
                                 return;
                             }
                         }
@@ -802,10 +900,11 @@ namespace Rincon.ViewModels
                             Thickness = this?.Thickness,
                             Width = this?.Width,
                             Machimbre = this.IsMachimbre,
-                            ProductType = this.IsTiranteSelect ? ProductType.Tirante : this.IsPolinSelect ? ProductType.Polin : ProductType.Tabla,
+                            Deck = this.IsDeck,
+                            ProductType = this.IsTiranteSelect ? ProductType.Tirante : this.IsPolinSelect ? ProductType.Polin : this.IsTablaSelect ? ProductType.Tabla : ProductType.MedioPolin,
                             WoodState =  (WoodState)Enum.Parse(typeof(WoodState),this.SelectedState),
                             MachimbreSate = (Machimbre)Enum.Parse(typeof(Machimbre),this.SelectedMachimbre),
-                            Description = this.IsPolinSelect ? $"{this.Diameter}" : $"{this.Thickness} x {this.Length} x {this.Width}",
+                            Description = this.IsPolinSelect ? $"{this.Diameter} x {this.Length}" : $"{this.Thickness} x {this.Length} x {this.Width}",
 
                         };
 
@@ -833,6 +932,30 @@ namespace Rincon.ViewModels
             });
         });
 
+        [RelayCommand]
+        private void ReloadStates()
+        {
+            this.States = new List<string>();
+
+            if(this.IsPolinSelect || this.IsMedioPolinSelect)
+            {
+                foreach (var item in Enum.GetValues(typeof(WoodState)))
+                {
+                    if (item.ToString() == "Fresco" || item.ToString() == "Tratado")
+                    {
+                        this.States.Add(item.ToString());
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in Enum.GetValues(typeof(WoodState)))
+                {
+                    this.States.Add(item.ToString());
+                }
+            }
+            this.SelectedState = this.States.First();
+        }
         #endregion
 
         #region AddStock

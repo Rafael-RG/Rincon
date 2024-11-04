@@ -21,6 +21,7 @@ namespace Rincon.Models
         public string Id { get; set; }
         public string Description { get; set; }
         public bool? Machimbre { get; set; }
+        public bool? Deck { get; set; }
         public double? Thickness { get; set; }
         public double? Width { get; set; }
         public double? Length { get; set; }
