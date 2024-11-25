@@ -83,6 +83,14 @@ namespace Rincon.ViewModels
         ///// </summary>
         [ObservableProperty]
         private bool isAddStockView;
+        
+        
+        ///// <summary>
+        ///// New movement View
+        ///// </summary>
+        [ObservableProperty]
+        private bool isNewMovementView;
+
 
         ///// <summary>
         ///// Add stock View
@@ -554,6 +562,36 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private Operator operatorToUpdate;
 
+        [ObservableProperty]
+        private string okMovementText;
+
+        [ObservableProperty]
+        private int quantityMovement;
+
+        [ObservableProperty]
+        private bool isSale;
+
+        [ObservableProperty]
+        private bool isChangeOfState;
+
+        [ObservableProperty]
+        private bool isLoss;
+
+        [ObservableProperty]
+        private ObservableCollection<ProductStock> nextProductStates;
+
+        [ObservableProperty]
+        private ProductStock productMovement;
+        
+        [ObservableProperty]
+        private bool isSelectedProductMovement;
+
+        [ObservableProperty]
+        private bool isVisibleListNewMovement;
+
+        [ObservableProperty]
+        private ObservableCollection<ProductStock> productsWithStock;
+
         #endregion
 
         /// <summary>
@@ -624,6 +662,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = false;
+                    this.IsNewMovementView = false;
                     break;
                 case "MagementStock":
                     this.IsHomeView = false;
@@ -639,6 +678,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = false;
+                    this.IsNewMovementView = false;
                     break;
                 case "Tasks":
                     this.IsHomeView = false;
@@ -654,6 +694,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = false;
+                    this.IsNewMovementView = false;
                     break;
                 case "Orders":
                     this.IsHomeView = false;
@@ -669,6 +710,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = false;
+                    this.IsNewMovementView = false;
                     break;
                 case "History":
                     this.IsHomeView = false;
@@ -684,6 +726,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = false;
+                    this.IsNewMovementView = false;
                     break;
                 case "AddProduct":
                     this.IsHomeView = false;
@@ -697,7 +740,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = false;
-
+                    this.IsNewMovementView = false;
                     this.IsTiranteSelect = true;
                     break;
                 case "AddStock":
@@ -714,7 +757,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = false;
-
+                    this.IsNewMovementView = false;
                     this.IsVisibleListAddStock = false;
                     break;
                 case "Inventory":
@@ -731,7 +774,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = false;
-
+                    this.IsNewMovementView = false;
                     this.SelectedIndexSeachStock = 1;
                     break;
                 case "CheckStock":
@@ -748,7 +791,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = false;
-
+                    this.IsNewMovementView = false;
                     this.SelectedIndexSeachStock = 1;
                     break;
                 case "EditProductInventory":
@@ -765,6 +808,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = false;
+                    this.IsNewMovementView = false;
                     break;
                 case "EditProductDetaildInventory":
                     this.IsHomeView = false;
@@ -780,6 +824,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditProductView = true;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = false;
+                    this.IsNewMovementView = false;
                     break;
                 case "Configuration":
                     this.IsHomeView = false;
@@ -795,6 +840,7 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = true;
                     this.IsManagementOperatorsView = false;
+                    this.IsNewMovementView = false;
                     break;
                 case "Operators":
                     this.IsHomeView = false;
@@ -810,8 +856,27 @@ namespace Rincon.ViewModels
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = true;
+                    this.IsNewMovementView = false;
                     break;
+                case "NewMovement":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = false;
+                    this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
+                    this.IsNewMovementView = true;
 
+                    this.IsSale = true;
+                    this.OkMovementText = "Confirmar Movimiento";
+                    break;
             }
         });
 
@@ -912,6 +977,7 @@ namespace Rincon.ViewModels
 
                         if (result > 0)
                         {
+                            this.Products = this.Products ?? new List<Product>();
                             this.Products.Add(product);
                         }
                         
@@ -1079,9 +1145,25 @@ namespace Rincon.ViewModels
 
         #endregion
 
-        #region CheckStock
+        #region Movements
 
+        [RelayCommand]
+        private async Task CancelNewMovement() 
+        {
+            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Si", "No", (response) =>
+            {
+                if (response)
+                {
+                    this.ChangeViewCommand.Execute("Home");
+                }
+            });
+        }
 
+        [RelayCommand]
+        private async Task<bool> NewMovement()
+        {
+            return true;
+        }
         #endregion
 
         #region Inventario

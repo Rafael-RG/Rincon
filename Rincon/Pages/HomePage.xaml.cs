@@ -323,4 +323,49 @@ public partial class HomePage
         this.ViewModel.EditOperatorCommand.Execute(null);
 
     }
+
+    private void CollectionNewMovement_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if ((ProductStock)ProductsNewMovement.SelectedItem == null) return;
+        this.ViewModel.ProductMovement = (ProductStock)ProductsAddStock.SelectedItem;
+        this.ViewModel.IsVisibleListNewMovement = false;
+        this.SearchBarNewMovement.Unfocus();
+    }
+
+    void SearchBar_NewMovementFocused(System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e)
+    {
+        this.ViewModel.IsVisibleListNewMovement = !this.ViewModel.IsVisibleListNewMovement;
+    }
+
+    void SearchBar_NewMovementUnfocused(System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e)
+    {
+        this.ViewModel.IsVisibleListNewMovement = false;
+    }
+
+    private void OnNewMovementTextChanged(object sender, TextChangedEventArgs e)
+    {
+        this.ViewModel.IsVisibleListNewMovement = true;
+
+        if (string.IsNullOrWhiteSpace(e.NewTextValue))
+        {
+            ProductsNewMovement.ItemsSource = this.ViewModel.ProductsWithStock;
+        }
+        else
+        {
+            ProductsNewMovement.ItemsSource = this.ViewModel.ProductsWithStock.Where(x => x.Product.Description.ToLower().Contains(e.NewTextValue.ToLower())
+                || x.Id.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+        }
+    }
+
+    async void NewMovement_Clicked(object sender, EventArgs e)
+    {
+        var command = this.ViewModel.NewMovementCommand;
+        var result = await (Task<bool>)command.ExecuteAsync(null);
+
+        if (result)
+        {
+            await popupNavigation.PushAsync(new SuccessMessagePage(this.popupNavigation, $"Se realizo el movimiento con exito!"));
+        }
+
+    }
 }

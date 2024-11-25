@@ -420,6 +420,8 @@
                             VerticalOptions="FillAndExpand" />
                         <ImageButton
                             Grid.Column="1"
+                            Command="{Binding ChangeViewCommand}"
+                            CommandParameter="NewMovement"
                             HorizontalOptions="FillAndExpand"
                             Source="change_direct_home.png"
                             VerticalOptions="FillAndExpand" />
@@ -532,9 +534,9 @@
                         <CollectionView
                             Grid.Row="4"
                             Margin="0,10,0,0"
+                            BackgroundColor="Transparent"
                             ItemsSource="{Binding Notes}"
                             SelectionMode="None"
-                            BackgroundColor="Transparent"
                             VerticalOptions="FillAndExpand"
                             VerticalScrollBarVisibility="Never">
                             <CollectionView.ItemsLayout>
@@ -559,9 +561,9 @@
 
                                             <Label
                                                 Grid.Row="1"
-                                                MaxLines="2"
-                                                LineBreakMode="TailTruncation"
                                                 FontSize="12"
+                                                LineBreakMode="TailTruncation"
+                                                MaxLines="2"
                                                 Text="{Binding Content}"
                                                 TextColor="#000000"
                                                 VerticalOptions="Start" />
@@ -665,7 +667,11 @@
                     HeightRequest="50"
                     HorizontalOptions="Start"
                     Source="new_movement_icon_small.png"
-                    WidthRequest="50" />
+                    WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="NewMovement" />
+                    </Image.GestureRecognizers>
+                </Image>
                 <Label
                     Grid.Row="3"
                     Grid.Column="1"
@@ -674,7 +680,11 @@
                     HorizontalOptions="Start"
                     Text="Nuevo movimiento "
                     TextColor="#303030"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="NewMovement" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Image
                     Grid.Row="4"
                     Grid.Column="0"
@@ -1099,7 +1109,7 @@
                             VerticalOptions="Center" />
 
                     </Grid>
-                    
+
                     <HorizontalStackLayout Margin="35,40,0,0">
                         <Label
                             FontSize="18"
@@ -1246,21 +1256,21 @@
                         <Label
                             Margin="145,0,0,0"
                             FontSize="18"
-                            Text="Deck"
                             IsVisible="{Binding IsDeckOption}"
+                            Text="Deck"
                             TextColor="#79280F"
                             VerticalOptions="Center" />
 
                         <CheckBox
                             Margin="0,0,0,0"
                             HeightRequest="45"
-                            IsVisible="{Binding IsDeckOption}"
                             HorizontalOptions="End"
                             IsChecked="{Binding IsDeck}"
+                            IsVisible="{Binding IsDeckOption}"
                             WidthRequest="45"
                             Color="#79280F" />
                     </HorizontalStackLayout>
-                    
+
                     <Grid
                         Margin="30,150,0,0"
                         ColumnDefinitions="auto,auto,auto,auto"
@@ -1635,6 +1645,286 @@
                         Margin="20,0,20,0"
                         BackgroundColor="#FFF6ED"
                         Command="{Binding CancelAddStockCommand}"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        Text="Cancelar"
+                        TextColor="#000000"
+                        WidthRequest="260" />
+                </HorizontalStackLayout>
+
+
+            </Grid>
+
+            <!--  Nuevo Movimiento  -->
+            <Grid
+                Grid.Row="2"
+                Grid.ColumnSpan="4"
+                Padding="20"
+                BackgroundColor="White"
+                ColumnDefinitions="*"
+                IsVisible="{Binding IsNewMovementView}"
+                RowDefinitions="auto,auto,auto,auto,auto,auto,*,auto"
+                RowSpacing="5">
+
+                <Label
+                    Margin="0,0,0,10"
+                    FontSize="26"
+                    HorizontalOptions="Start"
+                    Text="Movimiento de stock"
+                    TextColor="#79280F"
+                    VerticalOptions="Center" />
+
+                <BoxView
+                    Grid.Row="1"
+                    Margin="0,0,0,20"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"
+                    Color="#79280F" />
+
+                <VerticalStackLayout
+                    Grid.Row="2"
+                    Margin="0,0,0,20"
+                    Padding="0,0,0,0">
+                    <Frame
+                        Margin="0"
+                        Padding="10,-3,10,-3"
+                        BackgroundColor="LightGray"
+                        CornerRadius="24"
+                        HeightRequest="55">
+                        <SearchBar
+                            x:Name="SearchBarNewMovement"
+                            BackgroundColor="LightGray"
+                            CancelButtonColor="Black"
+                            Focused="SearchBar_NewMovementFocused"
+                            HeightRequest="55"
+                            HorizontalOptions="StartAndExpand"
+                            Placeholder="Buscar producto"
+                            TextChanged="OnNewMovementTextChanged"
+                            TextColor="Black"
+                            Unfocused="SearchBar_NewMovementUnfocused" />
+
+                    </Frame>
+
+
+                    <Frame
+                        x:Name="FrameListNewMovoment"
+                        CornerRadius="24"
+                        IsVisible="{Binding IsVisibleListNewMovement}">
+                        <Frame.Background>
+                            <LinearGradientBrush EndPoint="0,1">
+                                <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                <GradientStop Offset="1.0" Color="#FFF6ED" />
+                            </LinearGradientBrush>
+                        </Frame.Background>
+                        <CollectionView
+                            x:Name="ProductsNewMovement"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding ProductsWithStock}"
+                            SelectionChanged="CollectionNewMovement_SelectionChanged"
+                            SelectionMode="Single"
+                            VerticalOptions="FillAndExpand">
+
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:ProductStock">
+                                    <Grid
+                                        ColumnDefinitions="*,*,*"
+                                        RowDefinitions="*"
+                                        RowSpacing="10"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            FontSize="18"
+                                            Text="{Binding Id}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                        <Label
+                                            Grid.Column="1"
+                                            FontSize="18"
+                                            Text="{Binding Product.Description}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                        <Label
+                                            Grid.Column="2"
+                                            FontSize="18"
+                                            Text="{Binding Product.WoodState}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                            <CollectionView.EmptyView>
+                                <Label
+                                    FontSize="18"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="No se encontraron productos para realizar movimientos"
+                                    TextColor="Black"
+                                    VerticalOptions="CenterAndExpand" />
+                            </CollectionView.EmptyView>
+                        </CollectionView>
+                    </Frame>
+
+                </VerticalStackLayout>
+
+                <HorizontalStackLayout Grid.Row="3" Margin="30,0,0,30">
+                    <Label
+                        FontSize="18"
+                        Text="Codigo"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="230,0,0,0"
+                        FontSize="18"
+                        Text="Descripcion"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="130,0,0,0"
+                        FontSize="18"
+                        Text="Estado"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="120,0,0,0"
+                        FontSize="18"
+                        Text="Stock Disponible"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="120,0,0,0"
+                        FontSize="18"
+                        Text="Reserva / Proceso"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="120,0,0,0"
+                        FontSize="18"
+                        Text="Total"
+                        TextColor="#79280F" />
+                </HorizontalStackLayout>
+               
+                <Grid
+                    Grid.Row="4"
+                    IsVisible="{Binding IsSelectedProductMovement}"
+                    ColumnDefinitions="300,300,*,100,auto,300"
+                    RowDefinitions="*"
+                    RowSpacing="10"
+                    VerticalOptions="Start">
+                    <Label
+                        FontSize="18"
+                        Text="{Binding ProductMovement.Id}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="1"
+                        FontSize="18"
+                        Text="{Binding ProductMovement.Product.Description}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="2"
+                        FontSize="18"
+                        Text="{Binding ProductMovement.Product.WoodState}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="3"
+                        FontSize="18"
+                        Text="{Binding ProductMovement.Available}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="4"
+                        Margin="0,0,6,0"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        TextColor="black">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding ProductMovement.Reserved}" />
+                                <Span Text="/" />
+                                <Span Text="{Binding ProductMovement.Process}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label
+                        Grid.Column="5"
+                        FontSize="18"
+                        Text="{Binding ProductMovement.Quantity}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                </Grid>
+                
+                <Frame Grid.Row="5" Margin="30,0,0,0" BackgroundColor="White">
+                    <Grid RowDefinitions="auto, auto,auto" RowSpacing="25">
+                        <HorizontalStackLayout Spacing="25">
+                            <Label Text="Tipo de movimiento" TextColor="Black"/>
+                            <VerticalStackLayout>
+                                <RadioButton
+                                    TextColor="Black"
+                                    Content="Venta"
+                                    GroupName="MovementType"
+                                    IsChecked="{Binding IsSale}"
+                                    Value="Sale" />
+                                <RadioButton
+                                    TextColor="Black"
+                                    Content="Cambio de estado"
+                                    GroupName="MovementType"
+                                    IsChecked="{Binding IsChangeOfState}"
+                                    Value="ChangeOfState" />
+                                <RadioButton
+                                    TextColor="Black"
+                                    Content="Para perdida"
+                                    GroupName="MovementType"
+                                    IsChecked="{Binding IsLoss}"
+                                    Value="Loss" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="1" Spacing="25">
+                            <Label Text="Cantidad" VerticalOptions="Center" TextColor="Black"/>
+                            <Entry Text="{Binding QuantityMovement}" TextColor="Black"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="2" Spacing="25">
+                            <Label Text="Suiguiente estado:" VerticalOptions="Center" TextColor="Black"/>
+                            <Picker ItemsSource="{Binding NextProductStates}" TextColor="Black"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Frame>
+                <BoxView
+                    Grid.Row="6"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="EndAndExpand"
+                    Color="#79280F" />
+
+                <HorizontalStackLayout
+                    Grid.Row="7"
+                    Margin="0,20,0,0"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Start">
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="20,0,20,0"
+                        BackgroundColor="#D3AA84"
+                        Clicked="NewMovement_Clicked"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        Text="{Binding OkMovementText}"
+                        TextColor="#000000"
+                        WidthRequest="260" />
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="20,0,20,0"
+                        BackgroundColor="#FFF6ED"
+                        Command="{Binding CancelNewMovementCommand}"
                         HeightRequest="35"
                         HorizontalOptions="Center"
                         Text="Cancelar"
@@ -2280,331 +2570,341 @@
                         HorizontalOptions="Start"
                         Source="rincon_white.png"
                         WidthRequest="400" />
-                    <Grid IsVisible="{Binding ConfirmUserChanges, Converter={StaticResource InvertedBoolConverter}}" VerticalOptions="FillAndExpand" ColumnDefinitions="25*,25*,25*,25*" RowDefinitions="25*,25*,25*,25*">      
+                    <Grid
+                        ColumnDefinitions="25*,25*,25*,25*"
+                        IsVisible="{Binding ConfirmUserChanges, Converter={StaticResource InvertedBoolConverter}}"
+                        RowDefinitions="25*,25*,25*,25*"
+                        VerticalOptions="FillAndExpand">
                         <Frame
+                            Grid.Row="1"
+                            Grid.RowSpan="2"
                             Grid.Column="1"
                             Grid.ColumnSpan="2"
-                            Grid.Row="1"
-                            Grid.RowSpan="2"
-                        BackgroundColor="#D3AA84"
-                        CornerRadius="18"
-                        >
-                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                            <Label
-                                Margin="30,30,0,0"
-                                FontAttributes="Bold"
-                                FontSize="26"
-                                Text="Configuración"
-                                TextColor="Black" />
-                            <Grid
-                                Margin="30,20,0,0"
-                                ColumnDefinitions="auto,auto"
-                                ColumnSpacing="20"
-                                RowSpacing="10"
-                                HorizontalOptions="FillAndExpand"
-                                RowDefinitions="auto,auto,auto,auto,auto,auto"
-                                VerticalOptions="FillAndExpand">
+                            BackgroundColor="#D3AA84"
+                            CornerRadius="18">
+                            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                 <Label
-                                    Margin="0,20,0,0"
-                                    FontSize="16"
-                                    Text="Nombre"
+                                    Margin="30,30,0,0"
+                                    FontAttributes="Bold"
+                                    FontSize="26"
+                                    Text="Configuración"
                                     TextColor="Black" />
-                                <Frame
-                                    Grid.Column="1"
-                                    Margin="0,20,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    VerticalOptions="Start"
-                                    MinimumWidthRequest="200">
-                                    <Entry
-                                        BackgroundColor="White"
-                                        HeightRequest="60"
-                                        HorizontalOptions="Start"
-                                        MaxLength="25"
-                                        Placeholder="Nombre"
-                                        PlaceholderColor="#848484"
-                                        Text="{Binding NameConfigurations}"
-                                        TextColor="Black"
-                                        MinimumWidthRequest="200" />
-                                </Frame>
-                                <Label
-                                    Grid.Row="1"
-                                    Margin="0,10,0,0"
-                                    FontSize="16"
-                                    Text="Contraseña"
-                                    TextColor="Black" />
-                                <Frame
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="0,10,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    MinimumWidthRequest="200">
-                                    <Entry
-                                        BackgroundColor="Transparent"
-                                        HeightRequest="60"
-                                        HorizontalOptions="FillAndExpand"
-                                        MaxLength="25"
-                                        Placeholder="{extensions:Localize Password}"
-                                        PlaceholderColor="#848484"
-                                        Text="{Binding PasswordConfigurations}"
-                                        TextColor="Black"
-                                        MinimumWidthRequest="200" />
-                                </Frame>
-                                <Frame
-                                    Grid.Row="2"
-                                    Grid.Column="1"
-                                    Margin="0,10,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    MinimumWidthRequest="200">
-                                    <Entry
-                                        BackgroundColor="Transparent"
-                                        HeightRequest="60"
-                                        HorizontalOptions="FillAndExpand"
-                                        MaxLength="25"
-                                        Placeholder="Repetir contraseña"
-                                        PlaceholderColor="#848484"
-                                        Text="{Binding RepeatPasswordConfigrations}"
-                                        TextColor="Black"
-                                        MinimumWidthRequest="200" />
-                                </Frame>
-
-                                <Label
-                                    Grid.Row="3"
-                                    Margin="0,10,0,0"
-                                    FontSize="16"
-                                    Text="Pregunta de seguridad"
-                                    TextColor="Black" />
-                                <StackLayout
-                                    Grid.Row="3"
-                                    Grid.Column="1"
-                                    Margin="0,10,0,10"
-                                    HorizontalOptions="Start"
-                                    MinimumWidthRequest="300">
+                                <Grid
+                                    Margin="30,20,0,0"
+                                    ColumnDefinitions="auto,auto"
+                                    ColumnSpacing="20"
+                                    HorizontalOptions="FillAndExpand"
+                                    RowDefinitions="auto,auto,auto,auto,auto,auto"
+                                    RowSpacing="10"
+                                    VerticalOptions="FillAndExpand">
+                                    <Label
+                                        Margin="0,20,0,0"
+                                        FontSize="16"
+                                        Text="Nombre"
+                                        TextColor="Black" />
                                     <Frame
-                                        Margin="0"
-                                        Padding="10,-3,10,-3"
+                                        Grid.Column="1"
+                                        Margin="0,20,0,0"
+                                        Padding="0,0,0,0"
                                         BackgroundColor="White"
                                         CornerRadius="18"
-                                        HeightRequest="40">
-                                        <Label
-                                            FontSize="14"
-                                            Text="{Binding SelectedQuestionConfigurations, Mode=TwoWay}"
-                                            TextColor="Black"
-                                            VerticalOptions="Center">
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding SelectQuestionCommand}" />
-                                            </Label.GestureRecognizers>
-
-                                        </Label>
-                                    </Frame>
-                                    <Frame CornerRadius="24"
-                                        HeightRequest="180" IsVisible="{Binding IsVisibleListQuestions}" Padding="0" BackgroundColor="Transparent">
-                                        <Frame
-                                        x:Name="FrameListQuestions"
-                                        CornerRadius="24"
-                                        HeightRequest="180"
-                                        IsVisible="{Binding IsVisibleListQuestions}"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        MinimumWidthRequest="200"
                                         VerticalOptions="Start">
-                                        <Frame.Background> 
-                                 <LinearGradientBrush EndPoint="0,1">
-                                    <GradientStop Offset="0.1" Color="#FFFFFF" />
-                                    <GradientStop Offset="1.0" Color="#FFF6ED" />
-                                </LinearGradientBrush>
-                            </Frame.Background>
-                                        <CollectionView
-                                            x:Name="Questions"
-                                            HeightRequest="140"
-                                            Margin="0,5,0,5"
+                                        <Entry
+                                            BackgroundColor="White"
+                                            HeightRequest="60"
                                             HorizontalOptions="Start"
-                                            ItemsSource="{Binding Questions}"
-                                            SelectionChanged="Questions_SelectionChanged"
-                                            SelectionMode="Single"
-                                            VerticalOptions="StartAndExpand">
-
-                                            <CollectionView.ItemsLayout>
-                                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
-                                            </CollectionView.ItemsLayout>
-                                            <CollectionView.ItemTemplate>
-                                                <DataTemplate x:DataType="x:String">
-                                                    <Label
-                                                        FontSize="14"
-                                                        Text="{Binding .}"
-                                                        TextColor="#000000"
-                                                        VerticalOptions="Start" />
-                                                </DataTemplate>
-                                            </CollectionView.ItemTemplate>
-                                        </CollectionView>
+                                            MaxLength="25"
+                                            MinimumWidthRequest="200"
+                                            Placeholder="Nombre"
+                                            PlaceholderColor="#848484"
+                                            Text="{Binding NameConfigurations}"
+                                            TextColor="Black" />
                                     </Frame>
+                                    <Label
+                                        Grid.Row="1"
+                                        Margin="0,10,0,0"
+                                        FontSize="16"
+                                        Text="Contraseña"
+                                        TextColor="Black" />
+                                    <Frame
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="0,10,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        MinimumWidthRequest="200">
+                                        <Entry
+                                            BackgroundColor="Transparent"
+                                            HeightRequest="60"
+                                            HorizontalOptions="FillAndExpand"
+                                            MaxLength="25"
+                                            MinimumWidthRequest="200"
+                                            Placeholder="{extensions:Localize Password}"
+                                            PlaceholderColor="#848484"
+                                            Text="{Binding PasswordConfigurations}"
+                                            TextColor="Black" />
                                     </Frame>
-                                </StackLayout>
-                                <Label
-                                    Grid.Row="4"
-                                    Margin="0,10,0,0"
-                                    FontSize="16"
-                                    Text="Respuesta"
-                                    TextColor="Black" />
-                                <Frame
-                                    Grid.Row="4"
-                                    Grid.Column="1"
-                                    Margin="0,0,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    IsVisible="{Binding IsVisibleListQuestions, Converter={StaticResource InvertedBoolConverter}}"
-                                    MinimumWidthRequest="200">
-                                    <Entry
-                                        BackgroundColor="Transparent"
-                                        HeightRequest="60"
-                                        HorizontalOptions="FillAndExpand"
-                                        MaxLength="25"
-                                        Placeholder="{extensions:Localize Answer}"
-                                        PlaceholderColor="#848484"
-                                        Text="{Binding ResponseConfigurations}"
-                                        TextColor="Black"
-                                        MinimumWidthRequest="200" />
-                                </Frame>
+                                    <Frame
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Margin="0,10,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        MinimumWidthRequest="200">
+                                        <Entry
+                                            BackgroundColor="Transparent"
+                                            HeightRequest="60"
+                                            HorizontalOptions="FillAndExpand"
+                                            MaxLength="25"
+                                            MinimumWidthRequest="200"
+                                            Placeholder="Repetir contraseña"
+                                            PlaceholderColor="#848484"
+                                            Text="{Binding RepeatPasswordConfigrations}"
+                                            TextColor="Black" />
+                                    </Frame>
 
-                                <HorizontalStackLayout
-                                    Grid.Row="5"
-                                    Grid.Column="1"
-                                    Margin="0,20,0,0"
-                                    HorizontalOptions="EndAndExpand"
-                                    Spacing="10"
-                                    VerticalOptions="EndAndExpand">
-                                    <Button
-                                        BackgroundColor="#AD6B2A"
-                                        Command="{Binding CancelConfigurationCommand}"
-                                        MinimumHeightRequest="35"
-                                        Text="Volver"
-                                        TextColor="#FFF6ED"
-                                        MinimumWidthRequest="200" />
-                                    <Button
-                                        BackgroundColor="#4A744C"
-                                        Command="{Binding UpdateDataUserCommand}"
-                                        MinimumHeightRequest="35"
-                                        Text="Guardar Cambios"
-                                        TextColor="White"
-                                        MinimumWidthRequest="200" />
-                                </HorizontalStackLayout>
+                                    <Label
+                                        Grid.Row="3"
+                                        Margin="0,10,0,0"
+                                        FontSize="16"
+                                        Text="Pregunta de seguridad"
+                                        TextColor="Black" />
+                                    <StackLayout
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        Margin="0,10,0,10"
+                                        HorizontalOptions="Start"
+                                        MinimumWidthRequest="300">
+                                        <Frame
+                                            Margin="0"
+                                            Padding="10,-3,10,-3"
+                                            BackgroundColor="White"
+                                            CornerRadius="18"
+                                            HeightRequest="40">
+                                            <Label
+                                                FontSize="14"
+                                                Text="{Binding SelectedQuestionConfigurations, Mode=TwoWay}"
+                                                TextColor="Black"
+                                                VerticalOptions="Center">
+                                                <Label.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding SelectQuestionCommand}" />
+                                                </Label.GestureRecognizers>
 
-                            </Grid>
-                        </StackLayout>
-                    </Frame>
-                    
+                                            </Label>
+                                        </Frame>
+                                        <Frame
+                                            Padding="0"
+                                            BackgroundColor="Transparent"
+                                            CornerRadius="24"
+                                            HeightRequest="180"
+                                            IsVisible="{Binding IsVisibleListQuestions}">
+                                            <Frame
+                                                x:Name="FrameListQuestions"
+                                                CornerRadius="24"
+                                                HeightRequest="180"
+                                                IsVisible="{Binding IsVisibleListQuestions}"
+                                                VerticalOptions="Start">
+                                                <Frame.Background>
+                                                    <LinearGradientBrush EndPoint="0,1">
+                                                        <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                                        <GradientStop Offset="1.0" Color="#FFF6ED" />
+                                                    </LinearGradientBrush>
+                                                </Frame.Background>
+                                                <CollectionView
+                                                    x:Name="Questions"
+                                                    Margin="0,5,0,5"
+                                                    HeightRequest="140"
+                                                    HorizontalOptions="Start"
+                                                    ItemsSource="{Binding Questions}"
+                                                    SelectionChanged="Questions_SelectionChanged"
+                                                    SelectionMode="Single"
+                                                    VerticalOptions="StartAndExpand">
+
+                                                    <CollectionView.ItemsLayout>
+                                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                                                    </CollectionView.ItemsLayout>
+                                                    <CollectionView.ItemTemplate>
+                                                        <DataTemplate x:DataType="x:String">
+                                                            <Label
+                                                                FontSize="14"
+                                                                Text="{Binding .}"
+                                                                TextColor="#000000"
+                                                                VerticalOptions="Start" />
+                                                        </DataTemplate>
+                                                    </CollectionView.ItemTemplate>
+                                                </CollectionView>
+                                            </Frame>
+                                        </Frame>
+                                    </StackLayout>
+                                    <Label
+                                        Grid.Row="4"
+                                        Margin="0,10,0,0"
+                                        FontSize="16"
+                                        Text="Respuesta"
+                                        TextColor="Black" />
+                                    <Frame
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        Margin="0,0,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        IsVisible="{Binding IsVisibleListQuestions, Converter={StaticResource InvertedBoolConverter}}"
+                                        MinimumWidthRequest="200">
+                                        <Entry
+                                            BackgroundColor="Transparent"
+                                            HeightRequest="60"
+                                            HorizontalOptions="FillAndExpand"
+                                            MaxLength="25"
+                                            MinimumWidthRequest="200"
+                                            Placeholder="{extensions:Localize Answer}"
+                                            PlaceholderColor="#848484"
+                                            Text="{Binding ResponseConfigurations}"
+                                            TextColor="Black" />
+                                    </Frame>
+
+                                    <HorizontalStackLayout
+                                        Grid.Row="5"
+                                        Grid.Column="1"
+                                        Margin="0,20,0,0"
+                                        HorizontalOptions="EndAndExpand"
+                                        Spacing="10"
+                                        VerticalOptions="EndAndExpand">
+                                        <Button
+                                            BackgroundColor="#AD6B2A"
+                                            Command="{Binding CancelConfigurationCommand}"
+                                            MinimumHeightRequest="35"
+                                            MinimumWidthRequest="200"
+                                            Text="Volver"
+                                            TextColor="#FFF6ED" />
+                                        <Button
+                                            BackgroundColor="#4A744C"
+                                            Command="{Binding UpdateDataUserCommand}"
+                                            MinimumHeightRequest="35"
+                                            MinimumWidthRequest="200"
+                                            Text="Guardar Cambios"
+                                            TextColor="White" />
+                                    </HorizontalStackLayout>
+
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+
                     </Grid>
-                    <Grid IsVisible="{Binding ConfirmUserChanges}" VerticalOptions="FillAndExpand" ColumnDefinitions="25*,25*,25*,25*" RowDefinitions="10*,10*,20*,30*">  
-                    <Frame
-                        Grid.Column="1"
-                            Grid.ColumnSpan="2"
+                    <Grid
+                        ColumnDefinitions="25*,25*,25*,25*"
+                        IsVisible="{Binding ConfirmUserChanges}"
+                        RowDefinitions="10*,10*,20*,30*"
+                        VerticalOptions="FillAndExpand">
+                        <Frame
                             Grid.Row="1"
                             Grid.RowSpan="2"
-                        BackgroundColor="#FFF6ED"
-                        CornerRadius="18"
-                        >
-                        <StackLayout>
-                            <Label
-                                Margin="30,30,0,0"
-                                FontSize="26"
-                                Text="Identificacion"
-                                TextColor="Black" />
-                            <Grid
-                                Margin="30,30,0,0"
-                                ColumnDefinitions="100,*"
-                                RowDefinitions="*,*"
-                                RowSpacing="20">
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            BackgroundColor="#FFF6ED"
+                            CornerRadius="18">
+                            <StackLayout>
                                 <Label
-                                    Text="Usuario"
-                                    FontSize="16"
-                                    TextColor="Black"
-                                    VerticalOptions="Center" />
-                                <Frame
-                                    Grid.Column="1"
-                                    Margin="20,0,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    MinimumHeightRequest="40"
-                                    MaximumHeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    VerticalOptions="Start"
-                                    MinimumWidthRequest="200">
-                                    <Entry
-                                        BackgroundColor="#D3AA84"
-                                        MinimumHeightRequest="60"
-                                        HorizontalOptions="Start"
-                                        MaxLength="25"
-                                        Placeholder="Nombre de usuario"
-                                        PlaceholderColor="#848484"
-                                        Text="{Binding ConfirmUserConfigurations}"
+                                    Margin="30,30,0,0"
+                                    FontSize="26"
+                                    Text="Identificacion"
+                                    TextColor="Black" />
+                                <Grid
+                                    Margin="30,30,0,0"
+                                    ColumnDefinitions="100,*"
+                                    RowDefinitions="*,*"
+                                    RowSpacing="20">
+                                    <Label
+                                        FontSize="16"
+                                        Text="Usuario"
                                         TextColor="Black"
-                                        MinimumWidthRequest="200" />
-                                </Frame>
-                                <Label
-                                    FontSize="16"
-                                    Grid.Row="1"
-                                    Text="Contraseña"
-                                    TextColor="Black"
-                                    VerticalOptions="Center" />
-                                <Frame
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="20,0,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    MinimumHeightRequest="40"
-                                    MaximumHeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    MinimumWidthRequest="200">
-                                    <Entry
-                                        BackgroundColor="#D3AA84"
-                                        MinimumHeightRequest="60"
+                                        VerticalOptions="Center" />
+                                    <Frame
+                                        Grid.Column="1"
+                                        Margin="20,0,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
                                         HorizontalOptions="Start"
-                                        MaxLength="25"
-                                        Placeholder="Contraseña"
-                                        PlaceholderColor="#848484"
-                                        Text="{Binding ConfirmPasswordConfigurations}"
+                                        MaximumHeightRequest="40"
+                                        MinimumHeightRequest="40"
+                                        MinimumWidthRequest="200"
+                                        VerticalOptions="Start">
+                                        <Entry
+                                            BackgroundColor="#D3AA84"
+                                            HorizontalOptions="Start"
+                                            MaxLength="25"
+                                            MinimumHeightRequest="60"
+                                            MinimumWidthRequest="200"
+                                            Placeholder="Nombre de usuario"
+                                            PlaceholderColor="#848484"
+                                            Text="{Binding ConfirmUserConfigurations}"
+                                            TextColor="Black" />
+                                    </Frame>
+                                    <Label
+                                        Grid.Row="1"
+                                        FontSize="16"
+                                        Text="Contraseña"
                                         TextColor="Black"
-                                        MinimumWidthRequest="200" />
-                                </Frame>
-                            </Grid>
-                            <HorizontalStackLayout
-                                HorizontalOptions="EndAndExpand"
-                                Spacing="30"
-                                VerticalOptions="EndAndExpand">
-                                <Button
-                                    Margin="0,60,0,60"
-                                    BackgroundColor="#AD6B2A"
-                                    Command="{Binding CancelConfirmConfigurationCommand}"
-                                    MinimumHeightRequest="35"
-                                    Text="Volver"
-                                    TextColor="#FFF6ED"
-                                    MinimumWidthRequest="200" />
-                                <Button
-                                    Margin="0,60,60,60"
-                                    BackgroundColor="#79280F"
-                                    Clicked="ConfirmChange_Clicked"
-                                    MinimumHeightRequest="35"
-                                    Text="Confirmar Cambios"
-                                    TextColor="White"
-                                    MinimumWidthRequest="200" />
-                            </HorizontalStackLayout>
-                        </StackLayout>
-                    </Frame>
-                </Grid>
+                                        VerticalOptions="Center" />
+                                    <Frame
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="20,0,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HorizontalOptions="Start"
+                                        MaximumHeightRequest="40"
+                                        MinimumHeightRequest="40"
+                                        MinimumWidthRequest="200">
+                                        <Entry
+                                            BackgroundColor="#D3AA84"
+                                            HorizontalOptions="Start"
+                                            MaxLength="25"
+                                            MinimumHeightRequest="60"
+                                            MinimumWidthRequest="200"
+                                            Placeholder="Contraseña"
+                                            PlaceholderColor="#848484"
+                                            Text="{Binding ConfirmPasswordConfigurations}"
+                                            TextColor="Black" />
+                                    </Frame>
+                                </Grid>
+                                <HorizontalStackLayout
+                                    HorizontalOptions="EndAndExpand"
+                                    Spacing="30"
+                                    VerticalOptions="EndAndExpand">
+                                    <Button
+                                        Margin="0,60,0,60"
+                                        BackgroundColor="#AD6B2A"
+                                        Command="{Binding CancelConfirmConfigurationCommand}"
+                                        MinimumHeightRequest="35"
+                                        MinimumWidthRequest="200"
+                                        Text="Volver"
+                                        TextColor="#FFF6ED" />
+                                    <Button
+                                        Margin="0,60,60,60"
+                                        BackgroundColor="#79280F"
+                                        Clicked="ConfirmChange_Clicked"
+                                        MinimumHeightRequest="35"
+                                        MinimumWidthRequest="200"
+                                        Text="Confirmar Cambios"
+                                        TextColor="White" />
+                                </HorizontalStackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
                 </StackLayout>
 
             </Grid>
@@ -2647,416 +2947,426 @@
                         WidthRequest="400" />
 
                     <!--  Operators  -->
-                    <Grid IsVisible="{Binding IsOperatorsView}" VerticalOptions="FillAndExpand" ColumnDefinitions="15*,35*,35*,15*" RowDefinitions="10*,40*,40*,10*">   
-                    <Frame
-                        Grid.Column="1"
-                            Grid.ColumnSpan="2"
+                    <Grid
+                        ColumnDefinitions="15*,35*,35*,15*"
+                        IsVisible="{Binding IsOperatorsView}"
+                        RowDefinitions="10*,40*,40*,10*"
+                        VerticalOptions="FillAndExpand">
+                        <Frame
                             Grid.Row="1"
                             Grid.RowSpan="2"
-                        BackgroundColor="White"
-                        VerticalOptions="FillAndExpand"
-                        CornerRadius="18">
-                        <Grid
-                            Padding="30,30,30,10"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
                             BackgroundColor="White"
-                            ColumnDefinitions="*"
-                            HorizontalOptions="FillAndExpand"
-                            RowDefinitions="auto,auto,30,*,*,auto"
-                            RowSpacing="5"
+                            CornerRadius="18"
                             VerticalOptions="FillAndExpand">
-
-                            <StackLayout
+                            <Grid
+                                Padding="30,30,30,10"
+                                BackgroundColor="White"
+                                ColumnDefinitions="*"
                                 HorizontalOptions="FillAndExpand"
-                                Orientation="Horizontal"
+                                RowDefinitions="auto,auto,30,*,*,auto"
+                                RowSpacing="5"
                                 VerticalOptions="FillAndExpand">
-                                <Label
-                                    Margin="0,0,0,10"
-                                    FontSize="26"
-                                    HorizontalOptions="Start"
-                                    Text="Operarios"
-                                    TextColor="Black"
-                                    VerticalOptions="Center" />
-                                <Button
-                                    Margin="0,0,0,0"
-                                    Command="{Binding AddOperatorCommand}"
-                                    HeightRequest="60"
-                                    BackgroundColor="transparent"
-                                    HorizontalOptions="EndAndExpand"
-                                    ImageSource="add_circle_button.png"
+
+                                <StackLayout
+                                    HorizontalOptions="FillAndExpand"
+                                    Orientation="Horizontal"
+                                    VerticalOptions="FillAndExpand">
+                                    <Label
+                                        Margin="0,0,0,10"
+                                        FontSize="26"
+                                        HorizontalOptions="Start"
+                                        Text="Operarios"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+                                    <Button
+                                        Margin="0,0,0,0"
+                                        BackgroundColor="transparent"
+                                        Command="{Binding AddOperatorCommand}"
+                                        HeightRequest="60"
+                                        HorizontalOptions="EndAndExpand"
+                                        ImageSource="add_circle_button.png"
+                                        VerticalOptions="Start"
+                                        WidthRequest="60" />
+                                </StackLayout>
+
+
+                                <BoxView
+                                    Grid.Row="1"
+                                    Margin="0,0,0,20"
+                                    HeightRequest="2"
+                                    HorizontalOptions="FillAndExpand"
                                     VerticalOptions="Start"
-                                    WidthRequest="60" />
-                            </StackLayout>
+                                    Color="Black" />
 
+                                <HorizontalStackLayout Grid.Row="2" Margin="50,0,0,0">
+                                    <Label
+                                        FontSize="18"
+                                        Text="Nombre"
+                                        TextColor="#79280F" />
+                                    <Label
+                                        Margin="188,0,0,0"
+                                        FontSize="18"
+                                        Text="Apellido"
+                                        TextColor="#79280F" />
+                                    <Label
+                                        Margin="165,0,0,0"
+                                        FontSize="18"
+                                        Text="Fecha de creacion"
+                                        TextColor="#79280F" />
+                                </HorizontalStackLayout>
 
-                            <BoxView
-                                Grid.Row="1"
-                                Margin="0,0,0,20"
-                                HeightRequest="2"
-                                HorizontalOptions="FillAndExpand"
-                                VerticalOptions="Start"
-                                Color="Black" />
+                                <CollectionView
+                                    Grid.Row="3"
+                                    Margin="50,0,30,0"
+                                    IsVisible="{Binding AnyOperators}"
+                                    ItemsSource="{Binding Operators}"
+                                    SelectionMode="None"
+                                    VerticalOptions="FillAndExpand"
+                                    VerticalScrollBarVisibility="Never">
+                                    <CollectionView.ItemsLayout>
+                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:Operator">
+                                            <Grid
+                                                ColumnDefinitions="260,234,180,140,*,60"
+                                                RowDefinitions="*"
+                                                VerticalOptions="Start">
 
-                            <HorizontalStackLayout Grid.Row="2" Margin="50,0,0,0">
+                                                <Label
+                                                    Grid.Column="0"
+                                                    FontSize="18"
+                                                    Text="{Binding Name}"
+                                                    TextColor="#000000"
+                                                    VerticalOptions="Start" />
+
+                                                <Label
+                                                    Grid.Column="1"
+                                                    FontSize="18"
+                                                    Text="{Binding LastName}"
+                                                    TextColor="#000000"
+                                                    VerticalOptions="Start" />
+
+                                                <Label
+                                                    Grid.Column="2"
+                                                    FontSize="18"
+                                                    Text="{Binding CreateDate, StringFormat='{0:dd/MM/yyyy}'}"
+                                                    TextColor="#000000"
+                                                    VerticalOptions="Start" />
+
+                                                <Button
+                                                    Grid.Column="4"
+                                                    BackgroundColor="Transparent"
+                                                    Clicked="ViewEditOperator_Clicked"
+                                                    HorizontalOptions="End"
+                                                    ImageSource="edit_operators.png" />
+                                                <Button
+                                                    Grid.Column="5"
+                                                    BackgroundColor="Transparent"
+                                                    Clicked="ConfirmDeleteOperator_Clicked"
+                                                    ImageSource="delete_item_icon.png" />
+
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+
                                 <Label
+                                    Grid.Row="3"
+                                    Margin="30,30,30,0"
                                     FontSize="18"
-                                    Text="Nombre"
-                                    TextColor="#79280F" />
-                                <Label
-                                    Margin="188,0,0,0"
-                                    FontSize="18"
-                                    Text="Apellido"
-                                    TextColor="#79280F" />
-                                <Label
-                                    Margin="165,0,0,0"
-                                    FontSize="18"
-                                    Text="Fecha de creacion"
-                                    TextColor="#79280F" />
-                            </HorizontalStackLayout>
+                                    HorizontalOptions="Center"
+                                    IsVisible="{Binding AnyOperators, Converter={StaticResource InvertedBoolConverter}}"
+                                    MinimumHeightRequest="200"
+                                    Text="Aun no hay operadores"
+                                    TextColor="Black"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
 
-                            <CollectionView
-                                Grid.Row="3"
-                                Margin="50,0,30,0"
-                                IsVisible="{Binding AnyOperators}"
-                                ItemsSource="{Binding Operators}"
-                                SelectionMode="None"
-                                VerticalOptions="FillAndExpand"
-                                VerticalScrollBarVisibility="Never">
-                                <CollectionView.ItemsLayout>
-                                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
-                                </CollectionView.ItemsLayout>
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate x:DataType="models:Operator">
-                                        <Grid
-                                            ColumnDefinitions="260,234,180,140,*,60"
-                                            RowDefinitions="*"
-                                            VerticalOptions="Start">
+                                <BoxView
+                                    Grid.Row="4"
+                                    Margin="0,0,0,0"
+                                    HeightRequest="2"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="End"
+                                    Color="#79280F" />
 
-                                            <Label
-                                                Grid.Column="0"
-                                                FontSize="18"
-                                                Text="{Binding Name}"
-                                                TextColor="#000000"
-                                                VerticalOptions="Start" />
+                                <Button
+                                    Grid.Row="5"
+                                    Margin="0,20,0,0"
+                                    BackgroundColor="#AD6B2A"
+                                    Command="{Binding CancelConfigurationCommand}"
+                                    HeightRequest="45"
+                                    Text="Volver"
+                                    TextColor="#FFF6ED"
+                                    VerticalOptions="EndAndExpand"
+                                    WidthRequest="200" />
 
-                                            <Label
-                                                Grid.Column="1"
-                                                FontSize="18"
-                                                Text="{Binding LastName}"
-                                                TextColor="#000000"
-                                                VerticalOptions="Start" />
-
-                                            <Label
-                                                Grid.Column="2"
-                                                FontSize="18"
-                                                Text="{Binding CreateDate, StringFormat='{0:dd/MM/yyyy}'}"
-                                                TextColor="#000000"
-                                                VerticalOptions="Start" />
-
-                                            <Button
-                                                Grid.Column="4"
-                                                BackgroundColor="Transparent"
-                                                Clicked="ViewEditOperator_Clicked"
-                                                HorizontalOptions="End"
-                                                ImageSource="edit_operators.png" />
-                                            <Button
-                                                Grid.Column="5"
-                                                BackgroundColor="Transparent"
-                                                Clicked="ConfirmDeleteOperator_Clicked"
-                                                ImageSource="delete_item_icon.png" />
-
-                                        </Grid>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-
-                            <Label
-                                Grid.Row="3"
-                                Margin="30,30,30,0"
-                                FontSize="18"
-                                HorizontalOptions="Center"
-                                IsVisible="{Binding AnyOperators, Converter={StaticResource InvertedBoolConverter}}"
-                                MinimumHeightRequest="200"
-                                Text="Aun no hay operadores"
-                                TextColor="Black"
-                                VerticalOptions="Center"
-                                VerticalTextAlignment="Center" />
-
-                            <BoxView
-                                Grid.Row="4"
-                                Margin="0,0,0,0"
-                                HeightRequest="2"
-                                HorizontalOptions="FillAndExpand"
-                                VerticalOptions="End"
-                                Color="#79280F" />
-
-                            <Button
-                                Grid.Row="5"
-                                Margin="0,20,0,0"
-                                BackgroundColor="#AD6B2A"
-                                Command="{Binding CancelConfigurationCommand}"
-                                HeightRequest="45"
-                                Text="Volver"
-                                TextColor="#FFF6ED"
-                                VerticalOptions="EndAndExpand"
-                                WidthRequest="200" />
-
-                        </Grid>
-                    </Frame>
+                            </Grid>
+                        </Frame>
                     </Grid>
 
                     <!--  Add operator  -->
-                    <Grid  IsVisible="{Binding IsAddOperatorView}" VerticalOptions="FillAndExpand" ColumnDefinitions="25*,25*,25*,25*" RowDefinitions="25*,25*,25*,25*"> 
-                    <Frame
-                        Grid.Column="1"
-                            Grid.ColumnSpan="2"
+                    <Grid
+                        ColumnDefinitions="25*,25*,25*,25*"
+                        IsVisible="{Binding IsAddOperatorView}"
+                        RowDefinitions="25*,25*,25*,25*"
+                        VerticalOptions="FillAndExpand">
+                        <Frame
                             Grid.Row="1"
                             Grid.RowSpan="2"
-                        BackgroundColor="#D3AA84"
-                        CornerRadius="18"
-                       >
-                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                            <Label
-                                Margin="30,20,0,0"
-                                FontAttributes="Bold"
-                                FontSize="26"
-                                Text="Nuevo Operario"
-                                TextColor="Black" />
-                            <Grid
-                                Margin="30,10,0,0"
-                                ColumnDefinitions="auto,auto"
-                                ColumnSpacing="100"
-                                HorizontalOptions="FillAndExpand"
-                                RowDefinitions="auto,auto,auto,auto,auto"
-                                VerticalOptions="FillAndExpand">
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            BackgroundColor="#D3AA84"
+                            CornerRadius="18">
+                            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                 <Label
-                                    Margin="0,20,0,0"
-                                    FontSize="16"
-                                    Text="Nombre"
+                                    Margin="30,20,0,0"
+                                    FontAttributes="Bold"
+                                    FontSize="26"
+                                    Text="Nuevo Operario"
                                     TextColor="Black" />
-                                <Frame
-                                    Grid.Column="1"
-                                    Margin="0,20,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    WidthRequest="200">
-                                    <Entry
+                                <Grid
+                                    Margin="30,10,0,0"
+                                    ColumnDefinitions="auto,auto"
+                                    ColumnSpacing="100"
+                                    HorizontalOptions="FillAndExpand"
+                                    RowDefinitions="auto,auto,auto,auto,auto"
+                                    VerticalOptions="FillAndExpand">
+                                    <Label
+                                        Margin="0,20,0,0"
+                                        FontSize="16"
+                                        Text="Nombre"
+                                        TextColor="Black" />
+                                    <Frame
+                                        Grid.Column="1"
+                                        Margin="0,20,0,0"
+                                        Padding="0,0,0,0"
                                         BackgroundColor="White"
-                                        HeightRequest="60"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
                                         HorizontalOptions="Start"
-                                        MaxLength="25"
-                                        Placeholder="Nombre"
-                                        PlaceholderColor="Black"
-                                        Text="{Binding OperatorName}"
-                                        TextColor="Black"
-                                        WidthRequest="200" />
-                                </Frame>
-                                <Label
-                                    Grid.Row="1"
-                                    Margin="0,20,0,0"
-                                    FontSize="16"
-                                    Text="Apellido"
-                                    TextColor="Black" />
-                                <Frame
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="0,20,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    WidthRequest="200">
-                                    <Entry
-                                        BackgroundColor="Transparent"
-                                        HeightRequest="60"
-                                        HorizontalOptions="FillAndExpand"
-                                        MaxLength="25"
-                                        Placeholder="Apellido"
-                                        PlaceholderColor="Black"
-                                        Text="{Binding OperatorLastName}"
-                                        TextColor="Black"
-                                        WidthRequest="200" />
-                                </Frame>
-                                <Label
-                                    Grid.Row="2"
-                                    Margin="0,20,0,0"
-                                    FontSize="16"
-                                    Text="Pin"
-                                    TextColor="Black" />
-                                <Frame
-                                    Grid.Row="2"
-                                    Grid.Column="1"
-                                    Margin="0,20,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    WidthRequest="200">
-                                    <Entry
-                                        BackgroundColor="Transparent"
-                                        HeightRequest="60"
-                                        HorizontalOptions="FillAndExpand"
-                                        MaxLength="25"
-                                        Placeholder="Escriba un PIN"
-                                        PlaceholderColor="Black"
-                                        Text="{Binding OperatorPin}"
-                                        TextColor="Black"
-                                        WidthRequest="200" />
-                                </Frame>
+                                        WidthRequest="200">
+                                        <Entry
+                                            BackgroundColor="White"
+                                            HeightRequest="60"
+                                            HorizontalOptions="Start"
+                                            MaxLength="25"
+                                            Placeholder="Nombre"
+                                            PlaceholderColor="Black"
+                                            Text="{Binding OperatorName}"
+                                            TextColor="Black"
+                                            WidthRequest="200" />
+                                    </Frame>
+                                    <Label
+                                        Grid.Row="1"
+                                        Margin="0,20,0,0"
+                                        FontSize="16"
+                                        Text="Apellido"
+                                        TextColor="Black" />
+                                    <Frame
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="0,20,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        WidthRequest="200">
+                                        <Entry
+                                            BackgroundColor="Transparent"
+                                            HeightRequest="60"
+                                            HorizontalOptions="FillAndExpand"
+                                            MaxLength="25"
+                                            Placeholder="Apellido"
+                                            PlaceholderColor="Black"
+                                            Text="{Binding OperatorLastName}"
+                                            TextColor="Black"
+                                            WidthRequest="200" />
+                                    </Frame>
+                                    <Label
+                                        Grid.Row="2"
+                                        Margin="0,20,0,0"
+                                        FontSize="16"
+                                        Text="Pin"
+                                        TextColor="Black" />
+                                    <Frame
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Margin="0,20,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        WidthRequest="200">
+                                        <Entry
+                                            BackgroundColor="Transparent"
+                                            HeightRequest="60"
+                                            HorizontalOptions="FillAndExpand"
+                                            MaxLength="25"
+                                            Placeholder="Escriba un PIN"
+                                            PlaceholderColor="Black"
+                                            Text="{Binding OperatorPin}"
+                                            TextColor="Black"
+                                            WidthRequest="200" />
+                                    </Frame>
 
-                                <Frame
-                                    Grid.Row="3"
-                                    Grid.Column="1"
-                                    Margin="0,20,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    WidthRequest="200">
-                                    <Entry
-                                        BackgroundColor="Transparent"
-                                        HeightRequest="60"
-                                        HorizontalOptions="FillAndExpand"
-                                        MaxLength="25"
-                                        Placeholder="Confirme su PIN"
-                                        PlaceholderColor="Black"
-                                        Text="{Binding RepeatOperatorPin}"
-                                        TextColor="Black"
-                                        WidthRequest="200" />
-                                </Frame>
+                                    <Frame
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        Margin="0,20,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        WidthRequest="200">
+                                        <Entry
+                                            BackgroundColor="Transparent"
+                                            HeightRequest="60"
+                                            HorizontalOptions="FillAndExpand"
+                                            MaxLength="25"
+                                            Placeholder="Confirme su PIN"
+                                            PlaceholderColor="Black"
+                                            Text="{Binding RepeatOperatorPin}"
+                                            TextColor="Black"
+                                            WidthRequest="200" />
+                                    </Frame>
 
+                                    <HorizontalStackLayout
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2"
+                                        Margin="0,30,0,0"
+                                        HorizontalOptions="EndAndExpand"
+                                        Spacing="30"
+                                        VerticalOptions="EndAndExpand">
+                                        <Button
+                                            BackgroundColor="#AD6B2A"
+                                            Command="{Binding CancelAddOperatorCommand}"
+                                            HeightRequest="35"
+                                            Text="Volver"
+                                            TextColor="#FFF6ED"
+                                            WidthRequest="200" />
+                                        <Button
+                                            BackgroundColor="#4A744C"
+                                            Command="{Binding OkAddOperatorCommand}"
+                                            HeightRequest="35"
+                                            Text="Agregar"
+                                            TextColor="White"
+                                            WidthRequest="200" />
+                                    </HorizontalStackLayout>
+
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                    <Grid
+                        ColumnDefinitions="25*,25*,25*,25*"
+                        IsVisible="{Binding ValidateAddOperator}"
+                        RowDefinitions="10*,10*,20*,30*"
+                        VerticalOptions="FillAndExpand">
+                        <Frame
+                            Grid.Row="1"
+                            Grid.RowSpan="2"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            BackgroundColor="#FFF6ED"
+                            CornerRadius="18">
+                            <StackLayout>
+                                <Label
+                                    Margin="30,30,0,0"
+                                    FontSize="26"
+                                    Text="Identificacion"
+                                    TextColor="Black" />
+                                <Grid
+                                    Margin="30,30,0,0"
+                                    ColumnDefinitions="100,*"
+                                    RowDefinitions="*,*"
+                                    RowSpacing="20">
+                                    <Label
+                                        FontSize="16"
+                                        Text="Usuario"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+                                    <Frame
+                                        Grid.Column="1"
+                                        Margin="20,0,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Start"
+                                        WidthRequest="300">
+                                        <Entry
+                                            BackgroundColor="#D3AA84"
+                                            HeightRequest="60"
+                                            HorizontalOptions="Start"
+                                            MaxLength="25"
+                                            Placeholder="Nombre de usuario"
+                                            PlaceholderColor="#848484"
+                                            Text="{Binding ConfirmUserConfigurations}"
+                                            TextColor="Black"
+                                            WidthRequest="300" />
+                                    </Frame>
+                                    <Label
+                                        Grid.Row="1"
+                                        FontSize="16"
+                                        Text="Contraseña"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+                                    <Frame
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="20,0,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        WidthRequest="300">
+                                        <Entry
+                                            BackgroundColor="#D3AA84"
+                                            HeightRequest="60"
+                                            HorizontalOptions="Start"
+                                            MaxLength="25"
+                                            Placeholder="Contraseña"
+                                            PlaceholderColor="#848484"
+                                            Text="{Binding ConfirmPasswordConfigurations}"
+                                            TextColor="Black"
+                                            WidthRequest="300" />
+                                    </Frame>
+                                </Grid>
                                 <HorizontalStackLayout
-                                    Grid.Row="4"
-                                    Grid.Column="1"
-                                    Margin="0,30,0,0"
-                                    Grid.ColumnSpan="2"
                                     HorizontalOptions="EndAndExpand"
                                     Spacing="30"
                                     VerticalOptions="EndAndExpand">
                                     <Button
+                                        Margin="0,60,0,60"
                                         BackgroundColor="#AD6B2A"
-                                        Command="{Binding CancelAddOperatorCommand}"
+                                        Command="{Binding CancelValidateAddOperatorCommand}"
                                         HeightRequest="35"
                                         Text="Volver"
                                         TextColor="#FFF6ED"
                                         WidthRequest="200" />
                                     <Button
-                                        BackgroundColor="#4A744C"
-                                        Command="{Binding OkAddOperatorCommand}"
+                                        Margin="0,60,60,60"
+                                        BackgroundColor="#79280F"
+                                        Clicked="ConfirmAddOperator_Clicked"
                                         HeightRequest="35"
-                                        Text="Agregar"
+                                        Text="Aceptar"
                                         TextColor="White"
                                         WidthRequest="200" />
                                 </HorizontalStackLayout>
-
-                            </Grid>
-                        </StackLayout>
-                    </Frame>
+                            </StackLayout>
+                        </Frame>
                     </Grid>
-                    <Grid IsVisible="{Binding ValidateAddOperator}" VerticalOptions="FillAndExpand" ColumnDefinitions="25*,25*,25*,25*" RowDefinitions="10*,10*,20*,30*"> 
-                    <Frame
-                        Grid.Column="1"
-                            Grid.ColumnSpan="2"
-                            Grid.Row="1"
-                            Grid.RowSpan="2"
-                        BackgroundColor="#FFF6ED"
-                        CornerRadius="18"
-                        >
-                        <StackLayout>
-                            <Label
-                                Margin="30,30,0,0"
-                                FontSize="26"
-                                Text="Identificacion"
-                                TextColor="Black" />
-                            <Grid
-                                Margin="30,30,0,0"
-                                ColumnDefinitions="100,*"
-                                RowDefinitions="*,*"
-                                RowSpacing="20">
-                                <Label
-                                    Text="Usuario"
-                                    FontSize="16"
-                                    TextColor="Black"
-                                    VerticalOptions="Center" />
-                                <Frame
-                                    Grid.Column="1"
-                                    Margin="20,0,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    VerticalOptions="Start"
-                                    WidthRequest="300">
-                                    <Entry
-                                        BackgroundColor="#D3AA84"
-                                        HeightRequest="60"
-                                        HorizontalOptions="Start"
-                                        MaxLength="25"
-                                        Placeholder="Nombre de usuario"
-                                        PlaceholderColor="#848484"
-                                        Text="{Binding ConfirmUserConfigurations}"
-                                        TextColor="Black"
-                                        WidthRequest="300" />
-                                </Frame>
-                                <Label
-                                    Grid.Row="1"
-                                    FontSize="16"
-                                    Text="Contraseña"
-                                    TextColor="Black"
-                                    VerticalOptions="Center" />
-                                <Frame
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="20,0,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    WidthRequest="300">
-                                    <Entry
-                                        BackgroundColor="#D3AA84"
-                                        HeightRequest="60"
-                                        HorizontalOptions="Start"
-                                        MaxLength="25"
-                                        Placeholder="Contraseña"
-                                        PlaceholderColor="#848484"
-                                        Text="{Binding ConfirmPasswordConfigurations}"
-                                        TextColor="Black"
-                                        WidthRequest="300" />
-                                </Frame>
-                            </Grid>
-                            <HorizontalStackLayout
-                                HorizontalOptions="EndAndExpand"
-                                Spacing="30"
-                                VerticalOptions="EndAndExpand">
-                                <Button
-                                    Margin="0,60,0,60"
-                                    BackgroundColor="#AD6B2A"
-                                    Command="{Binding CancelValidateAddOperatorCommand}"
-                                    HeightRequest="35"
-                                    Text="Volver"
-                                    TextColor="#FFF6ED"
-                                    WidthRequest="200" />
-                                <Button
-                                    Margin="0,60,60,60"
-                                    BackgroundColor="#79280F"
-                                    Clicked="ConfirmAddOperator_Clicked"
-                                    HeightRequest="35"
-                                    Text="Aceptar"
-                                    TextColor="White"
-                                    WidthRequest="200" />
-                            </HorizontalStackLayout>
-                        </StackLayout>
-                    </Frame>
-</Grid>
-                    
+
                     <!--  Delete Operator  -->
                     <Frame
                         Margin="560,200,560,300"
@@ -3153,256 +3463,262 @@
                     </Frame>
 
                     <!--  Edit Operator  -->
-                    <Grid IsVisible="{Binding IsEditOperatorView}" VerticalOptions="FillAndExpand" ColumnDefinitions="25*,25*,25*,25*" RowDefinitions="25*,25*,25*,25*"> 
-                    <Frame
-                        Grid.Column="1"
-                            Grid.ColumnSpan="2"
+                    <Grid
+                        ColumnDefinitions="25*,25*,25*,25*"
+                        IsVisible="{Binding IsEditOperatorView}"
+                        RowDefinitions="25*,25*,25*,25*"
+                        VerticalOptions="FillAndExpand">
+                        <Frame
                             Grid.Row="1"
                             Grid.RowSpan="2"
-                        BackgroundColor="#D3AA84"
-                        CornerRadius="18"
-                        Padding="30"
-                        >
-                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                            <Label
-                                Margin="30,30,0,0"
-                                FontAttributes="Bold"
-                                FontSize="26"
-                                Text="Editar Operario"
-                                TextColor="Black" />
-                            <Grid
-                                Margin="30,30,0,0"
-                                ColumnDefinitions="auto,*"
-                                ColumnSpacing="100"
-                                HorizontalOptions="FillAndExpand"
-                                RowDefinitions="auto,auto,auto,auto,auto"
-                                VerticalOptions="FillAndExpand">
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            Padding="30"
+                            BackgroundColor="#D3AA84"
+                            CornerRadius="18">
+                            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                                 <Label
-                                    Margin="0,20,0,0"
-                                    FontSize="16"
-                                    Text="Nombre"
+                                    Margin="30,30,0,0"
+                                    FontAttributes="Bold"
+                                    FontSize="26"
+                                    Text="Editar Operario"
                                     TextColor="Black" />
-                                <Frame
-                                    Grid.Column="1"
-                                    Margin="0,20,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    WidthRequest="300">
-                                    <Entry
+                                <Grid
+                                    Margin="30,30,0,0"
+                                    ColumnDefinitions="auto,*"
+                                    ColumnSpacing="100"
+                                    HorizontalOptions="FillAndExpand"
+                                    RowDefinitions="auto,auto,auto,auto,auto"
+                                    VerticalOptions="FillAndExpand">
+                                    <Label
+                                        Margin="0,20,0,0"
+                                        FontSize="16"
+                                        Text="Nombre"
+                                        TextColor="Black" />
+                                    <Frame
+                                        Grid.Column="1"
+                                        Margin="0,20,0,0"
+                                        Padding="0,0,0,0"
                                         BackgroundColor="White"
-                                        HeightRequest="60"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
                                         HorizontalOptions="Start"
-                                        MaxLength="25"
-                                        Placeholder="Nombre"
-                                        PlaceholderColor="Black"
-                                        Text="{Binding OperatorName}"
-                                        TextColor="Black"
-                                        WidthRequest="300" />
-                                </Frame>
-                                <Label
-                                    Grid.Row="1"
-                                    Margin="0,20,0,0"
-                                    FontSize="16"
-                                    Text="Apellido"
-                                    TextColor="Black" />
-                                <Frame
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="0,20,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    WidthRequest="300">
-                                    <Entry
-                                        BackgroundColor="Transparent"
-                                        HeightRequest="60"
-                                        HorizontalOptions="FillAndExpand"
-                                        MaxLength="25"
-                                        Placeholder="Apellido"
-                                        PlaceholderColor="Black"
-                                        Text="{Binding OperatorLastName}"
-                                        TextColor="Black"
-                                        WidthRequest="300" />
-                                </Frame>
-                                <Label
-                                    Grid.Row="2"
-                                    Margin="0,20,0,0"
-                                    FontSize="16"
-                                    Text="Pin"
-                                    TextColor="Black" />
-                                <Frame
-                                    Grid.Row="2"
-                                    Grid.Column="1"
-                                    Margin="0,20,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    WidthRequest="300">
-                                    <Entry
-                                        BackgroundColor="Transparent"
-                                        HeightRequest="60"
-                                        HorizontalOptions="FillAndExpand"
-                                        MaxLength="25"
-                                        Placeholder="Escriba un PIN"
-                                        PlaceholderColor="Black"
-                                        Text="{Binding OperatorPin}"
-                                        TextColor="Black"
-                                        WidthRequest="300" />
-                                </Frame>
+                                        WidthRequest="300">
+                                        <Entry
+                                            BackgroundColor="White"
+                                            HeightRequest="60"
+                                            HorizontalOptions="Start"
+                                            MaxLength="25"
+                                            Placeholder="Nombre"
+                                            PlaceholderColor="Black"
+                                            Text="{Binding OperatorName}"
+                                            TextColor="Black"
+                                            WidthRequest="300" />
+                                    </Frame>
+                                    <Label
+                                        Grid.Row="1"
+                                        Margin="0,20,0,0"
+                                        FontSize="16"
+                                        Text="Apellido"
+                                        TextColor="Black" />
+                                    <Frame
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="0,20,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        WidthRequest="300">
+                                        <Entry
+                                            BackgroundColor="Transparent"
+                                            HeightRequest="60"
+                                            HorizontalOptions="FillAndExpand"
+                                            MaxLength="25"
+                                            Placeholder="Apellido"
+                                            PlaceholderColor="Black"
+                                            Text="{Binding OperatorLastName}"
+                                            TextColor="Black"
+                                            WidthRequest="300" />
+                                    </Frame>
+                                    <Label
+                                        Grid.Row="2"
+                                        Margin="0,20,0,0"
+                                        FontSize="16"
+                                        Text="Pin"
+                                        TextColor="Black" />
+                                    <Frame
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Margin="0,20,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        WidthRequest="300">
+                                        <Entry
+                                            BackgroundColor="Transparent"
+                                            HeightRequest="60"
+                                            HorizontalOptions="FillAndExpand"
+                                            MaxLength="25"
+                                            Placeholder="Escriba un PIN"
+                                            PlaceholderColor="Black"
+                                            Text="{Binding OperatorPin}"
+                                            TextColor="Black"
+                                            WidthRequest="300" />
+                                    </Frame>
 
-                                <Frame
-                                    Grid.Row="3"
-                                    Grid.Column="1"
-                                    Margin="0,20,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    WidthRequest="300">
-                                    <Entry
-                                        BackgroundColor="Transparent"
-                                        HeightRequest="60"
-                                        HorizontalOptions="FillAndExpand"
-                                        MaxLength="25"
-                                        Placeholder="Confirme su PIN"
-                                        PlaceholderColor="Black"
-                                        Text="{Binding RepeatOperatorPin}"
-                                        TextColor="Black"
-                                        WidthRequest="300" />
-                                </Frame>
+                                    <Frame
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        Margin="0,20,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        WidthRequest="300">
+                                        <Entry
+                                            BackgroundColor="Transparent"
+                                            HeightRequest="60"
+                                            HorizontalOptions="FillAndExpand"
+                                            MaxLength="25"
+                                            Placeholder="Confirme su PIN"
+                                            PlaceholderColor="Black"
+                                            Text="{Binding RepeatOperatorPin}"
+                                            TextColor="Black"
+                                            WidthRequest="300" />
+                                    </Frame>
 
+                                    <HorizontalStackLayout
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        Margin="0,30,0,0"
+                                        HorizontalOptions="StartAndExpand"
+                                        Spacing="30"
+                                        VerticalOptions="EndAndExpand">
+                                        <Button
+                                            BackgroundColor="#AD6B2A"
+                                            Command="{Binding CancelAddOperatorCommand}"
+                                            HeightRequest="35"
+                                            Text="Volver"
+                                            TextColor="#FFF6ED"
+                                            WidthRequest="200" />
+                                        <Button
+                                            BackgroundColor="#4A744C"
+                                            Command="{Binding OkValidateEditOperatorCommand}"
+                                            HeightRequest="35"
+                                            Text="Editar"
+                                            TextColor="White"
+                                            WidthRequest="200" />
+                                    </HorizontalStackLayout>
+
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                    <Grid
+                        ColumnDefinitions="25*,25*,25*,25*"
+                        IsVisible="{Binding ValidateEditOperator}"
+                        RowDefinitions="10*,10*,20*,30*"
+                        VerticalOptions="FillAndExpand">
+                        <Frame
+                            Grid.Row="1"
+                            Grid.RowSpan="2"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            BackgroundColor="#FFF6ED"
+                            CornerRadius="18">
+                            <StackLayout>
+                                <Label
+                                    Margin="30,30,0,0"
+                                    FontSize="26"
+                                    Text="Identificacion"
+                                    TextColor="Black" />
+                                <Grid
+                                    Margin="30,30,0,0"
+                                    ColumnDefinitions="100,*"
+                                    RowDefinitions="*,*"
+                                    RowSpacing="20">
+                                    <Label
+                                        FontSize="16"
+                                        Text="Usuario"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+                                    <Frame
+                                        Grid.Column="1"
+                                        Margin="20,0,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Start"
+                                        WidthRequest="300">
+                                        <Entry
+                                            BackgroundColor="#D3AA84"
+                                            HeightRequest="60"
+                                            HorizontalOptions="Start"
+                                            MaxLength="25"
+                                            Placeholder="Nombre de usuario"
+                                            PlaceholderColor="#848484"
+                                            Text="{Binding ConfirmUserConfigurations}"
+                                            TextColor="Black"
+                                            WidthRequest="300" />
+                                    </Frame>
+                                    <Label
+                                        Grid.Row="1"
+                                        FontSize="16"
+                                        Text="Contraseña"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+                                    <Frame
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="20,0,0,0"
+                                        Padding="0,0,0,0"
+                                        BackgroundColor="White"
+                                        CornerRadius="18"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Start"
+                                        WidthRequest="300">
+                                        <Entry
+                                            BackgroundColor="#D3AA84"
+                                            HeightRequest="60"
+                                            HorizontalOptions="Start"
+                                            MaxLength="25"
+                                            Placeholder="Contraseña"
+                                            PlaceholderColor="#848484"
+                                            Text="{Binding ConfirmPasswordConfigurations}"
+                                            TextColor="Black"
+                                            WidthRequest="300" />
+                                    </Frame>
+                                </Grid>
                                 <HorizontalStackLayout
-                                    Grid.Row="4"
-                                    Margin="0,30,0,0"
-                                    Grid.Column="1"
-                                    HorizontalOptions="StartAndExpand"
+                                    HorizontalOptions="EndAndExpand"
                                     Spacing="30"
                                     VerticalOptions="EndAndExpand">
                                     <Button
+                                        Margin="0,60,0,60"
                                         BackgroundColor="#AD6B2A"
-                                        Command="{Binding CancelAddOperatorCommand}"
-                                        HeightRequest="35"
+                                        Command="{Binding CancelDeleteOperatorCommand}"
+                                        HeightRequest="45"
                                         Text="Volver"
                                         TextColor="#FFF6ED"
                                         WidthRequest="200" />
                                     <Button
-                                        BackgroundColor="#4A744C"
-                                        Command="{Binding OkValidateEditOperatorCommand}"
-                                        HeightRequest="35"
-                                        Text="Editar"
+                                        Margin="0,60,60,60"
+                                        BackgroundColor="#79280F"
+                                        Clicked="OkEditOperator_Clicked"
+                                        HeightRequest="45"
+                                        Text="Aceptar"
                                         TextColor="White"
                                         WidthRequest="200" />
                                 </HorizontalStackLayout>
-
-                            </Grid>
-                        </StackLayout>
-                    </Frame>
-                    </Grid>
-                    <Grid IsVisible="{Binding ValidateEditOperator}" VerticalOptions="FillAndExpand" ColumnDefinitions="25*,25*,25*,25*" RowDefinitions="10*,10*,20*,30*"> 
-                    <Frame
-                        BackgroundColor="#FFF6ED"
-                        CornerRadius="18"
-                        Grid.Column="1"
-                            Grid.ColumnSpan="2"
-                            Grid.Row="1"
-                            Grid.RowSpan="2"
-                        >
-                        <StackLayout>
-                            <Label
-                                Margin="30,30,0,0"
-                                FontSize="26"
-                                Text="Identificacion"
-                                TextColor="Black" />
-                            <Grid
-                                Margin="30,30,0,0"
-                                ColumnDefinitions="100,*"
-                                RowDefinitions="*,*"
-                                RowSpacing="20">
-                                <Label
-                                    Text="Usuario"
-                                    FontSize="16"
-                                    TextColor="Black"
-                                    VerticalOptions="Center" />
-                                <Frame
-                                    Grid.Column="1"
-                                    Margin="20,0,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    VerticalOptions="Start"
-                                    WidthRequest="300">
-                                    <Entry
-                                        BackgroundColor="#D3AA84"
-                                        HeightRequest="60"
-                                        HorizontalOptions="Start"
-                                        MaxLength="25"
-                                        Placeholder="Nombre de usuario"
-                                        PlaceholderColor="#848484"
-                                        Text="{Binding ConfirmUserConfigurations}"
-                                        TextColor="Black"
-                                        WidthRequest="300" />
-                                </Frame>
-                                <Label
-                                    Grid.Row="1"
-                                    FontSize="16"
-                                    Text="Contraseña"
-                                    TextColor="Black"
-                                    VerticalOptions="Center" />
-                                <Frame
-                                    Grid.Row="1"
-                                    Grid.Column="1"
-                                    Margin="20,0,0,0"
-                                    Padding="0,0,0,0"
-                                    BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HeightRequest="40"
-                                    HorizontalOptions="Start"
-                                    WidthRequest="300">
-                                    <Entry
-                                        BackgroundColor="#D3AA84"
-                                        HeightRequest="60"
-                                        HorizontalOptions="Start"
-                                        MaxLength="25"
-                                        Placeholder="Contraseña"
-                                        PlaceholderColor="#848484"
-                                        Text="{Binding ConfirmPasswordConfigurations}"
-                                        TextColor="Black"
-                                        WidthRequest="300" />
-                                </Frame>
-                            </Grid>
-                            <HorizontalStackLayout
-                                HorizontalOptions="EndAndExpand"
-                                Spacing="30"
-                                VerticalOptions="EndAndExpand">
-                                <Button
-                                    Margin="0,60,0,60"
-                                    BackgroundColor="#AD6B2A"
-                                    Command="{Binding CancelDeleteOperatorCommand}"
-                                    HeightRequest="45"
-                                    Text="Volver"
-                                    TextColor="#FFF6ED"
-                                    WidthRequest="200" />
-                                <Button
-                                    Margin="0,60,60,60"
-                                    BackgroundColor="#79280F"
-                                    Clicked="OkEditOperator_Clicked"
-                                    HeightRequest="45"
-                                    Text="Aceptar"
-                                    TextColor="White"
-                                    WidthRequest="200" />
-                            </HorizontalStackLayout>
-                        </StackLayout>
-                    </Frame>
+                            </StackLayout>
+                        </Frame>
                     </Grid>
                 </StackLayout>
 
