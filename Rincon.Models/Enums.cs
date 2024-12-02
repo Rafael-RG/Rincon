@@ -49,4 +49,14 @@ namespace Rincon.Models
         Entrepiso,
         Piso
     }
+
+    /// <summary>
+    /// Movement type
+    /// </summary>
+    public enum MovementType
+    {
+        Venta,
+        Perdida,
+        Procesado
+    }
 }

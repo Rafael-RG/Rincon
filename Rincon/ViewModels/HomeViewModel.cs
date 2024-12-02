@@ -358,6 +358,12 @@ namespace Rincon.ViewModels
         ///// IsMachimbre
         ///// </summary>
         [ObservableProperty]
+        private bool isVisibleListProducts;
+
+        ///// <summary>
+        ///// IsMachimbre
+        ///// </summary>
+        [ObservableProperty]
         private string selectedMachimbre;
 
         ///// <summary>
@@ -578,7 +584,17 @@ namespace Rincon.ViewModels
         private bool isLoss;
 
         [ObservableProperty]
-        private ObservableCollection<ProductStock> nextProductStates;
+        private string saleClient;
+
+        [ObservableProperty]
+        private string lossMotive;
+
+        [ObservableProperty]
+        private ObservableCollection<Product> dependingProducts;
+
+        [ObservableProperty]
+        private Product selectedDependingProducts;
+
 
         [ObservableProperty]
         private ProductStock productMovement;
@@ -644,7 +660,7 @@ namespace Rincon.ViewModels
             });
         });
 
-        public ICommand ChangeViewCommand => new Command<string>((view) =>
+        public ICommand ChangeViewCommand => new Command<string>(async (view) =>
         {
             switch (view)
             {
@@ -874,6 +890,8 @@ namespace Rincon.ViewModels
                     this.IsManagementOperatorsView = false;
                     this.IsNewMovementView = true;
 
+                    await ReloadProductWithStock();
+
                     this.IsSale = true;
                     this.OkMovementText = "Confirmar Movimiento";
                     break;
@@ -898,6 +916,13 @@ namespace Rincon.ViewModels
         public ICommand SelectStateCommand => new Command(() =>
         {
             this.IsVisibleListStates = !this.IsVisibleListStates;
+
+        });
+
+
+        public ICommand SelectProductMocvementCommand => new Command(() =>
+        {
+            this.IsVisibleListProducts = !this.IsVisibleListProducts;
 
         });
 
@@ -970,7 +995,7 @@ namespace Rincon.ViewModels
                             WoodState =  (WoodState)Enum.Parse(typeof(WoodState),this.SelectedState),
                             MachimbreSate = (Machimbre)Enum.Parse(typeof(Machimbre),this.SelectedMachimbre),
                             Description = this.IsPolinSelect ? $"{this.Diameter} x {this.Length}" : $"{this.Thickness} x {this.Length} x {this.Width}",
-
+                            DependOf = this.SelectedProduct != null ? this.SelectedProduct.Id : null
                         };
 
                         var result = await this.DataService.InsertOrUpdateItemsAsync<Product>(product);
@@ -1162,7 +1187,143 @@ namespace Rincon.ViewModels
         [RelayCommand]
         private async Task<bool> NewMovement()
         {
-            return true;
+            try
+            {
+                if (this.ProductMovement == null)
+                {
+                    await NotificationService.NotifyAsync("Atencion", "No se a seleccionado ningun producto", "Cerrar");
+                    return false;
+                }
+
+                if (this.QuantityMovement == 0)
+                {
+                    await NotificationService.NotifyAsync("Atencion", "La cantidad no puede ser 0", "Cerrar");
+                    return false;
+                }
+
+                if (this.ProductMovement.Quantity < this.QuantityMovement)
+                {
+                    await NotificationService.NotifyAsync("Atencion", "La cantidad no puede ser mayor a la cantidad en stock", "Cerrar");
+                    return false;
+                }
+
+                this.ProductMovement.Quantity = this.ProductMovement.Quantity - this.QuantityMovement;
+                
+                if(this.IsChangeOfState)
+                {
+                    if (this.SelectedDependingProducts == null)
+                    {
+                        await NotificationService.NotifyAsync("Atencion", "No se a seleccionado ningun producto derivado", "Cerrar");
+                        return false;
+                    }
+
+                    var productStock = (await this.DataService.LoadStockAsync()).Where(x => x.Id == this.SelectedDependingProducts.Id).FirstOrDefault();
+
+                    if (productStock != null) 
+                    {
+                        productStock.Quantity = productStock.Quantity + this.QuantityMovement;
+                    }
+                    else
+                    {
+                        productStock = new ProductStock()
+                        {
+                            Id = this.SelectedDependingProducts.Id,
+                            Product = this.SelectedDependingProducts,
+                            Quantity = this.QuantityMovement
+                        };
+                    }
+
+                    var resultAddStock = await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(productStock);
+
+                    if (resultAddStock == 0)
+                    {
+                        await NotificationService.NotifyAsync("Atencion", "Hubo un error al realizar el movimiento. Vuleva a intentar.", "Cerrar");
+                        return false;
+                    }
+
+                }
+
+                var resultQuitStock = await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(this.ProductMovement);
+
+                var movement = new Movement
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Date = DateTime.Now,
+                    Quantity = this.QuantityMovement,
+                    MovementType = this.IsSale ? MovementType.Venta.ToString() : this.IsChangeOfState ? MovementType.Procesado.ToString() : MovementType.Perdida.ToString(),
+                    ProductName = $"{this.ProductMovement.Product.Id} - {this.ProductMovement.Product.Description}",
+                };
+
+                if (resultQuitStock > 0)
+                {
+                    this.ProductMovement = null;
+                    this.QuantityMovement = 0;
+                    this.IsSale = true;
+                    this.IsChangeOfState = false;
+                    this.IsLoss = false;
+                    this.IsSelectedProductMovement = false;
+                }
+                else
+                {
+                    await NotificationService.NotifyAsync("Atencion", "Hubo un error al realizar el movimiento. Vuleva a intentar.", "Cerrar");
+                    return false;
+                }
+
+                var saveMovement = await this.DataService.InsertOrUpdateItemsAsync<Movement>(movement);
+
+                if (saveMovement == 0)
+                {
+                    await NotificationService.NotifyAsync("Atencion", "Hubo un error al realizar el movimiento. Vuleva a intentar.", "Cerrar");
+                    return false;
+                }
+
+                return true;
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Atencion", "Hubo un error al realizar el movimiento. Vuleva a intentar.", "Cerrar");
+                return false;
+            }
+        }
+        
+        [RelayCommand]
+        private async Task ReloadProductWithStock()
+        {
+            try
+            {
+                var productsStock = await this.DataService.LoadStockAsync();
+
+                if (productsStock != null && productsStock.Any())
+                {
+                    productsStock = productsStock.Where(x => x.Quantity > 0).ToList();
+
+                    productsStock.ForEach(x =>
+                    {
+                        x.Product = this.Products.Find(y => y.Id == x.Id);
+                    });
+
+                    this.ProductsWithStock = new ObservableCollection<ProductStock>(productsStock);
+                }
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar los productos. Vuleva a intentar.", "Cerrar");
+            }
+        }
+
+        [RelayCommand]
+        private async Task ReloadDependingProducts()
+        {
+            try
+            {
+                var depending = this.Products.Where(x => x.DependOf == this.ProductMovement.Id).ToList();
+
+                this.DependingProducts = new ObservableCollection<Product>(depending);
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar los productos. Vuleva a intentar.", "Cerrar");
+            }
         }
         #endregion
 

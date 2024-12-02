@@ -1178,7 +1178,73 @@
 
                     </HorizontalStackLayout>
 
+                    <HorizontalStackLayout Margin="35,40,0,0">
+                        <Label
+                            FontSize="18"
+                            Text="Derivado de"
+                            TextColor="#79280F"
+                            VerticalOptions="Center" />
 
+                        <StackLayout
+                            Margin="70,20,0,20"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start"
+                            WidthRequest="270">
+                            <Frame
+                                Margin="0"
+                                Padding="10,-3,10,-3"
+                                BackgroundColor="White"
+                                CornerRadius="18"
+                                HeightRequest="40">
+                                <Label
+                                    FontSize="14"
+                                    Text="{Binding SelectedProduct, Mode=TwoWay}"
+                                    VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectProductMocvementCommand}" />
+                                    </Label.GestureRecognizers>
+
+                                </Label>
+                            </Frame>
+                            <Frame
+                                CornerRadius="24"
+                                HeightRequest="140"
+                                IsVisible="{Binding IsVisibleListProducts}"
+                                VerticalOptions="Start">
+                                <Frame.Background>
+                                    <LinearGradientBrush EndPoint="0,1">
+                                        <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                        <GradientStop Offset="1.0" Color="#FFF6ED" />
+                                    </LinearGradientBrush>
+                                </Frame.Background>
+                                <CollectionView
+                                    x:Name="ProductList"
+                                    HeightRequest="140"
+                                    HorizontalOptions="Start"
+                                    ItemsSource="{Binding Products}"
+                                    SelectionChanged="Product_SelectionChanged"
+                                    SelectionMode="Single"
+                                    VerticalOptions="Start">
+
+                                    <CollectionView.ItemsLayout>
+                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:Product">
+                                            <Label
+                                                Grid.Column="2"
+                                                FontSize="18"
+                                                Text="{Binding .}"
+                                                TextColor="#000000"
+                                                VerticalOptions="Start" />
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Frame>
+                        </StackLayout>
+
+
+                    </HorizontalStackLayout>
 
                     <HorizontalStackLayout Margin="35,60,0,0" IsVisible="{Binding IsMachimbreOption}">
                         <Label
@@ -1731,7 +1797,7 @@
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:ProductStock">
                                     <Grid
-                                        ColumnDefinitions="*,*,*"
+                                        ColumnDefinitions="auto,auto,auto"
                                         RowDefinitions="*"
                                         RowSpacing="10"
                                         VerticalOptions="Start">
@@ -1771,7 +1837,10 @@
 
                 </VerticalStackLayout>
 
-                <HorizontalStackLayout Grid.Row="3" Margin="30,0,0,30">
+                <HorizontalStackLayout
+                    Grid.Row="3"
+                    Margin="30,0,0,30"
+                    IsVisible="{Binding IsSelectedProductMovement}">
                     <Label
                         FontSize="18"
                         Text="Codigo"
@@ -1802,11 +1871,11 @@
                         Text="Total"
                         TextColor="#79280F" />
                 </HorizontalStackLayout>
-               
+
                 <Grid
                     Grid.Row="4"
-                    IsVisible="{Binding IsSelectedProductMovement}"
                     ColumnDefinitions="300,300,*,100,auto,300"
+                    IsVisible="{Binding IsSelectedProductMovement}"
                     RowDefinitions="*"
                     RowSpacing="10"
                     VerticalOptions="Start">
@@ -1860,39 +1929,71 @@
                         VerticalOptions="Start" />
 
                 </Grid>
-                
-                <Frame Grid.Row="5" Margin="30,0,0,0" BackgroundColor="White">
+
+                <Frame
+                    Grid.Row="5"
+                    Margin="30,0,0,0"
+                    BackgroundColor="White">
                     <Grid RowDefinitions="auto, auto,auto" RowSpacing="25">
                         <HorizontalStackLayout Spacing="25">
-                            <Label Text="Tipo de movimiento" TextColor="Black"/>
+                            <Label Text="Tipo de movimiento" TextColor="Black" />
                             <VerticalStackLayout>
                                 <RadioButton
-                                    TextColor="Black"
                                     Content="Venta"
                                     GroupName="MovementType"
                                     IsChecked="{Binding IsSale}"
+                                    TextColor="Black"
                                     Value="Sale" />
                                 <RadioButton
-                                    TextColor="Black"
                                     Content="Cambio de estado"
                                     GroupName="MovementType"
                                     IsChecked="{Binding IsChangeOfState}"
+                                    TextColor="Black"
                                     Value="ChangeOfState" />
                                 <RadioButton
-                                    TextColor="Black"
                                     Content="Para perdida"
                                     GroupName="MovementType"
                                     IsChecked="{Binding IsLoss}"
+                                    TextColor="Black"
                                     Value="Loss" />
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout Grid.Row="1" Spacing="25">
-                            <Label Text="Cantidad" VerticalOptions="Center" TextColor="Black"/>
-                            <Entry Text="{Binding QuantityMovement}" TextColor="Black"/>
+                            <Label
+                                Text="Cantidad"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+                            <Entry Text="{Binding QuantityMovement}" TextColor="Black" />
                         </HorizontalStackLayout>
-                        <HorizontalStackLayout Grid.Row="2" Spacing="25">
-                            <Label Text="Suiguiente estado:" VerticalOptions="Center" TextColor="Black"/>
-                            <Picker ItemsSource="{Binding NextProductStates}" TextColor="Black"/>
+                        <HorizontalStackLayout
+                            Grid.Row="2"
+                            IsVisible="{Binding IsChangeOfState}"
+                            Spacing="25">
+                            <Label
+                                Text="Suiguiente estado:"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+                            <Picker ItemsSource="{Binding DependingProducts}" SelectedItem="{Binding SelectedDependingProducts}" TextColor="Black" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            Grid.Row="2"
+                            IsVisible="{Binding IsSale}"
+                            Spacing="25">
+                            <Label
+                                Text="Cliente:"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+                            <Entry Text="{Binding SaleClient}" TextColor="Black" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            Grid.Row="2"
+                            IsVisible="{Binding IsLoss}"
+                            Spacing="25">
+                            <Label
+                                Text="Motivo:"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+                            <Entry Text="{Binding LossMotive}" TextColor="Black" />
                         </HorizontalStackLayout>
                     </Grid>
                 </Frame>

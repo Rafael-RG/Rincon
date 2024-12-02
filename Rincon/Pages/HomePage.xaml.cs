@@ -206,6 +206,12 @@ public partial class HomePage
         this.ViewModel.IsVisibleListStates = false;
     }
 
+    void Product_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    {
+        this.ViewModel.SelectedProduct = (Product)ProductList.SelectedItem;
+        this.ViewModel.IsVisibleListProducts = false;
+    }
+
     void Machimbres_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
     {
         this.ViewModel.SelectedMachimbre = (string)MachimbreList.SelectedItem;
@@ -327,8 +333,11 @@ public partial class HomePage
     private void CollectionNewMovement_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if ((ProductStock)ProductsNewMovement.SelectedItem == null) return;
-        this.ViewModel.ProductMovement = (ProductStock)ProductsAddStock.SelectedItem;
+        this.ViewModel.ProductMovement = (ProductStock)ProductsNewMovement.SelectedItem;
+        this.ViewModel.ReloadDependingProductsCommand.Execute(null);
+        this.ViewModel.SelectedDependingProducts = null;
         this.ViewModel.IsVisibleListNewMovement = false;
+        this.ViewModel.IsSelectedProductMovement = true;
         this.SearchBarNewMovement.Unfocus();
     }
 

@@ -54,6 +54,8 @@ namespace Rincon.Models
             }
         }
 
+        public string DependOf { get; set; }
+
 
         public override string ToString()
         {
