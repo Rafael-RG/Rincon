@@ -2976,6 +2976,7 @@
                             TextColor="Black"
                             VerticalOptions="Center" />
                         <Picker
+                            WidthRequest="300"
                             ItemsSource="{Binding ProductsMovementsFilter}"
                             SelectedItem="{Binding SelectedFilterMovementProduct, Mode=TwoWay}"
                             TextColor="Black" />

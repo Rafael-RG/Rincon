@@ -1489,7 +1489,7 @@ namespace Rincon.ViewModels
             {
                 this.MovementsFilter = new ObservableCollection<Movement>(this.Movements);
 
-                this.SelectedFilterMovementDate = new DateTime(2024, 1, 1);
+                this.SelectedFilterMovementDate = new DateTime(2023, 1, 1);
 
                 this.SelectedFilterMovementProduct = null;
 
@@ -1519,7 +1519,7 @@ namespace Rincon.ViewModels
                     this.MovementsFilter = new ObservableCollection<Movement>(this.MovementsFilter.Where(x => x.MovementType == this.SelectedFilterMovementType.Name));
                 }
 
-                if (this.SelectedFilterMovementDate.Year != 2024)
+                if (this.SelectedFilterMovementDate.Year != 2023)
                 {
                     this.MovementsFilter = new ObservableCollection<Movement>(this.MovementsFilter.Where(x => x.Date.Date.Year == this.SelectedFilterMovementDate.Date.Year && x.Date.Date.Month == this.SelectedFilterMovementDate.Date.Month && x.Date.Date.Day == this.SelectedFilterMovementDate.Date.Day));
                 }
