@@ -1616,6 +1616,7 @@ namespace Rincon.ViewModels
                 if(notes!=null && notes.Any()) 
                 {
                     this.Notes = new ObservableCollection<Note>(notes);
+                    OnPropertyChanged(nameof(Notes));
                 } 
             }
             catch
