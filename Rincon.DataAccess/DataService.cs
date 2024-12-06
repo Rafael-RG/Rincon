@@ -104,7 +104,17 @@ namespace Rincon.DataAccess
                 return items;
             }
         }
-        
+
+        ///<inheritdoc/>
+        public async Task<List<Movement>> LoadMovementsAsync()
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                var items = await databaseContext.Movement.ToListAsync().ConfigureAwait(false);
+                return items;
+            }
+        }
+
         ///<inheritdoc/>
         public async Task<List<Operator>> LoadOperatorsAsync()
         {

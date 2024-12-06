@@ -377,4 +377,52 @@ public partial class HomePage
         }
 
     }
+
+
+    void SearchBar_EditStockFocused(System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e)
+    {
+        this.ViewModel.IsVisibleListEditStock = !this.ViewModel.IsVisibleListEditStock;
+    }
+
+    void SearchBar_EditStockUnfocused(System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e)
+    {
+        this.ViewModel.IsVisibleListEditStock = false;
+    }
+
+    private void OnEditStockTextChanged(object sender, TextChangedEventArgs e)
+    {
+        this.ViewModel.IsVisibleListEditStock = true;
+
+        if (string.IsNullOrWhiteSpace(e.NewTextValue))
+        {
+            ProductsEditStock.ItemsSource = this.ViewModel.ProductsWithStock;
+        }
+        else
+        {
+            ProductsEditStock.ItemsSource = this.ViewModel.ProductsWithStock.Where(x => x.Product.Description.ToLower().Contains(e.NewTextValue.ToLower())
+                || x.Id.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+        }
+    }
+
+
+    private void CollectionEditStock_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if ((ProductStock)ProductsEditStock.SelectedItem == null) return;
+        this.ViewModel.ProductEditStock = (ProductStock)ProductsEditStock.SelectedItem;
+        this.ViewModel.IsVisibleListEditStock = false;
+        this.ViewModel.IsSelectedProductEditStock = true;
+        this.SearchBarEditStock.Unfocus();
+    }
+
+    async void EditStock_Clicked(object sender, EventArgs e)
+    {
+        var command = this.ViewModel.EditStockCommand;
+        var result = await (Task<bool>)command.ExecuteAsync(null);
+
+        if (result)
+        {
+            await popupNavigation.PushAsync(new SuccessMessagePage(this.popupNavigation, $"Se edito el stock con exito!"));
+        }
+
+    }
 }

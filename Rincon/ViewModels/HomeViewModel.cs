@@ -129,6 +129,12 @@ namespace Rincon.ViewModels
         private bool isCheckStockView;
 
         ///// <summary>
+        ///// Edit stock View
+        ///// </summary>
+        [ObservableProperty]
+        private bool isEditStockView;
+
+        ///// <summary>
         ///// Add stock View
         ///// </summary>
         [ObservableProperty]
@@ -608,6 +614,40 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private ObservableCollection<ProductStock> productsWithStock;
 
+        [ObservableProperty]
+        private ObservableCollection<Movement> movements;
+
+        [ObservableProperty]
+        private ObservableCollection<Movement> movementsFilter;
+
+        [ObservableProperty]
+        private MovementTypes selectedFilterMovementType;
+        
+        [ObservableProperty]
+        private Product selectedFilterMovementProduct;
+        
+        [ObservableProperty]
+        private DateTime selectedFilterMovementDate;
+
+        [ObservableProperty]
+        private ObservableCollection<MovementTypes> movementTypes;
+
+        [ObservableProperty]
+        private ObservableCollection<Product> productsMovementsFilter;
+
+
+        [ObservableProperty]
+        private bool isVisibleListEditStock;
+
+        [ObservableProperty]
+        private ProductStock productEditStock;
+
+        [ObservableProperty]
+        private bool isSelectedProductEditStock;
+
+        [ObservableProperty]
+        private int quantityEditStock;
+
         #endregion
 
         /// <summary>
@@ -624,6 +664,9 @@ namespace Rincon.ViewModels
                 new ("Cual es el nombre de tu primer mascota?"),
                 new ("Cual es el nombre del barrio en que naciste?")
             };
+
+
+            this.SelectedFilterMovementDate = DateTime.Now;
 
             this.SelectedQuestionConfigurations = this.Questions.First();
         }
@@ -674,6 +717,7 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = false;
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
@@ -690,6 +734,7 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = false;
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
@@ -706,6 +751,7 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = false;
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
@@ -722,6 +768,7 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = false;
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
@@ -738,11 +785,14 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = false;
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = false;
                     this.IsNewMovementView = false;
+
+                    await this.ReloadMovementsAsync();
                     break;
                 case "AddProduct":
                     this.IsHomeView = false;
@@ -769,6 +819,7 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = true;
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
@@ -786,6 +837,7 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = false;
                     this.IsInventoryView = true;
                     this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
@@ -803,12 +855,33 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = false;
                     this.IsInventoryView = false;
                     this.IsCheckStockView = true;
+                    this.IsEditStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
                     this.IsManagementOperatorsView = false;
                     this.IsNewMovementView = false;
                     this.SelectedIndexSeachStock = 1;
+                    break;
+                case "EditStock":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = false;
+                    this.IsEditStockView = true;
+                    this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
+                    this.IsNewMovementView = false;
+
+                    this.QuantityEditStock = 0;
+                    await ReloadProductWithStock();
                     break;
                 case "EditProductInventory":
                     this.IsHomeView = false;
@@ -820,6 +893,7 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = false;
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
                     this.IsInventoryEditView = true;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
@@ -836,6 +910,7 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = false;
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = true;
                     this.IsConfigurationView = false;
@@ -852,6 +927,7 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = false;
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = true;
@@ -868,6 +944,7 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = false;
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
@@ -884,6 +961,7 @@ namespace Rincon.ViewModels
                     this.IsAddStockView = false;
                     this.IsInventoryView = false;
                     this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
@@ -1170,6 +1248,63 @@ namespace Rincon.ViewModels
 
         #endregion
 
+        #region EditStock
+
+        [RelayCommand]
+        private async Task<bool> EditStock()
+        {
+            try
+            {
+                if (this.ProductEditStock == null) 
+                {
+                    await NotificationService.NotifyAsync("Atencion", "No se a seleccionado ningun producto", "Cerrar");
+                    return false;
+                }
+
+                if (this.ProductEditStock.Reserved + this.ProductEditStock.Process > this.QuantityEditStock)
+                {
+                    await NotificationService.NotifyAsync("Atencion", "La cantidad de stock total no puede ser menor a la cantidad reservada y procesada", "Cerrar");
+                    return false;
+                }
+
+                this.ProductEditStock.Quantity = this.QuantityEditStock;
+
+                var result = await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(this.ProductEditStock);
+
+                if (result > 0)
+                {
+                    this.ProductEditStock = null;
+                    this.QuantityEditStock = 0;
+                    this.IsSelectedProductEditStock = false;
+                }
+                else
+                {
+                    await NotificationService.NotifyAsync("Atencion", "Hubo un error al realizar el movimiento. Vuleva a intentar.", "Cerrar");
+                    return false;
+                }
+                return true;
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Atencion", "Hubo un error al realizar el movimiento. Vuleva a intentar.", "Cerrar");
+                return false;
+            }
+        }
+
+
+        [RelayCommand]
+        private async Task CancelEditStock()
+        {
+            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Si", "No", (response) =>
+            {
+                if (response)
+                {
+                    this.ChangeViewCommand.Execute("Home");
+                }
+            });
+        }
+        #endregion
+
         #region Movements
 
         [RelayCommand]
@@ -1325,6 +1460,77 @@ namespace Rincon.ViewModels
                 await NotificationService.NotifyAsync("Error", "Hubo un error al cargar los productos. Vuleva a intentar.", "Cerrar");
             }
         }
+
+        [RelayCommand]
+        private async Task ReloadMovementsAsync()
+        {
+            try
+            {
+                var movements = await this.DataService.LoadMovementsAsync();
+                this.Movements = new ObservableCollection<Movement>(movements);
+                this.MovementsFilter = new ObservableCollection<Movement>(this.Movements);
+
+                this.ProductsMovementsFilter = new ObservableCollection<Product>(await this.DataService.LoadProductsAsync());
+
+                var movementTypeList = Enum.GetValues(typeof(MovementType)).Cast<MovementType>().Select(x => new MovementTypes { Name = x.ToString() }).ToList();
+                this.MovementTypes = new ObservableCollection<MovementTypes>(movementTypeList);
+
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar los productos. Vuleva a intentar.", "Cerrar");
+            }
+        }
+
+        [RelayCommand]
+        private async Task ClearFiltersMovementsAsync()
+        {
+            try
+            {
+                this.MovementsFilter = new ObservableCollection<Movement>(this.Movements);
+
+                this.SelectedFilterMovementDate = new DateTime(2024, 1, 1);
+
+                this.SelectedFilterMovementProduct = null;
+
+                this.SelectedFilterMovementType = null;
+
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar los productos. Vuleva a intentar.", "Cerrar");
+            }
+        }
+
+        [RelayCommand]
+        private async Task ApplyFiltersMovementsAsync()
+        {
+            try
+            {
+                this.MovementsFilter = new ObservableCollection<Movement>(this.Movements);
+
+                if (this.SelectedFilterMovementProduct != null)
+                {
+                    this.MovementsFilter = new ObservableCollection<Movement>(this.MovementsFilter.Where(x => x.ProductName == $"{this.SelectedFilterMovementProduct.Id} - {this.SelectedFilterMovementProduct.Description}"));
+                }
+
+                if (this.SelectedFilterMovementType != null && this.SelectedFilterMovementType.Name.ToLower() != "todos")
+                {
+                    this.MovementsFilter = new ObservableCollection<Movement>(this.MovementsFilter.Where(x => x.MovementType == this.SelectedFilterMovementType.Name));
+                }
+
+                if (this.SelectedFilterMovementDate.Year != 2024)
+                {
+                    this.MovementsFilter = new ObservableCollection<Movement>(this.MovementsFilter.Where(x => x.Date.Date.Year == this.SelectedFilterMovementDate.Date.Year && x.Date.Date.Month == this.SelectedFilterMovementDate.Date.Month && x.Date.Date.Day == this.SelectedFilterMovementDate.Date.Day));
+                }
+
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar los productos. Vuleva a intentar.", "Cerrar");
+            }
+        }
+
         #endregion
 
         #region Inventario

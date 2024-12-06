@@ -18,4 +18,14 @@ namespace Rincon.Models
         public double Quantity { get; set; }
         public string MovementType { get; set; }
     }
+
+    public class MovementTypes 
+    {
+        public string Name { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
 }

@@ -427,6 +427,8 @@
                             VerticalOptions="FillAndExpand" />
                         <ImageButton
                             Grid.Column="2"
+                            Command="{Binding ChangeViewCommand}"
+                            CommandParameter="EditStock"
                             HorizontalOptions="FillAndExpand"
                             Source="edit_direct_home.png"
                             VerticalOptions="FillAndExpand" />
@@ -717,7 +719,11 @@
                     HeightRequest="50"
                     HorizontalOptions="Start"
                     Source="edit_stock_icon_small.png"
-                    WidthRequest="50" />
+                    WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="EditStock" />
+                    </Image.GestureRecognizers>
+                </Image>
                 <Label
                     Grid.Row="5"
                     Grid.Column="1"
@@ -726,7 +732,11 @@
                     HorizontalOptions="Start"
                     Text="Editar stock"
                     TextColor="#303030"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="EditStock" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <Image
                     Grid.Row="6"
                     Grid.Column="0"
@@ -1721,6 +1731,264 @@
 
             </Grid>
 
+            <!--  Editar stock  -->
+            <Grid
+                Grid.Row="2"
+                Grid.ColumnSpan="4"
+                Padding="20"
+                BackgroundColor="White"
+                ColumnDefinitions="*"
+                IsVisible="{Binding IsEditStockView}"
+                RowDefinitions="auto,auto,auto,auto,auto,auto,*,auto"
+                RowSpacing="5">
+
+                <Label
+                    Margin="0,0,0,10"
+                    FontSize="26"
+                    HorizontalOptions="Start"
+                    Text="Editar stock"
+                    TextColor="#79280F"
+                    VerticalOptions="Center" />
+
+                <BoxView
+                    Grid.Row="1"
+                    Margin="0,0,0,20"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"
+                    Color="#79280F" />
+
+                <VerticalStackLayout
+                    Grid.Row="2"
+                    Margin="0,0,0,20"
+                    Padding="0,0,0,0">
+                    <Frame
+                        Margin="0"
+                        Padding="10,-3,10,-3"
+                        BackgroundColor="LightGray"
+                        CornerRadius="24"
+                        HeightRequest="55">
+                        <SearchBar
+                            x:Name="SearchBarEditStock"
+                            BackgroundColor="LightGray"
+                            CancelButtonColor="Black"
+                            Focused="SearchBar_EditStockFocused"
+                            HeightRequest="55"
+                            HorizontalOptions="StartAndExpand"
+                            Placeholder="Buscar producto"
+                            TextChanged="OnEditStockTextChanged"
+                            TextColor="Black"
+                            Unfocused="SearchBar_EditStockUnfocused" />
+
+                    </Frame>
+
+
+                    <Frame
+                        x:Name="FrameListEditStock"
+                        CornerRadius="24"
+                        IsVisible="{Binding IsVisibleListEditStock}">
+                        <Frame.Background>
+                            <LinearGradientBrush EndPoint="0,1">
+                                <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                <GradientStop Offset="1.0" Color="#FFF6ED" />
+                            </LinearGradientBrush>
+                        </Frame.Background>
+                        <CollectionView
+                            x:Name="ProductsEditStock"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding ProductsWithStock}"
+                            SelectionChanged="CollectionEditStock_SelectionChanged"
+                            SelectionMode="Single"
+                            VerticalOptions="FillAndExpand">
+
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:ProductStock">
+                                    <Grid
+                                        ColumnDefinitions="auto,auto,auto"
+                                        RowDefinitions="*"
+                                        RowSpacing="10"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            FontSize="18"
+                                            Text="{Binding Id}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                        <Label
+                                            Grid.Column="1"
+                                            FontSize="18"
+                                            Text="{Binding Product.Description}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                        <Label
+                                            Grid.Column="2"
+                                            FontSize="18"
+                                            Text="{Binding Product.WoodState}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                            <CollectionView.EmptyView>
+                                <Label
+                                    FontSize="18"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="No se encontraron productos para editar stock"
+                                    TextColor="Black"
+                                    VerticalOptions="CenterAndExpand" />
+                            </CollectionView.EmptyView>
+                        </CollectionView>
+                    </Frame>
+
+                </VerticalStackLayout>
+
+                <HorizontalStackLayout
+                    Grid.Row="3"
+                    Margin="30,0,0,30"
+                    IsVisible="{Binding IsSelectedProductEditStock}">
+                    <Label
+                        FontSize="18"
+                        Text="Codigo"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="230,0,0,0"
+                        FontSize="18"
+                        Text="Descripcion"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="130,0,0,0"
+                        FontSize="18"
+                        Text="Estado"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="120,0,0,0"
+                        FontSize="18"
+                        Text="Stock Disponible"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="120,0,0,0"
+                        FontSize="18"
+                        Text="Reserva / Proceso"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="120,0,0,0"
+                        FontSize="18"
+                        Text="Total"
+                        TextColor="#79280F" />
+                </HorizontalStackLayout>
+
+                <Grid
+                    Grid.Row="4"
+                    ColumnDefinitions="300,300,*,100,auto,300"
+                    IsVisible="{Binding IsSelectedProductEditStock}"
+                    RowDefinitions="*"
+                    RowSpacing="10"
+                    VerticalOptions="Start">
+                    <Label
+                        FontSize="18"
+                        Text="{Binding ProductEditStock.Id}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="1"
+                        FontSize="18"
+                        Text="{Binding ProductEditStock.Product.Description}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="2"
+                        FontSize="18"
+                        Text="{Binding ProductEditStock.Product.WoodState}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="3"
+                        FontSize="18"
+                        Text="{Binding ProductEditStock.Available}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="4"
+                        Margin="0,0,6,0"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        TextColor="black">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding ProductEditStock.Reserved}" />
+                                <Span Text="/" />
+                                <Span Text="{Binding ProductEditStock.Process}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label
+                        Grid.Column="5"
+                        FontSize="18"
+                        Text="{Binding ProductEditStock.Quantity}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                </Grid>
+
+                <Grid
+                    Grid.Row="5"
+                    Margin="30,50,0,0"
+                    BackgroundColor="White">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Ingrese nuevo Total de stock:" TextColor="#79280F" FontSize="24" VerticalTextAlignment="Center"/>
+                        <Entry Text="{Binding QuantityEditStock}" TextColor="Black" FontSize="24"/>
+                    </StackLayout>
+                    
+                </Grid>
+                <BoxView
+                    Grid.Row="6"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="EndAndExpand"
+                    Color="#79280F" />
+
+                <HorizontalStackLayout
+                    Grid.Row="7"
+                    Margin="0,20,0,0"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Start">
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="20,0,20,0"
+                        BackgroundColor="#D3AA84"
+                        Clicked="EditStock_Clicked"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        Text="Editar Stock"
+                        TextColor="#000000"
+                        WidthRequest="260" />
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="20,0,20,0"
+                        BackgroundColor="#FFF6ED"
+                        Command="{Binding CancelEditStockCommand}"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        Text="Cancelar"
+                        TextColor="#000000"
+                        WidthRequest="260" />
+                </HorizontalStackLayout>
+
+
+            </Grid>
+
             <!--  Nuevo Movimiento  -->
             <Grid
                 Grid.Row="2"
@@ -1973,7 +2241,10 @@
                                 Text="Suiguiente estado:"
                                 TextColor="Black"
                                 VerticalOptions="Center" />
-                            <Picker ItemsSource="{Binding DependingProducts}" SelectedItem="{Binding SelectedDependingProducts}" TextColor="Black" />
+                            <Picker
+                                ItemsSource="{Binding DependingProducts}"
+                                SelectedItem="{Binding SelectedDependingProducts}"
+                                TextColor="Black" />
                         </HorizontalStackLayout>
                         <HorizontalStackLayout
                             Grid.Row="2"
@@ -2625,13 +2896,201 @@
                 Grid.ColumnSpan="4"
                 Padding="20"
                 BackgroundColor="#FFF6ED"
-                IsVisible="{Binding IsHistoryView}">
-                <Image
-                    HeightRequest="300"
-                    HorizontalOptions="CenterAndExpand"
-                    Source="working_page.png"
-                    VerticalOptions="CenterAndExpand"
-                    WidthRequest="500" />
+                IsVisible="{Binding IsHistoryView}"
+                RowDefinitions="auto,auto,auto,auto,*,auto,auto"
+                RowSpacing="5">
+                <Label
+                    Margin="0,0,0,10"
+                    FontSize="26"
+                    HorizontalOptions="Start"
+                    Text="Movimientos"
+                    TextColor="#79280F"
+                    VerticalOptions="Center" />
+
+                <BoxView
+                    Grid.Row="1"
+                    Margin="0,0,0,20"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"
+                    Color="#79280F" />
+                <Grid
+                    Grid.Row="2"
+                    Margin="30,0,0,40"
+                    ColumnDefinitions="auto,*,auto"
+                    ColumnSpacing="60"
+                    RowDefinitions="auto,30,30,30">
+                    <Frame
+                        Grid.RowSpan="4"
+                        Grid.ColumnSpan="3"
+                        Margin="-10,-10,40,-10"
+                        BackgroundColor="Transparent"
+                        BorderColor="#79280F"
+                        HorizontalOptions="FillAndExpand" />
+
+                    <Label
+                        Margin="0,0,0,10"
+                        FontSize="30"
+                        Text="Filtros"
+                        TextColor="#79280F"
+                        VerticalTextAlignment="Center" />
+
+                    <StackLayout
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="40,0,0,0"
+                        Orientation="Horizontal"
+                        VerticalOptions="End">
+                        <Label
+                            FontSize="16"
+                            Text="Tipo de movimiento:"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                        <Picker
+                            ItemsSource="{Binding MovementTypes}"
+                            SelectedItem="{Binding SelectedFilterMovementType, Mode=TwoWay}"
+                            TextColor="black"
+                            VerticalOptions="EndAndExpand" />
+                    </StackLayout>
+
+                    <StackLayout
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="40,0,0,0"
+                        Orientation="Horizontal"
+                        VerticalOptions="Center">
+                        <Label
+                            FontSize="16"
+                            Text="Producto:"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                        <Picker
+                            ItemsSource="{Binding ProductsMovementsFilter}"
+                            SelectedItem="{Binding SelectedFilterMovementProduct, Mode=TwoWay}"
+                            TextColor="Black" />
+                    </StackLayout>
+
+                    <StackLayout
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Margin="40,0,0,0"
+                        Orientation="Horizontal">
+                        <Label
+                            FontSize="16"
+                            Text="Fecha del movimiento:"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                        <DatePicker Date="{Binding SelectedFilterMovementDate}" TextColor="Black" />
+                    </StackLayout>
+
+                    <StackLayout
+                        Grid.RowSpan="4"
+                        Grid.Column="2"
+                        Margin="0,0,60,0"
+                        Spacing="10"
+                        VerticalOptions="CenterAndExpand">
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#79280F"
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=ApplyFiltersMovementsCommand}"
+                            FontSize="15"
+                            HeightRequest="45"
+                            Text="Aplicar filtros"
+                            TextColor="#79280F"
+                            WidthRequest="140" />
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#79280F"
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=ClearFiltersMovementsCommand}"
+                            FontSize="15"
+                            HeightRequest="45"
+                            Text="Limpiar filtros"
+                            TextColor="#79280F"
+                            WidthRequest="140" />
+                    </StackLayout>
+
+                </Grid>
+
+                <HorizontalStackLayout Grid.Row="3" Margin="30,0,0,0">
+                    <Label
+                        FontSize="18"
+                        Text="Fecha"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="145,0,0,0"
+                        FontSize="18"
+                        Text="Producto"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="115,0,0,0"
+                        FontSize="18"
+                        Text="Tipo de movimiento"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="160,0,0,0"
+                        FontSize="18"
+                        Text="Cantidad"
+                        TextColor="#79280F" />
+                </HorizontalStackLayout>
+
+                <CollectionView
+                    x:Name="MovementsSearch"
+                    Grid.Row="4"
+                    Margin="30,0,30,0"
+                    ItemsSource="{Binding MovementsFilter, Mode=TwoWay}"
+                    SelectionMode="None"
+                    VerticalOptions="FillAndExpand"
+                    VerticalScrollBarVisibility="Never">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="20" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Movement">
+                            <Grid
+                                ColumnDefinitions="*,*,*,*"
+                                RowDefinitions="*"
+                                VerticalOptions="Start">
+                                <Label
+                                    FontSize="18"
+                                    Text="{Binding Date}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Start" />
+
+                                <Label
+                                    Grid.Column="1"
+                                    FontSize="18"
+                                    Text="{Binding ProductName}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Start" />
+
+                                <Label
+                                    Grid.Column="2"
+                                    FontSize="18"
+                                    Text="{Binding MovementType}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Start" />
+
+                                <Label
+                                    Grid.Column="3"
+                                    FontSize="18"
+                                    Text="{Binding Quantity}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Start" />
+
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+                <BoxView
+                    Grid.Row="5"
+                    Margin="0,0,0,40"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="EndAndExpand"
+                    Color="#79280F" />
+
 
             </Grid>
 

@@ -81,5 +81,10 @@ namespace Rincon.Common.Interfaces
         /// Loads operators
         /// </summary>
         Task<List<Operator>> LoadOperatorsAsync();
+
+        /// <summary>
+        /// Loads movements
+        /// </summary>
+        Task<List<Movement>> LoadMovementsAsync();
     }
 }
