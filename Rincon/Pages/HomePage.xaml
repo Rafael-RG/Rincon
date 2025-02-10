@@ -1856,7 +1856,8 @@
                         FontSize="18"
                         Text="Codigo"
                         TextColor="#79280F" />
-                    <Label Grid.Column="1"
+                    <Label
+                        Grid.Column="1"
                         FontSize="18"
                         Text="Descripcion"
                         TextColor="#79280F" />
@@ -1884,10 +1885,10 @@
 
                 <Grid
                     Grid.Row="4"
+                    Margin="30,0,0,0"
                     ColumnDefinitions="15*,25*,15*,15*,15*,15*"
                     IsVisible="{Binding IsSelectedProductEditStock}"
                     RowDefinitions="*"
-                    Margin="30,0,0,0"
                     RowSpacing="10"
                     VerticalOptions="Start">
                     <Label
@@ -1946,10 +1947,19 @@
                     Margin="30,50,0,0"
                     BackgroundColor="White">
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Ingrese nuevo Total de stock:" TextColor="#79280F" FontSize="24" VerticalTextAlignment="Center"/>
-                        <Entry Margin="20,0,0,0" Text="{Binding QuantityEditStock}" TextColor="Black" FontSize="24" WidthRequest="200"/>
+                        <Label
+                            FontSize="24"
+                            Text="Ingrese nuevo Total de stock:"
+                            TextColor="#79280F"
+                            VerticalTextAlignment="Center" />
+                        <Entry
+                            Margin="20,0,0,0"
+                            FontSize="24"
+                            Text="{Binding QuantityEditStock}"
+                            TextColor="Black"
+                            WidthRequest="200" />
                     </StackLayout>
-                    
+
                 </Grid>
                 <BoxView
                     Grid.Row="6"
@@ -2067,8 +2077,8 @@
                                 <DataTemplate x:DataType="models:ProductStock">
                                     <Grid
                                         ColumnDefinitions="auto,auto,auto"
-                                        RowDefinitions="*"
                                         ColumnSpacing="70"
+                                        RowDefinitions="*"
                                         RowSpacing="10"
                                         VerticalOptions="Start">
                                         <Label
@@ -2109,10 +2119,10 @@
 
                 <StackLayout
                     Grid.Row="3"
-                    Orientation="Horizontal"
-                    HorizontalOptions="FillAndExpand"
                     Margin="30,0,0,30"
-                    IsVisible="{Binding IsSelectedProductMovement}">
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding IsSelectedProductMovement}"
+                    Orientation="Horizontal">
                     <Grid ColumnDefinitions="15*,25*,15*,15*,15*,15*" HorizontalOptions="FillAndExpand">
                         <Label
                             FontSize="18"
@@ -2148,15 +2158,14 @@
 
                 <Grid
                     Grid.Row="4"
+                    Margin="30,0,0,0"
                     ColumnDefinitions="15*,25*,15*,15*,15*,15*"
                     IsVisible="{Binding IsSelectedProductMovement}"
                     RowDefinitions="*"
                     RowSpacing="10"
-                    Margin="30,0,0,0"
                     VerticalOptions="Start">
                     <Label
                         FontSize="18"
-                        
                         Text="{Binding ProductMovement.Id}"
                         TextColor="#000000"
                         VerticalOptions="Start" />
@@ -2239,7 +2248,11 @@
                                 Text="Cantidad"
                                 TextColor="Black"
                                 VerticalOptions="Center" />
-                            <Entry Text="{Binding QuantityMovement}" TextColor="Black" WidthRequest="150" HorizontalTextAlignment="End"/>
+                            <Entry
+                                HorizontalTextAlignment="End"
+                                Text="{Binding QuantityMovement}"
+                                TextColor="Black"
+                                WidthRequest="150" />
                         </HorizontalStackLayout>
                         <HorizontalStackLayout
                             Grid.Row="2"
@@ -2250,10 +2263,10 @@
                                 TextColor="Black"
                                 VerticalOptions="Center" />
                             <Picker
-                                WidthRequest="350"
                                 ItemsSource="{Binding DependingProducts}"
                                 SelectedItem="{Binding SelectedDependingProducts}"
-                                TextColor="Black" />
+                                TextColor="Black"
+                                WidthRequest="350" />
                         </HorizontalStackLayout>
                         <HorizontalStackLayout
                             Grid.Row="2"
@@ -2263,7 +2276,10 @@
                                 Text="Cliente:"
                                 TextColor="Black"
                                 VerticalOptions="Center" />
-                            <Entry Text="{Binding SaleClient}" TextColor="Black" WidthRequest="250"/>
+                            <Entry
+                                Text="{Binding SaleClient}"
+                                TextColor="Black"
+                                WidthRequest="250" />
                         </HorizontalStackLayout>
                         <HorizontalStackLayout
                             Grid.Row="2"
@@ -2273,7 +2289,10 @@
                                 Text="Motivo:"
                                 TextColor="Black"
                                 VerticalOptions="Center" />
-                            <Entry Text="{Binding LossMotive}" TextColor="Black" WidthRequest="300"/>
+                            <Entry
+                                Text="{Binding LossMotive}"
+                                TextColor="Black"
+                                WidthRequest="300" />
                         </HorizontalStackLayout>
                     </Grid>
                 </Frame>
@@ -2871,31 +2890,1721 @@
                 Grid.Row="2"
                 Grid.ColumnSpan="4"
                 Padding="20"
-                BackgroundColor="#FFF6ED"
-                IsVisible="{Binding IsTasksView}">
+                BackgroundColor="White"
+                ColumnDefinitions="Auto,*"
+                ColumnSpacing="-150"
+                IsVisible="{Binding IsTasksView}"
+                RowDefinitions="auto,auto,auto,auto,auto,auto,auto"
+                RowSpacing="6"
+                VerticalOptions="FillAndExpand">
 
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0,0,0,10"
+                    FontSize="26"
+                    HorizontalOptions="Start"
+                    Text="Historial de Tareas"
+                    TextColor="#79280F"
+                    VerticalOptions="Center" />
+                <BoxView
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,10"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"
+                    Color="#79280F" />
                 <Image
-                    HeightRequest="300"
-                    HorizontalOptions="CenterAndExpand"
-                    Source="working_page.png"
-                    VerticalOptions="CenterAndExpand"
-                    WidthRequest="500" />
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="40,30,0,10"
+                    HeightRequest="50"
+                    HorizontalOptions="Start"
+                    Source="add_stock_icon_small.png"
+                    WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="ManagementTasks" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="60,20,0,10"
+                    FontSize="22"
+                    HorizontalOptions="Start"
+                    Text="Administrar tareas"
+                    TextColor="#303030"
+                    VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="ManagementTasks" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Image
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Margin="40,20,0,10"
+                    HeightRequest="50"
+                    HorizontalOptions="Start"
+                    Source="new_movement_icon_small.png"
+                    WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CreateTask" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="60,20,0,10"
+                    FontSize="22"
+                    HorizontalOptions="Start"
+                    Text="Crear Tarea "
+                    TextColor="#303030"
+                    VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CreateTask" />
+                    </Label.GestureRecognizers>
+                </Label>
 
             </Grid>
 
-            <!--  Pedidos  -->
+            <!--  Crear Tareas  -->
             <Grid
                 Grid.Row="2"
                 Grid.ColumnSpan="4"
                 Padding="20"
-                BackgroundColor="#FFF6ED"
-                IsVisible="{Binding IsOrdersView}">
-                <Image
-                    HeightRequest="300"
+                BackgroundColor="White"
+                ColumnDefinitions="*"
+                IsVisible="{Binding IsCreateTaskView}"
+                RowDefinitions="auto,auto,auto,auto,auto,auto,*,auto"
+                RowSpacing="5">
+
+                <Label
+                    Margin="0,0,0,10"
+                    FontSize="26"
+                    HorizontalOptions="Start"
+                    Text="Nueva Tarea"
+                    TextColor="#79280F"
+                    VerticalOptions="Center" />
+
+                <BoxView
+                    Grid.Row="1"
+                    Margin="0,0,0,20"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"
+                    Color="#79280F" />
+
+                <VerticalStackLayout
+                    Grid.Row="2"
+                    Margin="0,0,0,20"
+                    Padding="0,0,0,0">
+                    <Frame
+                        Margin="0"
+                        Padding="10,-3,10,-3"
+                        BackgroundColor="LightGray"
+                        CornerRadius="24"
+                        HeightRequest="55">
+                        <SearchBar
+                            x:Name="SearchBarNewTask"
+                            BackgroundColor="LightGray"
+                            CancelButtonColor="Black"
+                            Focused="SearchBar_NewTaskFocused"
+                            HeightRequest="55"
+                            HorizontalOptions="StartAndExpand"
+                            Placeholder="Buscar producto"
+                            TextChanged="OnNewTaskTextChanged"
+                            TextColor="Black"
+                            Unfocused="SearchBar_NewTaskUnfocused" />
+
+                    </Frame>
+
+
+                    <Frame
+                        x:Name="FrameListNewTask"
+                        CornerRadius="24"
+                        IsVisible="{Binding IsVisibleListNewTask}">
+                        <Frame.Background>
+                            <LinearGradientBrush EndPoint="0,1">
+                                <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                <GradientStop Offset="1.0" Color="#FFF6ED" />
+                            </LinearGradientBrush>
+                        </Frame.Background>
+                        <CollectionView
+                            x:Name="ProductsNewTask"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding ProductsWithStock}"
+                            SelectionChanged="CollectionNewTask_SelectionChanged"
+                            SelectionMode="Single"
+                            VerticalOptions="FillAndExpand">
+
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:ProductStock">
+                                    <Grid
+                                        ColumnDefinitions="auto,auto,auto"
+                                        ColumnSpacing="70"
+                                        RowDefinitions="*"
+                                        RowSpacing="10"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            FontSize="18"
+                                            Text="{Binding Id}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                        <Label
+                                            Grid.Column="1"
+                                            FontSize="18"
+                                            Text="{Binding Product.Description}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                        <Label
+                                            Grid.Column="2"
+                                            FontSize="18"
+                                            Text="{Binding Product.WoodState}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                            <CollectionView.EmptyView>
+                                <Label
+                                    FontSize="18"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="No se encontraron productos para realizar movimientos"
+                                    TextColor="Black"
+                                    VerticalOptions="CenterAndExpand" />
+                            </CollectionView.EmptyView>
+                        </CollectionView>
+                    </Frame>
+
+                </VerticalStackLayout>
+
+                <StackLayout
+                    Grid.Row="3"
+                    Margin="30,0,0,30"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding IsSelectedProductTask}"
+                    Orientation="Horizontal">
+                    <Grid ColumnDefinitions="15*,25*,15*,15*,15*,15*" HorizontalOptions="FillAndExpand">
+                        <Label
+                            FontSize="18"
+                            Text="Codigo"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="1"
+                            FontSize="18"
+                            Text="Descripcion"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="2"
+                            FontSize="18"
+                            Text="Estado"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="3"
+                            FontSize="18"
+                            Text="Stock Disponible"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="4"
+                            FontSize="18"
+                            Text="Reserva / Proceso"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="5"
+                            FontSize="18"
+                            Text="Total"
+                            TextColor="#79280F" />
+                    </Grid>
+                </StackLayout>
+
+                <Grid
+                    Grid.Row="4"
+                    Margin="30,0,0,0"
+                    ColumnDefinitions="15*,25*,15*,15*,15*,15*"
+                    IsVisible="{Binding IsSelectedProductTask}"
+                    RowDefinitions="*"
+                    RowSpacing="10"
+                    VerticalOptions="Start">
+                    <Label
+                        FontSize="18"
+                        Text="{Binding ProductTask.Id}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="1"
+                        FontSize="18"
+                        Text="{Binding ProductTask.Product.Description}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="2"
+                        FontSize="18"
+                        Text="{Binding ProductTask.Product.WoodState}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="3"
+                        FontSize="18"
+                        Text="{Binding ProductTask.Available}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="4"
+                        Margin="0,0,6,0"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        TextColor="black">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding ProductTask.Reserved}" />
+                                <Span Text="/" />
+                                <Span Text="{Binding ProductTask.Process}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label
+                        Grid.Column="5"
+                        FontSize="18"
+                        Text="{Binding ProductTask.Quantity}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                </Grid>
+
+                <Frame
+                    Grid.Row="5"
+                    Margin="30,150,0,0"
+                    BackgroundColor="White">
+                    <Grid RowDefinitions="auto,auto,auto, auto" RowSpacing="25">
+                        <HorizontalStackLayout Spacing="25">
+                            <Label Text="¿Dar prioridad?" TextColor="Black" />
+                            <HorizontalStackLayout>
+                                <RadioButton
+                                    Content="No"
+                                    GroupName="PriorityType"
+                                    IsChecked="{Binding IsNoPriorityTask}"
+                                    TextColor="Black"
+                                    Value="no" />
+                                <RadioButton
+                                    Content="Si"
+                                    GroupName="PriorityType"
+                                    IsChecked="{Binding IsYesPriorityTask}"
+                                    TextColor="Black"
+                                    Value="no" />
+                            </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="1" Spacing="25">
+                            <Label
+                                Text="Cantidad"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+                            <Entry
+                                HorizontalTextAlignment="End"
+                                Text="{Binding QuantityTask}"
+                                TextColor="Black"
+                                WidthRequest="150" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="2" Margin="35,40,0,0">
+                            <Label
+                                FontSize="18"
+                                Text="Producto final"
+                                TextColor="#79280F"
+                                VerticalOptions="Center" />
+
+                            <StackLayout
+                                Margin="70,20,0,20"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Start"
+                                WidthRequest="270">
+                                <Frame
+                                    Margin="0"
+                                    Padding="10,-3,10,-3"
+                                    BackgroundColor="White"
+                                    CornerRadius="18"
+                                    HeightRequest="40">
+                                    <Label
+                                        FontSize="14"
+                                        Text="{Binding SelectedDerivateProducts, Mode=TwoWay}"
+                                        VerticalOptions="Center">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectProductDerivateTaskCommand}" />
+                                        </Label.GestureRecognizers>
+
+                                    </Label>
+                                </Frame>
+                                <Frame
+                                    CornerRadius="24"
+                                    HeightRequest="140"
+                                    IsVisible="{Binding IsVisibleListProductsDerivateTask}"
+                                    VerticalOptions="Start">
+                                    <Frame.Background>
+                                        <LinearGradientBrush EndPoint="0,1">
+                                            <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                            <GradientStop Offset="1.0" Color="#FFF6ED" />
+                                        </LinearGradientBrush>
+                                    </Frame.Background>
+                                    <CollectionView
+                                        x:Name="ProductListDerivateTask"
+                                        HeightRequest="140"
+                                        HorizontalOptions="Start"
+                                        ItemsSource="{Binding DerivateProducts}"
+                                        SelectionChanged="ProductDerivate_SelectionChanged"
+                                        SelectionMode="Single"
+                                        VerticalOptions="Start">
+
+                                        <CollectionView.ItemsLayout>
+                                            <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="models:Product">
+                                                <Label
+                                                    Grid.Column="2"
+                                                    FontSize="18"
+                                                    Text="{Binding .}"
+                                                    TextColor="#000000"
+                                                    VerticalOptions="Start" />
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </Frame>
+                            </StackLayout>
+
+
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="3">
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                Margin="90,0,0,0"
+                                FontSize="18"
+                                HorizontalOptions="Start"
+                                Text="Comentarios"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+
+                            <Frame
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="3"
+                                Margin="30,0,0,0"
+                                Padding="0"
+                                BackgroundColor="Transparent"
+                                BorderColor="#797979"
+                                WidthRequest="550">
+                                <Editor
+                                    AutoSize="TextChanges"
+                                    FontSize="18"
+                                    HeightRequest="75"
+                                    HorizontalOptions="FillAndExpand"
+                                    Text="{Binding CommentsTask}"
+                                    TextColor="Black"
+                                    VerticalOptions="FillAndExpand" />
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Frame>
+                <BoxView
+                    Grid.Row="6"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="EndAndExpand"
+                    Color="#79280F" />
+
+                <HorizontalStackLayout
+                    Grid.Row="7"
+                    Margin="0,20,0,0"
                     HorizontalOptions="CenterAndExpand"
-                    Source="working_page.png"
-                    VerticalOptions="CenterAndExpand"
-                    WidthRequest="500" />
+                    VerticalOptions="Start">
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="20,0,20,0"
+                        BackgroundColor="#D3AA84"
+                        Clicked="CreateTask_Clicked"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        Text="Crear Tarea"
+                        TextColor="#000000"
+                        WidthRequest="260" />
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="20,0,20,0"
+                        BackgroundColor="#FFF6ED"
+                        Command="{Binding CancelCreateTaskCommand}"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        Text="Cancelar"
+                        TextColor="#000000"
+                        WidthRequest="260" />
+                </HorizontalStackLayout>
+
+
+            </Grid>
+
+            <!--  Historial de Tareas  -->
+            <Grid
+                Grid.Row="2"
+                Grid.ColumnSpan="4"
+                Padding="20"
+                BackgroundColor="White"
+                ColumnDefinitions="*"
+                IsVisible="{Binding IsHistoryOfTaskView}"
+                RowDefinitions="auto,auto,auto,auto,auto,auto,*,auto"
+                RowSpacing="5">
+
+                <Label
+                    Margin="0,0,0,10"
+                    FontSize="26"
+                    HorizontalOptions="Start"
+                    Text="Historial de Tarea"
+                    TextColor="#79280F"
+                    VerticalOptions="Center" />
+
+                <BoxView
+                    Grid.Row="1"
+                    Margin="0,0,0,20"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"
+                    Color="#79280F" />
+
+                <Frame
+                    Grid.Row="2"
+                    Padding="0"
+                    BackgroundColor="Transparent"
+                    BorderColor="#797979">
+                    <SearchBar
+                        x:Name="SearchBarTask"
+                        BackgroundColor="LightGray"
+                        CancelButtonColor="Black"
+                        HeightRequest="55"
+                        HorizontalOptions="StartAndExpand"
+                        Placeholder="Buscar tarea"
+                        TextChanged="OnSearchTaskTextChanged"
+                        TextColor="Black" />
+                </Frame>
+
+                <HorizontalStackLayout Grid.Row="3" Margin="30,0,0,0">
+                    <Label
+                        FontSize="18"
+                        Text="#Codigo"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="148,0,0,0"
+                        FontSize="18"
+                        Text="Producto inicial"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="135,0,0,0"
+                        FontSize="18"
+                        Text="Cantidad"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="180,0,0,0"
+                        FontSize="18"
+                        Text="Producto final"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="180,0,0,0"
+                        FontSize="18"
+                        Text="Estado"
+                        TextColor="#79280F" />
+                    <Label
+                        Margin="180,0,0,0"
+                        FontSize="18"
+                        Text="Fecha"
+                        TextColor="#79280F" />
+
+                </HorizontalStackLayout>
+
+                <CollectionView
+                    x:Name="TaskItemsSearch"
+                    Grid.Row="4"
+                    Margin="30,0,30,0"
+                    ItemsSource="{Binding TaskItems}"
+                    SelectionMode="Single"
+                    VerticalOptions="FillAndExpand"
+                    VerticalScrollBarVisibility="Never">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:TaskItem">
+                            <Grid
+                                ColumnDefinitions="230,230,240,140,*,60"
+                                RowDefinitions="*"
+                                VerticalOptions="Start">
+                                <Label
+                                    FontSize="18"
+                                    Text="{Binding Id}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Start" />
+
+                                <Label
+                                    Grid.Column="1"
+                                    FontSize="18"
+                                    Text="{Binding ProductSource}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Start" />
+
+                                <Label
+                                    Grid.Column="2"
+                                    FontSize="18"
+                                    Text="{Binding Quantity}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Start" />
+
+                                <Label
+                                    Grid.Column="3"
+                                    FontSize="18"
+                                    Text="{Binding ProductDestination}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Start" />
+
+                                <Label
+                                    Grid.Column="4"
+                                    FontSize="18"
+                                    Text="{Binding TaskStatus}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Start" />
+
+                                <Label
+                                    Grid.Column="5"
+                                    FontSize="18"
+                                    Text="{Binding CreatedAt}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Start" />
+
+                                <Button
+                                    Grid.Column="4"
+                                    BackgroundColor="Transparent"
+                                    Clicked="VisivilityTaskItemEdit_Clicked"
+                                    HorizontalOptions="End"
+                                    ImageSource="visibility.png" />
+                                <Button
+                                    Grid.Column="5"
+                                    BackgroundColor="Transparent"
+                                    Clicked="VisivilityTaskItem_Clicked"
+                                    ImageSource="delete_item_icon.png" />
+
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+                <BoxView
+                    Grid.Row="5"
+                    Margin="0,0,0,40"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="EndAndExpand"
+                    Color="#79280F" />
+
+
+
+
+
+            </Grid>
+
+            <!--  Editar Tarea  -->
+            <Grid
+                Grid.Row="2"
+                Grid.ColumnSpan="4"
+                Padding="20"
+                BackgroundColor="White"
+                ColumnDefinitions="*"
+                IsVisible="{Binding IsTaskItemEditView}"
+                RowDefinitions="auto,auto,auto,auto,auto,auto,*,auto"
+                RowSpacing="5">
+
+                <Label
+                    Margin="0,0,0,10"
+                    FontSize="26"
+                    HorizontalOptions="Start"
+                    Text="Editar Tarea"
+                    TextColor="#79280F"
+                    VerticalOptions="Center" />
+
+                <BoxView
+                    Grid.Row="1"
+                    Margin="0,0,0,20"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"
+                    Color="#79280F" />
+
+                <VerticalStackLayout
+                    Grid.Row="2"
+                    Margin="0,0,0,20"
+                    Padding="0,0,0,0">
+                    <Frame
+                        Margin="0"
+                        Padding="10,-3,10,-3"
+                        BackgroundColor="LightGray"
+                        CornerRadius="24"
+                        HeightRequest="55">
+                        <SearchBar
+                            x:Name="SearchBarEditTask"
+                            BackgroundColor="LightGray"
+                            CancelButtonColor="Black"
+                            Focused="SearchBar_EditTaskFocused"
+                            HeightRequest="55"
+                            HorizontalOptions="StartAndExpand"
+                            Placeholder="Buscar producto"
+                            TextChanged="OnEditTaskTextChanged"
+                            TextColor="Black"
+                            Unfocused="SearchBar_EditTaskUnfocused" />
+
+                    </Frame>
+
+
+                    <Frame
+                        x:Name="FrameListEditTask"
+                        CornerRadius="24"
+                        IsVisible="{Binding IsVisibleListNewTask}">
+                        <Frame.Background>
+                            <LinearGradientBrush EndPoint="0,1">
+                                <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                <GradientStop Offset="1.0" Color="#FFF6ED" />
+                            </LinearGradientBrush>
+                        </Frame.Background>
+                        <CollectionView
+                            x:Name="ProductsEditTask"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding ProductsWithStock}"
+                            SelectionChanged="CollectionEditTask_SelectionChanged"
+                            SelectionMode="Single"
+                            VerticalOptions="FillAndExpand">
+
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:ProductStock">
+                                    <Grid
+                                        ColumnDefinitions="auto,auto,auto"
+                                        ColumnSpacing="70"
+                                        RowDefinitions="*"
+                                        RowSpacing="10"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            FontSize="18"
+                                            Text="{Binding Id}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                        <Label
+                                            Grid.Column="1"
+                                            FontSize="18"
+                                            Text="{Binding Product.Description}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                        <Label
+                                            Grid.Column="2"
+                                            FontSize="18"
+                                            Text="{Binding Product.WoodState}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                            <CollectionView.EmptyView>
+                                <Label
+                                    FontSize="18"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="No se encontraron productos para realizar movimientos"
+                                    TextColor="Black"
+                                    VerticalOptions="CenterAndExpand" />
+                            </CollectionView.EmptyView>
+                        </CollectionView>
+                    </Frame>
+
+                </VerticalStackLayout>
+
+                <StackLayout
+                    Grid.Row="3"
+                    Margin="30,0,0,30"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding IsSelectedProductTask}"
+                    Orientation="Horizontal">
+                    <Grid ColumnDefinitions="15*,25*,15*,15*,15*,15*" HorizontalOptions="FillAndExpand">
+                        <Label
+                            FontSize="18"
+                            Text="Codigo"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="1"
+                            FontSize="18"
+                            Text="Descripcion"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="2"
+                            FontSize="18"
+                            Text="Estado"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="3"
+                            FontSize="18"
+                            Text="Stock Disponible"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="4"
+                            FontSize="18"
+                            Text="Reserva / Proceso"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="5"
+                            FontSize="18"
+                            Text="Total"
+                            TextColor="#79280F" />
+                    </Grid>
+                </StackLayout>
+
+                <Grid
+                    Grid.Row="4"
+                    Margin="30,0,0,0"
+                    ColumnDefinitions="15*,25*,15*,15*,15*,15*"
+                    IsVisible="{Binding IsSelectedProductTask}"
+                    RowDefinitions="*"
+                    RowSpacing="10"
+                    VerticalOptions="Start">
+                    <Label
+                        FontSize="18"
+                        Text="{Binding ProductTask.Id}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="1"
+                        FontSize="18"
+                        Text="{Binding ProductTask.Product.Description}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="2"
+                        FontSize="18"
+                        Text="{Binding ProductTask.Product.WoodState}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="3"
+                        FontSize="18"
+                        Text="{Binding ProductTask.Available}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="4"
+                        Margin="0,0,6,0"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        TextColor="black">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding ProductTask.Reserved}" />
+                                <Span Text="/" />
+                                <Span Text="{Binding ProductTask.Process}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label
+                        Grid.Column="5"
+                        FontSize="18"
+                        Text="{Binding ProductTask.Quantity}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                </Grid>
+
+                <Frame
+                    Grid.Row="5"
+                    Margin="30,150,0,0"
+                    BackgroundColor="White">
+                    <Grid RowDefinitions="auto,auto,auto, auto" RowSpacing="25">
+                        <HorizontalStackLayout Spacing="25">
+                            <Label Text="¿Dar prioridad?" TextColor="Black" />
+                            <HorizontalStackLayout>
+                                <RadioButton
+                                    Content="No"
+                                    GroupName="PriorityTypeEdit"
+                                    IsChecked="{Binding IsNoPriorityTask}"
+                                    TextColor="Black"
+                                    Value="no" />
+                                <RadioButton
+                                    Content="Si"
+                                    GroupName="PriorityTypeEdit"
+                                    IsChecked="{Binding IsYesPriorityTask}"
+                                    TextColor="Black"
+                                    Value="si" />
+                            </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="1" Spacing="25">
+                            <Label
+                                Text="Cantidad"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+                            <Entry
+                                HorizontalTextAlignment="End"
+                                Text="{Binding QuantityTask}"
+                                TextColor="Black"
+                                WidthRequest="150" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="2" Margin="35,40,0,0">
+                            <Label
+                                FontSize="18"
+                                Text="Producto final"
+                                TextColor="#79280F"
+                                VerticalOptions="Center" />
+
+                            <StackLayout
+                                Margin="70,20,0,20"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Start"
+                                WidthRequest="270">
+                                <Frame
+                                    Margin="0"
+                                    Padding="10,-3,10,-3"
+                                    BackgroundColor="White"
+                                    CornerRadius="18"
+                                    HeightRequest="40">
+                                    <Label
+                                        FontSize="14"
+                                        Text="{Binding SelectedDerivateProducts, Mode=TwoWay}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding SelectProductDerivateTaskCommand}" />
+                                        </Label.GestureRecognizers>
+
+                                    </Label>
+                                </Frame>
+                                <Frame
+                                    CornerRadius="24"
+                                    HeightRequest="140"
+                                    IsVisible="{Binding IsVisibleListProductsDerivateTask}"
+                                    VerticalOptions="Start">
+                                    <Frame.Background>
+                                        <LinearGradientBrush EndPoint="0,1">
+                                            <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                            <GradientStop Offset="1.0" Color="#FFF6ED" />
+                                        </LinearGradientBrush>
+                                    </Frame.Background>
+                                    <CollectionView
+                                        x:Name="ProductListDerivateEditTask"
+                                        HeightRequest="140"
+                                        HorizontalOptions="Start"
+                                        ItemsSource="{Binding DerivateProducts}"
+                                        SelectionChanged="ProductDerivate_SelectionChanged"
+                                        SelectionMode="Single"
+                                        VerticalOptions="Start">
+
+                                        <CollectionView.ItemsLayout>
+                                            <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="models:Product">
+                                                <Label
+                                                    Grid.Column="2"
+                                                    FontSize="18"
+                                                    Text="{Binding .}"
+                                                    TextColor="#000000"
+                                                    VerticalOptions="Start" />
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </Frame>
+                            </StackLayout>
+
+
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="3">
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                Margin="90,0,0,0"
+                                FontSize="18"
+                                HorizontalOptions="Start"
+                                Text="Comentarios"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+
+                            <Frame
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="3"
+                                Margin="30,0,0,0"
+                                Padding="0"
+                                BackgroundColor="Transparent"
+                                BorderColor="#797979"
+                                WidthRequest="550">
+                                <Editor
+                                    AutoSize="TextChanges"
+                                    FontSize="18"
+                                    HeightRequest="75"
+                                    HorizontalOptions="FillAndExpand"
+                                    Text="{Binding CommentsTask}"
+                                    TextColor="Black"
+                                    VerticalOptions="FillAndExpand" />
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Frame>
+                <BoxView
+                    Grid.Row="6"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="EndAndExpand"
+                    Color="#79280F" />
+
+                <HorizontalStackLayout
+                    Grid.Row="7"
+                    Margin="0,20,0,0"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Start">
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="20,0,20,0"
+                        BackgroundColor="#D3AA84"
+                        Clicked="EditTask_Clicked"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        Text="Editar Tarea"
+                        TextColor="#000000"
+                        WidthRequest="260" />
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="20,0,20,0"
+                        BackgroundColor="#FFF6ED"
+                        Command="{Binding CancelEditTaskCommand}"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        Text="Cancelar"
+                        TextColor="#000000"
+                        WidthRequest="260" />
+                </HorizontalStackLayout>
+
+
+            </Grid>
+
+            <!--  Ver Tarea  -->
+            <Grid
+                Grid.Row="2"
+                Grid.ColumnSpan="4"
+                Padding="20"
+                BackgroundColor="White"
+                ColumnDefinitions="*"
+                IsVisible="{Binding IsTaskItemView}"
+                RowDefinitions="auto,auto,auto,auto,auto,auto,*,auto"
+                RowSpacing="5">
+
+                <Label
+                    Margin="0,0,0,10"
+                    FontSize="26"
+                    HorizontalOptions="Start"
+                    Text="Tarea"
+                    TextColor="#79280F"
+                    VerticalOptions="Center" />
+
+                <BoxView
+                    Grid.Row="1"
+                    Margin="0,0,0,20"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"
+                    Color="#79280F" />
+
+                <StackLayout
+                    Grid.Row="3"
+                    Margin="30,0,0,30"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding IsSelectedProductTask}"
+                    Orientation="Horizontal">
+                    <Grid ColumnDefinitions="15*,25*,15*,15*,15*,15*" HorizontalOptions="FillAndExpand">
+                        <Label
+                            FontSize="18"
+                            Text="Codigo"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="1"
+                            FontSize="18"
+                            Text="Descripcion"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="2"
+                            FontSize="18"
+                            Text="Estado"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="3"
+                            FontSize="18"
+                            Text="Stock Disponible"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="4"
+                            FontSize="18"
+                            Text="Reserva / Proceso"
+                            TextColor="#79280F" />
+                        <Label
+                            Grid.Column="5"
+                            FontSize="18"
+                            Text="Total"
+                            TextColor="#79280F" />
+                    </Grid>
+                </StackLayout>
+
+                <Grid
+                    Grid.Row="4"
+                    Margin="30,0,0,0"
+                    ColumnDefinitions="15*,25*,15*,15*,15*,15*"
+                    IsVisible="{Binding IsSelectedProductTask}"
+                    RowDefinitions="*"
+                    RowSpacing="10"
+                    VerticalOptions="Start">
+                    <Label
+                        FontSize="18"
+                        Text="{Binding ProductTask.Id}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="1"
+                        FontSize="18"
+                        Text="{Binding ProductTask.Product.Description}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="2"
+                        FontSize="18"
+                        Text="{Binding ProductTask.Product.WoodState}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="3"
+                        FontSize="18"
+                        Text="{Binding ProductTask.Available}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                    <Label
+                        Grid.Column="4"
+                        Margin="0,0,6,0"
+                        FontAttributes="Bold"
+                        FontSize="18"
+                        TextColor="black">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding ProductTask.Reserved}" />
+                                <Span Text="/" />
+                                <Span Text="{Binding ProductTask.Process}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label
+                        Grid.Column="5"
+                        FontSize="18"
+                        Text="{Binding ProductTask.Quantity}"
+                        TextColor="#000000"
+                        VerticalOptions="Start" />
+
+                </Grid>
+
+                <Frame
+                    Grid.Row="5"
+                    Margin="30,150,0,0"
+                    BackgroundColor="White">
+                    <Grid RowDefinitions="auto,auto,auto, auto" RowSpacing="25">
+                        <HorizontalStackLayout Spacing="25">
+                            <Label Text="¿Dar prioridad?" TextColor="Black" />
+                            <Label Text="{Binding SelectedTaskItem.Priority}" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="1" Spacing="25">
+                            <Label
+                                Text="Cantidad"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+                            <Label
+                                HorizontalTextAlignment="End"
+                                Text="{Binding QuantityTask}"
+                                TextColor="Black"
+                                WidthRequest="150" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="2" Margin="35,40,0,0">
+                            <Label
+                                FontSize="18"
+                                Text="Producto final"
+                                TextColor="#79280F"
+                                VerticalOptions="Center" />
+
+                            <StackLayout
+                                Margin="70,20,0,20"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Start"
+                                WidthRequest="270">
+                                <Frame
+                                    Margin="0"
+                                    Padding="10,-3,10,-3"
+                                    BackgroundColor="White"
+                                    CornerRadius="18"
+                                    HeightRequest="40">
+                                    <Label
+                                        FontSize="14"
+                                        Text="{Binding SelectedDerivateProducts, Mode=TwoWay}"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+                                </Frame>
+                            </StackLayout>
+
+
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Row="3">
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                Margin="90,0,0,0"
+                                FontSize="18"
+                                HorizontalOptions="Start"
+                                Text="Comentarios"
+                                TextColor="Black"
+                                VerticalOptions="Center" />
+
+                            <Frame
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="3"
+                                Margin="30,0,0,0"
+                                Padding="0"
+                                BackgroundColor="Transparent"
+                                BorderColor="#797979"
+                                WidthRequest="550">
+                                <Label
+                                    FontSize="18"
+                                    HeightRequest="75"
+                                    HorizontalOptions="FillAndExpand"
+                                    Text="{Binding CommentsTask}"
+                                    TextColor="Black"
+                                    VerticalOptions="FillAndExpand" />
+                            </Frame>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Frame>
+                <BoxView
+                    Grid.Row="6"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="EndAndExpand"
+                    Color="#79280F" />
+
+                <HorizontalStackLayout
+                    Grid.Row="7"
+                    Margin="0,20,0,0"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Start">
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="20,0,20,0"
+                        BackgroundColor="#FFF6ED"
+                        Command="{Binding BackViewTaskCommand}"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        Text="Volver"
+                        TextColor="#000000"
+                        WidthRequest="260" />
+                </HorizontalStackLayout>
+
+
+            </Grid>
+
+
+            <!--  Reservas y Pedidos  -->
+            <Grid
+                Grid.Row="2"
+                Grid.ColumnSpan="4"
+                Padding="20"
+                BackgroundColor="White"
+                ColumnDefinitions="Auto,*"
+                ColumnSpacing="-150"
+                IsVisible="{Binding IsOrdersView}"
+                RowDefinitions="auto,auto,auto,auto,auto,auto,auto"
+                RowSpacing="6"
+                VerticalOptions="FillAndExpand">
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0,0,0,10"
+                    FontSize="26"
+                    HorizontalOptions="Start"
+                    Text="Reservas y Pedidos"
+                    TextColor="#79280F"
+                    VerticalOptions="Center" />
+                <BoxView
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,10"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"
+                    Color="#79280F" />
+                <Image
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="40,30,0,10"
+                    HeightRequest="50"
+                    HorizontalOptions="Start"
+                    Source="add_stock_icon_small.png"
+                    WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CreateBookingOrder" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="60,20,0,10"
+                    FontSize="22"
+                    HorizontalOptions="Start"
+                    Text="Nuevo Pedido/Reserva"
+                    TextColor="#303030"
+                    VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CreateBookingOrder" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Image
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Margin="40,20,0,10"
+                    HeightRequest="50"
+                    HorizontalOptions="Start"
+                    Source="new_movement_icon_small.png"
+                    WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="ListBooking" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="60,20,0,10"
+                    FontSize="22"
+                    HorizontalOptions="Start"
+                    Text="Lista de Reservas"
+                    TextColor="#303030"
+                    VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="ListBooking" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Image
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Margin="40,20,0,10"
+                    HeightRequest="50"
+                    HorizontalOptions="Start"
+                    Source="new_movement_icon_small.png"
+                    WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="ListOrders" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="60,20,0,10"
+                    FontSize="22"
+                    HorizontalOptions="Start"
+                    Text="Lista de Pedidos"
+                    TextColor="#303030"
+                    VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="ListOrders" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+            </Grid>
+
+            <!--  Crear reservas o pedidos  -->
+            <Grid
+                Grid.Row="2"
+                Grid.ColumnSpan="4"
+                Padding="20"
+                BackgroundColor="White"
+                ColumnDefinitions="Auto,*"
+                ColumnSpacing="-150"
+                IsVisible="{Binding IsVisibleCreateBookingOrderView}"
+                RowDefinitions="auto,auto,auto,auto,auto,auto,auto,auto,auto"
+                RowSpacing="6"
+                VerticalOptions="FillAndExpand">
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0,0,0,10"
+                    FontSize="26"
+                    HorizontalOptions="Start"
+                    Text="Nueva reservas o pedidos"
+                    TextColor="#79280F"
+                    VerticalOptions="Center" />
+                <BoxView
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,10"
+                    HeightRequest="2"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"
+                    Color="#79280F" />
+
+                <Grid
+                    Grid.Row="2"
+                    ColumnDefinitions="auto,auto"
+                    RowDefinitions="auto,auto,auto,auto,auto">
+                    <StackLayout Orientation="Horizontal">
+                        <RadioButton
+                            Content="Reserva"
+                            GroupName="BookingOrderType"
+                            IsChecked="{Binding IsBooking}"
+                            TextColor="Black"
+                            Value="reserva" />
+                        <RadioButton
+                            Content="Pedido"
+                            GroupName="BookingOrderType"
+                            IsChecked="{Binding IsOrder}"
+                            TextColor="Black"
+                            Value="pedido" />
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Orientation="Horizontal">
+                        <Label Text="Client" />
+                        <Frame
+                            Padding="0"
+                            BackgroundColor="Transparent"
+                            BorderColor="#797979">
+                            <Entry
+                                FontSize="18"
+                                HorizontalOptions="FillAndExpand"
+                                Placeholder="Ingresar"
+                                Text="{Binding ClientBookingOrder}"
+                                TextColor="Black"
+                                VerticalOptions="FillAndExpand" />
+                        </Frame>
+                        <Label Text="Telefono" />
+                        <Frame
+                            Padding="0"
+                            BackgroundColor="Transparent"
+                            BorderColor="#797979">
+                            <Entry
+                                FontSize="18"
+                                HorizontalOptions="FillAndExpand"
+                                Placeholder="Ingresar"
+                                Text="{Binding PhoneBookingOrder}"
+                                TextColor="Black"
+                                VerticalOptions="FillAndExpand" />
+                        </Frame>
+                    </StackLayout>
+                    <StackLayout
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Orientation="Horizontal">
+                        <Label Text="Fecha despacho" />
+                        <DatePicker
+                            Date="{Binding DateBookingOrder}"
+                            TextColor="Black"
+                            WidthRequest="200" />
+                        <Label Text="Envio" />
+                        <StackLayout Orientation="Horizontal">
+                            <RadioButton
+                                Content="No"
+                                GroupName="BookingOrderShipment"
+                                IsChecked="{Binding IsNoShipmentTask}"
+                                TextColor="Black"
+                                Value="reserva" />
+                            <RadioButton
+                                Content="Si"
+                                GroupName="BookingOrderShipment"
+                                IsChecked="{Binding IsShipmentTask}"
+                                TextColor="Black"
+                                Value="pedido" />
+                        </StackLayout>
+                    </StackLayout>
+                    <Label Grid.Row="3" Text="Direccion" />
+                    <Frame
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Padding="0"
+                        BackgroundColor="Transparent"
+                        BorderColor="#797979">
+                        <Entry
+                            FontSize="18"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="Ingresar"
+                            Text="{Binding AddressBookingOrder}"
+                            TextColor="Black"
+                            VerticalOptions="FillAndExpand" />
+                    </Frame>
+                    <Label Grid.Row="4" Text="Comentarios" />
+                    <Frame
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Padding="0"
+                        BackgroundColor="Transparent"
+                        BorderColor="#797979">
+                        <Entry
+                            FontSize="18"
+                            HorizontalOptions="FillAndExpand"
+                            Placeholder="Ingresar"
+                            Text="{Binding CommentsBookingOrder}"
+                            TextColor="Black"
+                            VerticalOptions="FillAndExpand" />
+                    </Frame>
+
+                </Grid>
+
+                <VerticalStackLayout
+                    Grid.Row="3"
+                    Margin="0,0,0,20"
+                    Padding="0,0,0,0">
+                    <Frame
+                        Margin="0"
+                        Padding="10,-3,10,-3"
+                        BackgroundColor="LightGray"
+                        CornerRadius="24"
+                        HeightRequest="55">
+                        <SearchBar
+                            x:Name="SearchBarAddProductsBookingOrder"
+                            BackgroundColor="LightGray"
+                            CancelButtonColor="Black"
+                            Focused="SearchBarProductBookingOrder_Focused"
+                            HeightRequest="55"
+                            HorizontalOptions="StartAndExpand"
+                            Placeholder="Buscar producto"
+                            TextChanged="OnProductsBookingORderTextChanged"
+                            TextColor="Black"
+                            Unfocused="SearchBarProductBookingOrder_Unfocused" />
+
+                    </Frame>
+
+
+                    <Frame
+                        x:Name="FrameListProductsBookingOrder"
+                        CornerRadius="24"
+                        IsVisible="{Binding IsVisibleListProductsBookingOrders}">
+                        <Frame.Background>
+                            <LinearGradientBrush EndPoint="0,1">
+                                <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                <GradientStop Offset="1.0" Color="#FFF6ED" />
+                            </LinearGradientBrush>
+                        </Frame.Background>
+                        <CollectionView
+                            x:Name="ProductsBookingOrder"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding ProductsWithStock}"
+                            SelectionChanged="CollectionProductsBookingOrder_SelectionChanged"
+                            SelectionMode="Single"
+                            VerticalOptions="FillAndExpand">
+
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:Product">
+                                    <Grid
+                                        ColumnDefinitions="*,*,*"
+                                        RowDefinitions="*"
+                                        RowSpacing="10"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            FontSize="18"
+                                            Text="{Binding Id}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                        <Label
+                                            Grid.Column="1"
+                                            FontSize="18"
+                                            Text="{Binding Description}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                        <Label
+                                            Grid.Column="2"
+                                            FontSize="18"
+                                            Text="{Binding WoodState}"
+                                            TextColor="#000000"
+                                            VerticalOptions="Start" />
+
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                            <CollectionView.EmptyView>
+                                <Label
+                                    FontSize="18"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Text="No se encontraron productos"
+                                    TextColor="Black"
+                                    VerticalOptions="CenterAndExpand" />
+                            </CollectionView.EmptyView>
+                        </CollectionView>
+                    </Frame>
+
+                </VerticalStackLayout>
+
+                <CollectionView
+                    Grid.Row="4"
+                    Margin="30,0,30,0"
+                    ItemsSource="{Binding ProductsBookingOrder, Mode=TwoWay}"
+                    SelectionMode="Single"
+                    VerticalOptions="FillAndExpand"
+                    VerticalScrollBarVisibility="Never">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.Header>
+                        <HorizontalStackLayout Margin="30,0,0,30">
+                            <Label
+                                FontSize="18"
+                                Text="Codigo"
+                                TextColor="#79280F" />
+                            <Label
+                                Margin="230,0,0,0"
+                                FontSize="18"
+                                Text="Descripcion"
+                                TextColor="#79280F" />
+                            <Label
+                                Margin="200,0,0,0"
+                                FontSize="18"
+                                Text="Estado"
+                                TextColor="#79280F" />
+                            <Label
+                                Margin="520,0,0,0"
+                                FontSize="18"
+                                Text="Cantidad"
+                                TextColor="#79280F" />
+                        </HorizontalStackLayout>
+                    </CollectionView.Header>
+                    <CollectionView.EmptyView>
+                        <StackLayout>
+                            <Label
+                                FontSize="24"
+                                HorizontalOptions="CenterAndExpand"
+                                Text="No se han cargado productos"
+                                TextColor="#797979"
+                                VerticalOptions="CenterAndExpand" />
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:ProductStock">
+                            <Grid
+                                ColumnDefinitions="300,300,*,100,auto"
+                                RowDefinitions="*"
+                                RowSpacing="10"
+                                VerticalOptions="Start">
+                                <Label
+                                    FontSize="18"
+                                    Text="{Binding Product.Id}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Start" />
+
+                                <Label
+                                    Grid.Column="1"
+                                    FontSize="18"
+                                    Text="{Binding Product.Description}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Start" />
+
+                                <Label
+                                    Grid.Column="2"
+                                    FontSize="18"
+                                    Text="{Binding Product.WoodState}"
+                                    TextColor="#000000"
+                                    VerticalOptions="Start" />
+
+                                <Frame
+                                    Grid.Column="3"
+                                    Margin="0,0,0,5"
+                                    Padding="0"
+                                    BackgroundColor="Transparent">
+                                    <Entry
+                                        FontSize="18"
+                                        HorizontalOptions="FillAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        Text="{Binding QuantityBookingOrder, Mode=TwoWay}"
+                                        TextColor="#000000"
+                                        VerticalOptions="FillAndExpand" />
+                                </Frame>
+
+
+                                <ImageButton
+                                    Grid.Column="4"
+                                    Margin="30,0,0,0"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=RemoveProductToAddedBookingOrderCommand}"
+                                    CommandParameter="{Binding .}"
+                                    HeightRequest="15"
+                                    Source="delete_item_icon.png"
+                                    WidthRequest="15" />
+
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <HorizontalStackLayout
+                    Grid.Row="7"
+                    Margin="0,20,0,0"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Start">
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="20,0,20,0"
+                        BackgroundColor="#D3AA84"
+                        Clicked="CreateBookingOrder_Clicked"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        Text="Crear"
+                        TextColor="#000000"
+                        WidthRequest="260" />
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="20,0,20,0"
+                        BackgroundColor="#FFF6ED"
+                        Command="{Binding CancelCreateBookingOrderCommand}"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        Text="Cancelar"
+                        TextColor="#000000"
+                        WidthRequest="260" />
+                </HorizontalStackLayout>
 
             </Grid>
 
@@ -2948,8 +4657,8 @@
                         Grid.Row="1"
                         Grid.Column="0"
                         Margin="40,0,0,6"
-                        Spacing="10"
                         Orientation="Horizontal"
+                        Spacing="10"
                         VerticalOptions="End">
                         <Label
                             FontSize="16"
@@ -2957,18 +4666,18 @@
                             TextColor="Black"
                             VerticalOptions="Center" />
                         <Picker
-                            WidthRequest="200"
                             ItemsSource="{Binding MovementTypes}"
                             SelectedItem="{Binding SelectedFilterMovementType, Mode=TwoWay}"
-                            TextColor="black" />
+                            TextColor="black"
+                            WidthRequest="200" />
                     </StackLayout>
 
                     <StackLayout
                         Grid.Row="2"
                         Grid.Column="0"
                         Margin="40,0,0,6"
-                        Spacing="10"
                         Orientation="Horizontal"
+                        Spacing="10"
                         VerticalOptions="Center">
                         <Label
                             FontSize="16"
@@ -2976,23 +4685,26 @@
                             TextColor="Black"
                             VerticalOptions="Center" />
                         <Picker
-                            WidthRequest="300"
                             ItemsSource="{Binding ProductsMovementsFilter}"
                             SelectedItem="{Binding SelectedFilterMovementProduct, Mode=TwoWay}"
-                            TextColor="Black" />
+                            TextColor="Black"
+                            WidthRequest="300" />
                     </StackLayout>
 
                     <StackLayout
                         Grid.Row="3"
                         Grid.Column="0"
                         Margin="40,3,0,0"
-                        Spacing="10"
-                        Orientation="Horizontal">
+                        Orientation="Horizontal"
+                        Spacing="10">
                         <Label
                             FontSize="16"
                             Text="Fecha del movimiento:"
                             TextColor="Black" />
-                        <DatePicker Date="{Binding SelectedFilterMovementDate}" TextColor="Black"  WidthRequest="200"/>
+                        <DatePicker
+                            Date="{Binding SelectedFilterMovementDate}"
+                            TextColor="Black"
+                            WidthRequest="200" />
                     </StackLayout>
 
                     <StackLayout
@@ -3023,7 +4735,10 @@
 
                 </Grid>
 
-                <Grid Grid.Row="3" Margin="30,0,0,0" ColumnDefinitions="25*,25*,25*,25*">
+                <Grid
+                    Grid.Row="3"
+                    Margin="30,0,0,0"
+                    ColumnDefinitions="25*,25*,25*,25*">
                     <Label
                         FontSize="18"
                         Text="Fecha"

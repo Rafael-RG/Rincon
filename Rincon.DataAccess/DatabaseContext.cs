@@ -21,6 +21,14 @@ namespace Rincon.DataAccess
 
         public DbSet<Movement> Movement { get; set; }
 
+        public DbSet<TaskItem> TaskItems { get; set; }
+
+        public DbSet<Booking> Booking { get; set; }
+
+        public DbSet<Order> Order { get; set; }
+
+        public DbSet<BookingOrder> BookingOrder { get; set; }
+
 
         /// <summary>   |
         /// Initializes sqlite

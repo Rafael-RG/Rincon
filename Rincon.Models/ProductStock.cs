@@ -26,5 +26,7 @@ namespace Rincon.Models
         }
         public int Reserved { get; set; }
         public int Process { get; set; }
+        [NotMapped]
+        public int QuantityBookingOrder { get; set; }
     }
 }

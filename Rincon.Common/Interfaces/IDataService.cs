@@ -21,6 +21,10 @@ namespace Rincon.Common.Interfaces
         /// </summary>
         Task<int> SaveItemsAsync<T>(IEnumerable<T> items, string tableName) where T : class;
 
+        Task<int> InsertItemAsync<T>(T item) where T : class;
+
+        Task<int> UpdateItemAsync<T>(T item) where T : class;
+
         /// <summary>
         /// Save a collections of items 
         /// </summary>
@@ -86,5 +90,10 @@ namespace Rincon.Common.Interfaces
         /// Loads movements
         /// </summary>
         Task<List<Movement>> LoadMovementsAsync();
+
+        /// <summary>
+        /// Loads task items
+        /// </summary>
+        Task<List<TaskItem>> LoadTaskItemsAsync();
     }
 }

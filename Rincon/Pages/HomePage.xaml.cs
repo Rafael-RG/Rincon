@@ -425,4 +425,229 @@ public partial class HomePage
         }
 
     }
+
+
+    //Tasks
+    void SearchBar_NewTaskFocused(System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e)
+    {
+        this.ViewModel.IsVisibleListNewTask = !this.ViewModel.IsVisibleListNewTask;
+    }
+
+    void SearchBar_NewTaskUnfocused(System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e)
+    {
+        this.ViewModel.IsVisibleListNewTask = false;
+    }
+
+    private void OnNewTaskTextChanged(object sender, TextChangedEventArgs e)
+    {
+        this.ViewModel.IsVisibleListNewTask = true;
+
+        if (string.IsNullOrWhiteSpace(e.NewTextValue))
+        {
+            ProductsNewTask.ItemsSource = this.ViewModel.ProductsWithStock;
+        }
+        else
+        {
+            ProductsNewTask.ItemsSource = this.ViewModel.ProductsWithStock.Where(x => x.Product.Description.ToLower().Contains(e.NewTextValue.ToLower())
+                || x.Id.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+        }
+    }
+
+    private void CollectionNewTask_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if ((ProductStock)ProductsNewTask.SelectedItem == null) return;
+        this.ViewModel.ProductTask = (ProductStock)ProductsNewTask.SelectedItem;
+        this.ViewModel.ReloadDerivateProductsCommand.Execute(null);
+        this.ViewModel.SelectedDerivateProducts = null;
+        this.ViewModel.IsVisibleListNewTask = false;
+        this.ViewModel.IsSelectedProductTask = true;
+        this.SearchBarNewTask.Unfocus();
+    }
+
+    async void CreateTask_Clicked(object sender, EventArgs e)
+    {
+        var command = this.ViewModel.CreateTaskCommand;
+        var result = await (Task<bool>)command.ExecuteAsync(null);
+
+        if (result)
+        {
+            await popupNavigation.PushAsync(new SuccessMessagePage(this.popupNavigation, $"Se creo la tarea con exito!"));
+        }
+
+    }
+
+    void ProductDerivate_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    {
+        this.ViewModel.SelectedDerivateProducts = (Product)ProductListDerivateTask.SelectedItem;
+        this.ViewModel.IsVisibleListProductsDerivateTask = false;
+    }
+
+    void OnSearchTaskTextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(e.NewTextValue))
+            {
+                TaskItemsSearch.ItemsSource = this.ViewModel.TaskItems;
+            }
+            else
+            {
+                TaskItemsSearch.ItemsSource = this.ViewModel.TaskItems.Where(x => x.TaskStatus.ToString().ToLower().Contains(e.NewTextValue.ToLower())
+                    || x.ProductSource.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+            }
+        }
+        catch
+        {
+
+        }
+    }
+
+    private void VisivilityTaskItemEdit_Clicked(object sender, EventArgs e)
+    {
+
+        var button = ((Button)sender);
+        var taskItem = (TaskItem)button.BindingContext;
+
+        this.ViewModel.SelectedTaskItem = taskItem;
+
+        this.ViewModel.ProductTask = this.ViewModel.ProductsWithStock.FirstOrDefault(x => x.Product.Id == taskItem.ProductSourceId);
+
+        this.ViewModel.IsSelectedProductTask = true;
+
+        this.ViewModel.ReloadDerivateProductsCommand.Execute(null);
+
+        this.ViewModel.SelectedDerivateProducts = this.ViewModel.Products.FirstOrDefault(x => x.Id == taskItem.ProductDestinationId);
+
+        this.ViewModel.QuantityTask = int.Parse(taskItem.Quantity);
+
+        this.ViewModel.QuantityEditTask = int.Parse(taskItem.Quantity);
+
+        this.ViewModel.CommentsTask = taskItem.Description;
+
+        this.ViewModel.IsNoPriorityTask = !taskItem.Priority;
+
+        this.ViewModel.IsYesPriorityTask = taskItem.Priority;
+
+        this.ViewModel.IsTaskItemEditView = true;
+
+    }
+
+    private void VisivilityTaskItem_Clicked(object sender, EventArgs e)
+    {
+
+        var button = ((Button)sender);
+        var taskItem = (TaskItem)button.BindingContext;
+
+        this.ViewModel.SelectedTaskItem = taskItem;
+        this.ViewModel.ProductTask = this.ViewModel.ProductsWithStock.FirstOrDefault(x => x.Product.Id == taskItem.ProductSourceId);
+
+        this.ViewModel.IsSelectedProductTask = true;
+
+        this.ViewModel.SelectedDerivateProducts = this.ViewModel.Products.FirstOrDefault(x => x.Id == taskItem.ProductDestinationId);
+
+        this.ViewModel.QuantityTask = int.Parse(taskItem.Quantity);
+
+        this.ViewModel.CommentsTask = taskItem.Description;
+
+        this.ViewModel.IsTaskItemView = true;
+
+    }
+
+
+    void SearchBar_EditTaskFocused(System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e)
+    {
+        this.ViewModel.IsVisibleListNewTask = !this.ViewModel.IsVisibleListNewTask;
+    }
+
+    void SearchBar_EditTaskUnfocused(System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e)
+    {
+        this.ViewModel.IsVisibleListNewTask = false;
+    }
+
+    private void OnEditTaskTextChanged(object sender, TextChangedEventArgs e)
+    {
+        this.ViewModel.IsVisibleListNewTask = true;
+
+        if (string.IsNullOrWhiteSpace(e.NewTextValue))
+        {
+            ProductsEditTask.ItemsSource = this.ViewModel.ProductsWithStock;
+        }
+        else
+        {
+            ProductsEditTask.ItemsSource = this.ViewModel.ProductsWithStock.Where(x => x.Product.Description.ToLower().Contains(e.NewTextValue.ToLower())
+                || x.Id.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+        }
+    }
+
+    private void CollectionEditTask_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if ((ProductStock)ProductsEditTask.SelectedItem == null) return;
+        this.ViewModel.ProductTask = (ProductStock)ProductsEditTask.SelectedItem;
+        this.ViewModel.ReloadDerivateProductsCommand.Execute(null);
+        this.ViewModel.SelectedDerivateProducts = null;
+        this.ViewModel.IsVisibleListNewTask = false;
+        this.ViewModel.IsSelectedProductTask = true;
+        this.SearchBarEditTask.Unfocus();
+    }
+
+    async void EditTask_Clicked(object sender, EventArgs e)
+    {
+        var command = this.ViewModel.EditTaskCommand;
+        var result = await (Task<bool>)command.ExecuteAsync(null);
+
+        if (result)
+        {
+            await popupNavigation.PushAsync(new SuccessMessagePage(this.popupNavigation, $"Se actualizo la tarea con exito!"));
+        }
+
+    }
+
+    //Booking and orders
+    void SearchBarProductBookingOrder_Focused(System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e)
+    {
+        this.ViewModel.IsVisibleListProductsBookingOrders = !this.ViewModel.IsVisibleListProductsBookingOrders;
+    }
+
+    void SearchBarProductBookingOrder_Unfocused(System.Object sender, Microsoft.Maui.Controls.FocusEventArgs e)
+    {
+        this.ViewModel.IsVisibleListProductsBookingOrders = false;
+    }
+
+    private void OnProductsBookingORderTextChanged(object sender, TextChangedEventArgs e)
+    {
+        this.ViewModel.IsVisibleListProiductsBookingOrder = true;
+
+        if (string.IsNullOrWhiteSpace(e.NewTextValue))
+        {
+            ProductsBookingOrder.ItemsSource = this.ViewModel.Products;
+        }
+        else
+        {
+            ProductsBookingOrder.ItemsSource = this.ViewModel.Products.Where(x => x.Description.ToLower().Contains(e.NewTextValue.ToLower())
+                || x.Id.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+        }
+    }
+
+    private void CollectionProductsBookingOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if ((ProductStock)ProductsBookingOrder.SelectedItem == null) return;
+        this.ViewModel.LoadProductToAddBookingOrderCommand.Execute((ProductStock)ProductsBookingOrder.SelectedItem);
+        this.ViewModel.IsVisibleListProiductsBookingOrder = false;
+        this.SearchBarAddProductsBookingOrder.Unfocus();
+    }
+
+    async void CreateBookingOrder_Clicked(object sender, EventArgs e)
+    {
+        var command = this.ViewModel.CreateBookingOrderCommand;
+
+        var text = this.ViewModel.IsBooking ? "la reserva" : "el pedido";
+
+        var result = await (Task<bool>)command.ExecuteAsync(null);
+
+        if (result)
+        {
+            await popupNavigation.PushAsync(new SuccessMessagePage(this.popupNavigation, $"Se creo {text} con exito!"));
+        }
+
+    }
 }

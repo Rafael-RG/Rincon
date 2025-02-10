@@ -2,6 +2,7 @@
 using Rincon.Common.Interfaces;
 using Rincon.Models;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Rincon.DataAccess
@@ -53,6 +54,28 @@ namespace Rincon.DataAccess
             using (var databaseContext = new DatabaseContext())
             {
                 var itemsCount = await databaseContext.UpsertRange<T>(item).RunAsync();
+                return itemsCount;
+            }
+        }
+
+        public async Task<int> InsertItemAsync<T>(T item) where T : class
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                await databaseContext.Set<T>().AddAsync(item);
+                var itemsCount = await databaseContext.SaveChangesAsync().ConfigureAwait(false);
+                return itemsCount;
+            }
+        }
+
+ 
+
+        public async Task<int> UpdateItemAsync<T>(T item) where T : class
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                databaseContext.Set<T>().Update(item);
+                var itemsCount = await databaseContext.SaveChangesAsync().ConfigureAwait(false);
                 return itemsCount;
             }
         }
@@ -184,6 +207,16 @@ namespace Rincon.DataAccess
             {
                 var user = await databaseContext.User.Where(x => x.Name == userName).FirstOrDefaultAsync();
                 return user;
+            }
+        }
+
+        ///<inheritdoc/>
+        public async Task<List<TaskItem>> LoadTaskItemsAsync()
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                var taskItems = await databaseContext.TaskItems.OrderByDescending(x => x.CreatedAt).ToListAsync();
+                return taskItems;
             }
         }
     }
