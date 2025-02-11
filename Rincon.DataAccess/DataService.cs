@@ -219,5 +219,45 @@ namespace Rincon.DataAccess
                 return taskItems;
             }
         }
+
+        ///<inheritdoc/>
+        public async Task<List<BookingOrder>> LoadBookingItemsAsync()
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                var bookingItems = await databaseContext.BookingOrder.Where(b => b.IsBooking).OrderByDescending(x => x.OrderDate).ToListAsync();
+                return bookingItems;
+            }
+        }
+
+        ///<inheritdoc/>
+        public async Task<List<Booking>> LoadBookingDetailsItemsAsync(Guid guid)
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                var bookingItems = await databaseContext.Booking.Where(b => b.BookingId == guid).OrderByDescending(x => x.ProductName).ToListAsync();
+                return bookingItems;
+            }
+        }
+
+        ///<inheritdoc/>
+        public async Task<List<BookingOrder>> LoadOrderItemsAsync()
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                var orderItems = await databaseContext.BookingOrder.Where(b => b.IsOrder).OrderByDescending(x => x.OrderDate).ToListAsync();
+                return orderItems;
+            }
+        }
+
+        ///<inheritdoc/>
+        public async Task<List<Order>> LoadOrderDetailsItemsAsync(Guid guid)
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                var orderItems = await databaseContext.Order.Where(b => b.OrderId == guid).OrderByDescending(x => x.ProductName).ToListAsync();
+                return orderItems;
+            }
+        }
     }
 }

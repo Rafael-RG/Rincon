@@ -22,5 +22,17 @@ namespace Rincon.Models
         public string Phone { get; set; }
         public bool IsOrder { get; set; }
         public bool IsBooking { get; set; }
+        public OrderStatus Status { get; set; }
+        public string Comments { get; set; }
+        [NotMapped]
+        public bool IsCancellable { get { return Status != OrderStatus.Cancelado; } }
+    }
+
+    public enum OrderStatus
+    {
+        Despachado,
+        Enviado,
+        Cancelado,
+        Reserva
     }
 }

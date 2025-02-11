@@ -95,5 +95,25 @@ namespace Rincon.Common.Interfaces
         /// Loads task items
         /// </summary>
         Task<List<TaskItem>> LoadTaskItemsAsync();
+
+        /// <summary>
+        /// Loads bookings items
+        /// </summary>
+        Task<List<BookingOrder>> LoadBookingItemsAsync();
+
+        /// <summary>
+        /// Loads booking details items
+        /// </summary>
+        Task<List<Booking>> LoadBookingDetailsItemsAsync(Guid guid);
+
+        /// <summary>
+        /// Loads orders items
+        /// </summary>
+        Task<List<BookingOrder>> LoadOrderItemsAsync();
+
+        /// <summary>
+        /// Loads orders details items
+        /// </summary>
+        Task<List<Order>> LoadOrderDetailsItemsAsync(Guid guid);
     }
 }

@@ -8,7 +8,6 @@ using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Draw;
 using iText.Layout;
 using iText.Layout.Element;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Rincon.Common.ViewModels;
 using Rincon.Models;
 
@@ -741,6 +740,18 @@ namespace Rincon.ViewModels
         private bool isOrder;
         [ObservableProperty]
         private string phoneBookingOrder;
+        [ObservableProperty]
+        private ObservableCollection<BookingOrder> bookingOrderItems;
+        [ObservableProperty]
+        private BookingOrder selectedBookingOrder;
+        [ObservableProperty]
+        private ObservableCollection<Order> orderItems;
+        [ObservableProperty]
+        private bool isVisibleOrderView;
+        [ObservableProperty]
+        private bool isVisibleBookingView;
+        [ObservableProperty]
+        private ObservableCollection<Booking> bookingItems;
 
         #endregion
 
@@ -797,6 +808,8 @@ namespace Rincon.ViewModels
             });
         });
 
+
+        //Optimiza este metodo URGENTEMENTE
         public ICommand ChangeViewCommand => new Command<string>(async (view) =>
         {
             switch (view)
@@ -824,6 +837,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "MagementStock":
                     this.IsHomeView = false;
@@ -848,6 +863,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "Tasks":
                     this.IsHomeView = false;
@@ -872,6 +889,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "CreateTask":
                     this.IsHomeView = false;
@@ -896,6 +915,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
 
                     await ReloadProductWithStock();
 
@@ -925,6 +946,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
 
                     await ReloadProductWithStock();
                     break;
@@ -951,6 +974,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "DetailTaskItem":
                     this.IsHomeView = false;
@@ -975,6 +1000,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "Orders":
                     this.IsHomeView = false;
@@ -999,6 +1026,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "History":
                     this.IsHomeView = false;
@@ -1023,6 +1052,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
 
                     await this.ReloadMovementsAsync();
                     break;
@@ -1047,6 +1078,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "AddStock":
                     this.IsHomeView = false;
@@ -1072,6 +1105,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "Inventory":
                     this.IsHomeView = false;
@@ -1097,6 +1132,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "CheckStock":
                     this.IsHomeView = false;
@@ -1122,6 +1159,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "EditStock":
                     this.IsHomeView = false;
@@ -1146,6 +1185,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
 
                     this.QuantityEditStock = 0;
                     await ReloadProductWithStock();
@@ -1173,6 +1214,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "EditProductDetaildInventory":
                     this.IsHomeView = false;
@@ -1197,6 +1240,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "Configuration":
                     this.IsHomeView = false;
@@ -1221,6 +1266,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "Operators":
                     this.IsHomeView = false;
@@ -1245,6 +1292,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
                     break;
                 case "NewMovement":
                     this.IsHomeView = false;
@@ -1269,6 +1318,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
 
                     await ReloadProductWithStock();
 
@@ -1298,6 +1349,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = true;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
 
                     await ReloadProductWithStock();
                     break;
@@ -1324,6 +1377,10 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = true;
                     this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
+
+                    await this.LoadBookingsItems();
                     break;
                 case "ListOrders":
                     this.IsHomeView = false;
@@ -1348,6 +1405,62 @@ namespace Rincon.ViewModels
                     this.IsVisibleCreateBookingOrderView = false;
                     this.IsVisibleListBookingsView = false;
                     this.IsVisibleListOrdersView = true;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = false;
+
+                    await this.LoadOrdersItems();
+                    break;
+                case "Order":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
+                    this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
+                    this.IsNewMovementView = false;
+                    this.IsCreateTaskView = false;
+                    this.IsHistoryOfTaskView = false;
+                    this.IsTaskItemView = false;
+                    this.IsTaskItemEditView = false;
+                    this.IsVisibleCreateBookingOrderView = false;
+                    this.IsVisibleListBookingsView = false;
+                    this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = true;
+                    this.IsVisibleBookingView = false;
+                    break;
+                case "Booking":
+                    this.IsHomeView = false;
+                    this.IsMagementStockView = false;
+                    this.IsTasksView = false;
+                    this.IsOrdersView = false;
+                    this.IsHistoryView = false;
+                    this.IsAddProductView = false;
+                    this.IsAddStockView = false;
+                    this.IsInventoryView = false;
+                    this.IsCheckStockView = false;
+                    this.IsEditStockView = false;
+                    this.IsInventoryEditView = false;
+                    this.IsInventoryEditProductView = false;
+                    this.IsConfigurationView = false;
+                    this.IsManagementOperatorsView = false;
+                    this.IsNewMovementView = false;
+                    this.IsCreateTaskView = false;
+                    this.IsHistoryOfTaskView = false;
+                    this.IsTaskItemView = false;
+                    this.IsTaskItemEditView = false;
+                    this.IsVisibleCreateBookingOrderView = false;
+                    this.IsVisibleListBookingsView = false;
+                    this.IsVisibleListOrdersView = false;
+                    this.IsVisibleOrderView = false;
+                    this.IsVisibleBookingView = true;
                     break;
             }
         });
@@ -2919,7 +3032,8 @@ namespace Rincon.ViewModels
                     IsBooking = this.IsBooking,
                     IsOrder = this.IsOrder,
                     OrderDate = this.DateBookingOrder,
-                    Shipment = this.IsShipmentTask
+                    Shipment = this.IsShipmentTask,
+                    Comments = this.CommentsBookingOrder,
                 };
 
                 var saveBookingOrder = await this.DataService.InsertItemAsync<BookingOrder>(newBookingOrder);
@@ -2991,6 +3105,178 @@ namespace Rincon.ViewModels
             });
         }
 
+        [RelayCommand]
+        private async Task<bool> CancelOrder(BookingOrder bookingOrder)
+        {
+            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Si", "No", async (response) =>
+            {
+                if (response)
+                {
+                    bookingOrder.Status = OrderStatus.Cancelado;
+
+                    await this.DataService.UpdateItemAsync<BookingOrder>(bookingOrder);
+
+                    var orders = await this.DataService.LoadOrderDetailsItemsAsync(bookingOrder.BookingOrderId);
+
+                    if (orders != null && orders.Any())
+                    {
+                        orders.ToList().ForEach(async order =>
+                        {
+                            var product = this.ProductsWithStock.Where(x => x.Product.Id == order.ProductId).FirstOrDefault();
+
+                            if (product != null)
+                            {
+                                product.Quantity = product.Quantity + order.Quantity;
+
+                                await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(product);
+                            }
+                        });
+                    }
+                }
+            });
+
+
+            return true;
+        }
+
+        [RelayCommand]
+        private async Task<bool> ConfirmBooking(BookingOrder bookingOrder)
+        {
+            await NotificationService.ConfirmAsync("Confirmar", "¿Está seguro que desea confirmar la operación?", "Si", "No", async (response) =>
+            {
+                if (response)
+                {
+                    bookingOrder.Status = bookingOrder.Shipment ? OrderStatus.Enviado : OrderStatus.Despachado;
+
+                    bookingOrder.IsBooking = false;
+                    bookingOrder.IsOrder = true;
+
+                    await this.DataService.UpdateItemAsync<BookingOrder>(bookingOrder);
+                }
+            });
+
+            return true;
+        }
+
+        [RelayCommand]
+        private async Task ViewOrderAsync(BookingOrder bookingOrder)
+        {
+            try 
+            {
+                var orders = await this.DataService.LoadOrderDetailsItemsAsync(bookingOrder.BookingOrderId);
+
+                if (orders != null && orders.Any())
+                {
+                    this.SelectedBookingOrder = bookingOrder;
+                    this.OrderItems = new ObservableCollection<Order>(orders);
+                    this.ChangeViewCommand.Execute("Order");
+                }
+                else 
+                {
+                    await NotificationService.NotifyAsync("Error", "Hubo un error al cargar la orden. Vuleva a intentar.", "Cerrar");
+
+                }
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar la orden. Vuleva a intentar.", "Cerrar");
+            }
+        }
+
+        [RelayCommand]
+        private async Task LoadOrdersItems()
+        {
+            try
+            {
+                var orderItems = await this.DataService.LoadOrderItemsAsync();
+
+                if (orderItems != null && orderItems.Any())
+                {
+                    this.BookingOrderItems = new ObservableCollection<BookingOrder>(orderItems);
+                    OnPropertyChanged(nameof(BookingOrderItems));
+                }
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar las notas. Vuleva a intentar.", "Cerrar");
+            }
+        }
+
+        [RelayCommand]
+        private async Task LoadBookingsItems()
+        {
+            try
+            {
+                var bookingItems = await this.DataService.LoadBookingItemsAsync();
+
+                if (bookingItems != null && bookingItems.Any())
+                {
+                    this.BookingOrderItems = new ObservableCollection<BookingOrder>(bookingItems);
+                    OnPropertyChanged(nameof(BookingOrderItems));
+                }
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar las notas. Vuleva a intentar.", "Cerrar");
+            }
+        }
+
+        [RelayCommand]
+        private async Task<bool> CancelBooking(BookingOrder bookingOrder)
+        {
+            await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Si", "No", async (response) =>
+            {
+                if (response)
+                {
+                    await this.DataService.UpdateItemAsync<BookingOrder>(bookingOrder);
+
+                    var bookings = await this.DataService.LoadBookingDetailsItemsAsync(bookingOrder.BookingOrderId);
+
+                    if (bookings != null && bookings.Any())
+                    {
+                        bookings.ToList().ForEach(async booking =>
+                        {
+                            var product = this.ProductsWithStock.Where(x => x.Product.Id == booking.ProductId).FirstOrDefault();
+
+                            if (product != null)
+                            {
+                                product.Quantity = product.Quantity + booking.Quantity;
+
+                                await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(product);
+                            }
+                        });
+                    }
+                }
+            });
+
+
+            return true;
+        }
+
+        [RelayCommand]
+        private async Task ViewBookingAsync(BookingOrder bookingOrder)
+        {
+            try
+            {
+                var booking = await this.DataService.LoadBookingDetailsItemsAsync(bookingOrder.BookingOrderId);
+
+                if (booking != null && booking.Any())
+                {
+                    this.SelectedBookingOrder = bookingOrder;
+                    this.BookingItems = new ObservableCollection<Booking>(booking);
+                    this.ChangeViewCommand.Execute("Booking");
+                }
+                else
+                {
+                    await NotificationService.NotifyAsync("Error", "Hubo un error al cargar la reserva. Vuleva a intentar.", "Cerrar");
+
+                }
+            }
+            catch
+            {
+                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar la reserva. Vuleva a intentar.", "Cerrar");
+            }
+        }
 
         #endregion
 
