@@ -650,4 +650,118 @@ public partial class HomePage
         }
 
     }
+
+    void OnSearchOrderTextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(e.NewTextValue))
+            {
+                OrderItemsSearch.ItemsSource = this.ViewModel.BookingOrderItems;
+            }
+            else
+            {
+                OrderItemsSearch.ItemsSource = this.ViewModel.BookingOrderItems.Where(x => x.Client.ToString().ToLower().Contains(e.NewTextValue.ToLower())
+                    || x.Id.ToString().ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+            }
+        }
+        catch
+        {
+
+        }
+    }
+
+    private async void VisivilityCancelOrderItem_Clicked(object sender, EventArgs e)
+    {
+
+        var button = ((Button)sender);
+        var taskItem = (BookingOrder)button.BindingContext;
+
+        var command = this.ViewModel.CancelOrderCommand;
+
+        var result = await (Task<bool>)command.ExecuteAsync((BookingOrder)taskItem);
+
+
+        if (result)
+        {
+            await popupNavigation.PushAsync(new SuccessMessagePage(this.popupNavigation, $"Se cancelo la orden con exito!"));
+        }
+    }
+
+
+    private async void VisivilityOrderItem_Clicked(object sender, EventArgs e)
+    {
+
+        var button = ((Button)sender);
+        var taskItem = (BookingOrder)button.BindingContext;
+
+        var command = this.ViewModel.ViewOrderCommand;
+
+        command.ExecuteAsync((BookingOrder)taskItem);
+
+    }
+
+    void OnSearchBookingTextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(e.NewTextValue))
+            {
+                BookingItemsSearch.ItemsSource = this.ViewModel.BookingOrderItems;
+            }
+            else
+            {
+                BookingItemsSearch.ItemsSource = this.ViewModel.BookingOrderItems.Where(x => x.Client.ToString().ToLower().Contains(e.NewTextValue.ToLower())
+                    || x.Id.ToString().ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+            }
+        }
+        catch
+        {
+
+        }
+    }
+
+
+    private async void VisivilityCancelBookingItem_Clicked(object sender, EventArgs e)
+    {
+
+        var button = ((Button)sender);
+        var taskItem = (BookingOrder)button.BindingContext;
+
+        var command = this.ViewModel.CancelBookingCommand;
+
+        var result = await (Task<bool>)command.ExecuteAsync((BookingOrder)taskItem);
+
+
+        if (result)
+        {
+            await popupNavigation.PushAsync(new SuccessMessagePage(this.popupNavigation, $"Se cancelo la reserva con exito!"));
+        }
+    }
+
+
+    private async void VisivilityBookingItem_Clicked(object sender, EventArgs e)
+    {
+
+        var button = ((Button)sender);
+        var taskItem = (BookingOrder)button.BindingContext;
+
+        var command = this.ViewModel.ViewBookingCommand;
+
+        command.ExecuteAsync((BookingOrder)taskItem);
+
+    }
+
+    async void VisivilityConfirmBookingItem_Clicked(object sender, EventArgs e)
+    {
+        var command = this.ViewModel.ConfirmBookingCommand;
+
+        var result = await (Task<bool>)command.ExecuteAsync(null);
+
+        if (result)
+        {
+            await popupNavigation.PushAsync(new SuccessMessagePage(this.popupNavigation, $"Se confirmo la reserva y se creo el pedido con exito!"));
+        }
+
+    }
 }
