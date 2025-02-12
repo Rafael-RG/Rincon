@@ -4953,6 +4953,17 @@
                         Text="Volver"
                         TextColor="#000000"
                         WidthRequest="260" />
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="20,0,20,0"
+                        BackgroundColor="#FFF6ED"
+                        Command="{Binding GeneratePdfCommand}"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        Text="PDF"
+                        TextColor="#000000"
+                        WidthRequest="260" />
                 </HorizontalStackLayout>
 
             </Grid>
@@ -5310,7 +5321,7 @@
                         Clicked="VisivilityConfirmBookingItem_Clicked"
                         HeightRequest="35"
                         HorizontalOptions="Center"
-                        Text="Volver"
+                        Text="Confirmar reserva"
                         TextColor="#000000"
                         WidthRequest="260" />
                 </HorizontalStackLayout>

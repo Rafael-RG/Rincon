@@ -3424,6 +3424,36 @@ namespace Rincon.ViewModels
             return ms.ToArray();
         }
 
+        [RelayCommand]
+        private async Task GeneratePdfAsync()
+        {
+            try
+            {
+                // Ruta del archivo PDF en el almacenamiento local
+                string filePath = Path.Combine(FileSystem.AppDataDirectory, "pedido.pdf");
+
+                // Ruta del logo (asegúrate de que esté en Resources/Images o AppDataDirectory)
+                string logoPath = Path.Combine(FileSystem.AppDataDirectory, "logo.png");
+
+                var productos = await this.DataService.LoadOrderDetailsItemsAsync(this.SelectedBookingOrder.BookingOrderId);
+
+                string downloadsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", $"{this.SelectedBookingOrder.Client}_{this.SelectedBookingOrder.Id}.pdf");
+
+                // Llamar a la generación del PDF
+                PdfGenerator.GenerateBookingOrderPdf(this.SelectedBookingOrder, productos, downloadsPath);
+
+                // Mostrar mensaje de éxito
+                await App.Current.MainPage.DisplayAlert("Éxito", "El PDF se generó correctamente.", "OK");
+
+                // Abrir el PDF después de generarlo
+                await Launcher.OpenAsync(new OpenFileRequest { File = new ReadOnlyFile(downloadsPath) });
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", $"Error al generar el PDF: {ex.Message}", "OK");
+            }
+        }
+
         #endregion
     }
 }
