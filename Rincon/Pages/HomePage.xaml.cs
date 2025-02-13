@@ -460,7 +460,7 @@ public partial class HomePage
         this.ViewModel.ReloadDerivateProductsCommand.Execute(null);
         this.ViewModel.SelectedDerivateProducts = null;
         this.ViewModel.IsVisibleListNewTask = false;
-        this.ViewModel.IsSelectedProductTask = true;
+        this.ViewModel.IsSelectedProductTask = this.ViewModel.ProductTask != null ? true : false;
         this.SearchBarNewTask.Unfocus();
     }
 
@@ -479,6 +479,12 @@ public partial class HomePage
     void ProductDerivate_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
     {
         this.ViewModel.SelectedDerivateProducts = (Product)ProductListDerivateTask.SelectedItem;
+        this.ViewModel.IsVisibleListProductsDerivateTask = false;
+    }
+
+    void ProductDerivateEdit_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    {
+        this.ViewModel.SelectedDerivateProducts = (Product)ProductListDerivateEditTask.SelectedItem;
         this.ViewModel.IsVisibleListProductsDerivateTask = false;
     }
 

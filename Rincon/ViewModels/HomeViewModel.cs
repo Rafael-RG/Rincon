@@ -1019,6 +1019,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleOrderView = false;
                     this.IsVisibleBookingView = false;
 
+                    this.IsSelectedProductTask = false;
+
                     await ReloadProductWithStock();
 
                     this.IsSale = true;
@@ -1453,6 +1455,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleOrderView = false;
                     this.IsVisibleBookingView = false;
 
+                    this.IsNoShipmentTask = true;
+                    this.IsBooking = true;
                     await ReloadProductWithStock();
                     break;
                 case "ListBooking":
@@ -2909,6 +2913,8 @@ namespace Rincon.ViewModels
                 }
 
                 await RefreshBar();
+
+                this.IsSelectedProductTask = false;
                 return true;
             }
             catch
@@ -2987,6 +2993,8 @@ namespace Rincon.ViewModels
                 }
 
                 await RefreshBar();
+                await LoadTaskItems();
+                this.ChangeViewCommand.Execute("ManagementTasks");
                 return true;
             }
             catch
