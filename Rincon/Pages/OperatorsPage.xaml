@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<pages:BaseContentPage
+    x:Class="Rincon.Pages.OperatorsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:extensions="clr-namespace:Rincon.Extensions"
+    xmlns:pages="clr-namespace:Rincon.Common.Pages;assembly=Rincon.Common"
+    xmlns:viewModels="clr-namespace:Rincon.ViewModels"
+    x:DataType="viewModels:OperatorsViewModel"
+    xmlns:local="clr-namespace:Rincon.Converters"
+    xmlns:models="clr-namespace:Rincon.Models;assembly=Rincon.Models"
+    xmlns:popups="clr-namespace:Rincon.CustomPopups"
+    xmlns:pagespop="clr-namespace:Rincon.Pages"
+    x:TypeArguments="viewModels:OperatorsViewModel"
+    Shell.NavBarIsVisible="False"
+    Shell.NavBarHasShadow="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Offset="0.1" Color="#AD6B2A" />
+                <GradientStop Offset="1.0" Color="#D3AA84" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <!-- Overlay para ActivityIndicator -->
+        <Grid IsVisible="{Binding IsBusy}" 
+              BackgroundColor="#80000000" 
+              ZIndex="2000">
+            <ActivityIndicator
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsBusy}"
+                Color="White"
+                Scale="1.5"/>
+        </Grid>
+
+        <!-- Popups superpuestos SIEMPRE arriba -->
+        <pagespop:TaskDetailPage IsVisible="{Binding IsTaskDetailPopupVisible}" ZIndex="1000" />
+        <popups:AssignOperatorPopup IsVisible="{Binding IsAssignOperatorPopupVisible}" ZIndex="1001" />
+        <pagespop:FinishTaskPopup IsVisible="{Binding IsFinishTaskPopupVisible}" ZIndex="1002" />
+        <!-- <popups:FinishTaskAuthPopup IsVisible="{Binding IsFinishTaskAuthPopupVisible}" ZIndex="1003" /> -->
+
+        <!-- Contenido principal debajo de los popups -->
+        <Frame Margin="30" Padding="20" BackgroundColor="#E0E0E0" CornerRadius="15" HasShadow="True" ZIndex="1"
+               IsVisible="{Binding IsAnyPopupVisible, Converter={StaticResource InvertedBoolConverter}}">
+            <StackLayout>
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Text="Lista de Tareas" FontSize="22" TextColor="#757575" FontAttributes="Bold" VerticalOptions="Center" />
+                    <Button Grid.Column="1" 
+                            Text="← Volver al Login"
+                            FontSize="14"
+                            BackgroundColor="#AD6B2A"
+                            TextColor="White"
+                            Padding="15,8"
+                            CornerRadius="20"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center"
+                            Command="{Binding LoginCommand}" />
+                </Grid>
+                <BoxView HeightRequest="1" Color="#BDBDBD" Margin="0,0,0,10" />
+                <Grid ColumnSpacing="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Encabezados y botón recargar -->
+                    <Label Grid.Row="0" Grid.Column="0" Text="Pendientes" FontSize="16" TextColor="#757575" />
+                    <Label Grid.Row="0" Grid.Column="1" Text="Asignadas" FontSize="16" TextColor="#757575" />
+                    <Button
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Text="⟳ Recargar"
+                        FontSize="14"
+                        BackgroundColor="Transparent"
+                        TextColor="#757575"
+                        Padding="8,0"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        Command="{Binding ReloadTasksCommand}" />
+
+                    <!-- Listas de tareas desde el ViewModel -->
+                    <CollectionView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding PendingTasks}" VerticalOptions="FillAndExpand"
+                                    SelectionMode="Single" SelectedItem="{Binding SelectedTask}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:TaskItem">
+                                <Frame BackgroundColor="#F5F5F5" CornerRadius="10" Padding="15" HasShadow="False" Margin="0,0,0,10">
+                                    <Grid>
+                                        <Label Text="{Binding Description}" FontSize="14" TextColor="#333" />
+                                        <Frame BackgroundColor="#E0E0E0" CornerRadius="20" Padding="5" HorizontalOptions="End" VerticalOptions="Center">
+                                            <Label Text="+" FontSize="18" TextColor="#222">
+                                            </Label>
+                                        </Frame>
+                                    </Grid>
+                                    <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding BindingContext.ShowTaskPopupCommand, Source={x:Reference OperatorsPage}}" CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <CollectionView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding AssignedTasks}" VerticalOptions="FillAndExpand"
+                                    SelectionMode="Single" SelectedItem="{Binding SelectedTask}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:TaskItem">
+                                <Frame BackgroundColor="#F5F5F5" CornerRadius="10" Padding="15" HasShadow="False" Margin="0,0,0,10">
+                                    <Grid>
+                                        <Label Text="{Binding Description}" FontSize="14" TextColor="#333" />
+                                        <Frame BackgroundColor="#E0E0E0" CornerRadius="20" Padding="5" HorizontalOptions="End" VerticalOptions="Center">
+                                            <Label Text="&#x2713;" FontSize="18" TextColor="#222">
+                                            </Label>
+                                        </Frame>
+                                    </Grid>
+                                    <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding BindingContext.ShowTaskPopupCommand, Source={x:Reference OperatorsPage}}" CommandParameter="{Binding .}" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </StackLayout>
+        </Frame>
+    </Grid>
+</pages:BaseContentPage>

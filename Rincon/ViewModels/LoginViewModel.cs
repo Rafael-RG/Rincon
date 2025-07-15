@@ -91,6 +91,27 @@ namespace Rincon.ViewModels
             await this.NavigationService.Navigate<RecoverPasswordViewModel>();
         });
 
+        /// <summary>
+        /// Login with operators
+        /// </summary>
+        public ICommand OperatorsCommand => new Command(async () =>
+        {
+            try
+            {
+                this.IsBusy = true;
+                await this.NavigationService.Navigate<OperatorsViewModel>();
+            }
+            catch (Exception ex)
+            {
+                await NotificationService.NotifyAsync(GetText("Error"), (ex.Message), GetText("Close"));
+                await LogExceptionAsync(ex);
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        });
+
 
 
         /// <summary>

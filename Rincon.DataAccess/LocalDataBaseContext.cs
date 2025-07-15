@@ -20,7 +20,7 @@ namespace Rincon.DataAccess
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            var databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), Constants.LocalDatabaseName);
+            var databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.LocalDatabaseName);
             optionsBuilder.UseSqlite($"Filename={databasePath}");
         }
     }
