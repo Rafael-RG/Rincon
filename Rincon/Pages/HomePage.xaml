@@ -42,10 +42,10 @@
 
         <Grid
             BackgroundColor="#AD6B2A"
-            ColumnDefinitions="*,*,*,*,1.3*"
+            ColumnDefinitions="*,*,*,*,1.6*"
             ColumnSpacing="0"
             IsVisible="{Binding IsUserLogin}"
-            RowDefinitions="80,90,*"
+            RowDefinitions="80,75,*"
             RowSpacing="0"
             VerticalOptions="FillAndExpand">
 
@@ -61,20 +61,24 @@
                 HeightRequest="60"
                 HorizontalOptions="StartAndExpand"
                 Source="rincon_home.png"
+                MaximumWidthRequest="273"
                 WidthRequest="273" />
             <Button
                 Grid.Row="1"
                 Grid.Column="0"
-                Margin="20,0,20,0"
+                Margin="15,5,15,5"
                 BackgroundColor="{Binding IsMagementStockView, Converter={StaticResource ActiveToColorConverter}}"
                 Command="{Binding ChangeViewCommand}"
                 CommandParameter="MagementStock"
                 CornerRadius="14"
-                FontSize="22"
+                FontSize="19"
+                MinimumHeightRequest="55"
                 HeightRequest="55"
                 HorizontalOptions="FillAndExpand"
                 Text="Gestión de stock"
-                TextColor="#000000">
+                TextColor="#000000"
+                LineBreakMode="WordWrap"
+                Padding="8,5,8,5">
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
@@ -87,16 +91,19 @@
             <Button
                 Grid.Row="1"
                 Grid.Column="1"
-                Margin="20,0,20,0"
+                Margin="15,5,15,5"
                 BackgroundColor="{Binding IsTasksView, Converter={StaticResource ActiveToColorConverter}}"
                 Command="{Binding ChangeViewCommand}"
                 CommandParameter="Tasks"
                 CornerRadius="14"
-                FontSize="22"
+                FontSize="19"
+                MinimumHeightRequest="55"
                 HeightRequest="55"
                 HorizontalOptions="FillAndExpand"
                 Text="Tareas"
-                TextColor="#000000">
+                TextColor="#000000"
+                LineBreakMode="WordWrap"
+                Padding="8,5,8,5">
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
@@ -109,16 +116,19 @@
             <Button
                 Grid.Row="1"
                 Grid.Column="2"
-                Margin="20,0,20,0"
+                Margin="15,5,15,5"
                 BackgroundColor="{Binding IsOrdersView, Converter={StaticResource ActiveToColorConverter}}"
                 Command="{Binding ChangeViewCommand}"
                 CommandParameter="Orders"
                 CornerRadius="14"
-                FontSize="22"
+                FontSize="19"
+                MinimumHeightRequest="55"
                 HeightRequest="55"
                 HorizontalOptions="FillAndExpand"
                 Text="Pedidos"
-                TextColor="#000000">
+                TextColor="#000000"
+                LineBreakMode="WordWrap"
+                Padding="8,5,8,5">
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
@@ -131,16 +141,19 @@
             <Button
                 Grid.Row="1"
                 Grid.Column="3"
-                Margin="20,0,20,0"
+                Margin="15,5,15,5"
                 BackgroundColor="{Binding IsHistoryView, Converter={StaticResource ActiveToColorConverter}}"
                 Command="{Binding ChangeViewCommand}"
                 CommandParameter="History"
                 CornerRadius="14"
-                FontSize="22"
+                FontSize="19"
+                MinimumHeightRequest="55"
                 HeightRequest="55"
                 HorizontalOptions="FillAndExpand"
                 Text="Historial"
-                TextColor="#000000">
+                TextColor="#000000"
+                LineBreakMode="WordWrap"
+                Padding="8,5,8,5">
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
@@ -153,16 +166,19 @@
             <Button
                 Grid.Row="1"
                 Grid.Column="4"
-                Margin="20,0,20,0"
+                Margin="15,5,15,5"
                 BackgroundColor="{Binding IsAddProductView, Converter={StaticResource ActiveToColorConverter}}"
                 Command="{Binding ChangeViewCommand}"
                 CommandParameter="AddProduct"
                 CornerRadius="14"
-                FontSize="22"
+                FontSize="17"
+                MinimumHeightRequest="55"
                 HeightRequest="55"
                 HorizontalOptions="FillAndExpand"
                 Text="Añadir producto"
-                TextColor="#000000">
+                TextColor="#000000"
+                LineBreakMode="WordWrap"
+                Padding="6,5,6,5">
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
