@@ -13,6 +13,7 @@
                 <Entry Placeholder="Usuario" BackgroundColor="#E0E0E0" Margin="0,10,0,0" HeightRequest="40" Text="{Binding OperatorUser}" />
                 <Entry Placeholder="PIN" BackgroundColor="#E0E0E0" Margin="0,10,0,0" HeightRequest="40" IsPassword="True" Text="{Binding OperatorPin}" />
                 <Button Text="Finalizar tarea" BackgroundColor="#F5F5F5" TextColor="#222" CornerRadius="8" HorizontalOptions="Center" WidthRequest="120" Margin="0,20,0,0" Command="{Binding FinishTaskAuthCommand}" />
+                <Button Text="Cerrar" BackgroundColor="#F5F5F5" TextColor="#888" CornerRadius="8" HorizontalOptions="Center" WidthRequest="120" Command="{Binding ClosePopupCommand}" />
             </StackLayout>
         </Frame>
     </Grid>
