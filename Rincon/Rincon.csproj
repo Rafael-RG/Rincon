@@ -41,10 +41,10 @@
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" />
 
-		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" BaseSize="128,128">
+		<!-- Splash Screen - DISABLED -->
+		<!-- <MauiSplashScreen Include="Resources\Splash\splash.svg" BaseSize="128,128">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</MauiSplashScreen>
+		</MauiSplashScreen> -->
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
