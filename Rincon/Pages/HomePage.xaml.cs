@@ -35,10 +35,16 @@ public partial class HomePage
 	/// </summary>
 	private async void AddNote_Clicked(object sender, EventArgs e)
     {
+        try
+        {
         await popupNavigation.PushAsync(new AddNotePage(this.popupNavigation, ViewModel.AddedNoteCommand));
-    }
-
-    private void OnAddStockTextChanged(object sender, TextChangedEventArgs e)
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"=== AddNote_Clicked ERROR: {ex.Message} ===");
+            System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
+        }
+    }    private void OnAddStockTextChanged(object sender, TextChangedEventArgs e)
     {
         this.ViewModel.IsVisibleListAddStock = true;
 

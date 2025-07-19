@@ -16,7 +16,7 @@ public partial class AddNotePage
 
     public AddNotePage(IPopupNavigation popupNavigation, ICommand okAddNoteCommand, Note note= null)
 	{
-		InitializeComponent();
+       InitializeComponent();
         this.NoteItem = note;
 
         if (this.NoteItem != null)
@@ -27,6 +27,16 @@ public partial class AddNotePage
 
         this.popupNavigation = popupNavigation;
         this.okAddNoteCommand = okAddNoteCommand;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
     }
 
 	private async void CancelAddNote_Clicked(object sender, EventArgs e)
