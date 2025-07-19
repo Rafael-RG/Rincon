@@ -46,7 +46,7 @@
         <pagespop:TaskDetailPage IsVisible="{Binding IsTaskDetailPopupVisible}" ZIndex="1000" />
         <popups:AssignOperatorPopup IsVisible="{Binding IsAssignOperatorPopupVisible}" ZIndex="1001" />
         <pagespop:FinishTaskPopup IsVisible="{Binding IsFinishTaskPopupVisible}" ZIndex="1002" />
-        <!-- <popups:FinishTaskAuthPopup IsVisible="{Binding IsFinishTaskAuthPopupVisible}" ZIndex="1003" /> -->
+        <popups:FinishTaskAuthPopup IsVisible="{Binding IsFinishTaskAuthPopupVisible}" ZIndex="1003" />
 
         <!-- Contenido principal debajo de los popups -->
         <Frame Margin="30" Padding="20" BackgroundColor="#E0E0E0" CornerRadius="15" HasShadow="True" ZIndex="1"

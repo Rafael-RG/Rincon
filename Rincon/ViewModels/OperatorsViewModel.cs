@@ -68,6 +68,12 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private string operatorPin;
 
+        [ObservableProperty]
+        private int lossMaterial;
+
+        [ObservableProperty]
+        private string additionalComments;
+
         public List<TaskItem> PendingTasks { get; set; }
         public List<TaskItem> AssignedTasks { get; set; }
 
@@ -97,7 +103,7 @@ namespace Rincon.ViewModels
             }
         });
 
-        public ICommand EnterOperatorCommand => new Command(async () =>
+        public ICommand AssignedOperatorCommand => new Command(async () =>
         {
 
             try
@@ -161,6 +167,14 @@ namespace Rincon.ViewModels
             IsAssignOperatorPopupVisible = true;
         });
 
+        public ICommand ShowFinishTaskAuthPopupCommand => new Command(() =>
+        {
+            IsTaskDetailPopupVisible = false;
+            IsFinishTaskPopupVisible = false;
+            IsFinishTaskAuthPopupVisible = true;
+            IsAssignOperatorPopupVisible = false;
+        });
+
         public ICommand OperatorsCommand => new Command(async () =>
         {
             await NotificationService.NotifyAsync("Info", "Operator login command executed", "Close");
@@ -192,13 +206,71 @@ namespace Rincon.ViewModels
             LoadTasksAsync();
         }
 
-        //FinishTaskAuthCommand
-        public ICommand FinishTaskAuthCommand => new Command(() =>
+        public ICommand FinishTaskAuthCommand => new Command(async() =>
         {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(OperatorUser) || string.IsNullOrWhiteSpace(OperatorPin))
+                {
+                    NotificationService.NotifyAsync("Error", "Por favor, ingrese usuario y PIN.", "OK");
+                    return;
+                }
+
+                // Aquí puedes agregar la lógica para autenticar al operador
+                var operators = await this._dataService.LoadOperatorsAsync();
+
+                if (operators == null || !operators.Any())
+                {
+                    NotificationService.NotifyAsync("Error", "No hay operadores registrados.", "OK");
+                    return;
+                }
+
+                var existOperator = operators.FirstOrDefault(o => o.Name == OperatorUser && o.Pin == OperatorPin);
+
+                if (existOperator == null)
+                {
+                    NotificationService.NotifyAsync("Error", "Usuario o PIN incorrectos.", "OK");
+                    return;
+                }
+                // Si el operador existe, puedes proceder a finalizar la tarea
+                this.SelectedTask.TaskStatus = Rincon.Models.TaskStatus.Finalizada;
+                this.SelectedTask.ProcessErrorQuantity = this.LossMaterial.ToString();
+                this.SelectedTask.OperatorComment = this.AdditionalComments;
+
+                // Actualizar la tarea en el servicio de datos
+                await _dataService.UpdateItemAsync(this.SelectedTask);
+
+                var productsStock = await _dataService.LoadStockAsync();
+                if (productsStock != null && productsStock.Any())
+                {
+                    var productSource = productsStock.FirstOrDefault(p => p.Id == this.SelectedTask.ProductSourceId);
+                    if (productSource != null)
+                    {
+                        // Actualizar la cantidad del producto en stock
+                        productSource.Process -= int.Parse(this.SelectedTask.Quantity);
+                        await _dataService.UpdateItemAsync(productSource);
+                    }
+
+                    var productDestination = productsStock.FirstOrDefault(p => p.Id == this.SelectedTask.ProductDestinationId);
+                    if (productDestination != null)
+                    {
+                        // Actualizar la cantidad del producto en stock
+                        productDestination.Quantity += int.Parse(this.SelectedTask.Quantity) - int.Parse(this.SelectedTask.ProcessErrorQuantity);
+                        await _dataService.UpdateItemAsync(productDestination);
+                    }
+                }
+
+                // Recargar las tareas para reflejar los cambios
+                LoadTasksAsync();
+
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al finalizar tarea: {ex.Message}");
+                NotificationService.NotifyAsync("Error", $"Error al finalizar tarea: {ex.Message}", "OK");
+            }
+
             IsFinishTaskAuthPopupVisible = false;
-            SelectedTask = null;
-            // Aquí puedes agregar la lógica para finalizar la tarea
-            System.Diagnostics.Debug.WriteLine("Tarea finalizada con autenticación");
         });
 
         private async void LoadTasksAsync()

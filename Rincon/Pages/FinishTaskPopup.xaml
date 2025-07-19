@@ -46,13 +46,13 @@
           <Label Text="{Binding SelectedTask.OperatorComment}" Grid.Row="4" Grid.Column="1" TextColor="#222" />
           <!-- Material para pérdida -->
           <Label Text="Material para pérdida" Grid.Row="5" Grid.Column="0" TextColor="#666" />
-          <Entry Grid.Row="5" Grid.Column="1" BackgroundColor="#E0E0E0" HeightRequest="30" />
+          <Entry Text="{Binding LossMaterial}" Grid.Row="5" Grid.Column="1" BackgroundColor="#E0E0E0" HeightRequest="30" />
           <!-- Comentarios adicionales -->
           <Label Text="Comentarios adicionales" Grid.Row="6" Grid.Column="0" TextColor="#666" />
-          <Editor Grid.Row="6" Grid.Column="1" BackgroundColor="#E0E0E0" HeightRequest="60" />
+          <Editor Text="{Binding AdditionalComments}" Grid.Row="6" Grid.Column="1" BackgroundColor="#E0E0E0" HeightRequest="60" />
         </Grid>
         <BoxView HeightRequest="1" Color="#BDBDBD" Margin="0,20,0,10" />
-        <Button Text="Finalizar" BackgroundColor="#E0E0E0" TextColor="#222" CornerRadius="8" HorizontalOptions="Center" WidthRequest="120" />
+        <Button Text="Finalizar" BackgroundColor="#E0E0E0" TextColor="#222" CornerRadius="8" HorizontalOptions="Center" WidthRequest="120"  Command="{Binding ShowFinishTaskAuthPopupCommand}" />
         <Button Text="Cerrar" BackgroundColor="#F5F5F5" TextColor="#888" CornerRadius="8" HorizontalOptions="Center" WidthRequest="120" Command="{Binding ClosePopupCommand}" />
       </StackLayout>
     </Frame>
