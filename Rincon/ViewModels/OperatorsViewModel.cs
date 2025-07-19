@@ -62,6 +62,12 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private TaskItem selectedTask;
 
+        [ObservableProperty]
+        private string operatorUser;
+
+        [ObservableProperty]
+        private string operatorPin;
+
         public List<TaskItem> PendingTasks { get; set; }
         public List<TaskItem> AssignedTasks { get; set; }
 
@@ -91,9 +97,60 @@ namespace Rincon.ViewModels
             }
         });
 
-        public ICommand EnterOperatorCommand => new Command(() =>
+        public ICommand EnterOperatorCommand => new Command(async () =>
         {
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(OperatorUser) || string.IsNullOrWhiteSpace(OperatorPin))
+                {
+                    NotificationService.NotifyAsync("Error", "Por favor, ingrese usuario y PIN.", "OK");
+                    return;
+                }
+                // Aquí puedes agregar la lógica para autenticar al operador
+                var operators = await this._dataService.LoadOperatorsAsync();
+
+                if (operators == null || !operators.Any())
+                {
+                    NotificationService.NotifyAsync("Error", "No hay operadores registrados.", "OK");
+                    return;
+                }
+
+                var existOperator = operators.FirstOrDefault(o => o.Name == OperatorUser && o.Pin == OperatorPin);
+
+                if (existOperator == null)
+                {
+                    NotificationService.NotifyAsync("Error", "Usuario o PIN incorrectos.", "OK");
+                    return;
+                }
+
+                // Si el operador existe, puedes proceder a navegar a la página de tareas
+
+                this.SelectedTask.OperatorId = existOperator.Id;
+                this.SelectedTask.TaskStatus = Rincon.Models.TaskStatus.Iniciada;
+
+                // Actualizar la tarea en el servicio de datos
+                await _dataService.UpdateItemAsync(this.SelectedTask);
+                
+                // Recargar las tareas para reflejar los cambios
+                LoadTasksAsync();
+
+                IsBusy = true;
+            }
+            catch (Exception ex)
+            {
+                IsBusy = false;
+                System.Diagnostics.Debug.WriteLine($"Error al entrar como operador: {ex.Message}");
+                NotificationService.NotifyAsync("Error", $"Error al entrar como operador: {ex.Message}", "OK");
+            }
+
+            IsTaskDetailPopupVisible = false;
+            IsFinishTaskPopupVisible = false;
+            IsFinishTaskAuthPopupVisible = false;
             IsAssignOperatorPopupVisible = false;
+            
+            this.IsBusy = false;
+            
         });
 
         public ICommand ShowAssignOperatorPopupCommand => new Command(() =>
