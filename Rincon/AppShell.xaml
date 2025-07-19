@@ -6,36 +6,10 @@
     xmlns:local="clr-namespace:Rincon"
     xmlns:pages="clr-namespace:Rincon.Pages"
     FlyoutHeaderBehavior="CollapseOnScroll"
-    Shell.FlyoutBehavior="Flyout">
-
-    <!--<FlyoutItem Title="Cats"
-                Icon="cat.png">
-        <Tab>
-            <ShellContent ContentTemplate="{DataTemplate views:CatsPage}" />
-        </Tab>
-    </FlyoutItem-->
-
+    Shell.FlyoutBehavior="Flyout"
+    Shell.NavBarIsVisible="False">
 
     <ShellContent
-        Title="Splash"
         ContentTemplate="{DataTemplate pages:SplashPage}"
         Route="Splash" />
-
-    <ShellContent
-        Title="Sincronizar"
-        ContentTemplate="{DataTemplate pages:SynchronizationPage}"
-        Route="Synchonize" />
-
-
-    <!--<FlyoutItem Title="Home">
-        <Tab>
-
-        </Tab>
-    </FlyoutItem>-->
-
-    <!--<ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate pages:HomePage}"
-        Route="Home" />-->
-
 </Shell>
