@@ -97,44 +97,34 @@
                         Command="{Binding ReloadTasksCommand}" />
 
                     <!-- Listas de tareas desde el ViewModel -->
-                    <CollectionView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding PendingTasks}" VerticalOptions="FillAndExpand"
-                                    SelectionMode="Single" SelectedItem="{Binding SelectedTask}">
+                    <CollectionView x:Name="TaskPendingList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding PendingTasks}" VerticalOptions="FillAndExpand"
+                                    SelectionMode="Single" SelectionChanged="TaskPendingSelectionChanged" SelectedItem="{Binding SelectedTask, Mode=TwoWay}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:TaskItem">
-                                <Frame BackgroundColor="#F5F5F5" CornerRadius="10" Padding="15" HasShadow="False" Margin="0,0,0,10">
-                                    <Grid>
-                                        <Label Text="{Binding Description}" FontSize="14" TextColor="#333" />
-                                        <Frame BackgroundColor="#E0E0E0" CornerRadius="20" Padding="5" HorizontalOptions="End" VerticalOptions="Center">
-                                            <Label Text="+" FontSize="18" TextColor="#222">
-                                            </Label>
-                                        </Frame>
-                                    </Grid>
-                                    <Frame.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding BindingContext.ShowTaskPopupCommand, Source={x:Reference OperatorsPage}}" CommandParameter="{Binding .}" />
-                                    </Frame.GestureRecognizers>
-                                </Frame>
+                                <Border BackgroundColor="#F5F5F5" 
+                                        StrokeThickness="0" 
+                                        StrokeShape="RoundRectangle 10" 
+                                        Padding="15" 
+                                        Margin="0,0,0,10">
+                                    <Label Text="{Binding Description}" FontSize="14" TextColor="#333" />
+                                </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
-                    <CollectionView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding AssignedTasks}" VerticalOptions="FillAndExpand"
-                                    SelectionMode="Single" SelectedItem="{Binding SelectedTask}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:TaskItem">
-                                <Frame BackgroundColor="#F5F5F5" CornerRadius="10" Padding="15" HasShadow="False" Margin="0,0,0,10">
-                                    <Grid>
+                    <CollectionView x:Name="TaskAssignedList" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding AssignedTasks}" VerticalOptions="FillAndExpand"
+                                    SelectionMode="Single" SelectionChanged="TaskAssignedSelectionChanged" SelectedItem="{Binding SelectedTask, Mode=TwoWay}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:TaskItem">
+                                    <Border BackgroundColor="#F5F5F5" 
+                                            StrokeThickness="0" 
+                                            StrokeShape="RoundRectangle 10" 
+                                            Padding="15" 
+                                            Margin="0,0,0,10">
                                         <Label Text="{Binding Description}" FontSize="14" TextColor="#333" />
-                                        <Frame BackgroundColor="#E0E0E0" CornerRadius="20" Padding="5" HorizontalOptions="End" VerticalOptions="Center">
-                                            <Label Text="&#x2713;" FontSize="18" TextColor="#222">
-                                            </Label>
-                                        </Frame>
-                                    </Grid>
-                                    <Frame.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding BindingContext.ShowTaskPopupCommand, Source={x:Reference OperatorsPage}}" CommandParameter="{Binding .}" />
-                                    </Frame.GestureRecognizers>
-                                </Frame>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
                     </CollectionView>
                 </Grid>
             </StackLayout>

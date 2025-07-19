@@ -2,10 +2,11 @@ using System.Windows.Input;
 using Rincon.Common.ViewModels;
 using Rincon.Models;
 using Rincon.Common.Interfaces;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Rincon.ViewModels
 {
-    public class OperatorsViewModel : BaseViewModel
+    public partial class OperatorsViewModel : BaseViewModel
     {
         public bool IsAnyPopupVisible => IsTaskDetailPopupVisible || IsAssignOperatorPopupVisible || IsFinishTaskPopupVisible || IsFinishTaskAuthPopupVisible || IsBusy;
 
@@ -58,25 +59,8 @@ namespace Rincon.ViewModels
             }
         }
 
-        private TaskItem _selectedTask;
-        public TaskItem SelectedTask
-        {
-            get => _selectedTask;
-            set
-            {
-                SetProperty(ref _selectedTask, value);
-                // ejecutamos el comando ShowTaskPopupCommand cuando se selecciona una tarea
-                if (value != null)
-                {
-                    ShowTaskPopupCommand.Execute(value);
-                }
-                else
-                {
-                    IsTaskDetailPopupVisible = false;
-                    IsFinishTaskPopupVisible = false;
-                }
-            }
-        }
+        [ObservableProperty]
+        private TaskItem selectedTask;
 
         public List<TaskItem> PendingTasks { get; set; }
         public List<TaskItem> AssignedTasks { get; set; }
@@ -155,6 +139,7 @@ namespace Rincon.ViewModels
         public ICommand FinishTaskAuthCommand => new Command(() =>
         {
             IsFinishTaskAuthPopupVisible = false;
+            SelectedTask = null;
             // Aquí puedes agregar la lógica para finalizar la tarea
             System.Diagnostics.Debug.WriteLine("Tarea finalizada con autenticación");
         });
