@@ -470,6 +470,7 @@
                             <ImageButton
                                 BackgroundColor="Transparent"
                                 HeightRequest="45"
+                                Clicked="AddTask_Clicked"
                                 HorizontalOptions="EndAndExpand"
                                 Source="add_circle_button.png"
                                 VerticalOptions="Start"
@@ -481,6 +482,71 @@
                             HorizontalOptions="FillAndExpand"
                             VerticalOptions="Start"
                             Color="Gray" />
+                        <CollectionView
+                            Grid.Row="4"
+                            Margin="0,10,0,0"
+                            BackgroundColor="Transparent"
+                            ItemsSource="{Binding TaskItems}"
+                            SelectionMode="None"
+                            VerticalOptions="FillAndExpand"
+                            VerticalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout
+                                    HorizontalItemSpacing="5"
+                                    Orientation="Vertical"
+                                    Span="1"
+                                    VerticalItemSpacing="5" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:TaskItem">
+                                    <Frame
+                                        BackgroundColor="White"
+                                        BorderColor="Transparent"
+                                        CornerRadius="20"
+                                        HeightRequest="120">
+                                        <Grid
+                                            ColumnDefinitions="*"
+                                            HorizontalOptions="FillAndExpand"
+                                            RowDefinitions="*,*,20"
+                                            VerticalOptions="FillAndExpand">
+
+                                            <Label
+                                                Grid.Row="1"
+                                                FontSize="12"
+                                                LineBreakMode="TailTruncation"
+                                                MaxLines="2"
+                                                Text="{Binding Id}"
+                                                TextColor="#000000"
+                                                VerticalOptions="Start" />
+                                            <StackLayout Grid.Column="0" Orientation="Horizontal">
+                                                <Label
+                                                    FontSize="18"
+                                                    Text="{Binding ProductDestination}"
+                                                    TextColor="#D3AA84"
+                                                    VerticalOptions="Start" />
+
+                                                <Button
+                                                    Margin="10,0,0,0"
+                                                    Padding="0,0,0,0"
+                                                    BackgroundColor="Transparent"
+                                                    Clicked="VisivilityTaskItem_Clicked"
+                                                    HorizontalOptions="End"
+                                                    ImageSource="visibility.png" />
+                                            </StackLayout>
+                                            <Label
+                                                Grid.Row="2"
+                                                FontSize="12"
+                                                HorizontalOptions="EndAndExpand"
+                                                Text="{Binding Description}"
+                                                TextColor="#D3AA84"
+                                                VerticalOptions="EndAndExpand" />
+
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    
                     </StackLayout>
                 </Frame>
                 <Frame
@@ -503,6 +569,7 @@
                             <ImageButton
                                 BackgroundColor="Transparent"
                                 HeightRequest="45"
+                                Clicked="AddBooking_Clicked"
                                 HorizontalOptions="EndAndExpand"
                                 Source="add_circle_button.png"
                                 VerticalOptions="Start"
@@ -514,6 +581,71 @@
                             HeightRequest="1"
                             HorizontalOptions="FillAndExpand"
                             VerticalOptions="Start" />
+                        <CollectionView
+                            Grid.Row="4"
+                            Margin="0,10,0,0"
+                            BackgroundColor="Transparent"
+                            ItemsSource="{Binding BookingOrderItems}"
+                            SelectionMode="None"
+                            VerticalOptions="FillAndExpand"
+                            VerticalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout
+                                    HorizontalItemSpacing="5"
+                                    Orientation="Vertical"
+                                    Span="1"
+                                    VerticalItemSpacing="5" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:BookingOrder">
+                                    <Frame
+                                        BackgroundColor="White"
+                                        BorderColor="Transparent"
+                                        CornerRadius="20"
+                                        HeightRequest="120">
+                                        <Grid
+                                            ColumnDefinitions="*"
+                                            HorizontalOptions="FillAndExpand"
+                                            RowDefinitions="*,*,20"
+                                            VerticalOptions="FillAndExpand">
+
+                                            <Label
+                                                Grid.Row="1"
+                                                FontSize="12"
+                                                LineBreakMode="TailTruncation"
+                                                MaxLines="2"
+                                                Text="{Binding Id}"
+                                                TextColor="#000000"
+                                                VerticalOptions="Start" />
+                                            <StackLayout Grid.Column="0" Orientation="Horizontal">
+                                                <Label
+                                                    FontSize="18"
+                                                    Text="{Binding Client}"
+                                                    TextColor="#D3AA84"
+                                                    VerticalOptions="Start" />
+
+                                                <Button
+                                                    Margin="10,0,0,0"
+                                                    Padding="0,0,0,0"
+                                                    BackgroundColor="Transparent"
+                                                    Clicked="VisivilityBookingItem_Clicked"
+                                                    HorizontalOptions="End"
+                                                    ImageSource="visibility.png" />
+                                            </StackLayout>
+                                            <Label
+                                                Grid.Row="2"
+                                                FontSize="12"
+                                                HorizontalOptions="EndAndExpand"
+                                                Text="{Binding Phone}"
+                                                TextColor="#D3AA84"
+                                                VerticalOptions="EndAndExpand" />
+
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    
                     </StackLayout>
                 </Frame>
                 <Frame

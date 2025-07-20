@@ -41,10 +41,39 @@ public partial class HomePage
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"=== AddNote_Clicked ERROR: {ex.Message} ===");
-            System.Diagnostics.Debug.WriteLine($"Stack trace: {ex.StackTrace}");
         }
-    }    private void OnAddStockTextChanged(object sender, TextChangedEventArgs e)
+    }
+
+    /// <summary>
+	/// Popups added booking.
+	/// </summary>
+	private async void AddBooking_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            this.ViewModel.ChangeViewCommand.Execute("CreateBookingOrder");
+        }
+        catch (Exception ex)
+        {
+        }
+    }
+
+
+    /// <summary>
+	/// Popups added booking.
+	/// </summary>
+	private async void AddTask_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            this.ViewModel.ChangeViewCommand.Execute("CreateTask");
+        }
+        catch (Exception ex)
+        {
+        }
+    }
+
+    private void OnAddStockTextChanged(object sender, TextChangedEventArgs e)
     {
         this.ViewModel.IsVisibleListAddStock = true;
 

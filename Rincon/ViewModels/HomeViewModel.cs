@@ -883,6 +883,8 @@ namespace Rincon.ViewModels
 
                 await LoadTaskItems();
 
+                await LoadBookingsItems();
+
                 await RefreshBar();
             }
             catch (Exception ex)
