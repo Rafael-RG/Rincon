@@ -22,7 +22,7 @@
     </ContentPage.Resources>
 
 
-    <Grid>
+    <Grid RowDefinitions="Auto, *" ColumnDefinitions="*,*">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0,1">
                 <GradientStop Offset="0.1" Color="#AD6B2A" />
@@ -31,45 +31,65 @@
         </Grid.Background>
 
         <!-- Overlay para ActivityIndicator -->
-        <Grid IsVisible="{Binding IsBusy}" 
+        <Grid Grid.ColumnSpan="2" Grid.RowSpan="2" IsVisible="{Binding IsBusy}" 
               BackgroundColor="#80000000" 
               ZIndex="2000">
             <ActivityIndicator
                 VerticalOptions="Center"
                 HorizontalOptions="Center"
                 IsRunning="{Binding IsBusy}"
-                Color="White"
+                Color="#4A744C"
                 Scale="1.5"/>
         </Grid>
 
         <!-- Popups superpuestos SIEMPRE arriba -->
-        <pagespop:TaskDetailPage IsVisible="{Binding IsTaskDetailPopupVisible}" ZIndex="1000" />
-        <popups:AssignOperatorPopup IsVisible="{Binding IsAssignOperatorPopupVisible}" ZIndex="1001" />
-        <pagespop:FinishTaskPopup IsVisible="{Binding IsFinishTaskPopupVisible}" ZIndex="1002" />
-        <popups:FinishTaskAuthPopup IsVisible="{Binding IsFinishTaskAuthPopupVisible}" ZIndex="1003" />
+        <!-- ocupar 50% -->
+        <pagespop:TaskDetailPage IsVisible="{Binding IsTaskDetailPopupVisible}" ZIndex="1000" Grid.RowSpan="2" Grid.ColumnSpan="2"/> 
+        <popups:AssignOperatorPopup IsVisible="{Binding IsAssignOperatorPopupVisible}" ZIndex="1001" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+        <pagespop:FinishTaskPopup IsVisible="{Binding IsFinishTaskPopupVisible}" ZIndex="1002" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+        <popups:FinishTaskAuthPopup IsVisible="{Binding IsFinishTaskAuthPopupVisible}" ZIndex="1003" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
+        <ImageButton Grid.Column="1" 
+                    Source="home_operators"
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    Command="{Binding LoginCommand}"
+                    Margin="0,20,30,0"
+                    WidthRequest="40"
+                    HeightRequest="40" />
+        <Image Source="rincon_white" 
+                        HorizontalOptions="Start"
+                        Margin="30,20,0,0"
+                        WidthRequest="200"
+                        HeightRequest="60"/>
         <!-- Contenido principal debajo de los popups -->
-        <Frame Margin="30" Padding="20" BackgroundColor="#E0E0E0" CornerRadius="15" HasShadow="True" ZIndex="1"
+        <Frame Grid.ColumnSpan="2" Grid.Row="1" Margin="30" Padding="20" BackgroundColor="#D3AA84" BorderColor="Transparent" CornerRadius="15" HasShadow="True" ZIndex="1"
                IsVisible="{Binding IsAnyPopupVisible, Converter={StaticResource InvertedBoolConverter}}">
+               <Frame.Shadow>
+                    <Shadow Brush="Black" 
+                            Opacity="0.5" 
+                            Offset="0,4" 
+                            Radius="10"/>
+                </Frame.Shadow>
             <StackLayout>
                 <Grid Margin="0,0,0,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="Lista de Tareas" FontSize="22" TextColor="#757575" FontAttributes="Bold" VerticalOptions="Center" />
-                    <Button Grid.Column="1" 
-                            Text="← Volver al Login"
-                            FontSize="14"
-                            BackgroundColor="#AD6B2A"
-                            TextColor="White"
-                            Padding="15,8"
-                            CornerRadius="20"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center"
-                            Command="{Binding LoginCommand}" />
+                    <Label Grid.Column="0" Text="Lista de Tareas" FontSize="22" TextColor="#000000" FontAttributes="Bold" VerticalOptions="Center" />
+                    <ImageButton
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Source="refresh"
+                        BackgroundColor="Transparent"
+                        Padding="8,0"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        Command="{Binding ReloadTasksCommand}" />  
                 </Grid>
-                <BoxView HeightRequest="1" Color="#BDBDBD" Margin="0,0,0,10" />
+                <BoxView HeightRequest="1" Color="#000000" Margin="0,0,0,10" />
                 <Grid ColumnSpacing="20">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -82,31 +102,39 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Encabezados y botón recargar -->
-                    <Label Grid.Row="0" Grid.Column="0" Text="Pendientes" FontSize="16" TextColor="#757575" />
-                    <Label Grid.Row="0" Grid.Column="1" Text="Asignadas" FontSize="16" TextColor="#757575" />
-                    <Button
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        Text="⟳ Recargar"
-                        FontSize="14"
-                        BackgroundColor="Transparent"
-                        TextColor="#757575"
-                        Padding="8,0"
-                        HorizontalOptions="End"
-                        VerticalOptions="Center"
-                        Command="{Binding ReloadTasksCommand}" />
+                    <Label Margin="0,0,0,10" Grid.Row="0" Grid.Column="0" Text="Pendientes" FontSize="16" TextColor="#000000" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                    <Label Margin="0,0,0,10" Grid.Row="0" Grid.Column="1" Text="Asignadas" FontSize="16" TextColor="#000000" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                    
 
                     <!-- Listas de tareas desde el ViewModel -->
                     <CollectionView x:Name="TaskPendingList" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding PendingTasks}" VerticalOptions="FillAndExpand"
                                     SelectionMode="Single" SelectionChanged="TaskPendingSelectionChanged" SelectedItem="{Binding SelectedTask, Mode=TwoWay}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:TaskItem">
-                                <Border BackgroundColor="#F5F5F5" 
+                                <Border BackgroundColor="#FFFFFF" 
                                         StrokeThickness="0" 
                                         StrokeShape="RoundRectangle 10" 
                                         Padding="15" 
                                         Margin="0,0,0,10">
-                                    <Label Text="{Binding Description}" FontSize="14" TextColor="#333" />
+                                    <Grid ColumnDefinitions="*, Auto" 
+                                        RowSpacing="9"
+                                          RowDefinitions="Auto,Auto,Auto"
+                                          VerticalOptions="FillAndExpand">
+                                        <Label Text="{Binding Id, StringFormat='Tarea #{0:D5}'}" FontSize="14" TextColor="#797979" FontAttributes="Bold"/>
+                                        <Label Grid.Row="1" Text="{Binding ProductSource}" FontSize="14" TextColor="#000000" />
+                                        <Label Grid.Row="2" Text="{Binding ProductDestination}" FontSize="14" TextColor="#000000" />
+                                        <StackLayout
+                                            Grid.RowSpan="3"
+                                            Grid.Column="1" 
+                                            WidthRequest="90"
+                                            HorizontalOptions="Center" 
+                                            VerticalOptions="Center">
+                                        <Image  Source="user_task" 
+                                            WidthRequest="40" 
+                                            HeightRequest="40" />
+                                        <Label IsVisible="{Binding Priority}" HorizontalTextAlignment="Center" Text="Dar prioridad" FontSize="12" FontAttributes="Bold" TextColor="#000000" />
+                                    </StackLayout>
+                                    </Grid>
                                 </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -116,12 +144,30 @@
                                     SelectionMode="Single" SelectionChanged="TaskAssignedSelectionChanged" SelectedItem="{Binding SelectedTask, Mode=TwoWay}">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:TaskItem">
-                                    <Border BackgroundColor="#F5F5F5" 
+                                    <Border BackgroundColor="#FFFFFF" 
                                             StrokeThickness="0" 
                                             StrokeShape="RoundRectangle 10" 
                                             Padding="15" 
                                             Margin="0,0,0,10">
-                                        <Label Text="{Binding Description}" FontSize="14" TextColor="#333" />
+                                            <Grid ColumnDefinitions="*, Auto" 
+                                        RowSpacing="9"
+                                          RowDefinitions="Auto,Auto,Auto"
+                                          VerticalOptions="FillAndExpand">
+                                        <Label Text="{Binding Id, StringFormat='Tarea #{0:D5}'}" FontSize="14" TextColor="#797979" FontAttributes="Bold"/>
+                                        <Label Grid.Row="1" Text="{Binding ProductSource}" FontSize="14" TextColor="#000000" />
+                                        <Label Grid.Row="2" Text="{Binding ProductDestination}" FontSize="14" TextColor="#000000" />
+                                        <StackLayout
+                                            Grid.RowSpan="3"
+                                            Grid.Column="1" 
+                                            WidthRequest="90"
+                                            HorizontalOptions="Center" 
+                                            VerticalOptions="Center">
+                                        <Image  Source="double_check" 
+                                            WidthRequest="40" 
+                                            HeightRequest="40" />
+                                        <Label IsVisible="true" HorizontalTextAlignment="Center" Text="{Binding Description}" FontSize="12" TextColor="#000000" />
+                                    </StackLayout>
+                                    </Grid>
                                     </Border>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>

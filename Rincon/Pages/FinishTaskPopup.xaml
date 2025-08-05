@@ -5,21 +5,28 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewModels="clr-namespace:Rincon.ViewModels"
     x:DataType="viewModels:OperatorsViewModel"
+    xmlns:local="clr-namespace:Rincon.Converters"
     BackgroundColor="#80000000">
-  <Grid VerticalOptions="Center" HorizontalOptions="Center">
-    <Frame Margin="40" Padding="25" BackgroundColor="#FAFAFA" CornerRadius="12" HasShadow="True" VerticalOptions="Center" HorizontalOptions="Center">
-      <StackLayout Spacing="18">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <local:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+  <Grid>
+    <Frame Margin="140,100,140,100" Padding="25" BackgroundColor="#FAFAFA" CornerRadius="12" HasShadow="True" VerticalOptions="Fill" HorizontalOptions="Fill">
+      <StackLayout >
         <Grid>
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
           </Grid.ColumnDefinitions>
-          <Label Text="Finalizar tarea" Grid.Column="1" FontSize="22" FontAttributes="Bold" TextColor="#222" HorizontalOptions="Center" />
-          <Label Text="{Binding SelectedTask.Id, StringFormat='Tarea #{0}'}" Grid.Column="2" FontSize="16" TextColor="#888" VerticalTextAlignment="End" HorizontalOptions="End" />
+          <Label Text="Finalizar tarea"  FontSize="22" FontAttributes="Bold" TextColor="#222"  />
+          <Label Text="{Binding SelectedTask.Id, StringFormat='Tarea #{0:D5}'}" Grid.Column="2" FontSize="16" TextColor="#888" VerticalTextAlignment="End" HorizontalOptions="End" />
         </Grid>
-        <BoxView HeightRequest="1" Color="#BDBDBD" Margin="0,10,0,10" />
-        <Grid ColumnSpacing="12" RowSpacing="10">
+        <BoxView HeightRequest="1" Color="#000000" Margin="0,10,0,10" />
+        <Grid ColumnSpacing="20" RowSpacing="10">
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -31,6 +38,7 @@
           </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
           <!-- Info tarea -->
@@ -41,19 +49,50 @@
           <Label Text="Unidades" Grid.Row="2" Grid.Column="0" TextColor="#666" />
           <Label Text="{Binding SelectedTask.Quantity}" Grid.Row="2" Grid.Column="1" TextColor="#222" />
           <Label Text="Prioridad" Grid.Row="3" Grid.Column="0" TextColor="#666" />
-          <Label Text="{Binding SelectedTask.Priority, Converter={StaticResource BoolToTextConverter}}" Grid.Row="3" Grid.Column="1" TextColor="#222" />
-          <Label Text="Comentarios" Grid.Row="4" Grid.Column="0" TextColor="#666" />
-          <Label Text="{Binding SelectedTask.OperatorComment}" Grid.Row="4" Grid.Column="1" TextColor="#222" />
+          <Label IsVisible="{Binding SelectedTask.Priority}" Text="Dar prioridad" Grid.Row="3" Grid.Column="1" TextColor="#222" />
+          <Label IsVisible="{Binding SelectedTask.Priority, Converter={StaticResource InvertedBoolConverter}}" Text="Sin prioridad" Grid.Row="3" Grid.Column="1" TextColor="#222" />
+          <Label Text="Descripción" Grid.Row="4" Grid.Column="0" TextColor="#666" />
+          <Label Text="{Binding SelectedTask.Description}" Grid.Row="4" Grid.Column="1" TextColor="#222" />
+          <Label Text="Operario" Grid.Row="5" Grid.Column="0" TextColor="#666" />
+          <Label Text="{Binding SelectedTask.OperatorId}" Grid.Row="5" Grid.Column="1" TextColor="#222" />
           <!-- Material para pérdida -->
-          <Label Text="Material para pérdida" Grid.Row="5" Grid.Column="0" TextColor="#666" />
-          <Entry Text="{Binding LossMaterial}" Grid.Row="5" Grid.Column="1" BackgroundColor="#E0E0E0" HeightRequest="30" />
-          <!-- Comentarios adicionales -->
-          <Label Text="Comentarios adicionales" Grid.Row="6" Grid.Column="0" TextColor="#666" />
-          <Editor Text="{Binding AdditionalComments}" Grid.Row="6" Grid.Column="1" BackgroundColor="#E0E0E0" HeightRequest="60" />
+          <StackLayout Grid.Column="2" Grid.RowSpan="2" Margin="70,0,0,0">
+            <Label Text="Material para pérdida"  TextColor="#666" />
+            <Frame 
+                    HeightRequest="30"
+                    CornerRadius="12" 
+                    BackgroundColor="#FFF6ED"
+                    BorderColor="grey"
+                    HasShadow="False"
+                    Padding="1"
+                    WidthRequest="100"
+                    HorizontalOptions="Start">
+            <Entry Text="{Binding LossMaterial}" Keyboard="Numeric" FontSize="12" TextColor="#222" BackgroundColor="transparent" HeightRequest="35" WidthRequest="100" Margin="0,0,0,0"/>
+          </Frame>          
+          </StackLayout>
+            <!-- Comentarios adicionales -->
+          <StackLayout Grid.Column="2" Grid.Row="2" Grid.RowSpan="2" Margin="70,0,0,0">
+            <Label Text="Comentarios" Grid.Row="6" Grid.Column="0" TextColor="#666" />
+            <Frame 
+                    Grid.Row="6" 
+                    Grid.Column="1"
+                    HeightRequest="80"
+                    CornerRadius="12" 
+                    BackgroundColor="#FFF6ED"
+                    BorderColor="grey"
+                    HasShadow="False"
+                    Padding="1"
+                    WidthRequest="300"
+                    HorizontalOptions="Start">
+            <Editor Text="{Binding AdditionalComments}"  BackgroundColor="transparent" HeightRequest="80" />
+          </Frame>
+          </StackLayout>
         </Grid>
-        <BoxView HeightRequest="1" Color="#BDBDBD" Margin="0,20,0,10" />
-        <Button Text="Finalizar" BackgroundColor="#E0E0E0" TextColor="#222" CornerRadius="8" HorizontalOptions="Center" WidthRequest="120"  Command="{Binding ShowFinishTaskAuthPopupCommand}" />
-        <Button Text="Cerrar" BackgroundColor="#F5F5F5" TextColor="#888" CornerRadius="8" HorizontalOptions="Center" WidthRequest="120" Command="{Binding ClosePopupCommand}" />
+        <BoxView HeightRequest="1" Color="#000000" Margin="0,20,0,10" VerticalOptions="EndAndExpand" />
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+          <ImageButton Source="back_brown" BackgroundColor="Transparent" Command="{Binding ClosePopupCommand}" />
+          <Button Text="Completar" BackgroundColor="#4A744C" TextColor="#FAFAFA" CornerRadius="8" HorizontalOptions="CenterAndExpand" WidthRequest="420"  Command="{Binding ShowFinishTaskAuthPopupCommand}" />
+        </StackLayout>
       </StackLayout>
     </Frame>
   </Grid>

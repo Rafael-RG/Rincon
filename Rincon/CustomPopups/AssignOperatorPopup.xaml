@@ -6,14 +6,39 @@
     xmlns:viewModels="clr-namespace:Rincon.ViewModels"
     x:DataType="viewModels:OperatorsViewModel"
     BackgroundColor="#80000000">
-    <Grid VerticalOptions="Center" HorizontalOptions="Center">
-        <Frame Margin="40" Padding="25" BackgroundColor="#D3D3D3" CornerRadius="12" HasShadow="True" VerticalOptions="Center" HorizontalOptions="Center">
-            <StackLayout>
-                <Label Text="Identificación" FontSize="22" FontAttributes="Bold" TextColor="#222" Margin="0,0,0,10" />
-                <Entry Placeholder="Usuario" BackgroundColor="#E0E0E0" Margin="0,10,0,0" HeightRequest="40" Text="{Binding OperatorUser}"/>
-                <Entry Placeholder="PIN" BackgroundColor="#E0E0E0" Margin="0,10,0,0" HeightRequest="40" IsPassword="True"  Text="{Binding OperatorPin}"/>
-                <Button Text="Asignar tarea" BackgroundColor="#F5F5F5" TextColor="#222" CornerRadius="8" HorizontalOptions="Center" WidthRequest="120" Margin="0,20,0,0" Command="{Binding AssignedOperatorCommand}" />
-                <Button Text="Cerrar" BackgroundColor="#F5F5F5" TextColor="#888" CornerRadius="8" HorizontalOptions="Center" WidthRequest="120" Command="{Binding ClosePopupCommand}" />
+    <Grid HeightRequest="400" WidthRequest="500">
+        <Frame Margin="40" Padding="35" BackgroundColor="#D3AA84" CornerRadius="12" BorderColor="Transparent"  VerticalOptions="Fill" HorizontalOptions="Fill">
+            <Frame.Shadow>
+                <Shadow Brush="#80000000" Offset="0,4" Radius="8" Opacity="0.5" />
+            </Frame.Shadow>
+            <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Spacing="10">
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center" Margin="0,0,0,40">
+                    <Label Text="Identificación" Grid.ColumnSpan="2" HorizontalOptions="Center" FontSize="22" FontAttributes="Bold" TextColor="#303030"/>
+                    <ImageButton Source="delete_item_icon" WidthRequest="24" HeightRequest="24" HorizontalOptions="End" Command="{Binding ClosePopupCommand}"/>
+                </Grid>
+                <Frame 
+                    WidthRequest="320"
+                    CornerRadius="12" 
+                    BackgroundColor="#FFF6ED"
+                    BorderColor="#FFF6ED"
+                    HeightRequest="35"
+                    HasShadow="False"
+                    Padding="3"
+                    HorizontalOptions="Fill">
+                        <Entry Placeholder="Usuario" WidthRequest="320" PlaceholderColor="#797979"  Margin="0,10,0,0" HeightRequest="40" Text="{Binding OperatorUser}"/>
+                </Frame>
+                <Frame 
+                    WidthRequest="320"
+                    HeightRequest="35"
+                    CornerRadius="12" 
+                    BackgroundColor="#FFF6ED"
+                    BorderColor="#FFF6ED"
+                    HasShadow="False"
+                    Padding="3"
+                    HorizontalOptions="Fill">
+                    <Entry Placeholder="PIN" PlaceholderColor="#797979" BackgroundColor="#FFF6ED" Margin="0,10,0,0" HeightRequest="40" WidthRequest="320" IsPassword="True"  Text="{Binding OperatorPin}"/>
+                </Frame>
+                <Button Text="Confirmar" BackgroundColor="#4A744C" TextColor="#FAFAFA" CornerRadius="8" HorizontalOptions="Center" WidthRequest="320" Margin="0,20,0,0" Command="{Binding AssignedOperatorCommand}" />
             </StackLayout>
         </Frame>
     </Grid>

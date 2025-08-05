@@ -35,6 +35,7 @@
             WidthRequest="400">
             <ActivityIndicator
                 HeightRequest="32"
+                Color="#4A744C"
                 IsRunning="True"
                 IsVisible="{Binding IsBusy}"
                 WidthRequest="32" />

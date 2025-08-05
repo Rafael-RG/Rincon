@@ -18,7 +18,7 @@
 
 
         <StackLayout HorizontalOptions="Center" IsVisible="{Binding FinishingSynchronization}">
-            <ActivityIndicator IsRunning="true" Style="{StaticResource ActivityIndicatorStyle}" />
+            <ActivityIndicator IsRunning="true" Color="#4A744C" Style="{StaticResource ActivityIndicatorStyle}" />
             <Label
                 HorizontalTextAlignment="Center"
                 Style="{StaticResource SmallLabelStyle}"
@@ -65,7 +65,7 @@
                                     IsRunning="True"
                                     IsVisible="{Binding Completed, Converter={StaticResource InvertedBoolConverter}}"
                                     WidthRequest="24"
-                                    Color="{StaticResource AccentColor}" />
+                                    Color="#4A744C" />
 
                                 <StackLayout
                                     Orientation="Vertical"

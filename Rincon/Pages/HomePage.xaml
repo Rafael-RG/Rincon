@@ -36,6 +36,7 @@
             HeightRequest="32"
             HorizontalOptions="CenterAndExpand"
             IsRunning="True"
+            Color="#4A744C"
             IsVisible="{Binding IsUserLogin, Converter={StaticResource InvertedBoolConverter}}"
             VerticalOptions="CenterAndExpand"
             WidthRequest="32" />
@@ -229,6 +230,7 @@
                     Grid.RowSpan="2"
                     Grid.Column="0"
                     HeightRequest="32"
+Color="#4A744C"
                     IsRunning="True"
                     IsVisible="{Binding IsBusy}"
                     WidthRequest="32" />
@@ -414,6 +416,7 @@
                     Grid.RowSpan="4"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
+                    Color="#4A744C"
                     BackgroundColor="White"
                     HorizontalOptions="CenterAndExpand"
                     IsRunning="True"
@@ -5718,6 +5721,7 @@
                         WidthRequest="400">
                         <ActivityIndicator
                             HeightRequest="32"
+                            Color="#4A744C"
                             IsRunning="True"
                             IsVisible="{Binding IsBusy}"
                             WidthRequest="32" />
@@ -6093,6 +6097,7 @@
                         WidthRequest="400">
                         <ActivityIndicator
                             HeightRequest="32"
+                            Color="#4A744C"
                             IsRunning="True"
                             IsVisible="{Binding IsBusy}"
                             WidthRequest="32" />
