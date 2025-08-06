@@ -37,6 +37,20 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
+
+	<!-- Configuración de firma para Android Release -->
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
+		<AndroidSigningKeyStore>rincon-app-key.keystore</AndroidSigningKeyStore>
+		<AndroidSigningKeyAlias>rinconapp</AndroidSigningKeyAlias>
+		<AndroidSigningKeyPass>969696</AndroidSigningKeyPass>
+		<AndroidSigningStorePass>969696</AndroidSigningStorePass>
+		<AndroidKeyStore>true</AndroidKeyStore>
+		<AndroidLinkResources>true</AndroidLinkResources>
+		<AndroidLinkMode>SdkOnly</AndroidLinkMode>
+		<AndroidUseAapt2>true</AndroidUseAapt2>
+		<AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" />
