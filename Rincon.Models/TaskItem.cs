@@ -24,6 +24,8 @@ namespace Rincon.Models
         public string ProductDestination { get; set; }
         public TaskStatus TaskStatus { get; set; }
         public string OperatorId { get; set; }
+        public string OperatorName { get; set; }
+        public DateTime? StartDate { get; set; }
         public string OperatorComment { get; set; }
         public string ProcessErrorQuantity { get; set; }
     }
