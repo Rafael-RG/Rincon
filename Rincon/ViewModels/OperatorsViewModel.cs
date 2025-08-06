@@ -133,6 +133,7 @@ namespace Rincon.ViewModels
                 // Si el operador existe, puedes proceder a navegar a la página de tareas
 
                 this.SelectedTask.OperatorId = existOperator.Id;
+                this.SelectedTask.OperatorName = existOperator.Name;
                 this.SelectedTask.TaskStatus = Rincon.Models.TaskStatus.Iniciada;
 
                 // Actualizar la tarea en el servicio de datos

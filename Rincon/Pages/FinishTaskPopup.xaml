@@ -42,11 +42,11 @@
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
           <!-- Info tarea -->
-          <Label Text="Tipo de proceso" Grid.Row="0" Grid.Column="0" TextColor="#666" />
+          <Label Text="Material" Grid.Row="0" Grid.Column="0" TextColor="#666" />
           <Label Text="{Binding SelectedTask.ProductSource}" Grid.Row="0" Grid.Column="1" TextColor="#222" />
-          <Label Text="Producto" Grid.Row="1" Grid.Column="0" TextColor="#666" />
+          <Label Text="Producir" Grid.Row="1" Grid.Column="0" TextColor="#666" />
           <Label Text="{Binding SelectedTask.ProductDestination}" Grid.Row="1" Grid.Column="1" TextColor="#222" />
-          <Label Text="Unidades" Grid.Row="2" Grid.Column="0" TextColor="#666" />
+          <Label Text="Unidades de material" Grid.Row="2" Grid.Column="0" TextColor="#666" />
           <Label Text="{Binding SelectedTask.Quantity}" Grid.Row="2" Grid.Column="1" TextColor="#222" />
           <Label Text="Prioridad" Grid.Row="3" Grid.Column="0" TextColor="#666" />
           <Label IsVisible="{Binding SelectedTask.Priority}" Text="Dar prioridad" Grid.Row="3" Grid.Column="1" TextColor="#222" />
@@ -54,7 +54,7 @@
           <Label Text="Descripción" Grid.Row="4" Grid.Column="0" TextColor="#666" />
           <Label Text="{Binding SelectedTask.Description}" Grid.Row="4" Grid.Column="1" TextColor="#222" />
           <Label Text="Operario" Grid.Row="5" Grid.Column="0" TextColor="#666" />
-          <Label Text="{Binding SelectedTask.OperatorId}" Grid.Row="5" Grid.Column="1" TextColor="#222" />
+          <Label Text="{Binding SelectedTask.OperatorName}" Grid.Row="5" Grid.Column="1" TextColor="#222" />
           <!-- Material para pérdida -->
           <StackLayout Grid.Column="2" Grid.RowSpan="2" Margin="70,0,0,0">
             <Label Text="Material para pérdida"  TextColor="#666" />

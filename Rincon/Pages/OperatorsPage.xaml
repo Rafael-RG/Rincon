@@ -121,8 +121,23 @@
                                           RowDefinitions="Auto,Auto,Auto"
                                           VerticalOptions="FillAndExpand">
                                         <Label Text="{Binding Id, StringFormat='Tarea #{0:D5}'}" FontSize="14" TextColor="#797979" FontAttributes="Bold"/>
-                                        <Label Grid.Row="1" Text="{Binding ProductSource}" FontSize="14" TextColor="#000000" />
-                                        <Label Grid.Row="2" Text="{Binding ProductDestination}" FontSize="14" TextColor="#000000" />
+                                        
+                                        <Label Grid.Row="1" FontSize="14" TextColor="#000000">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Material: " FontAttributes="Bold" />
+                                                    <Span Text="{Binding ProductSource}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Grid.Row="2" FontSize="14" TextColor="#000000">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Producir: " FontAttributes="Bold" />
+                                                    <Span Text="{Binding ProductDestination}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
                                         <StackLayout
                                             Grid.RowSpan="3"
                                             Grid.Column="1" 
@@ -154,8 +169,22 @@
                                           RowDefinitions="Auto,Auto,Auto"
                                           VerticalOptions="FillAndExpand">
                                         <Label Text="{Binding Id, StringFormat='Tarea #{0:D5}'}" FontSize="14" TextColor="#797979" FontAttributes="Bold"/>
-                                        <Label Grid.Row="1" Text="{Binding ProductSource}" FontSize="14" TextColor="#000000" />
-                                        <Label Grid.Row="2" Text="{Binding ProductDestination}" FontSize="14" TextColor="#000000" />
+                                        <Label Grid.Row="1" FontSize="14" TextColor="#000000">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Material: " FontAttributes="Bold" />
+                                                    <Span Text="{Binding ProductSource}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Grid.Row="2" FontSize="14" TextColor="#000000">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Producir: " FontAttributes="Bold" />
+                                                    <Span Text="{Binding ProductDestination}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
                                         <StackLayout
                                             Grid.RowSpan="3"
                                             Grid.Column="1" 
@@ -165,7 +194,7 @@
                                         <Image  Source="double_check" 
                                             WidthRequest="40" 
                                             HeightRequest="40" />
-                                        <Label IsVisible="true" HorizontalTextAlignment="Center" Text="{Binding Description}" FontSize="12" TextColor="#000000" />
+                                        <Label Margin="10" FontAttributes="Bold" IsVisible="true" HorizontalTextAlignment="Center" Text="{Binding OperatorName}" FontSize="12" TextColor="#000000" />
                                     </StackLayout>
                                     </Grid>
                                     </Border>

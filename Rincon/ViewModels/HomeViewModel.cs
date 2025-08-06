@@ -2886,8 +2886,8 @@ namespace Rincon.ViewModels
                     ProductDestinationId = this.SelectedDerivateProducts.Id,
                     Description = this.CommentsTask,
                     TaskStatus = Models.TaskStatus.Pendiente,
-                    ProductSource = this.ProductTask.Product.ToString(),
-                    ProductDestination = this.SelectedDerivateProducts.ToString()
+                    ProductSource = $"{this.ProductTask.Product.ProductType} {this.ProductTask.Product.Description} {this.ProductTask.Product.WoodState}", 
+                    ProductDestination = $"{this.SelectedDerivateProducts.ProductType} {this.SelectedDerivateProducts.Description} {this.ProductTask.Product.WoodState}",
                 };
 
                 var saveTask = await this.DataService.InsertItemAsync<TaskItem>(newTask);
@@ -2967,8 +2967,8 @@ namespace Rincon.ViewModels
                 this.SelectedTaskItem.ProductDestinationId = this.SelectedDerivateProducts.Id;
                 this.SelectedTaskItem.Description = this.CommentsTask;
                 this.SelectedTaskItem.TaskStatus = Models.TaskStatus.Pendiente;
-                this.SelectedTaskItem.ProductSource = this.ProductTask.Product.ToString();
-                this.SelectedTaskItem.ProductDestination = this.SelectedDerivateProducts.ToString();
+                this.SelectedTaskItem.ProductSource = $"{this.ProductTask.Product.ProductType}  {this.ProductTask.Product.Description} {this.ProductTask.Product.WoodState}";
+                this.SelectedTaskItem.ProductDestination = $"{this.SelectedDerivateProducts.ProductType}  {this.SelectedDerivateProducts.Description} {this.SelectedDerivateProducts.WoodState}";
 
                 var saveTask = await this.DataService.UpdateItemAsync<TaskItem>(this.SelectedTaskItem);
 
