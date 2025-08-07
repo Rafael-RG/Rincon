@@ -821,7 +821,7 @@ namespace Rincon.ViewModels
                         new CardStock
                         {
                             Id = product.Id,
-                            Description = product.Product.Description,
+                            Description = $"{product.Product.ProductType} {product.Product.Description}",
                             StockAvailable = product.Available,
                             StockReserved = product.Reserved,
                             Icon = $"{product.Product.WoodState.ToString().ToLower()}.png"
