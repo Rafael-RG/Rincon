@@ -20,8 +20,8 @@
     <StackLayout
         Margin="0"
         Padding="0"
-        HorizontalOptions="FillAndExpand"
-        VerticalOptions="FillAndExpand">
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill">
         <StackLayout.Background>
             <LinearGradientBrush EndPoint="0,1">
                 <GradientStop Offset="0.1" Color="#AD6B2A" />
@@ -30,9 +30,9 @@
         </StackLayout.Background>
 
         <StackLayout
-            Margin="0,12,0,0"
+            Margin="0,0,0,0"
             HeightRequest="32"
-            WidthRequest="400">
+            HorizontalOptions="Center">
             <ActivityIndicator
                 HeightRequest="32"
                 Color="#4A744C"
@@ -42,115 +42,126 @@
         </StackLayout>
 
         <Image
-            Margin="160,50,0,0"
-            HeightRequest="100"
+            Margin="30,0,0,50"
+            HeightRequest="50"
             HorizontalOptions="Start"
             Source="rincon_white.png"
-            WidthRequest="400" />
+            WidthRequest="220" />
 
         <Frame
-            Margin="260,100,260,300"
+            Margin="20,5,20,10"
             BackgroundColor="#D3AA84"
-            CornerRadius="18">
-            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            CornerRadius="18"
+            HorizontalOptions="Center"
+            VerticalOptions="Fill"
+            WidthRequest="{OnPlatform Default=700, WinUI=800, MacCatalyst=900}"
+            MaximumWidthRequest="1000"
+            MinimumWidthRequest="600">
+            <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Spacing="0">
                 <Label
-                    Margin="30,30,0,0"
+                    Margin="20,15,20,5"
                     FontAttributes="Bold"
-                    FontSize="26"
+                    FontSize="22"
                     Text="Registro"
-                    TextColor="Black" />
+                    TextColor="Black" 
+                    HorizontalOptions="Center" />
                 <Grid
-                    Margin="30,30,0,0"
-                    ColumnDefinitions="*"
-                    HorizontalOptions="FillAndExpand"
-                    RowDefinitions="auto,auto,auto,*,auto,*"
-                    VerticalOptions="FillAndExpand">
+                    Margin="20,5,20,15"
+                    ColumnDefinitions="1*,1*"
+                    HorizontalOptions="Fill"
+                    RowDefinitions="auto,auto,auto,auto"
+                    VerticalOptions="Fill"
+                    RowSpacing="12"
+                    ColumnSpacing="20">
+                    <!-- Primera fila: Username y Password -->
                     <Frame
-                        Margin="0,20,0,0"
+                        Grid.Column="0"
+                        Margin="0"
                         Padding="0,0,0,0"
                         BackgroundColor="White"
                         CornerRadius="18"
                         HeightRequest="40"
-                        HorizontalOptions="Start"
-                        WidthRequest="300">
+                        HorizontalOptions="Fill">
                         <Entry
                             BackgroundColor="White"
-                            HeightRequest="60"
-                            HorizontalOptions="Start"
+                            HeightRequest="40"
+                            HorizontalOptions="Fill"
                             MaxLength="25"
                             Placeholder="{extensions:Localize Username}"
                             PlaceholderColor="Black"
-                            Text="{Binding Username}"
-                            WidthRequest="300" />
+                            Text="{Binding Username}" />
                     </Frame>
 
                     <Frame
-                        Grid.Row="1"
-                        Margin="0,20,0,0"
+                        Grid.Column="1"
+                        Margin="0"
                         Padding="0,0,0,0"
                         BackgroundColor="White"
                         CornerRadius="18"
                         HeightRequest="40"
-                        HorizontalOptions="Start"
-                        WidthRequest="300">
+                        HorizontalOptions="Fill">
                         <Entry
                             BackgroundColor="Transparent"
-                            HeightRequest="60"
-                            HorizontalOptions="FillAndExpand"
+                            HeightRequest="40"
+                            HorizontalOptions="Fill"
                             MaxLength="25"
                             Placeholder="{extensions:Localize Password}"
                             PlaceholderColor="Black"
                             Text="{Binding Password}"
-                            WidthRequest="300" />
+                            IsPassword="True" />
                     </Frame>
 
+                    <!-- Segunda fila: Repetir contraseña y Pregunta -->
                     <Frame
-                        Grid.Row="2"
-                        Margin="0,20,0,0"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="0"
                         Padding="0,0,0,0"
                         BackgroundColor="White"
                         CornerRadius="18"
                         HeightRequest="40"
-                        HorizontalOptions="Start"
-                        WidthRequest="300">
+                        HorizontalOptions="Fill">
                         <Entry
                             BackgroundColor="Transparent"
-                            HeightRequest="60"
-                            HorizontalOptions="FillAndExpand"
+                            HeightRequest="40"
+                            HorizontalOptions="Fill"
                             MaxLength="25"
                             Placeholder="Repetir contraseña"
                             PlaceholderColor="Black"
                             Text="{Binding RepeatPassword}"
-                            WidthRequest="300" />
+                            IsPassword="True" />
                     </Frame>
 
+                    <Frame
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="0"
+                        Padding="10,-3,10,-3"
+                        BackgroundColor="White"
+                        CornerRadius="18"
+                        HeightRequest="40"
+                        HorizontalOptions="Fill">
+                        <Label
+                            FontSize="14"
+                            Text="{Binding SeletedQuestion, Mode=TwoWay}"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SelectQuestionCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Frame>
+
+                    <!-- Tercera fila: Lista de preguntas (span completo) y Campo respuesta -->
                     <StackLayout
-                        Grid.Row="3"
-                        Margin="0,20,0,20"
-                        HorizontalOptions="Start"
-                        WidthRequest="470">
-                        <Frame
-                            Margin="0"
-                            Padding="10,-3,10,-3"
-                            BackgroundColor="White"
-                            CornerRadius="18"
-                            HeightRequest="40">
-                            <Label
-                                FontSize="14"
-                                Text="{Binding SeletedQuestion, Mode=TwoWay}"
-                                VerticalOptions="Center">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding SelectQuestionCommand}" />
-
-                                </Label.GestureRecognizers>
-
-                            </Label>
-                        </Frame>
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Margin="0"
+                        HorizontalOptions="Fill"
+                        IsVisible="{Binding IsVisibleListQuestions}">
                         <Frame
                             x:Name="FrameListQuestions"
-                            CornerRadius="24"
-                            HeightRequest="140"
-                            IsVisible="{Binding IsVisibleListQuestions}"
+                            CornerRadius="18"
+                            HeightRequest="100"
                             VerticalOptions="Start">
                             <Frame.Background>
                                 <LinearGradientBrush EndPoint="0,1">
@@ -160,21 +171,19 @@
                             </Frame.Background>
                             <CollectionView
                                 x:Name="Questions"
-                                HeightRequest="140"
-                                HorizontalOptions="Start"
+                                HeightRequest="100"
+                                HorizontalOptions="Fill"
                                 ItemsSource="{Binding Questions}"
                                 SelectionChanged="Questions_SelectionChanged"
                                 SelectionMode="Single"
                                 VerticalOptions="Start">
-
                                 <CollectionView.ItemsLayout>
-                                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="6" />
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="x:String">
                                         <Label
-                                            Grid.Column="2"
-                                            FontSize="18"
+                                            FontSize="14"
                                             Text="{Binding .}"
                                             TextColor="#000000"
                                             VerticalOptions="Start" />
@@ -182,51 +191,52 @@
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
                         </Frame>
-
                     </StackLayout>
 
                     <Frame
-                        Grid.Row="4"
-                        Margin="0,0,0,0"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Margin="0"
                         Padding="0,0,0,0"
                         BackgroundColor="White"
                         CornerRadius="18"
                         HeightRequest="40"
-                        HorizontalOptions="Start"
-                        IsVisible="{Binding IsVisibleListQuestions, Converter={StaticResource InvertedBoolConverter}}"
-                        WidthRequest="300">
+                        HorizontalOptions="Fill"
+                        IsVisible="{Binding IsVisibleListQuestions, Converter={StaticResource InvertedBoolConverter}}">
                         <Entry
                             BackgroundColor="Transparent"
-                            HeightRequest="60"
-                            HorizontalOptions="FillAndExpand"
+                            HeightRequest="40"
+                            HorizontalOptions="Fill"
                             MaxLength="25"
                             Placeholder="{extensions:Localize Answer}"
                             PlaceholderColor="Black"
-                            Text="{Binding Answer}"
-                            WidthRequest="300" />
+                            Text="{Binding Answer}" />
                     </Frame>
 
+                    <!-- Cuarta fila: Botones -->
                     <HorizontalStackLayout
-                        Grid.Row="5"
-                        HorizontalOptions="EndAndExpand"
-                        Spacing="30"
-                        VerticalOptions="EndAndExpand">
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        HorizontalOptions="Center"
+                        Spacing="20"
+                        VerticalOptions="End"
+                        Margin="0,15,0,0">
                         <Button
-                            Margin="0,20,0,50"
                             BackgroundColor="#AD6B2A"
                             Command="{Binding CancelCheckinCommand}"
                             HeightRequest="45"
                             Text="{extensions:Localize Cancel}"
                             TextColor="#FFF6ED"
-                            WidthRequest="200" />
+                            WidthRequest="140"
+                            MinimumWidthRequest="120" />
                         <Button
-                            Margin="0,20,55,50"
                             BackgroundColor="#4A744C"
                             Command="{Binding CheckinCommand}"
                             HeightRequest="45"
                             Text="{extensions:Localize Checkin}"
                             TextColor="White"
-                            WidthRequest="200" />
+                            WidthRequest="140"
+                            MinimumWidthRequest="120" />
                     </HorizontalStackLayout>
 
                 </Grid>
