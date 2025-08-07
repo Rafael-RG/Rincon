@@ -46,7 +46,7 @@
             ColumnDefinitions="*,*,*,*,1.6*"
             ColumnSpacing="0"
             IsVisible="{Binding IsUserLogin}"
-            RowDefinitions="80,75,*"
+            RowDefinitions="55,65,*"
             RowSpacing="0"
             VerticalOptions="FillAndExpand">
 
@@ -59,11 +59,11 @@
                 BackgroundColor="#AD6B2A"
                 Command="{Binding ChangeViewCommand}"
                 CommandParameter="Home"
-                HeightRequest="60"
+                HeightRequest="40"
                 HorizontalOptions="StartAndExpand"
                 Source="rincon_home.png"
-                MaximumWidthRequest="273"
-                WidthRequest="273" />
+                MaximumWidthRequest="173"
+                WidthRequest="173" />
             <Button
                 Grid.Row="1"
                 Grid.Column="0"
@@ -73,8 +73,8 @@
                 CommandParameter="MagementStock"
                 CornerRadius="14"
                 FontSize="19"
-                MinimumHeightRequest="55"
-                HeightRequest="55"
+                MinimumHeightRequest="45"
+                HeightRequest="45"
                 HorizontalOptions="FillAndExpand"
                 Text="Gestión de stock"
                 TextColor="#000000"
@@ -83,7 +83,7 @@
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
-                        Opacity="0.4"
+                        Opacity="1.4"
                         Radius="10"
                         Offset="5,5" />
                 </Button.Shadow>
@@ -98,8 +98,8 @@
                 CommandParameter="Tasks"
                 CornerRadius="14"
                 FontSize="19"
-                MinimumHeightRequest="55"
-                HeightRequest="55"
+                MinimumHeightRequest="45"
+                HeightRequest="45"
                 HorizontalOptions="FillAndExpand"
                 Text="Tareas"
                 TextColor="#000000"
@@ -108,7 +108,7 @@
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
-                        Opacity="0.4"
+                        Opacity="1.4"
                         Radius="10"
                         Offset="5,5" />
                 </Button.Shadow>
@@ -123,8 +123,8 @@
                 CommandParameter="Orders"
                 CornerRadius="14"
                 FontSize="19"
-                MinimumHeightRequest="55"
-                HeightRequest="55"
+                MinimumHeightRequest="45"
+                HeightRequest="45"
                 HorizontalOptions="FillAndExpand"
                 Text="Pedidos"
                 TextColor="#000000"
@@ -133,7 +133,7 @@
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
-                        Opacity="0.4"
+                        Opacity="1.4"
                         Radius="10"
                         Offset="5,5" />
                 </Button.Shadow>
@@ -148,8 +148,8 @@
                 CommandParameter="History"
                 CornerRadius="14"
                 FontSize="19"
-                MinimumHeightRequest="55"
-                HeightRequest="55"
+                MinimumHeightRequest="45"
+                HeightRequest="45"
                 HorizontalOptions="FillAndExpand"
                 Text="Historial"
                 TextColor="#000000"
@@ -158,7 +158,7 @@
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
-                        Opacity="0.4"
+                        Opacity="1.4"
                         Radius="10"
                         Offset="5,5" />
                 </Button.Shadow>
@@ -173,8 +173,8 @@
                 CommandParameter="AddProduct"
                 CornerRadius="14"
                 FontSize="17"
-                MinimumHeightRequest="55"
-                HeightRequest="55"
+                MinimumHeightRequest="45"
+                HeightRequest="45"
                 HorizontalOptions="FillAndExpand"
                 Text="Añadir producto"
                 TextColor="#000000"
@@ -183,7 +183,7 @@
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
-                        Opacity="0.4"
+                        Opacity="1.4"
                         Radius="10"
                         Offset="5,5" />
                 </Button.Shadow>
@@ -192,28 +192,31 @@
             <StackLayout
                 Grid.Row="0"
                 Grid.Column="4"
-                Margin="0,20,20,10"
+                Margin="0,20,0,0"
                 HorizontalOptions="EndAndExpand"
                 Orientation="Horizontal"
                 Spacing="0"
-                WidthRequest="250">
-                <ImageButton
+                BackgroundColor="Transparent"
+                WidthRequest="290">
+                <Button
                     Margin="0,0,0,0"
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    Clicked="Menu_Clicked"
+                    FontSize="16"
+                    HorizontalOptions="EndAndExpand"
+                    VerticalOptions="Start"
+                    Text="{Binding User.Name}"
+                    TextColor="White" />
+                <ImageButton
+                    Margin="0,0,20,0"
                     BackgroundColor="Transparent"
                     Clicked="Menu_Clicked"
                     HeightRequest="30"
                     HorizontalOptions="Start"
                     Source="account.png"
                     WidthRequest="30" />
-                <Button
-                    Margin="0,0,0,0"
-                    BackgroundColor="Transparent"
-                    BorderColor="Transparent"
-                    Clicked="Menu_Clicked"
-                    FontSize="22"
-                    HorizontalOptions="StartAndExpand"
-                    Text="{Binding User.Name}"
-                    TextColor="White" />
+                
             </StackLayout>
 
 
