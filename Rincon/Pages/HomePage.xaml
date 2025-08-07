@@ -812,155 +812,156 @@
                 Grid.ColumnSpan="4"
                 Padding="20"
                 BackgroundColor="White"
-                ColumnDefinitions="Auto,*"
-                ColumnSpacing="-150"
+                ColumnDefinitions="*"
                 IsVisible="{Binding IsMagementStockView}"
-                RowDefinitions="auto,auto,auto,auto,auto,auto,auto"
-                RowSpacing="6"
-                VerticalOptions="FillAndExpand">
+                RowDefinitions="auto,auto,*"
+                RowSpacing="10">
+                
+                <!-- Título principal -->
                 <Label
                     Grid.Row="0"
-                    Grid.Column="0"
-                    Margin="0,0,0,10"
-                    FontSize="26"
+                    Margin="0,0,0,15"
+                    FontSize="24"
                     HorizontalOptions="Start"
                     Text="Gestión de Stock"
                     TextColor="#79280F"
-                    VerticalOptions="Center" />
+                    VerticalOptions="Start" />
+                    
                 <BoxView
                     Grid.Row="1"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Margin="0,0,0,10"
+                    Margin="0,0,0,20"
                     HeightRequest="2"
-                    HorizontalOptions="FillAndExpand"
+                    HorizontalOptions="Fill"
                     VerticalOptions="Start"
                     Color="#79280F" />
-                <Image
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Margin="40,30,0,10"
-                    HeightRequest="50"
-                    HorizontalOptions="Start"
-                    Source="add_stock_icon_small.png"
-                    WidthRequest="50">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="AddStock" />
-                    </Image.GestureRecognizers>
-                </Image>
-                <Label
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Margin="60,20,0,10"
-                    FontSize="22"
-                    HorizontalOptions="Start"
-                    Text="Carga de stock "
-                    TextColor="#303030"
-                    VerticalOptions="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="AddStock" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <Image
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Margin="40,20,0,10"
-                    HeightRequest="50"
-                    HorizontalOptions="Start"
-                    Source="new_movement_icon_small.png"
-                    WidthRequest="50">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="NewMovement" />
-                    </Image.GestureRecognizers>
-                </Image>
-                <Label
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    Margin="60,20,0,10"
-                    FontSize="22"
-                    HorizontalOptions="Start"
-                    Text="Nuevo movimiento "
-                    TextColor="#303030"
-                    VerticalOptions="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="NewMovement" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <Image
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Margin="40,20,0,10"
-                    HeightRequest="50"
-                    HorizontalOptions="Start"
-                    Source="consult_stock_icon_small.png"
-                    WidthRequest="50">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CheckStock" />
-                    </Image.GestureRecognizers>
-                </Image>
-                <Label
-                    Grid.Row="4"
-                    Grid.Column="1"
-                    Margin="60,20,0,10"
-                    FontSize="22"
-                    HorizontalOptions="Start"
-                    Text="Consulta de stock"
-                    TextColor="#303030"
-                    VerticalOptions="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CheckStock" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <Image
-                    Grid.Row="5"
-                    Grid.Column="0"
-                    Margin="40,20,0,10"
-                    HeightRequest="50"
-                    HorizontalOptions="Start"
-                    Source="edit_stock_icon_small.png"
-                    WidthRequest="50">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="EditStock" />
-                    </Image.GestureRecognizers>
-                </Image>
-                <Label
-                    Grid.Row="5"
-                    Grid.Column="1"
-                    Margin="60,20,0,10"
-                    FontSize="22"
-                    HorizontalOptions="Start"
-                    Text="Editar stock"
-                    TextColor="#303030"
-                    VerticalOptions="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="EditStock" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <Image
-                    Grid.Row="6"
-                    Grid.Column="0"
-                    Margin="40,20,0,10"
-                    HeightRequest="50"
-                    HorizontalOptions="Start"
-                    Source="inventory_icon_small.png"
-                    WidthRequest="50">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="Inventory" />
-                    </Image.GestureRecognizers>
-                </Image>
-                <Label
-                    Grid.Row="6"
-                    Grid.Column="1"
-                    Margin="60,20,0,10"
-                    FontSize="22"
-                    HorizontalOptions="Start"
-                    Text="Inventario"
-                    TextColor="#303030"
-                    VerticalOptions="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="Inventory" />
-                    </Label.GestureRecognizers>
-                </Label>
+
+                <!-- Lista de opciones compacta -->
+                <StackLayout Grid.Row="2" Spacing="15" HorizontalOptions="Start" MaximumWidthRequest="600">
+                    <!-- Carga de stock -->
+                    <StackLayout Orientation="Horizontal" Spacing="20">
+                        <Image
+                            HeightRequest="40"
+                            HorizontalOptions="Start"
+                            Source="add_stock_icon_small.png"
+                            WidthRequest="40"
+                            VerticalOptions="Center">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="AddStock" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Label
+                            FontSize="20"
+                            HorizontalOptions="Start"
+                            Text="Carga de stock"
+                            TextColor="#303030"
+                            VerticalOptions="Center"
+                            MinimumWidthRequest="200">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="AddStock" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+
+                    <!-- Nuevo movimiento -->
+                    <StackLayout Orientation="Horizontal" Spacing="20">
+                        <Image
+                            HeightRequest="40"
+                            HorizontalOptions="Start"
+                            Source="new_movement_icon_small.png"
+                            WidthRequest="40"
+                            VerticalOptions="Center">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="NewMovement" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Label
+                            FontSize="20"
+                            HorizontalOptions="Start"
+                            Text="Nuevo movimiento"
+                            TextColor="#303030"
+                            VerticalOptions="Center"
+                            MinimumWidthRequest="200">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="NewMovement" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+
+                    <!-- Consulta de stock -->
+                    <StackLayout Orientation="Horizontal" Spacing="20">
+                        <Image
+                            HeightRequest="40"
+                            HorizontalOptions="Start"
+                            Source="consult_stock_icon_small.png"
+                            WidthRequest="40"
+                            VerticalOptions="Center">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CheckStock" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Label
+                            FontSize="20"
+                            HorizontalOptions="Start"
+                            Text="Consulta de stock"
+                            TextColor="#303030"
+                            VerticalOptions="Center"
+                            MinimumWidthRequest="200">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CheckStock" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+
+                    <!-- Editar stock -->
+                    <StackLayout Orientation="Horizontal" Spacing="20">
+                        <Image
+                            HeightRequest="40"
+                            HorizontalOptions="Start"
+                            Source="edit_stock_icon_small.png"
+                            WidthRequest="40"
+                            VerticalOptions="Center">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="EditStock" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Label
+                            FontSize="20"
+                            HorizontalOptions="Start"
+                            Text="Editar stock"
+                            TextColor="#303030"
+                            VerticalOptions="Center"
+                            MinimumWidthRequest="200">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="EditStock" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+
+                    <!-- Inventario -->
+                    <StackLayout Orientation="Horizontal" Spacing="20">
+                        <Image
+                            HeightRequest="40"
+                            HorizontalOptions="Start"
+                            Source="inventory_icon_small.png"
+                            WidthRequest="40"
+                            VerticalOptions="Center">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="Inventory" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Label
+                            FontSize="20"
+                            HorizontalOptions="Start"
+                            Text="Inventario"
+                            TextColor="#303030"
+                            VerticalOptions="Center"
+                            MinimumWidthRequest="200">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="Inventory" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+                </StackLayout>
             </Grid>
 
             <!--  Añadir producto  -->
