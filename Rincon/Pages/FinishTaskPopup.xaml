@@ -67,7 +67,7 @@
                     Padding="1"
                     WidthRequest="100"
                     HorizontalOptions="Start">
-            <Entry Text="{Binding LossMaterial}" Keyboard="Numeric" FontSize="12" TextColor="#222" BackgroundColor="transparent" HeightRequest="35" WidthRequest="100" Margin="0,0,0,0"/>
+            <Entry Text="{Binding LossMaterial}" Keyboard="Numeric" FontSize="12" TextColor="#222" BackgroundColor="transparent" HeightRequest="55" WidthRequest="100" Margin="10,0,0,0"/>
           </Frame>          
           </StackLayout>
             <!-- Comentarios adicionales -->
@@ -84,7 +84,7 @@
                     Padding="1"
                     WidthRequest="300"
                     HorizontalOptions="Start">
-            <Editor Text="{Binding AdditionalComments}"  BackgroundColor="transparent" HeightRequest="80" />
+            <Editor Text="{Binding AdditionalComments}" Margin="3,10,0,0" BackgroundColor="transparent" HeightRequest="100" />
           </Frame>
           </StackLayout>
         </Grid>

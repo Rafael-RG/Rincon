@@ -76,15 +76,16 @@
                     <!-- Primera fila: Username y Password -->
                     <Frame
                         Grid.Column="0"
-                        Margin="0"
+                        Margin="0,0,0,0"
                         Padding="0,0,0,0"
                         BackgroundColor="White"
                         CornerRadius="18"
                         HeightRequest="40"
                         HorizontalOptions="Fill">
                         <Entry
-                            BackgroundColor="White"
-                            HeightRequest="40"
+                            BackgroundColor="Transparent"
+                            HeightRequest="65"
+                            Margin="10,0,0,0"
                             HorizontalOptions="Fill"
                             MaxLength="25"
                             Placeholder="{extensions:Localize Username}"
@@ -102,7 +103,8 @@
                         HorizontalOptions="Fill">
                         <Entry
                             BackgroundColor="Transparent"
-                            HeightRequest="40"
+                            HeightRequest="65"
+                            Margin="10,0,0,0"
                             HorizontalOptions="Fill"
                             MaxLength="25"
                             Placeholder="{extensions:Localize Password}"
@@ -123,7 +125,8 @@
                         HorizontalOptions="Fill">
                         <Entry
                             BackgroundColor="Transparent"
-                            HeightRequest="40"
+                            HeightRequest="65"
+                            Margin="10,0,0,0"
                             HorizontalOptions="Fill"
                             MaxLength="25"
                             Placeholder="Repetir contraseña"
@@ -205,7 +208,8 @@
                         IsVisible="{Binding IsVisibleListQuestions, Converter={StaticResource InvertedBoolConverter}}">
                         <Entry
                             BackgroundColor="Transparent"
-                            HeightRequest="40"
+                            HeightRequest="65"
+                            Margin="10,0,0,0"
                             HorizontalOptions="Fill"
                             MaxLength="25"
                             Placeholder="{extensions:Localize Answer}"

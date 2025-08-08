@@ -1081,10 +1081,11 @@
                                         Padding="3"
                                         BackgroundColor="Transparent"
                                         BorderColor="#797979"
-                                        HeightRequest="28">
+                                        HeightRequest="34">
                                         <Entry
                                             FontSize="12"
                                             HorizontalTextAlignment="Center"
+                                            HeightRequest="55"
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Grosor"
@@ -1104,10 +1105,11 @@
                                         Padding="3"
                                         BackgroundColor="Transparent"
                                         BorderColor="#797979"
-                                        HeightRequest="28">
+                                        HeightRequest="34">
                                         <Entry
                                             FontSize="12"
                                             HorizontalTextAlignment="Center"
+                                            HeightRequest="55"
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Ancho"
@@ -1127,10 +1129,11 @@
                                         Padding="3"
                                         BackgroundColor="Transparent"
                                         BorderColor="#797979"
-                                        HeightRequest="28">
+                                        HeightRequest="34">
                                         <Entry
                                             FontSize="12"
                                             HorizontalTextAlignment="Center"
+                                            HeightRequest="55"
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Largo"
@@ -1160,10 +1163,12 @@
                                         Padding="3"
                                         BackgroundColor="Transparent"
                                         BorderColor="#797979"
-                                        HeightRequest="28">
+                                        HeightRequest="34">
                                         <Entry
                                             FontSize="12"
                                             HorizontalTextAlignment="Center"
+                                            Keyboard="Numeric"
+                                            HeightRequest="55"
                                             MaxLength="9"
                                             Placeholder="Diámetro"
                                             Text="{Binding Diameter}"
@@ -1182,10 +1187,11 @@
                                         Padding="3"
                                         BackgroundColor="Transparent"
                                         BorderColor="#797979"
-                                        HeightRequest="28">
+                                        HeightRequest="34">
                                         <Entry
                                             FontSize="12"
                                             HorizontalTextAlignment="Center"
+                                            HeightRequest="55"
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Largo"
@@ -1215,10 +1221,12 @@
                                         Padding="3"
                                         BackgroundColor="Transparent"
                                         BorderColor="#797979"
-                                        HeightRequest="28">
+                                        HeightRequest="34">
                                         <Entry
                                             FontSize="12"
                                             HorizontalTextAlignment="Center"
+                                            HeightRequest="55"
+                                            Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Diámetro"
                                             Text="{Binding Diameter}"
@@ -1237,10 +1245,11 @@
                                         Padding="3"
                                         BackgroundColor="Transparent"
                                         BorderColor="#797979"
-                                        HeightRequest="28">
+                                        HeightRequest="34">
                                         <Entry
                                             FontSize="12"
                                             HorizontalTextAlignment="Center"
+                                            HeightRequest="55"
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Largo"
@@ -1476,9 +1485,10 @@
                                 Padding="3"
                                 BackgroundColor="Transparent"
                                 BorderColor="#797979"
-                                HeightRequest="28">
+                                HeightRequest="34">
                                 <Entry
                                     FontSize="12"
+                                    HeightRequest="55"
                                     Text="{Binding Location}"
                                     TextColor="Black"
                                     Placeholder="Ubicación del producto" />
@@ -1498,10 +1508,11 @@
                                 Padding="3"
                                 BackgroundColor="Transparent"
                                 BorderColor="#797979"
-                                HeightRequest="28">
+                                HeightRequest="34">
                                 <Entry
                                     FontSize="12"
                                     Keyboard="Text"
+                                    HeightRequest="55"
                                     Text="{Binding Supplier}"
                                     TextColor="Black"
                                     Placeholder="Nombre del proveedor" />
@@ -1526,6 +1537,8 @@
                                 <Editor
                                     AutoSize="TextChanges"
                                     FontSize="12"
+                                    HeightRequest="95"
+                                    Margin="0,20,0,0"
                                     Text="{Binding Comments}"
                                     TextColor="Black"
                                     Placeholder="Comentarios adicionales" />

@@ -64,24 +64,28 @@
             <Frame IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" Grid.Column="1" HasShadow="True" BackgroundColor="#D3AA84" BorderColor="#40000000" CornerRadius="24" Margin="20" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
                 <StackLayout VerticalOptions="FillAndExpand" Spacing="10" Padding="20,30">
                     <StackLayout  Spacing="15">
-                        <Frame HorizontalOptions="FillAndExpand" VerticalOptions="Start" CornerRadius="18" BackgroundColor="#FAFAFA" BorderColor="Transparent" Padding="0">
+                        <Frame HorizontalOptions="FillAndExpand" HeightRequest="45" VerticalOptions="Start" CornerRadius="18" BackgroundColor="#FAFAFA" BorderColor="Transparent" Padding="0">
                             <Entry
                                 BackgroundColor="Transparent"
                                 PlaceholderColor="#797979"
                                 FontSize="18"
+                                Margin="10,0,0,0"
                                 AutomationId="userNameEntry"
                                 HorizontalOptions="FillAndExpand"
+                                HeightRequest="65"
                                 MaxLength="50"
                                 Placeholder="{extensions:Localize Username}"
                                 Text="{Binding Username}"
                                 TextColor="#303030"/>
                         </Frame>
 
-                        <Frame CornerRadius="18" BackgroundColor="#FAFAFA" BorderColor="Transparent" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Padding="0">
+                        <Frame CornerRadius="18" HeightRequest="45" BackgroundColor="#FAFAFA" BorderColor="Transparent" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Padding="0">
                             <Entry
                                 VerticalOptions="Center"
                                 TextColor="#303030"
                                 FontSize="18"
+                                HeightRequest="65"
+                                Margin="10,0,0,0"
                                 PlaceholderColor="#797979"
                                 HorizontalOptions="FillAndExpand"
                                 IsPassword="true"
