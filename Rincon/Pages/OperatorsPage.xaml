@@ -147,7 +147,7 @@
                                         <Image  Source="user_task" 
                                             WidthRequest="40" 
                                             HeightRequest="40" />
-                                        <Label IsVisible="{Binding Priority}" HorizontalTextAlignment="Center" Text="Dar prioridad" FontSize="12" FontAttributes="Bold" TextColor="#000000" />
+                                        <Label Margin="10" IsVisible="{Binding Priority}" HorizontalTextAlignment="Center" Text="Dar prioridad" FontSize="12" FontAttributes="Bold" TextColor="#000000" />
                                     </StackLayout>
                                     </Grid>
                                 </Border>

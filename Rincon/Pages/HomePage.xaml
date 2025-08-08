@@ -274,7 +274,7 @@
                                 BackgroundColor="#EAEAEA"
                                 BorderColor="Transparent"
                                 CornerRadius="12"
-                                HeightRequest="108"
+                                HeightRequest="110"
                                 VerticalOptions="FillAndExpand"
                                 HorizontalOptions="FillAndExpand"
                                 Margin="0,0,0,0">

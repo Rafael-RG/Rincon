@@ -54,8 +54,8 @@
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding OperatorsCommand}"/>
                 </Frame.GestureRecognizers>
-                <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-                    <ImageButton Source="operator_login_icon.png" HeightRequest="320" WidthRequest="320" BackgroundColor="#4A744C"/>
+                <StackLayout HeightRequest="320" WidthRequest="320" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                    <ImageButton Source="operator_login_icon.png" HeightRequest="120" WidthRequest="220" VerticalOptions="CenterAndExpand" BackgroundColor="#4A744C"/>
                     <Label Text="Operarios" HorizontalTextAlignment="Center" FontSize="20" TextColor="White"/>
                 </StackLayout>
             </Frame>
