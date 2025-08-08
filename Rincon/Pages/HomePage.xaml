@@ -5096,12 +5096,12 @@
                 BackgroundColor="White"
                 ColumnDefinitions="*"
                 IsVisible="{Binding IsVisibleListBookingsView}"
-                RowDefinitions="auto,auto,auto,auto,auto,auto,*,auto"
-                RowSpacing="5">
+                RowDefinitions="auto,auto,auto,auto,*,auto"
+                RowSpacing="8">
 
                 <Label
-                    Margin="0,0,0,10"
-                    FontSize="26"
+                    Margin="0,0,0,0"
+                    FontSize="24"
                     HorizontalOptions="Start"
                     Text="Reservas"
                     TextColor="#79280F"
@@ -5109,116 +5109,180 @@
 
                 <BoxView
                     Grid.Row="1"
-                    Margin="0,0,0,20"
+                    Margin="0,0,0,10"
                     HeightRequest="2"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"
                     Color="#79280F" />
 
+                <!-- Barra de búsqueda optimizada -->
                 <Frame
                     Grid.Row="2"
                     Padding="0"
+                    HeightRequest="35"
                     BackgroundColor="Transparent"
                     BorderColor="#797979">
                     <SearchBar
                         x:Name="SearchBarBooking"
-                        BackgroundColor="LightGray"
-                        CancelButtonColor="Black"
-                        HeightRequest="55"
-                        HorizontalOptions="StartAndExpand"
-                        Placeholder="Buscador"
+                        BackgroundColor="Transparent"
+                        CancelButtonColor="#79280F"
+                        Placeholder="Buscar reservas por cliente, código o teléfono..."
+                        PlaceholderColor="#999999"
                         TextChanged="OnSearchBookingTextChanged"
-                        TextColor="Black" />
+                        TextColor="#333333"
+                        FontSize="14"
+                        VerticalOptions="Center" />
                 </Frame>
 
-               <Grid Grid.Row="3" Margin="30,30,0,0" ColumnDefinitions=".1*,.3*,.2*,.1*,.2*,.2*">
-                    <Label
-                        FontSize="18"
-                        Text="#Codigo"
-                        TextColor="#79280F" />
-                    <Label
-                        Grid.Column="1"
-                        FontSize="18"
-                        Text="Cliente"
-                        TextColor="#79280F" />
-                    <Label
-                        Grid.Column="2"
-                        FontSize="18"
-                        Text="Fecha"
-                        TextColor="#79280F" />
-                    <Label
-                        Grid.Column="3"
-                        FontSize="18"
-                        Text="Telefono"
-                        TextColor="#79280F" />
+               <!-- Encabezados de la lista -->
+               <Frame 
+                   Grid.Row="3" 
+                   Margin="20,20,20,10" 
+                   Padding="15,10"
+                   BackgroundColor="#F5F5F5"
+                   BorderColor="#79280F"
+                   CornerRadius="8">
+                   <Grid ColumnDefinitions="0.15*,0.35*,0.25*,0.25*" ColumnSpacing="10">
+                       <Label
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           Text="#Código"
+                           TextColor="#79280F"
+                           VerticalOptions="Center" />
+                       <Label
+                           Grid.Column="1"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           Text="Cliente"
+                           TextColor="#79280F"
+                           VerticalOptions="Center" />
+                       <Label
+                           Grid.Column="2"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           Text="Fecha"
+                           TextColor="#79280F"
+                           VerticalOptions="Center" />
+                       <Label
+                           Grid.Column="3"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           Text="Teléfono"
+                           TextColor="#79280F"
+                           VerticalOptions="Center" />
+                   </Grid>
+               </Frame>
 
-                </Grid>
-
-                <CollectionView
-                    x:Name="BookingItemsSearch"
+                <!-- Lista de reservas optimizada para tablet/desktop -->
+                <ScrollView
                     Grid.Row="4"
-                    Margin="30,0,30,0"
-                    ItemsSource="{Binding BookingOrderItems}"
-                    SelectionMode="Single"
+                    Margin="20,0,20,20"
                     VerticalOptions="FillAndExpand"
                     VerticalScrollBarVisibility="Never">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:BookingOrder">
-                            <Grid
-                                ColumnDefinitions=".1*,.2*,.2*,.2*,.1*,.1*"
-                                RowDefinitions="*"
-                                VerticalOptions="Start">
+                    <CollectionView
+                        x:Name="BookingItemsSearch"
+                        ItemsSource="{Binding BookingOrderItems}"
+                        SelectionMode="Single"
+                        VerticalOptions="Start"
+                        BackgroundColor="White">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="2" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:BookingOrder">
+                                <Frame
+                                    Padding="15,12"
+                                    Margin="0,0,0,4"
+                                    BackgroundColor="White"
+                                    HeightRequest="45"
+                                    BorderColor="#AD6B2A"
+                                    CornerRadius="12">
+                                    <Grid
+                                        ColumnDefinitions="0.15*,0.35*,0.25*,0.15*,0.05*,0.05*"
+                                        ColumnSpacing="2"
+                                        VerticalOptions="Center">
+                                        <Label
+                                            FontSize="14"
+                                            Text="{Binding Id}"
+                                            TextColor="#333333"
+                                            VerticalOptions="Center"
+                                            LineBreakMode="TailTruncation" />
+
+                                        <Label
+                                            Grid.Column="1"
+                                            FontSize="14"
+                                            Text="{Binding Client}"
+                                            TextColor="#333333"
+                                            VerticalOptions="Center"
+                                            LineBreakMode="TailTruncation"
+                                            MaxLines="2" />
+
+                                        <Label
+                                            Grid.Column="2"
+                                            FontSize="14"
+                                            Text="{Binding OrderDate, StringFormat='{0:dd/MM/yyyy}'}"
+                                            TextColor="#666666"
+                                            VerticalOptions="Center" />
+
+                                        <Label
+                                            Grid.Column="3"
+                                            FontSize="14"
+                                            Text="{Binding Phone}"
+                                            TextColor="#666666"
+                                            VerticalOptions="Center"
+                                            LineBreakMode="TailTruncation" />
+
+                                        <Button
+                                            Grid.Column="4"
+                                            BackgroundColor="Transparent"
+                                            Clicked="VisivilityCancelBookingItem_Clicked"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            ImageSource="delete_item_icon.png"
+                                            HeightRequest="35"
+                                            WidthRequest="35"
+                                            Padding="0" />
+
+                                        <Button
+                                            Grid.Column="5"
+                                            BackgroundColor="Transparent"
+                                            Clicked="VisivilityBookingItem_Clicked"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            ImageSource="visibility.png"
+                                            HeightRequest="35"
+                                            WidthRequest="35"
+                                            Padding="0" />
+                                    </Grid>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.EmptyView>
+                            <StackLayout 
+                                Spacing="20" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="Center"
+                                Padding="40">
+                                <Image 
+                                    Source="no_data_icon.png" 
+                                    HeightRequest="80" 
+                                    WidthRequest="80"
+                                    HorizontalOptions="Center" />
                                 <Label
                                     FontSize="18"
-                                    Text="{Binding Id}"
-                                    TextColor="#000000"
-                                    VerticalOptions="Start" />
-
-                                <Label
-                                    Grid.Column="1"
-                                    FontSize="18"
-                                    Text="{Binding Client}"
-                                    TextColor="#000000"
-                                    VerticalOptions="Start" />
-
-                                <Label
-                                    Grid.Column="2"
-                                    FontSize="18"
-                                    Text="{Binding OrderDate}"
-                                    TextColor="#000000"
-                                    VerticalOptions="Start" />
-
-                                <Label
-                                    Grid.Column="3"
-                                    FontSize="18"
-                                    Text="{Binding Phone}"
-                                    TextColor="#000000"
-                                    VerticalOptions="Start" />
-
-                                <Button
-                                    Grid.Column="4"
-                                    BackgroundColor="Transparent"
-                                    Clicked="VisivilityCancelBookingItem_Clicked"
-                                    HorizontalOptions="End"
-                                    ImageSource="delete_item_icon.png" />
-                                <Button
-                                    Grid.Column="5"
-                                    BackgroundColor="Transparent"
-                                    Clicked="VisivilityBookingItem_Clicked"
-                                    ImageSource="visibility.png" />
-
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                                    HorizontalOptions="Center"
+                                    Text="No hay reservas disponibles"
+                                    TextColor="#797979"
+                                    FontAttributes="Italic" />
+                            </StackLayout>
+                        </CollectionView.EmptyView>
+                    </CollectionView>
+                </ScrollView>
 
 
                 <BoxView
                     Grid.Row="6"
-                    Margin="0,0,0,40"
+                    Margin="0,0,0,10"
                     HeightRequest="2"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="EndAndExpand"
