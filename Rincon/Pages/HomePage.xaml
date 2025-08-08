@@ -5665,164 +5665,179 @@
                     </StackLayout.Background>
 
                     <StackLayout
-                        Margin="0,12,0,0"
-                        HeightRequest="32"
-                        WidthRequest="400">
+                        Margin="0,0,0,0"
+                        >
                         <ActivityIndicator
-                            HeightRequest="32"
+                            HeightRequest="28"
                             Color="#4A744C"
                             IsRunning="True"
                             IsVisible="{Binding IsBusy}"
-                            WidthRequest="32" />
+                            WidthRequest="28" />
                     </StackLayout>
 
                     <Image
-                        Margin="160,50,0,0"
+                        Margin="20,20,0,0"
                         HeightRequest="100"
                         HorizontalOptions="Start"
+                        VerticalOptions="Start"
                         Source="rincon_white.png"
-                        WidthRequest="400" />
+                        WidthRequest="200" />
+                    
                     <Grid
-                        ColumnDefinitions="25*,25*,25*,25*"
+                        ColumnDefinitions="*,1.5*,*"
                         IsVisible="{Binding ConfirmUserChanges, Converter={StaticResource InvertedBoolConverter}}"
-                        RowDefinitions="25*,25*,25*,25*"
-                        VerticalOptions="FillAndExpand">
+                        RowDefinitions="auto,auto,auto"
+                        VerticalOptions="FillAndExpand"
+                        Margin="0,20,0,0">
                         <Frame
                             Grid.Row="1"
-                            Grid.RowSpan="2"
                             Grid.Column="1"
-                            Grid.ColumnSpan="2"
                             BackgroundColor="#D3AA84"
-                            CornerRadius="18">
-                            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                            CornerRadius="15"
+                            Padding="20">
+                            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Spacing="12">
                                 <Label
-                                    Margin="30,30,0,0"
+                                    Margin="0,10,0,15"
                                     FontAttributes="Bold"
-                                    FontSize="26"
+                                    FontSize="22"
                                     Text="Configuración"
-                                    TextColor="Black" />
+                                    TextColor="Black"
+                                    HorizontalOptions="Center" />
+                                
                                 <Grid
-                                    Margin="30,20,0,0"
-                                    ColumnDefinitions="auto,auto"
-                                    ColumnSpacing="20"
+                                    ColumnDefinitions="*,*"
+                                    ColumnSpacing="15"
                                     HorizontalOptions="FillAndExpand"
-                                    RowDefinitions="auto,auto,auto,auto,auto,auto"
-                                    RowSpacing="10"
+                                    RowDefinitions="auto,auto,auto,auto,auto,auto,auto"
+                                    RowSpacing="8"
                                     VerticalOptions="FillAndExpand">
+                                    
+                                    <!-- Nombre -->
                                     <Label
-                                        Margin="0,20,0,0"
-                                        FontSize="16"
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        FontSize="14"
                                         Text="Nombre"
-                                        TextColor="Black" />
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
                                     <Frame
+                                        Grid.Row="0"
                                         Grid.Column="1"
-                                        Margin="0,20,0,0"
-                                        Padding="0,0,0,0"
+                                        Padding="3"
                                         BackgroundColor="White"
-                                        CornerRadius="18"
-                                        HeightRequest="40"
-                                        HorizontalOptions="Start"
-                                        MinimumWidthRequest="200"
-                                        VerticalOptions="Start">
+                                        CornerRadius="12"
+                                        HeightRequest="35"
+                                        HorizontalOptions="FillAndExpand">
                                         <Entry
-                                            BackgroundColor="White"
-                                            HeightRequest="60"
-                                            HorizontalOptions="Start"
+                                            BackgroundColor="transparent"
+                                            FontSize="12"
+                                            HeightRequest="55"
                                             MaxLength="25"
-                                            MinimumWidthRequest="200"
                                             Placeholder="Nombre"
                                             PlaceholderColor="#848484"
                                             Text="{Binding NameConfigurations}"
-                                            TextColor="Black" />
+                                            TextColor="Black"
+                                            IsSpellCheckEnabled="False"
+                                            IsTextPredictionEnabled="False" />
                                     </Frame>
+                                    
+                                    <!-- Contraseña -->
                                     <Label
                                         Grid.Row="1"
-                                        Margin="0,10,0,0"
-                                        FontSize="16"
+                                        Grid.Column="0"
+                                        FontSize="14"
                                         Text="Contraseña"
-                                        TextColor="Black" />
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
                                     <Frame
                                         Grid.Row="1"
                                         Grid.Column="1"
-                                        Margin="0,10,0,0"
-                                        Padding="0,0,0,0"
+                                        Padding="3"
                                         BackgroundColor="White"
-                                        CornerRadius="18"
-                                        HeightRequest="40"
-                                        HorizontalOptions="Start"
-                                        MinimumWidthRequest="200">
+                                        CornerRadius="12"
+                                        HeightRequest="35"
+                                        HorizontalOptions="FillAndExpand">
                                         <Entry
-                                            BackgroundColor="Transparent"
-                                            HeightRequest="60"
-                                            HorizontalOptions="FillAndExpand"
+                                            BackgroundColor="transparent"
+                                            FontSize="12"
+                                            HeightRequest="55"
                                             MaxLength="25"
-                                            MinimumWidthRequest="200"
-                                            Placeholder="{extensions:Localize Password}"
+                                            Placeholder="Contraseña"
                                             PlaceholderColor="#848484"
                                             Text="{Binding PasswordConfigurations}"
-                                            TextColor="Black" />
+                                            TextColor="Black"
+                                            IsPassword="True"
+                                            IsSpellCheckEnabled="False"
+                                            IsTextPredictionEnabled="False" />
                                     </Frame>
+                                    
+                                    <!-- Repetir contraseña -->
+                                    <Label
+                                        Grid.Row="2"
+                                        Grid.Column="0"
+                                        FontSize="14"
+                                        Text="Repetir contraseña"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
                                     <Frame
                                         Grid.Row="2"
                                         Grid.Column="1"
-                                        Margin="0,10,0,0"
-                                        Padding="0,0,0,0"
+                                        Padding="3"
                                         BackgroundColor="White"
-                                        CornerRadius="18"
-                                        HeightRequest="40"
-                                        HorizontalOptions="Start"
-                                        MinimumWidthRequest="200">
+                                        CornerRadius="12"
+                                        HeightRequest="35"
+                                        HorizontalOptions="FillAndExpand">
                                         <Entry
-                                            BackgroundColor="Transparent"
-                                            HeightRequest="60"
-                                            HorizontalOptions="FillAndExpand"
+                                            BackgroundColor="transparent"
+                                            FontSize="12"
+                                            HeightRequest="55"
                                             MaxLength="25"
-                                            MinimumWidthRequest="200"
                                             Placeholder="Repetir contraseña"
                                             PlaceholderColor="#848484"
                                             Text="{Binding RepeatPasswordConfigrations}"
-                                            TextColor="Black" />
+                                            TextColor="Black"
+                                            IsPassword="True"
+                                            IsSpellCheckEnabled="False"
+                                            IsTextPredictionEnabled="False" />
                                     </Frame>
 
+                                    <!-- Pregunta de seguridad -->
                                     <Label
                                         Grid.Row="3"
-                                        Margin="0,10,0,0"
-                                        FontSize="16"
+                                        Grid.Column="0"
+                                        FontSize="14"
                                         Text="Pregunta de seguridad"
-                                        TextColor="Black" />
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
                                     <StackLayout
                                         Grid.Row="3"
                                         Grid.Column="1"
-                                        Margin="0,10,0,10"
-                                        HorizontalOptions="Start"
-                                        MinimumWidthRequest="300">
+                                        HorizontalOptions="FillAndExpand">
                                         <Frame
-                                            Margin="0"
-                                            Padding="10,-3,10,-3"
+                                            Padding="8,3"
                                             BackgroundColor="White"
-                                            CornerRadius="18"
-                                            HeightRequest="40">
+                                            CornerRadius="12"
+                                            HeightRequest="32">
                                             <Label
-                                                FontSize="14"
+                                                FontSize="12"
                                                 Text="{Binding SelectedQuestionConfigurations, Mode=TwoWay}"
                                                 TextColor="Black"
                                                 VerticalOptions="Center">
                                                 <Label.GestureRecognizers>
                                                     <TapGestureRecognizer Command="{Binding SelectQuestionCommand}" />
                                                 </Label.GestureRecognizers>
-
                                             </Label>
                                         </Frame>
                                         <Frame
                                             Padding="0"
                                             BackgroundColor="Transparent"
-                                            CornerRadius="24"
-                                            HeightRequest="180"
+                                            CornerRadius="15"
+                                            HeightRequest="120"
                                             IsVisible="{Binding IsVisibleListQuestions}">
                                             <Frame
                                                 x:Name="FrameListQuestions"
-                                                CornerRadius="24"
-                                                HeightRequest="180"
+                                                CornerRadius="15"
+                                                HeightRequest="120"
                                                 IsVisible="{Binding IsVisibleListQuestions}"
                                                 VerticalOptions="Start">
                                                 <Frame.Background>
@@ -5834,20 +5849,19 @@
                                                 <CollectionView
                                                     x:Name="Questions"
                                                     Margin="0,5,0,5"
-                                                    HeightRequest="140"
+                                                    HeightRequest="110"
                                                     HorizontalOptions="Start"
                                                     ItemsSource="{Binding Questions}"
                                                     SelectionChanged="Questions_SelectionChanged"
                                                     SelectionMode="Single"
-                                                    VerticalOptions="StartAndExpand">
-
+                                                    VerticalOptions="Start">
                                                     <CollectionView.ItemsLayout>
-                                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="6" />
                                                     </CollectionView.ItemsLayout>
                                                     <CollectionView.ItemTemplate>
                                                         <DataTemplate x:DataType="x:String">
                                                             <Label
-                                                                FontSize="14"
+                                                                FontSize="12"
                                                                 Text="{Binding .}"
                                                                 TextColor="#000000"
                                                                 VerticalOptions="Start" />
@@ -5857,163 +5871,174 @@
                                             </Frame>
                                         </Frame>
                                     </StackLayout>
+                                    
+                                    <!-- Respuesta -->
                                     <Label
                                         Grid.Row="4"
-                                        Margin="0,10,0,0"
-                                        FontSize="16"
+                                        Grid.Column="0"
+                                        FontSize="14"
                                         Text="Respuesta"
-                                        TextColor="Black" />
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
                                     <Frame
                                         Grid.Row="4"
                                         Grid.Column="1"
-                                        Margin="0,0,0,0"
-                                        Padding="0,0,0,0"
+                                        Padding="3"
                                         BackgroundColor="White"
-                                        CornerRadius="18"
-                                        HeightRequest="40"
-                                        HorizontalOptions="Start"
-                                        IsVisible="{Binding IsVisibleListQuestions, Converter={StaticResource InvertedBoolConverter}}"
-                                        MinimumWidthRequest="200">
+                                        CornerRadius="12"
+                                        HeightRequest="35"
+                                        HorizontalOptions="FillAndExpand"
+                                        IsVisible="{Binding IsVisibleListQuestions, Converter={StaticResource InvertedBoolConverter}}">
                                         <Entry
-                                            BackgroundColor="Transparent"
-                                            HeightRequest="60"
-                                            HorizontalOptions="FillAndExpand"
+                                            BackgroundColor="transparent"
+                                            FontSize="12"
+                                            HeightRequest="55"
                                             MaxLength="25"
-                                            MinimumWidthRequest="200"
-                                            Placeholder="{extensions:Localize Answer}"
+                                            Placeholder="Respuesta"
                                             PlaceholderColor="#848484"
                                             Text="{Binding ResponseConfigurations}"
-                                            TextColor="Black" />
+                                            TextColor="Black"
+                                            IsSpellCheckEnabled="False"
+                                            IsTextPredictionEnabled="False" />
                                     </Frame>
 
-                                    <HorizontalStackLayout
-                                        Grid.Row="5"
-                                        Grid.Column="1"
-                                        Margin="0,20,0,0"
-                                        HorizontalOptions="EndAndExpand"
-                                        Spacing="10"
-                                        VerticalOptions="EndAndExpand">
+                                    <!-- Botones -->
+                                    <Grid
+                                        Grid.Row="6"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        Margin="0,15,0,0"
+                                        ColumnDefinitions="*,*"
+                                        ColumnSpacing="10">
                                         <Button
+                                            Grid.Column="0"
                                             BackgroundColor="#AD6B2A"
                                             Command="{Binding CancelConfigurationCommand}"
-                                            MinimumHeightRequest="35"
-                                            MinimumWidthRequest="200"
+                                            FontSize="14"
+                                            HeightRequest="35"
                                             Text="Volver"
                                             TextColor="#FFF6ED" />
                                         <Button
+                                            Grid.Column="1"
                                             BackgroundColor="#4A744C"
                                             Command="{Binding UpdateDataUserCommand}"
-                                            MinimumHeightRequest="35"
-                                            MinimumWidthRequest="200"
+                                            FontSize="14"
+                                            HeightRequest="35"
                                             Text="Guardar Cambios"
                                             TextColor="White" />
-                                    </HorizontalStackLayout>
-
+                                    </Grid>
                                 </Grid>
                             </StackLayout>
                         </Frame>
 
                     </Grid>
                     <Grid
-                        ColumnDefinitions="25*,25*,25*,25*"
+                        ColumnDefinitions="*,1.2*,*"
                         IsVisible="{Binding ConfirmUserChanges}"
-                        RowDefinitions="10*,10*,20*,30*"
-                        VerticalOptions="FillAndExpand">
+                        RowDefinitions="auto,auto,auto"
+                        VerticalOptions="FillAndExpand"
+                        Margin="0,20,0,0">
                         <Frame
                             Grid.Row="1"
-                            Grid.RowSpan="2"
                             Grid.Column="1"
-                            Grid.ColumnSpan="2"
                             BackgroundColor="#FFF6ED"
-                            CornerRadius="18">
-                            <StackLayout>
+                            CornerRadius="15"
+                            Padding="20">
+                            <StackLayout Spacing="15">
                                 <Label
-                                    Margin="30,30,0,0"
-                                    FontSize="26"
-                                    Text="Identificacion"
-                                    TextColor="Black" />
+                                    Margin="0,10,0,15"
+                                    FontSize="22"
+                                    Text="Identificación"
+                                    TextColor="Black"
+                                    HorizontalOptions="Center" />
                                 <Grid
-                                    Margin="30,30,0,0"
-                                    ColumnDefinitions="100,*"
-                                    RowDefinitions="*,*"
-                                    RowSpacing="20">
+                                    ColumnDefinitions="*,*"
+                                    RowDefinitions="auto,auto,auto"
+                                    RowSpacing="12"
+                                    ColumnSpacing="15">
+                                    
                                     <Label
-                                        FontSize="16"
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        FontSize="14"
                                         Text="Usuario"
                                         TextColor="Black"
                                         VerticalOptions="Center" />
                                     <Frame
+                                        Grid.Row="0"
                                         Grid.Column="1"
-                                        Margin="20,0,0,0"
-                                        Padding="0,0,0,0"
+                                        Padding="3"
                                         BackgroundColor="White"
-                                        CornerRadius="18"
-                                        HorizontalOptions="Start"
-                                        MaximumHeightRequest="40"
-                                        MinimumHeightRequest="40"
-                                        MinimumWidthRequest="200"
-                                        VerticalOptions="Start">
+                                        CornerRadius="12"
+                                        HeightRequest="35"
+                                        HorizontalOptions="FillAndExpand">
                                         <Entry
-                                            BackgroundColor="#D3AA84"
-                                            HorizontalOptions="Start"
+                                            BackgroundColor="transparent"
+                                            FontSize="12"
+                                            HeightRequest="55"
                                             MaxLength="25"
-                                            MinimumHeightRequest="60"
-                                            MinimumWidthRequest="200"
                                             Placeholder="Nombre de usuario"
                                             PlaceholderColor="#848484"
                                             Text="{Binding ConfirmUserConfigurations}"
-                                            TextColor="Black" />
+                                            TextColor="Black"
+                                            IsSpellCheckEnabled="False"
+                                            IsTextPredictionEnabled="False" />
                                     </Frame>
+                                    
                                     <Label
                                         Grid.Row="1"
-                                        FontSize="16"
+                                        Grid.Column="0"
+                                        FontSize="14"
                                         Text="Contraseña"
                                         TextColor="Black"
                                         VerticalOptions="Center" />
                                     <Frame
                                         Grid.Row="1"
                                         Grid.Column="1"
-                                        Margin="20,0,0,0"
-                                        Padding="0,0,0,0"
+                                        Padding="3"
                                         BackgroundColor="White"
-                                        CornerRadius="18"
-                                        HorizontalOptions="Start"
-                                        MaximumHeightRequest="40"
-                                        MinimumHeightRequest="40"
-                                        MinimumWidthRequest="200">
+                                        CornerRadius="12"
+                                        HeightRequest="35"
+                                        HorizontalOptions="FillAndExpand">
                                         <Entry
-                                            BackgroundColor="#D3AA84"
-                                            HorizontalOptions="Start"
+                                            BackgroundColor="transparent"
+                                            FontSize="12"
+                                            HeightRequest="55"
                                             MaxLength="25"
-                                            MinimumHeightRequest="60"
-                                            MinimumWidthRequest="200"
                                             Placeholder="Contraseña"
                                             PlaceholderColor="#848484"
                                             Text="{Binding ConfirmPasswordConfigurations}"
-                                            TextColor="Black" />
+                                            TextColor="Black"
+                                            IsPassword="True"
+                                            IsSpellCheckEnabled="False"
+                                            IsTextPredictionEnabled="False" />
                                     </Frame>
+                                    
+                                    <Grid
+                                        Grid.Row="2"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        Margin="0,15,0,0"
+                                        ColumnDefinitions="*,*"
+                                        ColumnSpacing="10">
+                                        <Button
+                                            Grid.Column="0"
+                                            BackgroundColor="#AD6B2A"
+                                            Command="{Binding CancelConfirmConfigurationCommand}"
+                                            FontSize="14"
+                                            HeightRequest="35"
+                                            Text="Volver"
+                                            TextColor="#FFF6ED" />
+                                        <Button
+                                            Grid.Column="1"
+                                            BackgroundColor="#79280F"
+                                            Clicked="ConfirmChange_Clicked"
+                                            FontSize="14"
+                                            HeightRequest="35"
+                                            Text="Confirmar Cambios"
+                                            TextColor="White" />
+                                    </Grid>
                                 </Grid>
-                                <HorizontalStackLayout
-                                    HorizontalOptions="EndAndExpand"
-                                    Spacing="30"
-                                    VerticalOptions="EndAndExpand">
-                                    <Button
-                                        Margin="0,60,0,60"
-                                        BackgroundColor="#AD6B2A"
-                                        Command="{Binding CancelConfirmConfigurationCommand}"
-                                        MinimumHeightRequest="35"
-                                        MinimumWidthRequest="200"
-                                        Text="Volver"
-                                        TextColor="#FFF6ED" />
-                                    <Button
-                                        Margin="0,60,60,60"
-                                        BackgroundColor="#79280F"
-                                        Clicked="ConfirmChange_Clicked"
-                                        MinimumHeightRequest="35"
-                                        MinimumWidthRequest="200"
-                                        Text="Confirmar Cambios"
-                                        TextColor="White" />
-                                </HorizontalStackLayout>
                             </StackLayout>
                         </Frame>
                     </Grid>
