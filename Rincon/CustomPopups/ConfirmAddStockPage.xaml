@@ -115,6 +115,7 @@
                                     FontSize="13"
                                     Text="{Binding Product.Description}"
                                     TextColor="#000000"
+                                    HorizontalTextAlignment="Center"
                                     VerticalOptions="Center"
                                     LineBreakMode="TailTruncation" />
 
