@@ -6066,9 +6066,7 @@
                     </StackLayout.Background>
 
                     <StackLayout
-                        Margin="0,12,0,0"
-                        HeightRequest="32"
-                        WidthRequest="400">
+                        Margin="0,12,0,0">
                         <ActivityIndicator
                             HeightRequest="32"
                             Color="#4A744C"
@@ -6078,11 +6076,10 @@
                     </StackLayout>
 
                     <Image
-                        Margin="160,50,0,0"
-                        HeightRequest="100"
+                        Margin="20,20,0,0"
                         HorizontalOptions="Start"
                         Source="rincon_white.png"
-                        WidthRequest="400" />
+                        WidthRequest="200" />
 
                     <!--  Operators  -->
                     <Grid
