@@ -92,9 +92,16 @@ namespace Rincon.ViewModels
             IsTaskDetailPopupVisible = false;
             IsFinishTaskPopupVisible = false;
             IsAssignOperatorPopupVisible = false;
+            IsFinishTaskAuthPopupVisible = false;
+            
+            // Limpiar campos
             SelectedTask = null;
             SelectedOperator = null;
             OperatorPin = string.Empty;
+            LossMaterial = 0;
+            AdditionalComments = string.Empty;
+            
+            OnPropertyChanged(nameof(IsAnyPopupVisible));
         });
 
 
@@ -118,9 +125,11 @@ namespace Rincon.ViewModels
 
         public ICommand AssignedOperatorCommand => new Command(async () =>
         {
-
             try
             {
+                IsBusy = true;
+                OnPropertyChanged(nameof(IsAnyPopupVisible));
+
                 if (SelectedOperator == null || string.IsNullOrWhiteSpace(OperatorPin))
                 {
                     await NotificationService.NotifyAsync("Error", "Por favor, seleccione un operador e ingrese el PIN.", "OK");
@@ -144,23 +153,22 @@ namespace Rincon.ViewModels
                 
                 // Recargar las tareas para reflejar los cambios
                 LoadTasksAsync();
-
-                IsBusy = true;
             }
             catch (Exception ex)
             {
-                IsBusy = false;
                 System.Diagnostics.Debug.WriteLine($"Error al entrar como operador: {ex.Message}");
                 await NotificationService.NotifyAsync("Error", $"Error al entrar como operador: {ex.Message}", "OK");
             }
-
-            IsTaskDetailPopupVisible = false;
-            IsFinishTaskPopupVisible = false;
-            IsFinishTaskAuthPopupVisible = false;
-            IsAssignOperatorPopupVisible = false;
-            
-            this.IsBusy = false;
-            
+            finally
+            {
+                IsTaskDetailPopupVisible = false;
+                IsFinishTaskPopupVisible = false;
+                IsFinishTaskAuthPopupVisible = false;
+                IsAssignOperatorPopupVisible = false;
+                
+                IsBusy = false;
+                OnPropertyChanged(nameof(IsAnyPopupVisible));
+            }
         });
 
         public ICommand ShowAssignOperatorPopupCommand => new Command(() =>
@@ -168,15 +176,29 @@ namespace Rincon.ViewModels
             IsTaskDetailPopupVisible = false;
             IsFinishTaskPopupVisible = false;
             IsFinishTaskAuthPopupVisible = false;
+            
+            // Limpiar campos antes de mostrar el popup
+            SelectedOperator = null;
+            OperatorPin = string.Empty;
+            
             IsAssignOperatorPopupVisible = true;
+            OnPropertyChanged(nameof(IsAnyPopupVisible));
         });
 
         public ICommand ShowFinishTaskAuthPopupCommand => new Command(() =>
         {
             IsTaskDetailPopupVisible = false;
             IsFinishTaskPopupVisible = false;
-            IsFinishTaskAuthPopupVisible = true;
             IsAssignOperatorPopupVisible = false;
+            
+            // Limpiar campos antes de mostrar el popup
+            SelectedOperator = null;
+            OperatorPin = string.Empty;
+            LossMaterial = 0;
+            AdditionalComments = string.Empty;
+            
+            IsFinishTaskAuthPopupVisible = true;
+            OnPropertyChanged(nameof(IsAnyPopupVisible));
         });
 
         public ICommand OperatorsCommand => new Command(async () =>
@@ -216,6 +238,9 @@ namespace Rincon.ViewModels
         {
             try
             {
+                IsBusy = true;
+                OnPropertyChanged(nameof(IsAnyPopupVisible));
+
                 if (SelectedOperator == null || string.IsNullOrWhiteSpace(OperatorPin))
                 {
                     await NotificationService.NotifyAsync("Error", "Por favor, seleccione un operador e ingrese el PIN.", "OK");
@@ -266,29 +291,40 @@ namespace Rincon.ViewModels
                 System.Diagnostics.Debug.WriteLine($"Error al finalizar tarea: {ex.Message}");
                 await NotificationService.NotifyAsync("Error", $"Error al finalizar tarea: {ex.Message}", "OK");
             }
-
-            IsFinishTaskAuthPopupVisible = false;
+            finally
+            {
+                IsFinishTaskAuthPopupVisible = false;
+                IsBusy = false;
+                OnPropertyChanged(nameof(IsAnyPopupVisible));
+            }
         });
 
         private async void LoadTasksAsync()
         {
-            var allTasks = await _dataService.LoadTaskItemsAsync();
-
-            // Log temporal para depuración
-            System.Diagnostics.Debug.WriteLine($"Total tareas cargadas: {allTasks.Count}");
-            foreach (var t in allTasks)
+            try
             {
-                System.Diagnostics.Debug.WriteLine($"Tarea: Id={t.Id}, Description={t.Description}, Status={t.TaskStatus}");
+                var allTasks = await _dataService.LoadTaskItemsAsync();
+
+                // Log temporal para depuración
+                System.Diagnostics.Debug.WriteLine($"Total tareas cargadas: {allTasks.Count}");
+                foreach (var t in allTasks)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Tarea: Id={t.Id}, Description={t.Description}, Status={t.TaskStatus}");
+                }
+
+                PendingTasks = allTasks.Where(t => t.TaskStatus == Rincon.Models.TaskStatus.Pendiente).ToList();
+                AssignedTasks = allTasks.Where(t => t.TaskStatus == Rincon.Models.TaskStatus.Iniciada).ToList();
+                System.Diagnostics.Debug.WriteLine($"Pendientes: {PendingTasks.Count}, Asignadas: {AssignedTasks.Count}");
+
+                OnPropertyChanged(nameof(PendingTasks));
+                OnPropertyChanged(nameof(AssignedTasks));
+                OnPropertyChanged(nameof(IsAnyPopupVisible));
             }
-
-            PendingTasks = allTasks.Where(t => t.TaskStatus == Rincon.Models.TaskStatus.Pendiente).ToList();
-            AssignedTasks = allTasks.Where(t => t.TaskStatus == Rincon.Models.TaskStatus.Iniciada).ToList();
-            System.Diagnostics.Debug.WriteLine($"Pendientes: {PendingTasks.Count}, Asignadas: {AssignedTasks.Count}");
-
-            IsBusy = false;
-            OnPropertyChanged(nameof(PendingTasks));
-            OnPropertyChanged(nameof(AssignedTasks));
-            OnPropertyChanged(nameof(IsAnyPopupVisible));
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al cargar tareas: {ex.Message}");
+                await NotificationService.NotifyAsync("Error", $"Error al cargar tareas: {ex.Message}", "OK");
+            }
         }
 
         private async void LoadOperatorsAsync()
@@ -318,11 +354,30 @@ namespace Rincon.ViewModels
             OnPropertyChanged(nameof(IsConfirmEnabled));
         }
         
-        public ICommand ReloadTasksCommand => new Command(() =>
+        public ICommand ReloadTasksCommand => new Command(async () =>
         {
-            IsBusy = true;
-            OnPropertyChanged(nameof(IsAnyPopupVisible));
-            LoadTasksAsync();
+            try
+            {
+                IsBusy = true;
+                OnPropertyChanged(nameof(IsAnyPopupVisible));
+                
+                var allTasks = await _dataService.LoadTaskItemsAsync();
+                PendingTasks = allTasks.Where(t => t.TaskStatus == Rincon.Models.TaskStatus.Pendiente).ToList();
+                AssignedTasks = allTasks.Where(t => t.TaskStatus == Rincon.Models.TaskStatus.Iniciada).ToList();
+                
+                OnPropertyChanged(nameof(PendingTasks));
+                OnPropertyChanged(nameof(AssignedTasks));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al recargar tareas: {ex.Message}");
+                await NotificationService.NotifyAsync("Error", $"Error al recargar tareas: {ex.Message}", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+                OnPropertyChanged(nameof(IsAnyPopupVisible));
+            }
         });
     }
 }
