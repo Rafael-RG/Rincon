@@ -5,7 +5,10 @@ using System.Globalization;
 namespace Rincon.Converters
 {
      public class BoolToTextConverter : IValueConverter
-    {     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        public static readonly BoolToTextConverter Instance = new BoolToTextConverter();
+        
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
             {
                 if (value is bool booleanValue && parameter is string param)
                 {

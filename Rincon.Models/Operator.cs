@@ -63,5 +63,7 @@ namespace Rincon.Models
                 OnPropertyChanged(nameof(CreateDate));
             }
         }
+
+        public string FullName => $"{Name} {LastName}".Trim();
     }
 }

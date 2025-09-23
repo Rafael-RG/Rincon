@@ -74,6 +74,16 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private string additionalComments;
 
+        [ObservableProperty]
+        private List<Operator> operators;
+
+        [ObservableProperty]
+        private Operator selectedOperator;
+
+        public bool IsPinEnabled => SelectedOperator != null;
+        
+        public bool IsConfirmEnabled => SelectedOperator != null && !string.IsNullOrWhiteSpace(OperatorPin);
+
         public List<TaskItem> PendingTasks { get; set; }
         public List<TaskItem> AssignedTasks { get; set; }
 
@@ -81,7 +91,10 @@ namespace Rincon.ViewModels
         {
             IsTaskDetailPopupVisible = false;
             IsFinishTaskPopupVisible = false;
+            IsAssignOperatorPopupVisible = false;
             SelectedTask = null;
+            SelectedOperator = null;
+            OperatorPin = string.Empty;
         });
 
 
@@ -108,32 +121,22 @@ namespace Rincon.ViewModels
 
             try
             {
-                if (string.IsNullOrWhiteSpace(OperatorUser) || string.IsNullOrWhiteSpace(OperatorPin))
+                if (SelectedOperator == null || string.IsNullOrWhiteSpace(OperatorPin))
                 {
-                    NotificationService.NotifyAsync("Error", "Por favor, ingrese usuario y PIN.", "OK");
-                    return;
-                }
-                // Aquí puedes agregar la lógica para autenticar al operador
-                var operators = await this._dataService.LoadOperatorsAsync();
-
-                if (operators == null || !operators.Any())
-                {
-                    NotificationService.NotifyAsync("Error", "No hay operadores registrados.", "OK");
+                    await NotificationService.NotifyAsync("Error", "Por favor, seleccione un operador e ingrese el PIN.", "OK");
                     return;
                 }
 
-                var existOperator = operators.FirstOrDefault(o => o.Name == OperatorUser && o.Pin == OperatorPin);
-
-                if (existOperator == null)
+                // Verificar que el PIN sea correcto para el operador seleccionado
+                if (SelectedOperator.Pin != OperatorPin)
                 {
-                    NotificationService.NotifyAsync("Error", "Usuario o PIN incorrectos.", "OK");
+                    await NotificationService.NotifyAsync("Error", "PIN incorrecto.", "OK");
                     return;
                 }
 
-                // Si el operador existe, puedes proceder a navegar a la página de tareas
-
-                this.SelectedTask.OperatorId = existOperator.Id;
-                this.SelectedTask.OperatorName = existOperator.Name;
+                // Si el PIN es correcto, proceder a asignar la tarea
+                this.SelectedTask.OperatorId = SelectedOperator.Id;
+                this.SelectedTask.OperatorName = SelectedOperator.Name;
                 this.SelectedTask.TaskStatus = Rincon.Models.TaskStatus.Iniciada;
 
                 // Actualizar la tarea en el servicio de datos
@@ -148,7 +151,7 @@ namespace Rincon.ViewModels
             {
                 IsBusy = false;
                 System.Diagnostics.Debug.WriteLine($"Error al entrar como operador: {ex.Message}");
-                NotificationService.NotifyAsync("Error", $"Error al entrar como operador: {ex.Message}", "OK");
+                await NotificationService.NotifyAsync("Error", $"Error al entrar como operador: {ex.Message}", "OK");
             }
 
             IsTaskDetailPopupVisible = false;
@@ -204,35 +207,28 @@ namespace Rincon.ViewModels
             _dataService = provider.GetService(typeof(IDataService)) as IDataService;
             PendingTasks = new List<TaskItem>();
             AssignedTasks = new List<TaskItem>();
+            Operators = new List<Operator>();
             LoadTasksAsync();
+            LoadOperatorsAsync();
         }
 
         public ICommand FinishTaskAuthCommand => new Command(async() =>
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(OperatorUser) || string.IsNullOrWhiteSpace(OperatorPin))
+                if (SelectedOperator == null || string.IsNullOrWhiteSpace(OperatorPin))
                 {
-                    NotificationService.NotifyAsync("Error", "Por favor, ingrese usuario y PIN.", "OK");
+                    await NotificationService.NotifyAsync("Error", "Por favor, seleccione un operador e ingrese el PIN.", "OK");
                     return;
                 }
 
-                // Aquí puedes agregar la lógica para autenticar al operador
-                var operators = await this._dataService.LoadOperatorsAsync();
-
-                if (operators == null || !operators.Any())
+                // Verificar que el PIN sea correcto para el operador seleccionado
+                if (SelectedOperator.Pin != OperatorPin)
                 {
-                    NotificationService.NotifyAsync("Error", "No hay operadores registrados.", "OK");
+                    await NotificationService.NotifyAsync("Error", "PIN incorrecto.", "OK");
                     return;
                 }
 
-                var existOperator = operators.FirstOrDefault(o => o.Name == OperatorUser && o.Pin == OperatorPin);
-
-                if (existOperator == null)
-                {
-                    NotificationService.NotifyAsync("Error", "Usuario o PIN incorrectos.", "OK");
-                    return;
-                }
                 // Si el operador existe, puedes proceder a finalizar la tarea
                 this.SelectedTask.TaskStatus = Rincon.Models.TaskStatus.Finalizada;
                 this.SelectedTask.ProcessErrorQuantity = this.LossMaterial.ToString();
@@ -268,7 +264,7 @@ namespace Rincon.ViewModels
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Error al finalizar tarea: {ex.Message}");
-                NotificationService.NotifyAsync("Error", $"Error al finalizar tarea: {ex.Message}", "OK");
+                await NotificationService.NotifyAsync("Error", $"Error al finalizar tarea: {ex.Message}", "OK");
             }
 
             IsFinishTaskAuthPopupVisible = false;
@@ -293,6 +289,33 @@ namespace Rincon.ViewModels
             OnPropertyChanged(nameof(PendingTasks));
             OnPropertyChanged(nameof(AssignedTasks));
             OnPropertyChanged(nameof(IsAnyPopupVisible));
+        }
+
+        private async void LoadOperatorsAsync()
+        {
+            try
+            {
+                var operatorsList = await _dataService.LoadOperatorsAsync();
+                Operators = operatorsList?.ToList() ?? new List<Operator>();
+                OnPropertyChanged(nameof(Operators));
+                System.Diagnostics.Debug.WriteLine($"Operadores cargados: {Operators.Count}");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al cargar operadores: {ex.Message}");
+                Operators = new List<Operator>();
+            }
+        }
+        
+        partial void OnSelectedOperatorChanged(Operator value)
+        {
+            OnPropertyChanged(nameof(IsPinEnabled));
+            OnPropertyChanged(nameof(IsConfirmEnabled));
+        }
+        
+        partial void OnOperatorPinChanged(string value)
+        {
+            OnPropertyChanged(nameof(IsConfirmEnabled));
         }
         
         public ICommand ReloadTasksCommand => new Command(() =>
