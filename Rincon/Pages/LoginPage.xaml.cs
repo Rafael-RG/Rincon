@@ -37,7 +37,7 @@ public partial class LoginPage
 		{
 			button.Scale = 1.0;
 			button.Opacity = 1.0;
-			button.BackgroundColor = Color.FromArgb("#4f6650ff");
+			button.BackgroundColor = Color.FromArgb("#4A744C");
 		}
 	}
 }
