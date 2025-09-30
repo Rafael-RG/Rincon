@@ -3084,6 +3084,7 @@
                 Padding="15,20,15,15"
                 BackgroundColor="White"
                 ColumnDefinitions="*"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
                 IsVisible="{Binding IsCreateTaskView}"
                 RowDefinitions="auto,auto,*,auto,auto"
                 RowSpacing="12">
@@ -3323,10 +3324,11 @@
                                         TextColor="Black"
                                         Text="{Binding SelectedDerivateProducts, Mode=TwoWay}"
                                         VerticalOptions="Center"
-                                        HorizontalOptions="Fill" />
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SelectProductDerivateTaskCommand}" />
-                                    </Frame.GestureRecognizers>
+                                        HorizontalOptions="Fill" >
+        <Label.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding SelectProductDerivateTaskCommand}" />
+        </Label.GestureRecognizers>
+    </Label>
                                 </Frame>
 
                                 <Frame Grid.Row="1" Grid.ColumnSpan="2"
@@ -3415,10 +3417,20 @@
                     ColumnDefinitions="*,180,180,*"
                     ColumnSpacing="15"
                     HorizontalOptions="Fill">
+                    <ActivityIndicator
+            HeightRequest="32"
+            Grid.ColumnSpan="4"
+            HorizontalOptions="CenterAndExpand"
+            IsRunning="True"
+            Color="#4A744C"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="CenterAndExpand"
+            WidthRequest="32" />
                     <Button
                         Grid.Column="1"
                         BackgroundColor="#D3AA84"
                         Clicked="CreateTask_Clicked"
+                        IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
                         HeightRequest="36"
                         Text="Crear Tarea"
                         TextColor="#000000"
@@ -3428,6 +3440,7 @@
                         Grid.Column="2"
                         BackgroundColor="#FFF6ED"
                         Command="{Binding CancelCreateTaskCommand}"
+                        IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
                         HeightRequest="36"
                         Text="Cancelar"
                         TextColor="#000000"
@@ -3702,6 +3715,7 @@
                 Padding="15,20,15,15"
                 BackgroundColor="White"
                 ColumnDefinitions="*"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
                 IsVisible="{Binding IsTaskItemEditView}"
                 RowDefinitions="auto,auto,*,auto,auto"
                 RowSpacing="12">
@@ -3899,18 +3913,29 @@
                     ColumnDefinitions="*,180,180,*"
                     ColumnSpacing="15"
                     HorizontalOptions="Fill">
+                    <ActivityIndicator
+            HeightRequest="32"
+            Grid.ColumnSpan="4"
+            HorizontalOptions="CenterAndExpand"
+            IsRunning="True"
+            Color="#4A744C"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="CenterAndExpand"
+            WidthRequest="32" />
                     <Button
                         Grid.Column="1"
                         BackgroundColor="#D3AA84"
                         Clicked="EditTask_Clicked"
                         HeightRequest="36"
                         Text="Editar Tarea"
+                        IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
                         TextColor="#000000"
                         FontSize="14"
                         CornerRadius="5" />
                     <Button
                         Grid.Column="2"
                         BackgroundColor="#FFF6ED"
+                        IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
                         Command="{Binding CancelEditTaskCommand}"
                         HeightRequest="36"
                         Text="Cancelar"
@@ -4170,6 +4195,7 @@
                 BackgroundColor="White"
                 ColumnDefinitions="*,1.5*"
                 ColumnSpacing="20"
+                IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
                 IsVisible="{Binding IsVisibleCreateBookingOrderView}"
                 RowDefinitions="auto,auto,*,auto"
                 RowSpacing="5"
@@ -4535,9 +4561,19 @@
                     ColumnSpacing="15"
                     HorizontalOptions="Center"
                     WidthRequest="400">
+                    <ActivityIndicator
+            HeightRequest="32"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="CenterAndExpand"
+            IsRunning="True"
+            Color="#4A744C"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="CenterAndExpand"
+            WidthRequest="32" />
                     <Button
                         Grid.Column="0"
                         BackgroundColor="#D3AA84"
+                        IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
                         Clicked="CreateBookingOrder_Clicked"
                         FontSize="14"
                         HeightRequest="35"
@@ -4545,6 +4581,7 @@
                         TextColor="#000000" />
                     <Button
                         Grid.Column="1"
+                        IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
                         BackgroundColor="#FFF6ED"
                         Command="{Binding CancelCreateBookingOrderCommand}"
                         FontSize="14"

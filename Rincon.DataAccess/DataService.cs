@@ -54,6 +54,7 @@ namespace Rincon.DataAccess
             using (var databaseContext = new DatabaseContext())
             {
                 var itemsCount = await databaseContext.UpsertRange<T>(item).RunAsync();
+                await databaseContext.SaveChangesAsync();
                 return itemsCount;
             }
         }
@@ -91,6 +92,8 @@ namespace Rincon.DataAccess
                     count += await databaseContext.UpsertRange<ProductStock>(item).RunAsync();
                 }
                 
+                await databaseContext.SaveChangesAsync();
+
                 return count;
             }
         }
@@ -123,7 +126,15 @@ namespace Rincon.DataAccess
         {
             using (var databaseContext = new DatabaseContext())
             {
-                var items = await databaseContext.ProductStock.ToListAsync().ConfigureAwait(false);
+                databaseContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
+                databaseContext.ChangeTracker.Clear();
+
+                var items = await databaseContext.ProductStock
+                    .AsNoTracking()
+                    .ToListAsync()
+                    .ConfigureAwait(false);
+
                 return items;
             }
         }
@@ -185,6 +196,7 @@ namespace Rincon.DataAccess
             {
                 //delete all
                 var itemsCount = await databaseContext.Database.ExecuteSqlRawAsync("DELETE FROM User");
+                await databaseContext.SaveChangesAsync();
                 return itemsCount > 0;
             }
         }
@@ -196,6 +208,7 @@ namespace Rincon.DataAccess
             using (var databaseContext = new LocalDataBaseContext())
             {
                 var itemsCount = await databaseContext.UpsertRange(user).RunAsync();
+                await databaseContext.SaveChangesAsync();
                 return itemsCount > 0;
             }
         }

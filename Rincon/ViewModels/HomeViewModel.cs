@@ -1960,7 +1960,7 @@ namespace Rincon.ViewModels
                     return false;
                 }
 
-                if (this.ProductMovement.Quantity < this.QuantityMovement)
+                if (this.ProductMovement.Available < this.QuantityMovement)
                 {
                     await NotificationService.NotifyAsync("Atencion", "La cantidad no puede ser mayor a la cantidad en stock", "Cerrar");
                     return false;
@@ -2851,6 +2851,8 @@ namespace Rincon.ViewModels
         {
             try
             {
+                this.IsBusy = true;
+
                 if (this.ProductTask == null)
                 {
                     await NotificationService.NotifyAsync("Atencion", "No se a seleccionado ningun producto", "Cerrar");
@@ -2886,7 +2888,7 @@ namespace Rincon.ViewModels
                     ProductDestinationId = this.SelectedDerivateProducts.Id,
                     Description = this.CommentsTask,
                     TaskStatus = Models.TaskStatus.Pendiente,
-                    ProductSource = $"{this.ProductTask.Product.ProductType} {this.ProductTask.Product.Description} {this.ProductTask.Product.WoodState}", 
+                    ProductSource = $"{this.ProductTask.Product.ProductType} {this.ProductTask.Product.Description} {this.ProductTask.Product.WoodState}",
                     ProductDestination = $"{this.SelectedDerivateProducts.ProductType} {this.SelectedDerivateProducts.Description} {this.ProductTask.Product.WoodState}",
                 };
 
@@ -2924,6 +2926,10 @@ namespace Rincon.ViewModels
                 await NotificationService.NotifyAsync("Atencion", "Hubo un error al crear la tarea. Vuleva a intentar.", "Cerrar");
                 return false;
             }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
         [RelayCommand]
@@ -2931,6 +2937,8 @@ namespace Rincon.ViewModels
         {
             try
             {
+                this.IsBusy = true;
+
                 if (this.ProductTask == null)
                 {
                     await NotificationService.NotifyAsync("Atencion", "No se a seleccionado ningun producto", "Cerrar");
@@ -3004,6 +3012,10 @@ namespace Rincon.ViewModels
                 await NotificationService.NotifyAsync("Atencion", "Hubo un error al actualizar la tarea. Vuleva a intentar.", "Cerrar");
                 return false;
             }
+            finally
+            {
+                this.IsBusy = false;
+            }
         }
 
         public ICommand SelectProductDerivateTaskCommand => new Command(() =>
@@ -3059,6 +3071,7 @@ namespace Rincon.ViewModels
                         Id = product.Id,
                         Product = product.Product,
                         Quantity = product.Quantity,
+                        Reserved= product.Reserved
                     });
                 }
                 else
@@ -3081,6 +3094,8 @@ namespace Rincon.ViewModels
         {
             try
             {
+                this.IsBusy = true;
+
                 if (!this.IsBooking && !this.IsOrder)
                 {
                     await NotificationService.NotifyAsync("Atencion", "No se a seleccionado el tipo de operacion", "Cerrar");
@@ -3099,16 +3114,42 @@ namespace Rincon.ViewModels
                     return false;
                 }
 
-                if (this.IsShipmentTask && string.IsNullOrEmpty(this.AddressBookingOrder)) 
+                if (this.IsShipmentTask && string.IsNullOrEmpty(this.AddressBookingOrder))
                 {
                     await NotificationService.NotifyAsync("Atencion", "Debe ingresar la direccion del cliente", "Cerrar");
                     return false;
                 }
 
-                if (this.ProductsBookingOrder == null || !this.ProductsBookingOrder.Any()) 
+                if (this.ProductsBookingOrder == null || !this.ProductsBookingOrder.Any())
                 {
                     await NotificationService.NotifyAsync("Atencion", "Debe seleccionar almenos un producto", "Cerrar");
                     return false;
+                }
+
+                foreach (var product in this.ProductsBookingOrder)
+                {
+                    if (this.IsOrder)
+                    {
+                        if (product.Available < product.QuantityBookingOrder)
+                        {
+                            await NotificationService.NotifyAsync("Stock Insuficiente",
+                                $"El producto '{product.Product.Description}' no tiene suficiente stock disponible.\n" +
+                                $"Disponible: {product.Available}, Solicitado: {product.QuantityBookingOrder}",
+                                "Cerrar");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (product.Quantity < product.QuantityBookingOrder)
+                        {
+                            await NotificationService.NotifyAsync("Stock Insuficiente",
+                                $"El producto '{product.Product.Description}' no tiene suficiente stock total.\n" +
+                                $"Total: {product.Quantity}, Solicitado: {product.QuantityBookingOrder}",
+                                "Cerrar");
+                            return false;
+                        }
+                    }
                 }
 
                 var guid = Guid.NewGuid();
@@ -3136,7 +3177,7 @@ namespace Rincon.ViewModels
 
                 if (this.IsBooking)
                 {
-                    this.ProductsBookingOrder.ToList().ForEach(async product =>
+                    foreach (var product in this.ProductsBookingOrder)
                     {
                         var booking = new Booking
                         {
@@ -3146,17 +3187,27 @@ namespace Rincon.ViewModels
                             ProductName = product.Product.ToString()
                         };
 
-                        await this.DataService.InsertItemAsync<Booking>(booking);
+                        var bookingResult = await this.DataService.InsertItemAsync<Booking>(booking);
+                        if (bookingResult == 0)
+                        {
+                            await NotificationService.NotifyAsync("Error", "Error al guardar la reserva", "Cerrar");
+                            return false;
+                        }
 
+                        // ✅ Incrementar stock reservado
                         product.Reserved = product.Reserved + product.QuantityBookingOrder;
 
-                        await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(product);
-
-                    });
+                        var stockResult = await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(product);
+                        if (stockResult == 0)
+                        {
+                            await NotificationService.NotifyAsync("Error", "Error al actualizar el stock", "Cerrar");
+                            return false;
+                        }
+                    }
                 }
-                else 
+                else
                 {
-                    this.ProductsBookingOrder.ToList().ForEach(async product =>
+                    foreach (var product in this.ProductsBookingOrder)
                     {
                         var order = new Order
                         {
@@ -3166,15 +3217,33 @@ namespace Rincon.ViewModels
                             ProductName = product.Product.ToString()
                         };
 
-                        await this.DataService.InsertItemAsync<Order>(order);
+                        var orderResult = await this.DataService.InsertItemAsync<Order>(order);
+                        if (orderResult == 0)
+                        {
+                            await NotificationService.NotifyAsync("Error", "Error al guardar el pedido", "Cerrar");
+                            return false;
+                        }
+
+                        if (product.Available < product.QuantityBookingOrder)
+                        {
+                            await NotificationService.NotifyAsync("Error",
+                                $"Stock insuficiente para {product.Product.Description}", "Cerrar");
+                            return false;
+                        }
 
                         product.Quantity = product.Quantity - product.QuantityBookingOrder;
 
-                        await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(product);
-                    });
+                        var stockResult = await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(product);
+                        if (stockResult == 0)
+                        {
+                            await NotificationService.NotifyAsync("Error", "Error al actualizar el stock", "Cerrar");
+                            return false;
+                        }
+                    }
                 }
 
                 await RefreshBar();
+                ClearBookingOrderForm();
                 return true;
             }
             catch
@@ -3182,6 +3251,23 @@ namespace Rincon.ViewModels
                 await NotificationService.NotifyAsync("Atencion", "Hubo un error al crear la tarea. Vuleva a intentar.", "Cerrar");
                 return false;
             }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        }
+
+        private void ClearBookingOrderForm()
+        {
+            this.ClientBookingOrder = string.Empty;
+            this.PhoneBookingOrder = string.Empty;
+            this.AddressBookingOrder = string.Empty;
+            this.CommentsBookingOrder = string.Empty;
+            this.ProductsBookingOrder?.Clear();
+            this.QuantityBookingOrder = 0;
+            this.DateBookingOrder = DateTime.Now;
+            this.IsNoShipmentTask = true;
+            this.IsBooking = true;
         }
 
         [RelayCommand]

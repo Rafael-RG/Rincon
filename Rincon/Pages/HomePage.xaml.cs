@@ -493,7 +493,7 @@ public partial class HomePage
         if ((ProductStock)ProductsNewTask.SelectedItem == null) return;
         this.ViewModel.ProductTask = (ProductStock)ProductsNewTask.SelectedItem;
         this.ViewModel.ReloadDerivateProductsCommand.Execute(null);
-        this.ViewModel.SelectedDerivateProducts = null;
+        this.ViewModel.SelectedDerivateProducts = this.ViewModel.DerivateProducts != null ? this.ViewModel.DerivateProducts.FirstOrDefault() : null;
         this.ViewModel.IsVisibleListNewTask = false;
         this.ViewModel.IsSelectedProductTask = this.ViewModel.ProductTask != null ? true : false;
         this.SearchBarNewTask.Unfocus();
