@@ -802,6 +802,9 @@ public partial class HomePage
         if (result)
         {
             await popupNavigation.PushAsync(new SuccessMessagePage(this.popupNavigation, $"Se confirmo la reserva y se creo el pedido con exito!"));
+            
+            // Navegar de vuelta a la lista de reservas
+            this.ViewModel.ChangeViewCommand.Execute("ListBooking");
         }
 
     }

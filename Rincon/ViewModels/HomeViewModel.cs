@@ -3165,6 +3165,7 @@ namespace Rincon.ViewModels
                     OrderDate = this.DateBookingOrder,
                     Shipment = this.IsShipmentTask,
                     Comments = this.CommentsBookingOrder,
+                    Status = OrderStatus.Reserva,
                 };
 
                 var saveBookingOrder = await this.DataService.InsertItemAsync<BookingOrder>(newBookingOrder);
@@ -3285,55 +3286,118 @@ namespace Rincon.ViewModels
         [RelayCommand]
         private async Task<bool> CancelOrder(BookingOrder bookingOrder)
         {
+            var tcs = new TaskCompletionSource<bool>();
+            
             await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Si", "No", async (response) =>
             {
-                if (response)
+                try
                 {
-                    bookingOrder.Status = OrderStatus.Cancelado;
-
-                    await this.DataService.UpdateItemAsync<BookingOrder>(bookingOrder);
-
-                    var orders = await this.DataService.LoadOrderDetailsItemsAsync(bookingOrder.BookingOrderId);
-
-                    if (orders != null && orders.Any())
+                    if (response)
                     {
-                        orders.ToList().ForEach(async order =>
+                        bookingOrder.Status = OrderStatus.Cancelado;
+                        await this.DataService.UpdateItemAsync<BookingOrder>(bookingOrder);
+
+                        var orders = await this.DataService.LoadOrderDetailsItemsAsync(bookingOrder.BookingOrderId);
+
+                        if (orders != null && orders.Any())
                         {
-                            var product = this.ProductsWithStock.Where(x => x.Product.Id == order.ProductId).FirstOrDefault();
-
-                            if (product != null)
+                            foreach (var order in orders)
                             {
-                                product.Quantity = product.Quantity + order.Quantity;
+                                var product = this.ProductsWithStock.Where(x => x.Product.Id == order.ProductId).FirstOrDefault();
 
-                                await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(product);
+                                if (product != null)
+                                {
+                                    // Devolver stock para pedidos cancelados
+                                    product.Quantity = product.Quantity + order.Quantity;
+                                    await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(product);
+                                }
                             }
-                        });
+                        }
+                        await RefreshBar();
                     }
+                    tcs.SetResult(response);
+                }
+                catch (Exception ex)
+                {
+                    await NotificationService.NotifyAsync("Error", "Error al cancelar el pedido", "Cerrar");
+                    tcs.SetException(ex);
                 }
             });
 
-            await RefreshBar();
-            return true;
+            return await tcs.Task;
         }
 
         [RelayCommand]
-        private async Task<bool> ConfirmBooking(BookingOrder bookingOrder)
+        private async Task<bool> ConfirmBooking()
         {
+            var tcs = new TaskCompletionSource<bool>();
+            
             await NotificationService.ConfirmAsync("Confirmar", "¿Está seguro que desea confirmar la operación?", "Si", "No", async (response) =>
             {
-                if (response)
+                try
                 {
-                    bookingOrder.Status = bookingOrder.Shipment ? OrderStatus.Enviado : OrderStatus.Despachado;
+                    if (response)
+                    {
+                        this.IsBusy = true;
+                        
+                        this.SelectedBookingOrder.Status = this.SelectedBookingOrder.Shipment ? OrderStatus.Enviado : OrderStatus.Despachado;
+                        this.SelectedBookingOrder.IsBooking = false;
+                        this.SelectedBookingOrder.IsOrder = true;
 
-                    bookingOrder.IsBooking = false;
-                    bookingOrder.IsOrder = true;
+                        await this.DataService.UpdateItemAsync<BookingOrder>(this.SelectedBookingOrder);
 
-                    await this.DataService.UpdateItemAsync<BookingOrder>(bookingOrder);
+                        var bookings = await this.DataService.LoadBookingDetailsItemsAsync(this.SelectedBookingOrder.BookingOrderId);
+
+                        if (bookings != null && bookings.Any())
+                        {
+                            foreach (var booking in bookings)
+                            {
+                                var product = this.ProductsWithStock.Where(x => x.Product.Id == booking.ProductId).FirstOrDefault();
+
+                                if (product != null)
+                                {
+                                    // Descontar del stock total la cantidad confirmada
+                                    product.Quantity = product.Quantity - booking.Quantity;
+                                    
+                                    // Liberar del stock reservado la cantidad confirmada
+                                    product.Reserved = product.Reserved - booking.Quantity;
+
+                                    await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(product);
+                                }
+                            }
+
+                            // Crear las órdenes correspondientes
+                            foreach (var booking in bookings)
+                            {
+                                var order = new Order
+                                {
+                                    OrderId = this.SelectedBookingOrder.BookingOrderId,
+                                    ProductId = booking.ProductId,
+                                    Quantity = booking.Quantity,
+                                    ProductName = booking.ProductName
+                                };
+
+                                await this.DataService.InsertItemAsync<Order>(order);
+                            }
+                        }
+
+                        await RefreshBar();
+                        await LoadBookingsItems();
+                    }
+                    tcs.SetResult(response);
+                }
+                catch (Exception ex)
+                {
+                    await NotificationService.NotifyAsync("Error", "Error al confirmar la reserva", "Cerrar");
+                    tcs.SetException(ex);
+                }
+                finally
+                {
+                    this.IsBusy = false;
                 }
             });
 
-            await RefreshBar();
-            return true;
+            return await tcs.Task;
         }
 
         [RelayCommand]
@@ -3402,33 +3466,52 @@ namespace Rincon.ViewModels
         [RelayCommand]
         private async Task<bool> CancelBooking(BookingOrder bookingOrder)
         {
+            var tcs = new TaskCompletionSource<bool>();
+            
             await NotificationService.ConfirmAsync("Cancelar", "¿Está seguro que desea cancelar la operación?", "Si", "No", async (response) =>
             {
-                if (response)
+                try
                 {
-                    await this.DataService.UpdateItemAsync<BookingOrder>(bookingOrder);
-
-                    var bookings = await this.DataService.LoadBookingDetailsItemsAsync(bookingOrder.BookingOrderId);
-
-                    if (bookings != null && bookings.Any())
+                    if (response)
                     {
-                        bookings.ToList().ForEach(async booking =>
+                        this.IsBusy = true;
+                        
+                        bookingOrder.Status = OrderStatus.Cancelado;
+                        await this.DataService.UpdateItemAsync<BookingOrder>(bookingOrder);
+
+                        var bookings = await this.DataService.LoadBookingDetailsItemsAsync(bookingOrder.BookingOrderId);
+
+                        if (bookings != null && bookings.Any())
                         {
-                            var product = this.ProductsWithStock.Where(x => x.Product.Id == booking.ProductId).FirstOrDefault();
-
-                            if (product != null)
+                            foreach (var booking in bookings)
                             {
-                                product.Quantity = product.Quantity + booking.Quantity;
+                                var product = this.ProductsWithStock.Where(x => x.Product.Id == booking.ProductId).FirstOrDefault();
 
-                                await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(product);
+                                if (product != null)
+                                {
+                                    // Liberar stock reservado para reservas
+                                    product.Reserved = product.Reserved - booking.Quantity;
+                                    await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(product);
+                                }
                             }
-                        });
+                        }
+                        await RefreshBar();
+                        await LoadBookingsItems();
                     }
+                    tcs.SetResult(response);
+                }
+                catch (Exception ex)
+                {
+                    await NotificationService.NotifyAsync("Error", "Error al cancelar la reserva", "Cerrar");
+                    tcs.SetException(ex);
+                }
+                finally
+                {
+                    this.IsBusy = false;
                 }
             });
 
-            await RefreshBar();
-            return true;
+            return await tcs.Task;
         }
 
         [RelayCommand]

@@ -25,7 +25,26 @@ namespace Rincon.Models
         public OrderStatus Status { get; set; }
         public string Comments { get; set; }
         [NotMapped]
-        public bool IsCancellable { get { return Status != OrderStatus.Cancelado; } }
+        public bool IsCancellable 
+        { 
+            get 
+            { 
+                if (Status == OrderStatus.Cancelado) return false;
+                
+                if (IsBooking) 
+                {
+                    // Para reservas: solo se puede cancelar si es reserva y no está cancelado
+                    return Status == OrderStatus.Reserva;
+                }
+                else if (IsOrder) 
+                {
+                    // Para órdenes: se puede cancelar si no está cancelado
+                    return true;
+                }
+                
+                return false;
+            } 
+        }
     }
 
     public enum OrderStatus
