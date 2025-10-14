@@ -2013,6 +2013,7 @@ namespace Rincon.ViewModels
                     Quantity = this.QuantityMovement,
                     MovementType = this.IsSale ? MovementType.Venta.ToString() : this.IsChangeOfState ? MovementType.Procesado.ToString() : MovementType.Perdida.ToString(),
                     ProductName = $"{this.ProductMovement.Product.Id} - {this.ProductMovement.Product.Description}",
+                    UserName = this.User?.Name ?? "Usuario desconocido"
                 };
 
                 if (resultQuitStock > 0)

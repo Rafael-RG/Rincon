@@ -119,6 +119,9 @@ namespace Rincon.ViewModels
             }
             else if (task.TaskStatus == Rincon.Models.TaskStatus.Iniciada)
             {
+                // Inicializar campos para finalizar tarea
+                LossMaterial = 0;
+                AdditionalComments = string.Empty;
                 IsFinishTaskPopupVisible = true;
             }
         });
@@ -194,8 +197,6 @@ namespace Rincon.ViewModels
             // Limpiar campos antes de mostrar el popup
             SelectedOperator = null;
             OperatorPin = string.Empty;
-            LossMaterial = 0;
-            AdditionalComments = string.Empty;
             
             IsFinishTaskAuthPopupVisible = true;
             OnPropertyChanged(nameof(IsAnyPopupVisible));
@@ -241,6 +242,8 @@ namespace Rincon.ViewModels
                 IsBusy = true;
                 OnPropertyChanged(nameof(IsAnyPopupVisible));
 
+                var products = await this.DataService.LoadProductsAsync();
+
                 if (SelectedOperator == null || string.IsNullOrWhiteSpace(OperatorPin))
                 {
                     await NotificationService.NotifyAsync("Error", "Por favor, seleccione un operador e ingrese el PIN.", "OK");
@@ -266,19 +269,70 @@ namespace Rincon.ViewModels
                 if (productsStock != null && productsStock.Any())
                 {
                     var productSource = productsStock.FirstOrDefault(p => p.Id == this.SelectedTask.ProductSourceId);
+
+                    productSource.Product = products.FirstOrDefault(pr => pr.Id == productSource.Id);
+
                     if (productSource != null)
                     {
                         // Actualizar la cantidad del producto en stock
                         productSource.Process -= int.Parse(this.SelectedTask.Quantity);
                         await _dataService.UpdateItemAsync(productSource);
+
+                        // Crear movimiento para el procesado del producto origen
+                        var movementSource = new Movement
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            Date = DateTime.Now,
+                            Quantity = int.Parse(this.SelectedTask.Quantity),
+                            MovementType = MovementType.Procesado.ToString(),
+                            ProductName = $"{productSource.Id} - {productSource.Product.Description}",
+                            UserName = this.SelectedOperator?.Name ?? "Operador desconocido"
+                        };
+                        await _dataService.InsertOrUpdateItemsAsync<Movement>(movementSource);
                     }
 
                     var productDestination = productsStock.FirstOrDefault(p => p.Id == this.SelectedTask.ProductDestinationId);
+
+                    productDestination.Product = products.FirstOrDefault(pr => pr.Id == productDestination.Id);
+
                     if (productDestination != null)
                     {
+                        // Cantidad producida exitosamente
+                        var successfulQuantity = int.Parse(this.SelectedTask.Quantity) - int.Parse(this.SelectedTask.ProcessErrorQuantity);
+                        
                         // Actualizar la cantidad del producto en stock
-                        productDestination.Quantity += int.Parse(this.SelectedTask.Quantity) - int.Parse(this.SelectedTask.ProcessErrorQuantity);
+                        productDestination.Quantity += successfulQuantity;
                         await _dataService.UpdateItemAsync(productDestination);
+
+                        // Crear movimiento para el producto generado (solo cantidad exitosa)
+                        if (successfulQuantity > 0)
+                        {
+                            var movementDestination = new Movement
+                            {
+                                Id = Guid.NewGuid().ToString(),
+                                Date = DateTime.Now,
+                                Quantity = successfulQuantity,
+                                MovementType = "Producción",
+                                ProductName = $"{productDestination.Id} - {productDestination.Product.Description}",
+                                UserName = this.SelectedOperator?.Name ?? "Operador desconocido"
+                            };
+                            await _dataService.InsertOrUpdateItemsAsync<Movement>(movementDestination);
+                        }
+
+                        // Si hay pérdidas, crear movimiento de pérdida
+                        if (int.Parse(this.SelectedTask.ProcessErrorQuantity) > 0)
+                        {
+                            var movementLoss = new Movement
+                            {
+                                Id = Guid.NewGuid().ToString(),
+                                Date = DateTime.Now,
+                                Quantity = int.Parse(this.SelectedTask.ProcessErrorQuantity),
+                                MovementType = MovementType.Perdida.ToString(),
+                                ProductName = $"{productSource.Id} - {productSource.Product.Description}",
+                                UserName = this.SelectedOperator?.Name ?? "Operador desconocido"
+                            };
+                            await _dataService.InsertOrUpdateItemsAsync<Movement>(movementLoss);
+                        }
                     }
                 }
 

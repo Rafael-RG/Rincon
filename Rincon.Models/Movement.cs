@@ -17,6 +17,7 @@ namespace Rincon.Models
         public string ProductName { get; set; }
         public double Quantity { get; set; }
         public string MovementType { get; set; }
+        public string UserName { get; set; }
     }
 
     public class MovementTypes 

@@ -67,7 +67,7 @@
                     Padding="1"
                     WidthRequest="100"
                     HorizontalOptions="Start">
-            <Entry Text="{Binding LossMaterial}" Keyboard="Numeric" FontSize="12" TextColor="#222" BackgroundColor="transparent" HeightRequest="55" WidthRequest="100" Margin="10,0,0,0"/>
+            <Entry Text="{Binding LossMaterial, Mode=TwoWay}" Keyboard="Numeric" FontSize="12" TextColor="#222" BackgroundColor="transparent" HeightRequest="55" WidthRequest="100" Margin="10,0,0,0"/>
           </Frame>          
           </StackLayout>
             <!-- Comentarios adicionales -->
