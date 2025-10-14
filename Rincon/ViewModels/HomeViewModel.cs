@@ -1812,6 +1812,8 @@ namespace Rincon.ViewModels
                    if (existStock != null)
                    {
                        x.Quantity = x.Quantity + existStock.Quantity;
+                       x.Reserved = existStock.Reserved;
+                       x.Process = existStock.Process;
                    }
                });
                
