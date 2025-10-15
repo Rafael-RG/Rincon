@@ -475,6 +475,24 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private ObservableCollection<Note> notes;
 
+        //// <summary>
+        ///// Top 10 notas más recientes para la vista Home
+        ///// </summary>
+        [ObservableProperty]
+        private ObservableCollection<Note> topRecentNotes;
+
+        //// <summary>
+        ///// Top 10 tareas más recientes para la vista Home
+        ///// </summary>
+        [ObservableProperty]
+        private ObservableCollection<TaskItem> topRecentTasks;
+
+        //// <summary>
+        ///// Top 10 reservas más recientes para la vista Home
+        ///// </summary>
+        [ObservableProperty]
+        private ObservableCollection<BookingOrder> topRecentBookings;
+
 
         //// <summary>
         ///// New note
@@ -897,6 +915,57 @@ namespace Rincon.ViewModels
                 this.IsBusy = false;
             }
 
+        });
+
+        public ICommand RefreshNotesCommand => new Command(async () =>
+        {
+            try
+            {
+                this.IsBusy = true;
+                await LoadNotes();
+            }
+            catch (Exception ex)
+            {
+                // Error handling
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        });
+
+        public ICommand RefreshTasksCommand => new Command(async () =>
+        {
+            try
+            {
+                this.IsBusy = true;
+                await LoadTaskItems();
+            }
+            catch (Exception ex)
+            {
+                // Error handling
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        });
+
+        public ICommand RefreshBookingsCommand => new Command(async () =>
+        {
+            try
+            {
+                this.IsBusy = true;
+                await LoadBookingsItems();
+            }
+            catch (Exception ex)
+            {
+                // Error handling
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
         });
 
         public ICommand LogoutViewCommand => new Command(async () =>
@@ -2262,6 +2331,11 @@ namespace Rincon.ViewModels
                 {
                     this.Notes = new ObservableCollection<Note>(notes);
                     OnPropertyChanged(nameof(Notes));
+                    
+                    // Cargar top 10 más recientes para la vista Home
+                    var recentNotes = notes.OrderByDescending(x => x.CreatedAt).Take(10);
+                    this.TopRecentNotes = new ObservableCollection<Note>(recentNotes);
+                    OnPropertyChanged(nameof(TopRecentNotes));
                 } 
             }
             catch
@@ -3038,11 +3112,16 @@ namespace Rincon.ViewModels
                 {
                     this.TaskItems = new ObservableCollection<TaskItem>(taskItems);
                     OnPropertyChanged(nameof(TaskItems));
+                    
+                    // Cargar top 10 más recientes para la vista Home
+                    var recentTasks = taskItems.Where(x => x.TaskStatus == Rincon.Models.TaskStatus.Pendiente).OrderByDescending(x => x.CreatedAt).Take(10);
+                    this.TopRecentTasks = new ObservableCollection<TaskItem>(recentTasks);
+                    OnPropertyChanged(nameof(TopRecentTasks));
                 }
             }
             catch
             {
-                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar las notas. Vuleva a intentar.", "Cerrar");
+                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar las tareas. Vuleva a intentar.", "Cerrar");
             }
         }
         #endregion
@@ -3458,11 +3537,16 @@ namespace Rincon.ViewModels
                 {
                     this.BookingOrderItems = new ObservableCollection<BookingOrder>(bookingItems);
                     OnPropertyChanged(nameof(BookingOrderItems));
+                    
+                    // Cargar top 10 más recientes para la vista Home
+                    var recentBookings = bookingItems.Where(x => x.Status == OrderStatus.Reserva).OrderByDescending(x => x.OrderDate).Take(10);
+                    this.TopRecentBookings = new ObservableCollection<BookingOrder>(recentBookings);
+                    OnPropertyChanged(nameof(TopRecentBookings));
                 }
             }
             catch
             {
-                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar las notas. Vuleva a intentar.", "Cerrar");
+                await NotificationService.NotifyAsync("Error", "Hubo un error al cargar las reservas. Vuleva a intentar.", "Cerrar");
             }
         }
 

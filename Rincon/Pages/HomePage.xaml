@@ -460,6 +460,7 @@
                             VerticalOptions="FillAndExpand" />
                     </Grid>
                 </Frame>
+                <!-- Frame tasks -->
                 <Frame
                     Grid.Row="1"
                     Grid.RowSpan="4"
@@ -473,14 +474,24 @@
                             <Label
                                 FontSize="22"
                                 HorizontalOptions="Start"
-                                Text="{Binding TaskItems.Count, StringFormat='Tareas ({0})'}"
+                                Text="{Binding TopRecentTasks.Count, StringFormat='Tareas ({0})'}"
                                 TextColor="Gray"
                                 VerticalOptions="Center" />
                             <ImageButton
                                 BackgroundColor="Transparent"
+                                Command="{Binding RefreshTasksCommand}"
+                                HeightRequest="35"
+                                WidthRequest="35"
+                                HorizontalOptions="EndAndExpand"
+                                VerticalOptions="Start"
+                                Source="refresh"
+                                Margin="0,0,5,0"
+                                Opacity="0.7" />
+                            <ImageButton
+                                BackgroundColor="Transparent"
                                 HeightRequest="35"
                                 Clicked="AddTask_Clicked"
-                                HorizontalOptions="EndAndExpand"
+                                HorizontalOptions="End"
                                 Source="add_circle_button.png"
                                 VerticalOptions="Start"
                                 WidthRequest="35" />
@@ -495,7 +506,7 @@
                             Grid.Row="4"
                             Margin="0,10,0,0"
                             BackgroundColor="Transparent"
-                            ItemsSource="{Binding TaskItems}"
+                            ItemsSource="{Binding TopRecentTasks}"
                             SelectionMode="None"
                             VerticalOptions="FillAndExpand"
                             VerticalScrollBarVisibility="Never">
@@ -576,6 +587,7 @@
                     
                     </StackLayout>
                 </Frame>
+                <!-- Frame bookings -->
                 <Frame
                     Grid.Row="0"
                     Grid.RowSpan="2"
@@ -590,14 +602,24 @@
                             <Label
                                 FontSize="22"
                                 HorizontalOptions="Start"
-                                Text="{Binding BookingOrderItems.Count, StringFormat='Reservas ({0})'}"
+                                Text="{Binding TopRecentBookings.Count, StringFormat='Reservas ({0})'}"
                                 TextColor="Gray"
                                 VerticalOptions="Center" />
                             <ImageButton
                                 BackgroundColor="Transparent"
+                                Command="{Binding RefreshBookingsCommand}"
+                                HeightRequest="35"
+                                WidthRequest="35"
+                                HorizontalOptions="EndAndExpand"
+                                VerticalOptions="Start"
+                                Source="refresh"
+                                Margin="0,0,5,0"
+                                Opacity="0.7" />
+                            <ImageButton
+                                BackgroundColor="Transparent"
                                 HeightRequest="35"
                                 Clicked="AddBooking_Clicked"
-                                HorizontalOptions="EndAndExpand"
+                                HorizontalOptions="End"
                                 Source="add_circle_button.png"
                                 VerticalOptions="Start"
                                 WidthRequest="35" />
@@ -612,7 +634,7 @@
                             Grid.Row="4"
                             Margin="0,10,0,0"
                             BackgroundColor="Transparent"
-                            ItemsSource="{Binding BookingOrderItems}"
+                            ItemsSource="{Binding TopRecentBookings}"
                             SelectionMode="None"
                             VerticalOptions="FillAndExpand"
                             VerticalScrollBarVisibility="Never">
@@ -691,6 +713,7 @@
                     
                     </StackLayout>
                 </Frame>
+                <!-- Frame notes -->
                 <Frame
                     Grid.Row="2"
                     Grid.RowSpan="2"
@@ -705,14 +728,24 @@
                             <Label
                                 FontSize="22"
                                 HorizontalOptions="Start"
-                                Text="{Binding Notes.Count, StringFormat='Notas ({0})'}"
+                                Text="{Binding TopRecentNotes.Count, StringFormat='Notas ({0})'}"
                                 TextColor="Gray"
                                 VerticalOptions="Center" />
                             <ImageButton
                                 BackgroundColor="Transparent"
+                                Command="{Binding RefreshNotesCommand}"
+                                HeightRequest="35"
+                                WidthRequest="35"
+                                HorizontalOptions="EndAndExpand"
+                                VerticalOptions="Start"
+                                Source="refresh"
+                                Margin="0,0,5,0"
+                                Opacity="0.7" />
+                            <ImageButton
+                                BackgroundColor="Transparent"
                                 Clicked="AddNote_Clicked"
                                 HeightRequest="35"
-                                HorizontalOptions="EndAndExpand"
+                                HorizontalOptions="End"
                                 Source="add_circle_button.png"
                                 VerticalOptions="Start"
                                 WidthRequest="35" />
@@ -729,7 +762,7 @@
                             Grid.Row="4"
                             Margin="0,10,0,0"
                             BackgroundColor="Transparent"
-                            ItemsSource="{Binding Notes}"
+                            ItemsSource="{Binding TopRecentNotes}"
                             SelectionMode="None"
                             VerticalOptions="FillAndExpand"
                             VerticalScrollBarVisibility="Never">
