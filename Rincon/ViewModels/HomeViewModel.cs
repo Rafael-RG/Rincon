@@ -915,11 +915,19 @@ namespace Rincon.ViewModels
 
                 this.Products = await this.DataService.LoadProductsAsync();
 
+                // Activar los indicadores de carga individuales
+                this.IsNotesLoading = true;
+                this.IsTasksLoading = true;
+                this.IsBookingsLoading = true;
+
                 await LoadNotes();
+                this.IsNotesLoading = false;
 
                 await LoadTaskItems();
+                this.IsTasksLoading = false;
 
                 await LoadBookingsItems();
+                this.IsBookingsLoading = false;
 
                 await RefreshBar();
             }

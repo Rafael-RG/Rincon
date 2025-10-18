@@ -417,17 +417,6 @@
                 IsVisible="{Binding IsHomeView}"
                 RowDefinitions="*,*,*,*"
                 RowSpacing="20">
-                <ActivityIndicator
-                    Grid.Row="0"
-                    Grid.RowSpan="4"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    Color="#4A744C"
-                    BackgroundColor="White"
-                    HorizontalOptions="CenterAndExpand"
-                    IsRunning="True"
-                    IsVisible="{Binding IsBusy}"
-                    VerticalOptions="CenterAndExpand" />
                 <Frame
                     Grid.Row="0"
                     Padding="10"
