@@ -227,30 +227,56 @@
                 Padding="0,0,0,0"
                 BackgroundColor="#D3AA84"
                 ColumnDefinitions="*"
-                RowDefinitions="auto,*">
+                RowDefinitions="auto,auto,*">
                 <ActivityIndicator
                     Grid.Row="0"
-                    Grid.RowSpan="2"
+                    Grid.RowSpan="3"
                     Grid.Column="0"
-                    HeightRequest="32"
+                    HeightRequest="50"
+                    WidthRequest="50"
                     Color="#4A744C"
                     IsRunning="True"
                     IsVisible="{Binding IsBusy}"
-                    WidthRequest="32" />
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    BackgroundColor="Transparent" />
+                <!-- Header con botón de refresh -->
+                <Grid Grid.Row="0" Margin="10,10,10,5" ColumnDefinitions="*,auto" 
+                      IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
+                    <Label 
+                        Grid.Column="0"
+                        Text="Stock"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        TextColor="#79280F"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
+                    <ImageButton
+                        Grid.Column="1"
+                        BackgroundColor="Transparent"
+                        Command="{Binding RefreshStockCommand}"
+                        HeightRequest="30"
+                        WidthRequest="30"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        Source="refresh"
+                        Opacity="0.7" />
+                </Grid>
                 <Frame
-                    Grid.Row="0"
-                    Margin="10,15,10,15"
+                    Grid.Row="1"
+                    Margin="10,5,10,15"
                     Padding="0,0,0,0"
                     BackgroundColor="#FAFAFA"
                     BorderColor="Transparent"
                     CornerRadius="12"
-                    HeightRequest="45">
+                    HeightRequest="45"
+                    IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
                     <SearchBar
                         x:Name="SearchBarLateralBar"
                         BackgroundColor="White"
                         CancelButtonColor="Black"
                         HeightRequest="45"
-                        HorizontalOptions="StartAndExpand"
+                        HorizontalOptions="FillAndExpand"
                         Placeholder="Buscar"
                         TextChanged="SearchBarLateralBar_TextChanged"
                         TextColor="Black" />
@@ -258,13 +284,14 @@
 
                 <CollectionView
                     x:Name="LateraBarStock"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Margin="5,5,5,5"
                     ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=Cards}"
                     SelectionChanged="LateraBarStock_SelectionChanged"
                     SelectionMode="Single"
                     VerticalOptions="FillAndExpand"
-                    VerticalScrollBarVisibility="Never">
+                    VerticalScrollBarVisibility="Never"
+                    IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="12" />
                     </CollectionView.ItemsLayout>

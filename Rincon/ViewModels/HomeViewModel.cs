@@ -994,6 +994,28 @@ namespace Rincon.ViewModels
             }
         });
 
+        public ICommand RefreshStockCommand => new Command(async () =>
+        {
+            try
+            {
+                this.IsBusy = true;
+                
+                // Pequeño delay para hacer visible el indicador (solo para testing)
+                await Task.Delay(500);
+                
+                await RefreshBar();
+            }
+            catch (Exception ex)
+            {
+                // Error handling
+                await NotificationService.NotifyAsync("Error", "Hubo un error al actualizar el stock. Vuelva a intentar.", "Cerrar");
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+        });
+
         public ICommand LogoutViewCommand => new Command(async () =>
         {
 
