@@ -511,6 +511,12 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private bool isBookingsLoading;
 
+        //// <summary>
+        ///// Indicador de carga específico para los filtros de movimientos
+        ///// </summary>
+        [ObservableProperty]
+        private bool isFiltersLoading;
+
 
         //// <summary>
         ///// New note
@@ -1577,6 +1583,7 @@ namespace Rincon.ViewModels
                     this.IsNoShipmentTask = true;
                     this.IsBooking = true;
                     await ReloadProductWithStock();
+                    ClearBookingOrderForm();
                     break;
                 case "ListBooking":
                     this.IsHomeView = false;
@@ -2247,9 +2254,11 @@ namespace Rincon.ViewModels
         {
             try
             {
+                this.IsFiltersLoading = true;
+
                 this.MovementsFilter = new ObservableCollection<Movement>(this.Movements);
 
-                this.SelectedFilterMovementDate = new DateTime(2023, 1, 1);
+                this.SelectedFilterMovementDate = DateTime.Now;
 
                 this.SelectedFilterMovementProduct = null;
 
@@ -2260,6 +2269,10 @@ namespace Rincon.ViewModels
             {
                 await NotificationService.NotifyAsync("Error", "Hubo un error al cargar los productos. Vuleva a intentar.", "Cerrar");
             }
+            finally
+            {
+                this.IsFiltersLoading = false;
+            }
         }
 
         [RelayCommand]
@@ -2267,6 +2280,8 @@ namespace Rincon.ViewModels
         {
             try
             {
+                this.IsFiltersLoading = true;
+
                 this.MovementsFilter = new ObservableCollection<Movement>(this.Movements);
 
                 if (this.SelectedFilterMovementProduct != null)
@@ -2288,6 +2303,10 @@ namespace Rincon.ViewModels
             catch
             {
                 await NotificationService.NotifyAsync("Error", "Hubo un error al cargar los productos. Vuleva a intentar.", "Cerrar");
+            }
+            finally
+            {
+                this.IsFiltersLoading = false;
             }
         }
 
@@ -3430,6 +3449,7 @@ namespace Rincon.ViewModels
             {
                 if (response)
                 {
+                    ClearBookingOrderForm();
                     this.ChangeViewCommand.Execute("Home");
                 }
             });

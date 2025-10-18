@@ -57,6 +57,7 @@ namespace Rincon.Models
     {
         Venta,
         Perdida,
-        Procesado
+        Procesado,
+        Producción
     }
 }
