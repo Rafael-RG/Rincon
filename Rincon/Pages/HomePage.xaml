@@ -581,6 +581,19 @@
                                     </Frame>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
+                            <CollectionView.EmptyView>
+                                <StackLayout 
+                                    HorizontalOptions="Center" 
+                                    VerticalOptions="Center" 
+                                    Spacing="10">
+                                    <Label
+                                        FontSize="16"
+                                        HorizontalOptions="Center"
+                                        Text="No hay tareas"
+                                        TextColor="#797979"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                            </CollectionView.EmptyView>
                         </CollectionView>
                     
                     </StackLayout>
@@ -717,6 +730,19 @@
                                     </Frame>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
+                            <CollectionView.EmptyView>
+                                <StackLayout 
+                                    HorizontalOptions="Center" 
+                                    VerticalOptions="Center" 
+                                    Spacing="10">
+                                    <Label
+                                        FontSize="16"
+                                        HorizontalOptions="Center"
+                                        Text="No hay reservas"
+                                        TextColor="#797979"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                            </CollectionView.EmptyView>
                         </CollectionView>
                     
                     </StackLayout>
@@ -852,6 +878,19 @@
                                     </Frame>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
+                            <CollectionView.EmptyView>
+                                <StackLayout 
+                                    HorizontalOptions="Center" 
+                                    VerticalOptions="Center" 
+                                    Spacing="10">
+                                    <Label
+                                        FontSize="16"
+                                        HorizontalOptions="Center"
+                                        Text="No hay notas"
+                                        TextColor="#797979"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                            </CollectionView.EmptyView>
                         </CollectionView>
                     </StackLayout>
                 </Grid>

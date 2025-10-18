@@ -2353,15 +2353,20 @@ namespace Rincon.ViewModels
             {
                 var notes = await this.DataService.LoadNotesAsync();
 
-                if(notes!=null && notes.Any()) 
+                if (notes != null && notes.Any())
                 {
                     this.Notes = new ObservableCollection<Note>(notes);
                     OnPropertyChanged(nameof(Notes));
-                    
+
                     // Cargar top 10 más recientes para la vista Home
                     var recentNotes = notes.OrderByDescending(x => x.CreatedAt).Take(10);
                     this.TopRecentNotes = new ObservableCollection<Note>(recentNotes);
                     OnPropertyChanged(nameof(TopRecentNotes));
+                }
+                else
+                {
+                    this.Notes = new ObservableCollection<Note>();
+                    this.TopRecentNotes = new ObservableCollection<Note>();
                 } 
             }
             catch
@@ -2411,19 +2416,31 @@ namespace Rincon.ViewModels
         {
             try
             {
+                this.IsNotesLoading = true;
+                
                 var result = await this.DataService.DeleteItemAsync<Note>(note);
 
                 if (result > 0)
                 {
                     this.Notes.Remove(note);
+                    
+                    // También actualizar TopRecentNotes si la nota estaba en esa colección
+                    if (this.TopRecentNotes?.Contains(note) == true)
+                    {
+                        this.TopRecentNotes.Remove(note);
+                    }
                 }
 
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
                 await NotificationService.NotifyAsync("Error", "Hubo un error al eliminar la nota. Vuleva a intentar.", "Cerrar");
                 return false;
+            }
+            finally
+            {
+                this.IsNotesLoading = false;
             }
         }
 
@@ -3144,6 +3161,11 @@ namespace Rincon.ViewModels
                     this.TopRecentTasks = new ObservableCollection<TaskItem>(recentTasks);
                     OnPropertyChanged(nameof(TopRecentTasks));
                 }
+                else
+                {
+                    this.TaskItems = new ObservableCollection<TaskItem>();
+                    this.TopRecentTasks = new ObservableCollection<TaskItem>();
+                }
             }
             catch
             {
@@ -3568,6 +3590,11 @@ namespace Rincon.ViewModels
                     var recentBookings = bookingItems.Where(x => x.Status == OrderStatus.Reserva).OrderByDescending(x => x.OrderDate).Take(10);
                     this.TopRecentBookings = new ObservableCollection<BookingOrder>(recentBookings);
                     OnPropertyChanged(nameof(TopRecentBookings));
+                }
+                else
+                {
+                    this.BookingOrderItems = new ObservableCollection<BookingOrder>();
+                    this.TopRecentBookings = new ObservableCollection<BookingOrder>();
                 }
             }
             catch
