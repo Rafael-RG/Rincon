@@ -493,6 +493,24 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private ObservableCollection<BookingOrder> topRecentBookings;
 
+        //// <summary>
+        ///// Indicador de carga específico para las notas
+        ///// </summary>
+        [ObservableProperty]
+        private bool isNotesLoading;
+
+        //// <summary>
+        ///// Indicador de carga específico para las tareas
+        ///// </summary>
+        [ObservableProperty]
+        private bool isTasksLoading;
+
+        //// <summary>
+        ///// Indicador de carga específico para las reservas
+        ///// </summary>
+        [ObservableProperty]
+        private bool isBookingsLoading;
+
 
         //// <summary>
         ///// New note
@@ -921,7 +939,7 @@ namespace Rincon.ViewModels
         {
             try
             {
-                this.IsBusy = true;
+                this.IsNotesLoading = true;
                 await LoadNotes();
             }
             catch (Exception ex)
@@ -930,7 +948,7 @@ namespace Rincon.ViewModels
             }
             finally
             {
-                this.IsBusy = false;
+                this.IsNotesLoading = false;
             }
         });
 
@@ -938,7 +956,7 @@ namespace Rincon.ViewModels
         {
             try
             {
-                this.IsBusy = true;
+                this.IsTasksLoading = true;
                 await LoadTaskItems();
             }
             catch (Exception ex)
@@ -947,7 +965,7 @@ namespace Rincon.ViewModels
             }
             finally
             {
-                this.IsBusy = false;
+                this.IsTasksLoading = false;
             }
         });
 
@@ -955,7 +973,7 @@ namespace Rincon.ViewModels
         {
             try
             {
-                this.IsBusy = true;
+                this.IsBookingsLoading = true;
                 await LoadBookingsItems();
             }
             catch (Exception ex)
@@ -964,7 +982,7 @@ namespace Rincon.ViewModels
             }
             finally
             {
-                this.IsBusy = false;
+                this.IsBookingsLoading = false;
             }
         });
 

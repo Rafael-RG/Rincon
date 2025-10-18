@@ -466,17 +466,26 @@
                     Grid.RowSpan="4"
                     BackgroundColor="#EAEAEA"
                     BorderColor="Transparent">
-                    <StackLayout
-                        Margin="0,0,0,0"
-                        Padding="0"
-                        Orientation="Vertical">
-                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                            <Label
-                                FontSize="22"
-                                HorizontalOptions="Start"
-                                Text="{Binding TopRecentTasks.Count, StringFormat='Tareas ({0})'}"
-                                TextColor="Gray"
-                                VerticalOptions="Center" />
+                    <Grid>
+                        <ActivityIndicator
+                            Color="#4A744C"
+                            BackgroundColor="Transparent"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="CenterAndExpand"
+                            IsRunning="True"
+                            IsVisible="{Binding IsTasksLoading}" />
+                        <StackLayout
+                            Margin="0,0,0,0"
+                            Padding="0"
+                            Orientation="Vertical"
+                            IsVisible="{Binding IsTasksLoading, Converter={StaticResource InvertedBoolConverter}}">
+                            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                <Label
+                                    FontSize="22"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding TopRecentTasks.Count, StringFormat='Tareas ({0})'}"
+                                    TextColor="Gray"
+                                    VerticalOptions="Center" />
                             <ImageButton
                                 BackgroundColor="Transparent"
                                 Command="{Binding RefreshTasksCommand}"
@@ -586,6 +595,7 @@
                         </CollectionView>
                     
                     </StackLayout>
+                </Grid>
                 </Frame>
                 <!-- Frame bookings -->
                 <Frame
@@ -594,17 +604,26 @@
                     Grid.Column="1"
                     BackgroundColor="#EAEAEA"
                     BorderColor="Transparent">
-                    <StackLayout
-                        Margin="0"
-                        Padding="0"
-                        Orientation="Vertical">
-                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                            <Label
-                                FontSize="22"
-                                HorizontalOptions="Start"
-                                Text="{Binding TopRecentBookings.Count, StringFormat='Reservas ({0})'}"
-                                TextColor="Gray"
-                                VerticalOptions="Center" />
+                    <Grid>
+                        <ActivityIndicator
+                            Color="#4A744C"
+                            BackgroundColor="Transparent"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="CenterAndExpand"
+                            IsRunning="True"
+                            IsVisible="{Binding IsBookingsLoading}" />
+                        <StackLayout
+                            Margin="0"
+                            Padding="0"
+                            Orientation="Vertical"
+                            IsVisible="{Binding IsBookingsLoading, Converter={StaticResource InvertedBoolConverter}}">
+                            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                <Label
+                                    FontSize="22"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding TopRecentBookings.Count, StringFormat='Reservas ({0})'}"
+                                    TextColor="Gray"
+                                    VerticalOptions="Center" />
                             <ImageButton
                                 BackgroundColor="Transparent"
                                 Command="{Binding RefreshBookingsCommand}"
@@ -712,6 +731,7 @@
                         </CollectionView>
                     
                     </StackLayout>
+                </Grid>
                 </Frame>
                 <!-- Frame notes -->
                 <Frame
@@ -720,17 +740,26 @@
                     Grid.Column="1"
                     BackgroundColor="#EAEAEA"
                     BorderColor="Transparent">
-                    <StackLayout
-                        Margin="0"
-                        Padding="0"
-                        Orientation="Vertical">
-                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                            <Label
-                                FontSize="22"
-                                HorizontalOptions="Start"
-                                Text="{Binding TopRecentNotes.Count, StringFormat='Notas ({0})'}"
-                                TextColor="Gray"
-                                VerticalOptions="Center" />
+                    <Grid>
+                        <ActivityIndicator
+                            Color="#4A744C"
+                            BackgroundColor="Transparent"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="CenterAndExpand"
+                            IsRunning="True"
+                            IsVisible="{Binding IsNotesLoading}" />
+                        <StackLayout
+                            Margin="0"
+                            Padding="0"
+                            Orientation="Vertical"
+                            IsVisible="{Binding IsNotesLoading, Converter={StaticResource InvertedBoolConverter}}">
+                            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                <Label
+                                    FontSize="22"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding TopRecentNotes.Count, StringFormat='Notas ({0})'}"
+                                    TextColor="Gray"
+                                    VerticalOptions="Center" />
                             <ImageButton
                                 BackgroundColor="Transparent"
                                 Command="{Binding RefreshNotesCommand}"
@@ -836,6 +865,7 @@
                             </CollectionView.ItemTemplate>
                         </CollectionView>
                     </StackLayout>
+                </Grid>
                 </Frame>
             </Grid>
 
