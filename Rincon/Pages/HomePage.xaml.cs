@@ -275,8 +275,52 @@ public partial class HomePage
 
     void LateraBarStock_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
     {
-        var productCard = (CardStock)this.LateraBarStock.SelectedItem;
-        this.ViewModel.LBProductDetaildCommand.Execute(productCard);
+        try
+        {
+            // Validar que hay un item seleccionado
+            if (this.LateraBarStock.SelectedItem == null)
+            {
+                return;
+            }
+
+            var productCard = (CardStock)this.LateraBarStock.SelectedItem;
+            
+            // Validar que el comando existe
+            if (this.ViewModel?.LBProductDetaildCommand != null)
+            {
+                this.ViewModel.LBProductDetaildCommand.Execute(productCard);
+            }
+
+            // Limpiar la selección para permitir re-selección del mismo item
+            this.LateraBarStock.SelectedItem = null;
+        }
+        catch (Exception ex)
+        {
+            // Log del error para debugging
+            System.Diagnostics.Debug.WriteLine($"Error en LateraBarStock_SelectionChanged: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Maneja el tap en el Frame del item de stock como alternativa al SelectionChanged
+    /// </summary>
+    private void Frame_Tapped(object sender, TappedEventArgs e)
+    {
+        try
+        {
+            var frame = (Frame)sender;
+            var productCard = (CardStock)frame.BindingContext;
+            
+            if (productCard != null && this.ViewModel?.LBProductDetaildCommand != null)
+            {
+                this.ViewModel.LBProductDetaildCommand.Execute(productCard);
+                System.Diagnostics.Debug.WriteLine($"Frame_Tapped ejecutado para: {productCard.Description}");
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error en Frame_Tapped: {ex.Message}");
+        }
     }
 
     private void Menu_Clicked(object sender, EventArgs e)
