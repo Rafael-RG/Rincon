@@ -12,7 +12,9 @@ using Rincon.Common.ViewModels;
 using Rincon.Models;
 
 using System.Collections.ObjectModel;
+using System.Data.SqlClient;
 using System.IO;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Windows.Input;
@@ -1725,6 +1727,12 @@ namespace Rincon.ViewModels
 
         });
 
+        public ICommand ClearSelectedProductCommand => new Command(() =>
+        {
+            this.SelectedProduct = null;
+            this.IsVisibleListProducts = false;
+        });
+
         public ICommand SelectMachimbreCommand => new Command(() =>
         {
             this.IsVisibleListMachimbres = !this.IsVisibleListMachimbres;
@@ -1861,6 +1869,7 @@ namespace Rincon.ViewModels
             this.IsPolinSelect = false;
             this.IsTablaSelect = false;
             this.IsTiranteSelect = true;
+            this.SelectedProduct = null; // Limpiar el producto seleccionado para "Derivado de"
         }
         #endregion
 
@@ -2350,6 +2359,11 @@ namespace Rincon.ViewModels
                     this.Products.Remove(product);
                     this.Cards.Remove(cardStock);
                     this.Stock.Remove(productStock);
+
+                    // Notificar cambios en las propiedades para actualizar la UI
+                    OnPropertyChanged(nameof(Products));
+                    OnPropertyChanged(nameof(Cards));
+                    OnPropertyChanged(nameof(Stock));
                 }
             }
             catch

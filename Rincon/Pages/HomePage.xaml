@@ -1458,10 +1458,24 @@
                                 BackgroundColor="White"
                                 CornerRadius="15"
                                 HeightRequest="30">
-                                <Label
-                                    FontSize="12"
-                                    Text="{Binding SelectedProduct, Mode=TwoWay}"
-                                    VerticalOptions="Center" />
+                                <Grid ColumnDefinitions="*,auto">
+                                    <Label
+                                        Grid.Column="0"
+                                        FontSize="12"
+                                        Text="{Binding SelectedProduct.Description, TargetNullValue='Seleccionar producto (opcional)', FallbackValue='Seleccionar producto (opcional)'}"
+                                        VerticalOptions="Center" />
+                                    <Button
+                                        Grid.Column="1"
+                                        Text="✕"
+                                        FontSize="12"
+                                        BackgroundColor="Transparent"
+                                        TextColor="#CC0000"
+                                        Padding="4,0"
+                                        WidthRequest="20"
+                                        HeightRequest="20"
+                                        CornerRadius="10"
+                                        Command="{Binding ClearSelectedProductCommand}" />
+                                </Grid>
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding SelectProductMocvementCommand}" />
                                 </Frame.GestureRecognizers>

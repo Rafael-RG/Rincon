@@ -31,6 +31,11 @@ namespace Rincon.Common.Interfaces
         Task<int> InsertOrUpdateItemsAsync<T>(T item) where T : class;
 
         /// <summary>
+        /// Save a products
+        /// </summary>
+        Task<int> InsertOrUpdateProductAsync(Product item);
+
+        /// <summary>
         /// Save a collections of products stock
         /// </summary>
         Task<int> InsertOrUpdateStockAsync(List<ProductStock> stock);

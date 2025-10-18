@@ -59,6 +59,16 @@ namespace Rincon.DataAccess
             }
         }
 
+        public async Task<int> InsertOrUpdateProductAsync(Product item)
+        {
+            using (var databaseContext = new DatabaseContext())
+            {
+                var itemsCount = await databaseContext.Upsert(item).RunAsync();
+                await databaseContext.SaveChangesAsync();
+                return itemsCount;
+            }
+        }
+
         public async Task<int> InsertItemAsync<T>(T item) where T : class
         {
             using (var databaseContext = new DatabaseContext())

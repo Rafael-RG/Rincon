@@ -2,6 +2,7 @@
 using Rincon.CustomPopups;
 using Rincon.Models;
 using Rincon.ViewModels;
+using System.Windows.Input;
 
 namespace Rincon.Pages;
 
@@ -19,6 +20,15 @@ public partial class HomePage
     {
         InitializeComponent();
         this.popupNavigation = popupNavigation;
+        
+        // Suscribirse a cambios en las propiedades para actualizar la UI
+        this.ViewModel.PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName == nameof(HomeViewModel.Products))
+            {
+                RefreshInventoryList();
+            }
+        };
     }
 
     /// <summary>
@@ -129,11 +139,37 @@ public partial class HomePage
 	/// </summary>
 	private async void DeleteProduct_Clicked(object sender, EventArgs e)
     {
-
         var button = ((Button)sender);
         var product = (Product)button.BindingContext;
 
         await popupNavigation.PushAsync(new DeleteProductsQuestionPage(this.popupNavigation, product, ViewModel.OkDeleteProductCommand));
+    }
+
+    /// <summary>
+    /// Refresca la lista del inventario después de operaciones CRUD
+    /// </summary>
+    private void RefreshInventoryList()
+    {
+        try
+        {
+            // Si hay texto de búsqueda, aplicar el filtro nuevamente
+            if (!string.IsNullOrWhiteSpace(this.SearchBarInventory?.Text))
+            {
+                var searchText = this.SearchBarInventory.Text;
+                ProductsSearchStockInventory.ItemsSource = this.ViewModel.Products.Where(x => 
+                    x.Id.ToLower().Contains(searchText.ToLower()) ||
+                    x.Description.ToLower().Contains(searchText.ToLower())).ToList();
+            }
+            else
+            {
+                // Si no hay búsqueda, mostrar todos los productos
+                ProductsSearchStockInventory.ItemsSource = this.ViewModel.Products;
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error al refrescar lista de inventario: {ex.Message}");
+        }
     }
 
     /// <summary>
@@ -207,7 +243,8 @@ public partial class HomePage
 
         this.ViewModel.UpdateProductCommand.Execute(this.ViewModel.SelectedProduct);
 
-        this.ProductsSearchStockInventory.ItemsSource = this.ViewModel.Products;
+        // Usar el método centralizado para refrescar la lista
+        RefreshInventoryList();
 
         this.ProductsSearchStockInventory.SelectedItem = this.ViewModel.SelectedProduct;
 
@@ -237,40 +274,41 @@ public partial class HomePage
 
     void States_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
     {
+        if (StatesList.SelectedItem == null) return;
+        
         this.ViewModel.SelectedState = (string)StatesList.SelectedItem;
         this.ViewModel.IsVisibleListStates = false;
+        
+        // Limpiar la selección para permitir re-selección del mismo item
+        StatesList.SelectedItem = null;
     }
 
     void Product_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
     {
+        if (ProductList.SelectedItem == null) return;
+        
         this.ViewModel.SelectedProduct = (Product)ProductList.SelectedItem;
         this.ViewModel.IsVisibleListProducts = false;
+        
+        // Limpiar la selección para permitir re-selección del mismo item
+        ProductList.SelectedItem = null;
     }
 
     void Machimbres_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
     {
+        if (MachimbreList.SelectedItem == null) return;
+        
         this.ViewModel.SelectedMachimbre = (string)MachimbreList.SelectedItem;
         this.ViewModel.IsVisibleListMachimbres = false;
+        
+        // Limpiar la selección para permitir re-selección del mismo item
+        MachimbreList.SelectedItem = null;
     }
 
     void OnSearchStockInventoryTextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
     {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(e.NewTextValue))
-            {
-                ProductsSearchStockInventory.ItemsSource = this.ViewModel.Products;
-            }
-            else
-            {
-                ProductsSearchStockInventory.ItemsSource = this.ViewModel.Products.Where(x => x.Id.ToLower().Contains(e.NewTextValue.ToLower())
-                    || x.Description.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
-            }
-        }
-        catch
-        {
-
-        }
+        // Usar el método centralizado para refrescar la lista
+        RefreshInventoryList();
     }
 
     void LateraBarStock_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
@@ -557,14 +595,24 @@ public partial class HomePage
 
     void ProductDerivate_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
     {
+        if (ProductListDerivateTask.SelectedItem == null) return;
+        
         this.ViewModel.SelectedDerivateProducts = (Product)ProductListDerivateTask.SelectedItem;
         this.ViewModel.IsVisibleListProductsDerivateTask = false;
+        
+        // Limpiar la selección para permitir re-selección del mismo item
+        ProductListDerivateTask.SelectedItem = null;
     }
 
     void ProductDerivateEdit_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
     {
+        if (ProductListDerivateEditTask.SelectedItem == null) return;
+        
         this.ViewModel.SelectedDerivateProducts = (Product)ProductListDerivateEditTask.SelectedItem;
         this.ViewModel.IsVisibleListProductsDerivateTask = false;
+        
+        // Limpiar la selección para permitir re-selección del mismo item
+        ProductListDerivateEditTask.SelectedItem = null;
     }
 
     void OnSearchTaskTextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
