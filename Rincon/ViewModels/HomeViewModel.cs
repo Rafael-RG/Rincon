@@ -3649,6 +3649,27 @@ namespace Rincon.ViewModels
 
                                 await this.DataService.InsertItemAsync<Order>(order);
                             }
+
+                            // Crear movimientos de venta para el historial
+                            foreach (var booking in bookings)
+                            {
+                                var movement = new Movement
+                                {
+                                    Id = Guid.NewGuid().ToString(),
+                                    Date = DateTime.Now,
+                                    Quantity = booking.Quantity,
+                                    MovementType = MovementType.Venta.ToString(),
+                                    ProductName = booking.ProductName,
+                                    UserName = this.User?.Name ?? "Usuario desconocido"
+                                };
+
+                                var saveMovement = await this.DataService.InsertOrUpdateItemsAsync<Movement>(movement);
+                                
+                                if (saveMovement == 0)
+                                {
+                                    await NotificationService.NotifyAsync("Atencion", "Hubo un error al guardar el movimiento del historial.", "Cerrar");
+                                }
+                            }
                         }
 
                         await RefreshBar();
