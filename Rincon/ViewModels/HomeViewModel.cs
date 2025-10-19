@@ -3865,6 +3865,8 @@ namespace Rincon.ViewModels
         {
             try
             {
+                this.IsBusy = true;
+                
                 var productos = await this.DataService.LoadOrderDetailsItemsAsync(this.SelectedBookingOrder.BookingOrderId);
                 var pdfName = $"{this.SelectedBookingOrder.Client}_{this.SelectedBookingOrder.Id}.pdf";
 
@@ -3894,6 +3896,10 @@ namespace Rincon.ViewModels
             catch (Exception ex)
             {
                 await App.Current.MainPage.DisplayAlert("Error", $"Error al generar el PDF: {ex.Message}", "OK");
+            }
+            finally
+            {
+                this.IsBusy = false;
             }
         }
 
