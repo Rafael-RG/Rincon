@@ -5647,29 +5647,45 @@
                 </ScrollView>
 
                 <!-- Botones de acción -->
-                <HorizontalStackLayout
+                <Grid
                     Grid.Row="3"
                     Grid.ColumnSpan="2"
                     HorizontalOptions="Center"
-                    Spacing="20"
                     Margin="0,15,0,0">
-                    <Button
-                        BackgroundColor="#FFF6ED"
-                        Command="{Binding ChangeViewCommand}"
-                        CommandParameter="ListBooking"
-                        HeightRequest="35"
-                        Text="Volver"
-                        TextColor="#000000"
-                        WidthRequest="200" />
-                    <Button
-                        BackgroundColor="#D3AA84"
-                        Clicked="VisivilityConfirmBookingItem_Clicked"
-                        HeightRequest="35"
-                        IsVisible="{Binding SelectedBookingOrder.IsCancellable}"
-                        Text="Confirmar reserva"
-                        TextColor="#000000"
-                        WidthRequest="200" />
-                </HorizontalStackLayout>
+                    
+                    <ActivityIndicator
+                        HeightRequest="32"
+                        HorizontalOptions="Center"
+                        IsRunning="True"
+                        Color="#4A744C"
+                        IsVisible="{Binding IsBusy}"
+                        VerticalOptions="Center"
+                        WidthRequest="32" />
+                    
+                    <HorizontalStackLayout
+                        HorizontalOptions="Center"
+                        Spacing="20"
+                        IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
+                        <Button
+                            BackgroundColor="#FFF6ED"
+                            Command="{Binding ChangeViewCommand}"
+                            CommandParameter="ListBooking"
+                            HeightRequest="35"
+                            Text="Volver"
+                            TextColor="#000000"
+                            WidthRequest="200"
+                            IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" />
+                        <Button
+                            BackgroundColor="#D3AA84"
+                            Clicked="VisivilityConfirmBookingItem_Clicked"
+                            HeightRequest="35"
+                            IsVisible="{Binding SelectedBookingOrder.IsCancellable}"
+                            IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                            Text="Confirmar reserva"
+                            TextColor="#000000"
+                            WidthRequest="200" />
+                    </HorizontalStackLayout>
+                </Grid>
 
             </Grid>
 
