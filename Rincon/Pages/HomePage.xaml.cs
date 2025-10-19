@@ -752,11 +752,11 @@ public partial class HomePage
 
         if (string.IsNullOrWhiteSpace(e.NewTextValue))
         {
-            ProductsBookingOrder.ItemsSource = this.ViewModel.Products;
+            ProductsBookingOrder.ItemsSource = this.ViewModel.ProductsWithStock;
         }
         else
         {
-            ProductsBookingOrder.ItemsSource = this.ViewModel.Products.Where(x => x.Description.ToLower().Contains(e.NewTextValue.ToLower())
+            ProductsBookingOrder.ItemsSource = this.ViewModel.ProductsWithStock.Where(x => x.Product.Description.ToLower().Contains(e.NewTextValue.ToLower())
                 || x.Id.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
         }
     }
