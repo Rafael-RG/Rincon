@@ -1992,6 +1992,7 @@ namespace Rincon.ViewModels
         {
             try
             {  
+                this.IsBusy = true;
 
                var result = await this.CreateSavePDFAsync(this.ProductsStock.ToList());
 
@@ -2006,6 +2007,10 @@ namespace Rincon.ViewModels
             {
                 await NotificationService.NotifyAsync("Error", "Hubo un error al guardar el PDF. Vuleva a intentar.", "Cerrar");
                 return;
+            }
+            finally
+            {
+                this.IsBusy = false;
             }
         });
 

@@ -41,6 +41,21 @@ public partial class ConfirmAddStockPage
 
     private void SavePDF_Clicked(object sender, EventArgs e)
     {
+        // Mostrar activity indicator y ocultar botones
+        ActivityIndicatorPDF.IsVisible = true;
+        ActivityIndicatorPDF.IsRunning = true;
+        ButtonsContainer.IsVisible = false;
+        
+        // Ejecutar el comando
         this.savePDFCommand.Execute(this.productStocks);
+        
+        // Usar un timer para ocultar el activity indicator después de un tiempo
+        // (ya que no tenemos acceso directo al estado del ViewModel)
+        this.Dispatcher.DispatchDelayed(TimeSpan.FromSeconds(2), () =>
+        {
+            ActivityIndicatorPDF.IsVisible = false;
+            ActivityIndicatorPDF.IsRunning = false;
+            ButtonsContainer.IsVisible = true;
+        });
     }
 }
