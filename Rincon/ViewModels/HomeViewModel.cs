@@ -3509,6 +3509,24 @@ namespace Rincon.ViewModels
                             await NotificationService.NotifyAsync("Error", "Error al actualizar el stock", "Cerrar");
                             return false;
                         }
+
+                        // Crear movimiento de venta para el historial
+                        var movement = new Movement
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            Date = DateTime.Now,
+                            Quantity = product.QuantityBookingOrder,
+                            MovementType = MovementType.Venta.ToString(),
+                            ProductName = $"{product.Product.Id} - {product.Product.Description}",
+                            UserName = this.User?.Name ?? "Usuario desconocido"
+                        };
+
+                        var saveMovement = await this.DataService.InsertOrUpdateItemsAsync<Movement>(movement);
+                        
+                        if (saveMovement == 0)
+                        {
+                            await NotificationService.NotifyAsync("Atencion", "Hubo un error al guardar el movimiento del historial.", "Cerrar");
+                        }
                     }
                 }
 
