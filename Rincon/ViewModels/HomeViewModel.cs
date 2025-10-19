@@ -2108,6 +2108,8 @@ namespace Rincon.ViewModels
         {
             try
             {
+                this.IsBusy = true;
+                
                 if (this.ProductMovement == null)
                 {
                     await NotificationService.NotifyAsync("Atencion", "No se a seleccionado ningun producto", "Cerrar");
@@ -2164,6 +2166,7 @@ namespace Rincon.ViewModels
 
                 var resultQuitStock = await this.DataService.InsertOrUpdateItemsAsync<ProductStock>(this.ProductMovement);
 
+                // Crear el movimiento principal
                 var movement = new Movement
                 {
                     Id = Guid.NewGuid().ToString(),
@@ -2191,6 +2194,28 @@ namespace Rincon.ViewModels
 
                 var saveMovement = await this.DataService.InsertOrUpdateItemsAsync<Movement>(movement);
 
+                // Si es un movimiento de Procesado, también crear un movimiento de Producción
+                if (this.IsChangeOfState && this.SelectedDependingProducts != null)
+                {
+                    var productionMovement = new Movement
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Date = DateTime.Now,
+                        Quantity = this.QuantityMovement,
+                        MovementType = MovementType.Producción.ToString(),
+                        ProductName = $"{this.SelectedDependingProducts.Id} - {this.SelectedDependingProducts.Description}",
+                        UserName = this.User?.Name ?? "Usuario desconocido"
+                    };
+
+                    var saveProductionMovement = await this.DataService.InsertOrUpdateItemsAsync<Movement>(productionMovement);
+                    
+                    if (saveProductionMovement == 0)
+                    {
+                        await NotificationService.NotifyAsync("Atencion", "Hubo un error al guardar el movimiento de producción.", "Cerrar");
+                        return false;
+                    }
+                }
+
                 if (saveMovement == 0)
                 {
                     await NotificationService.NotifyAsync("Atencion", "Hubo un error al realizar el movimiento. Vuleva a intentar.", "Cerrar");
@@ -2204,6 +2229,10 @@ namespace Rincon.ViewModels
             {
                 await NotificationService.NotifyAsync("Atencion", "Hubo un error al realizar el movimiento. Vuleva a intentar.", "Cerrar");
                 return false;
+            }
+            finally
+            {
+                this.IsBusy = false;
             }
         }
         
