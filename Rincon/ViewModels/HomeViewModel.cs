@@ -3811,7 +3811,7 @@ namespace Rincon.ViewModels
 #endif
 
                 // Llamar al PdfGenerator para generar el PDF
-                PdfGenerator.GenerateStockPdf(productsStock, downloadsPath);
+                PdfGenerator.GenerateStockPdf(productsStock, downloadsPath, this.User?.Name ?? "Usuario");
 
                 // Mostrar mensaje de éxito
                 await App.Current.MainPage.DisplayAlert("Éxito", "El PDF se generó correctamente.", "OK");
