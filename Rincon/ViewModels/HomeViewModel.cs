@@ -2002,7 +2002,7 @@ namespace Rincon.ViewModels
                     return;
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 await NotificationService.NotifyAsync("Error", "Hubo un error al guardar el PDF. Vuleva a intentar.", "Cerrar");
                 return;
@@ -3792,61 +3792,72 @@ namespace Rincon.ViewModels
 
         private async Task<bool> CreateSavePDFAsync(List<ProductStock> productsStock)
         {
-            var pdfName = $"Stock_{DateTime.Now.ToString("ddMMyyyy")}.pdf";
-
-            var stream = new MemoryStream();
-
-            using (PdfWriter writer = new PdfWriter(stream))
+            try
             {
-
-                PdfDocument pdf = new PdfDocument(writer);
-
-                Document document = new Document(pdf);
-
-                Paragraph header = new Paragraph("Productos agregados")
-                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
-                    .SetFontSize(20);
-
-                document.Add(header);
-                Paragraph subHeader = new Paragraph($"Fecha: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}")
-                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
-                    .SetFontSize(15);
-                document.Add(subHeader);
-
-                LineSeparator ls = new LineSeparator(new SolidLine());
-                document.Add(ls);
-
-                var imagStream = await ConvertImageSourceToStreamAsync("logo_login.svg");
-
-                iText.Layout.Element.Image image = new iText.Layout.Element.Image(ImageDataFactory
-                    .Create(imagStream))
-                    .SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER)
-                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
-
-                document.Add(image);
-
-                Paragraph footer = new Paragraph("Rincon")
-                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
-                    .SetFontSize(10);
-                document.Add(footer);
-
-                document.Close();
-
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-
-                //var fileSaverResult = await this.fileSaver.SaveAsync(pdfName, stream, cancellationTokenSource.Token);
-
-                return true;//fileSaverResult.IsSuccessful;
+                var pdfName = $"Stock_{DateTime.Now.ToString("ddMMyyyy")}.pdf";
                 
+                // Obtener la ruta correcta para guardar archivos en diferentes plataformas
+                string downloadsPath;
+                
+#if ANDROID
+                // En Android, usar el directorio Documents de la aplicación
+                downloadsPath = Path.Combine(FileSystem.AppDataDirectory, pdfName);
+#else
+                // En Windows/otras plataformas, usar Downloads
+                var downloadsFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+                if (!Directory.Exists(downloadsFolder))
+                    Directory.CreateDirectory(downloadsFolder);
+                downloadsPath = Path.Combine(downloadsFolder, pdfName);
+#endif
+
+                // Llamar al PdfGenerator para generar el PDF
+                PdfGenerator.GenerateStockPdf(productsStock, downloadsPath);
+
+                // Mostrar mensaje de éxito
+                await App.Current.MainPage.DisplayAlert("Éxito", "El PDF se generó correctamente.", "OK");
+
+                // Abrir el PDF después de generarlo
+                await Launcher.OpenAsync(new OpenFileRequest { File = new ReadOnlyFile(downloadsPath) });
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", $"Error al generar el PDF: {ex.Message}", "OK");
+                return false;
             }
         }
 
         private async Task<byte[]> ConvertImageSourceToStreamAsync(string imageName)
         {
-            using var ms = new MemoryStream();
-            using (var stream = await FileSystem.OpenAppPackageFileAsync(imageName))
-                await stream.CopyToAsync(ms);
-            return ms.ToArray();
+            try
+            {
+                using var ms = new MemoryStream();
+                using (var stream = await FileSystem.OpenAppPackageFileAsync(imageName))
+                {
+                    await stream.CopyToAsync(ms);
+                    return ms.ToArray();
+                }
+            }
+            catch
+            {
+                // Si falla, intentar con .png en lugar de .svg
+                try
+                {
+                    var pngImageName = imageName.Replace(".svg", ".png");
+                    using var ms = new MemoryStream();
+                    using (var stream = await FileSystem.OpenAppPackageFileAsync(pngImageName))
+                    {
+                        await stream.CopyToAsync(ms);
+                        return ms.ToArray();
+                    }
+                }
+                catch
+                {
+                    // Si todo falla, retornar un array vacío
+                    return new byte[0];
+                }
+            }
         }
 
         [RelayCommand]
@@ -3854,15 +3865,22 @@ namespace Rincon.ViewModels
         {
             try
             {
-                // Ruta del archivo PDF en el almacenamiento local
-                string filePath = Path.Combine(FileSystem.AppDataDirectory, "pedido.pdf");
-
-                // Ruta del logo (asegúrate de que esté en Resources/Images o AppDataDirectory)
-                string logoPath = Path.Combine(FileSystem.AppDataDirectory, "logo.png");
-
                 var productos = await this.DataService.LoadOrderDetailsItemsAsync(this.SelectedBookingOrder.BookingOrderId);
+                var pdfName = $"{this.SelectedBookingOrder.Client}_{this.SelectedBookingOrder.Id}.pdf";
 
-                string downloadsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", $"{this.SelectedBookingOrder.Client}_{this.SelectedBookingOrder.Id}.pdf");
+                // Obtener la ruta correcta para guardar archivos en diferentes plataformas
+                string downloadsPath;
+                
+#if ANDROID
+                // En Android, usar el directorio Documents de la aplicación
+                downloadsPath = Path.Combine(FileSystem.AppDataDirectory, pdfName);
+#else
+                // En Windows/otras plataformas, usar Downloads
+                var downloadsFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+                if (!Directory.Exists(downloadsFolder))
+                    Directory.CreateDirectory(downloadsFolder);
+                downloadsPath = Path.Combine(downloadsFolder, pdfName);
+#endif
 
                 // Llamar a la generación del PDF
                 PdfGenerator.GenerateBookingOrderPdf(this.SelectedBookingOrder, productos, downloadsPath);
