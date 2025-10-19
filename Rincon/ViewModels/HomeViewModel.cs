@@ -14,6 +14,7 @@ using Rincon.Models;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -1295,6 +1296,7 @@ namespace Rincon.ViewModels
                     this.IsHistoryView = false;
                     this.IsAddProductView = true;
                     this.IsAddStockView = false;
+                    this.IsInventoryView = false;
                     this.IsInventoryEditView = false;
                     this.IsInventoryEditProductView = false;
                     this.IsConfigurationView = false;
@@ -1366,6 +1368,8 @@ namespace Rincon.ViewModels
                     this.IsVisibleListOrdersView = false;
                     this.IsVisibleOrderView = false;
                     this.IsVisibleBookingView = false;
+
+                    this.Products = await this.DataService.LoadProductsAsync();
                     break;
                 case "CheckStock":
                     this.IsHomeView = false;
@@ -1785,6 +1789,13 @@ namespace Rincon.ViewModels
                             }
                         }
 
+                        // Verificar si el producto ya existe
+                        var existingProducts = await this.DataService.LoadProductsAsync();
+                        if (existingProducts.Any(p => p.Id == this.ProductCode))
+                        {
+                            await NotificationService.NotifyAsync("Producto duplicado", $"Ya existe un producto con el código '{this.ProductCode}'. Por favor, use un código diferente.", "Cerrar");
+                            return;
+                        }
 
                         var product = new Product()
                         {
@@ -1805,7 +1816,7 @@ namespace Rincon.ViewModels
                             DependOf = this.SelectedProduct != null ? this.SelectedProduct.Id : null
                         };
 
-                        var result = await this.DataService.InsertOrUpdateItemsAsync<Product>(product);
+                        var result = await this.DataService.InsertItemAsync<Product>(product);
 
                         if (result > 0)
                         {
@@ -1815,9 +1826,18 @@ namespace Rincon.ViewModels
                         
 
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        await NotificationService.NotifyAsync("Error", "Hubo un error al crear el product. Vuleva a intentar.", "Cerrar");
+                        // Verificar si es un error de clave duplicada
+                        if (ex.Message.Contains("duplicate") || ex.Message.Contains("UNIQUE constraint failed") || 
+                            ex.Message.Contains("PRIMARY KEY constraint") || ex.Message.Contains("already exists"))
+                        {
+                            await NotificationService.NotifyAsync("Producto duplicado", $"Ya existe un producto con el código '{this.ProductCode}'. Por favor, use un código diferente.", "Cerrar");
+                        }
+                        else
+                        {
+                            await NotificationService.NotifyAsync("Error", "Hubo un error al crear el producto. Vuelva a intentar.", "Cerrar");
+                        }
                         return;
                     }
 
@@ -2064,7 +2084,7 @@ namespace Rincon.ViewModels
         #endregion
 
 
-        #region Movements
+        #region Movements   
 
         [RelayCommand]
         private async Task CancelNewMovement() 
@@ -2187,6 +2207,8 @@ namespace Rincon.ViewModels
         {
             try
             {
+                this.Products = await this.DataService.LoadProductsAsync();
+                
                 var productsStock = await this.DataService.LoadStockAsync();
 
                 if (productsStock != null && productsStock.Any())
@@ -2350,20 +2372,40 @@ namespace Rincon.ViewModels
 
                 if (result > 0)
                 {
-
-                    var productStock = this.Stock.Where(x => x.Product.Id == product.Id).First();
-
-                    var cardStock = this.Cards.Where(x=>x.Id==product.Id).First();
-                    await this.DataService.DeleteItemAsync<ProductStock>(productStock);
-
-                    this.Products.Remove(product);
-                    this.Cards.Remove(cardStock);
-                    this.Stock.Remove(productStock);
-
+                    if (this.Stock != null && this.Stock.Any())
+                    {
+                        var productStock = this.Stock.ToList().Find(x => x.Product.Id == product.Id); 
+                       
+                       if (productStock != null)
+                       {
+                           await this.DataService.DeleteItemAsync<ProductStock>(productStock);
+                           this.Stock.Remove(productStock);
+                       }
+                    }
+                    
+                    if (this.Cards != null && this.Cards.Any())
+                    {
+                        var cardStock = this.Cards.ToList().Find(x => x.Id == product.Id);
+                        if (cardStock != null)
+                        {
+                            this.Cards.Remove(cardStock);
+                        }
+                    }
+                    
+                    if (this.Products != null && this.Products.Any())
+                    {
+                        var productToRemove = this.Products.Find(x => x.Id == product.Id);
+                        if (productToRemove != null)
+                        {
+                            this.Products.Remove(productToRemove);
+                        }
+                    }
+                    
                     // Notificar cambios en las propiedades para actualizar la UI
-                    OnPropertyChanged(nameof(Products));
-                    OnPropertyChanged(nameof(Cards));
-                    OnPropertyChanged(nameof(Stock));
+                    OnPropertyChanged(nameof(this.Products));
+                    this.Products = await this.DataService.LoadProductsAsync();
+                    OnPropertyChanged(nameof(this.Cards));
+                    OnPropertyChanged(nameof(this.Stock));
                 }
             }
             catch
@@ -2759,6 +2801,14 @@ namespace Rincon.ViewModels
                 {
                     this.Operators ??= new ObservableCollection<Operator>();
                     this.Operators.Add(operatorNew);
+
+                    var operatorsList = await this.DataService.LoadOperatorsAsync();
+
+                    if (operatorsList != null && operatorsList.Any())
+                    {
+                        this.Operators = new ObservableCollection<Operator>(operatorsList);
+
+                    }
 
                 }
                 else
