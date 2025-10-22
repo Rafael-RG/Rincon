@@ -11,25 +11,31 @@
 
 
     <Border
-        Margin="400,400,400,400"
-        HeightRequest="400"
-        WidthRequest="800"
-        Padding="40"
-        BackgroundColor="White">
+        Margin="50,100,50,100"
+        HeightRequest="450"
+        WidthRequest="600"
+        MaximumHeightRequest="500"
+        MaximumWidthRequest="700"
+        Padding="30"
+        BackgroundColor="White"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="18,18,18,18" />
+            <RoundRectangle CornerRadius="20,20,20,20" />
         </Border.StrokeShape>
-        <Grid RowDefinitions="*,*,*,*">
-            <Image Source="alert_icon.png" HorizontalOptions="Center" VerticalOptions="Start" HeightRequest="80" WidthRequest="80"/>
-            <Label Text="¿Quiere eliminar este producto?" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontSize="24" FontAttributes="Bold"/>
+        <Grid RowDefinitions="auto,auto,auto,auto" RowSpacing="20">
+            <Image Source="alert_icon.png" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="90" WidthRequest="90"/>
+            <Label Text="¿Quiere eliminar este producto?" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontSize="26" FontAttributes="Bold" LineBreakMode="WordWrap"/>
             <Label
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Grid.Row="2"
-                Margin="0,0,6,0"
-                FontSize="16"
+                Margin="10,0,10,0"
+                FontSize="18"
                 FontAttributes="Bold"
-                TextColor="black">
+                TextColor="black"
+                LineBreakMode="WordWrap"
+                HorizontalTextAlignment="Center">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span x:Name="ProductId"/>
@@ -40,9 +46,9 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-            <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" VerticalOptions="End" Spacing="30">
-                <Button Text="No" BackgroundColor="#D3AA84" Clicked="CancelDeleteProduct_Clicked" WidthRequest="150" TextColor="Black" FontSize="16"/>
-                <Button Text="Si" BackgroundColor="#FFF6ED" Clicked="OkDeleteProduct_Clicked" WidthRequest="150" TextColor="Black" FontSize="16"/>
+            <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" VerticalOptions="Center" Spacing="40">
+                <Button Text="No" BackgroundColor="#D3AA84" Clicked="CancelDeleteProduct_Clicked" WidthRequest="180" HeightRequest="50" TextColor="Black" FontSize="18" CornerRadius="10"/>
+                <Button Text="Sí" BackgroundColor="#FFF6ED" Clicked="OkDeleteProduct_Clicked" WidthRequest="180" HeightRequest="50" TextColor="Black" FontSize="18" CornerRadius="10"/>
             </HorizontalStackLayout>
         </Grid>
     </Border>

@@ -9,52 +9,61 @@
     CloseWhenBackgroundIsClicked="False">
 
     <Border
-        Margin="400,400,400,200"
-        Padding="40"
+        Margin="50,100,50,100"
+        Padding="30"
         BackgroundColor="White"
-        HeightRequest="400"
-        WidthRequest="800">
+        HeightRequest="380"
+        WidthRequest="550"
+        MaximumHeightRequest="450"
+        MaximumWidthRequest="650"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="18,18,18,18" />
+            <RoundRectangle CornerRadius="20,20,20,20" />
         </Border.StrokeShape>
-        <Grid RowDefinitions="*,*,*">
+        <Grid RowDefinitions="auto,auto,auto" RowSpacing="25">
             <Image
-                HeightRequest="80"
+                HeightRequest="90"
                 HorizontalOptions="Center"
                 Source="alert_icon.png"
-                VerticalOptions="Start"
-                WidthRequest="80" />
+                VerticalOptions="Center"
+                WidthRequest="90" />
             <Label
                 x:Name="Message"
                 Grid.Row="1"
                 FontAttributes="Bold"
-                FontSize="24"
+                FontSize="26"
                 HorizontalOptions="Center"
                 TextColor="Black"
-                VerticalOptions="Center" />
+                VerticalOptions="Center"
+                LineBreakMode="WordWrap"
+                HorizontalTextAlignment="Center"
+                Margin="10,0,10,0" />
 
             <StackLayout
                 Grid.Row="2"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
                 Orientation="Horizontal"
-                Spacing="60">
+                Spacing="40">
                 <Button
                     BackgroundColor="#D3AA84"
                     Clicked="BackDeleteOperator_Clicked"
-                    FontSize="16"
-                    HeightRequest="60"
+                    FontSize="18"
+                    HeightRequest="50"
                     Text="Volver"
                     TextColor="Black"
-                    WidthRequest="150" />
+                    WidthRequest="180"
+                    CornerRadius="10" />
 
                 <Button
                     BackgroundColor="#FFF6ED"
                     Clicked="ConfirmDeleteOperator_Clicked"
-                    FontSize="16"
-                    HeightRequest="60"
+                    FontSize="18"
+                    HeightRequest="50"
                     Text="Eliminar"
                     TextColor="Black"
-                    WidthRequest="150" />
+                    WidthRequest="180"
+                    CornerRadius="10" />
             </StackLayout>
 
         </Grid>

@@ -20,66 +20,69 @@
             <local:BoolToTextConverter x:Key="BoolToTextConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <StackLayout
+    <Grid
         Margin="0,0,0,0"
         Padding="0,0,0,0"
-        HorizontalOptions="FillAndExpand"
-        VerticalOptions="FillAndExpand">
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill"
+        RowDefinitions="Auto,*">
 
-        <StackLayout.Background>
+        <Grid.Background>
             <LinearGradientBrush EndPoint="0,1">
                 <GradientStop Offset="0.1" Color="#AD6B2A" />
                 <GradientStop Offset="1.0" Color="#D3AA84" />
             </LinearGradientBrush>
-        </StackLayout.Background>
+        </Grid.Background>
         <ActivityIndicator
+            Grid.Row="0"
             HeightRequest="32"
-            HorizontalOptions="CenterAndExpand"
+            HorizontalOptions="Center"
             IsRunning="True"
             Color="#4A744C"
             IsVisible="{Binding IsUserLogin, Converter={StaticResource InvertedBoolConverter}}"
-            VerticalOptions="CenterAndExpand"
+            VerticalOptions="Center"
             WidthRequest="32" />
 
         <Grid
+            Grid.Row="1"
             BackgroundColor="#AD6B2A"
-            ColumnDefinitions="*,*,*,*,1.6*"
+            ColumnDefinitions="*,*,*,*,2*"
             ColumnSpacing="0"
             IsVisible="{Binding IsUserLogin}"
-            RowDefinitions="55,65,*"
+            RowDefinitions="80,80,*"
             RowSpacing="0"
-            VerticalOptions="FillAndExpand">
+            VerticalOptions="Fill">
 
             <!--#region Botones principales-->
             <ImageButton
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="4"
-                Margin="20,40,20,20"
+                Margin="30,20,30,10"
                 BackgroundColor="#AD6B2A"
                 Command="{Binding ChangeViewCommand}"
                 CommandParameter="Home"
-                HeightRequest="40"
-                HorizontalOptions="StartAndExpand"
+                HeightRequest="50"
+                HorizontalOptions="Start"
                 Source="rincon_home.png"
-                MaximumWidthRequest="173"
-                WidthRequest="173" />
+                MaximumWidthRequest="200"
+                WidthRequest="200" />
             <Button
                 Grid.Row="1"
                 Grid.Column="0"
-                Margin="15,5,15,5"
+                Margin="20,8,20,8"
                 BackgroundColor="{Binding IsMagementStockView, Converter={StaticResource ActiveToColorConverter}}"
                 Command="{Binding ChangeViewCommand}"
                 CommandParameter="MagementStock"
-                CornerRadius="14"
-                FontSize="19"
-                MinimumHeightRequest="45"
-                HeightRequest="45"
-                HorizontalOptions="FillAndExpand"
+                CornerRadius="16"
+                FontSize="16"
+                MinimumHeightRequest="60"
+                HeightRequest="60"
+                HorizontalOptions="Fill"
                 Text="Gestión de stock"
                 TextColor="#000000"
                 LineBreakMode="WordWrap"
-                Padding="8,5,8,5">
+                Padding="12,8,12,8">
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
@@ -92,19 +95,19 @@
             <Button
                 Grid.Row="1"
                 Grid.Column="1"
-                Margin="15,5,15,5"
+                Margin="20,8,20,8"
                 BackgroundColor="{Binding IsTasksView, Converter={StaticResource ActiveToColorConverter}}"
                 Command="{Binding ChangeViewCommand}"
                 CommandParameter="Tasks"
-                CornerRadius="14"
-                FontSize="19"
-                MinimumHeightRequest="45"
-                HeightRequest="45"
-                HorizontalOptions="FillAndExpand"
+                CornerRadius="16"
+                FontSize="16"
+                MinimumHeightRequest="60"
+                HeightRequest="60"
+                HorizontalOptions="Fill"
                 Text="Tareas"
                 TextColor="#000000"
                 LineBreakMode="WordWrap"
-                Padding="8,5,8,5">
+                Padding="12,8,12,8">
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
@@ -117,19 +120,19 @@
             <Button
                 Grid.Row="1"
                 Grid.Column="2"
-                Margin="15,5,15,5"
+                Margin="20,8,20,8"
                 BackgroundColor="{Binding IsOrdersView, Converter={StaticResource ActiveToColorConverter}}"
                 Command="{Binding ChangeViewCommand}"
                 CommandParameter="Orders"
-                CornerRadius="14"
-                FontSize="19"
-                MinimumHeightRequest="45"
-                HeightRequest="45"
-                HorizontalOptions="FillAndExpand"
+                CornerRadius="16"
+                FontSize="16"
+                MinimumHeightRequest="60"
+                HeightRequest="60"
+                HorizontalOptions="Fill"
                 Text="Pedidos"
                 TextColor="#000000"
                 LineBreakMode="WordWrap"
-                Padding="8,5,8,5">
+                Padding="12,8,12,8">
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
@@ -142,19 +145,19 @@
             <Button
                 Grid.Row="1"
                 Grid.Column="3"
-                Margin="15,5,15,5"
+                Margin="20,8,20,8"
                 BackgroundColor="{Binding IsHistoryView, Converter={StaticResource ActiveToColorConverter}}"
                 Command="{Binding ChangeViewCommand}"
                 CommandParameter="History"
-                CornerRadius="14"
-                FontSize="19"
-                MinimumHeightRequest="45"
-                HeightRequest="45"
-                HorizontalOptions="FillAndExpand"
+                CornerRadius="16"
+                FontSize="16"
+                MinimumHeightRequest="60"
+                HeightRequest="60"
+                HorizontalOptions="Fill"
                 Text="Historial"
                 TextColor="#000000"
                 LineBreakMode="WordWrap"
-                Padding="8,5,8,5">
+                Padding="12,8,12,8">
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
@@ -167,19 +170,19 @@
             <Button
                 Grid.Row="1"
                 Grid.Column="4"
-                Margin="15,5,15,5"
+                Margin="20,8,20,8"
                 BackgroundColor="{Binding IsAddProductView, Converter={StaticResource ActiveToColorConverter}}"
                 Command="{Binding ChangeViewCommand}"
                 CommandParameter="AddProduct"
-                CornerRadius="14"
-                FontSize="17"
-                MinimumHeightRequest="45"
-                HeightRequest="45"
-                HorizontalOptions="FillAndExpand"
+                CornerRadius="16"
+                FontSize="16"
+                MinimumHeightRequest="60"
+                HeightRequest="60"
+                HorizontalOptions="Fill"
                 Text="Añadir producto"
                 TextColor="#000000"
                 LineBreakMode="WordWrap"
-                Padding="6,5,6,5">
+                Padding="12,8,12,8">
                 <Button.Shadow>
                     <Shadow
                         Brush="Black"
@@ -192,30 +195,30 @@
             <StackLayout
                 Grid.Row="0"
                 Grid.Column="4"
-                Margin="0,20,0,0"
+                Margin="0,25,0,0"
                 HorizontalOptions="EndAndExpand"
                 Orientation="Horizontal"
                 Spacing="0"
                 BackgroundColor="Transparent"
-                WidthRequest="290">
+                WidthRequest="350">
                 <Button
                     Margin="0,0,0,0"
                     BackgroundColor="Transparent"
                     BorderColor="Transparent"
                     Clicked="Menu_Clicked"
-                    FontSize="16"
-                    HorizontalOptions="EndAndExpand"
+                    FontSize="18"
+                    HorizontalOptions="End"
                     VerticalOptions="Start"
                     Text="{Binding User.Name}"
                     TextColor="White" />
                 <ImageButton
-                    Margin="0,0,20,0"
+                    Margin="0,0,25,0"
                     BackgroundColor="Transparent"
                     Clicked="Menu_Clicked"
-                    HeightRequest="30"
+                    HeightRequest="40"
                     HorizontalOptions="Start"
                     Source="account.png"
-                    WidthRequest="30" />
+                    WidthRequest="40" />
                 
             </StackLayout>
 
@@ -237,8 +240,8 @@
                     Color="#4A744C"
                     IsRunning="True"
                     IsVisible="{Binding IsBusy}"
-                    HorizontalOptions="CenterAndExpand"
-                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
                     BackgroundColor="Transparent" />
                 <!-- Header con botón de refresh -->
                 <Grid Grid.Row="0" Margin="10,10,10,5" ColumnDefinitions="*,auto" 
@@ -276,7 +279,7 @@
                         BackgroundColor="White"
                         CancelButtonColor="Black"
                         HeightRequest="45"
-                        HorizontalOptions="FillAndExpand"
+                        HorizontalOptions="Fill"
                         Placeholder="Buscar"
                         TextChanged="SearchBarLateralBar_TextChanged"
                         TextColor="Black" />
@@ -941,8 +944,8 @@
                 <!-- Título principal -->
                 <Label
                     Grid.Row="0"
-                    Margin="0,0,0,15"
-                    FontSize="24"
+                    Margin="0,0,0,20"
+                    FontSize="32"
                     HorizontalOptions="Start"
                     Text="Gestión de Stock"
                     TextColor="#79280F"
@@ -950,33 +953,33 @@
                     
                 <BoxView
                     Grid.Row="1"
-                    Margin="0,0,0,20"
-                    HeightRequest="2"
+                    Margin="0,0,0,30"
+                    HeightRequest="3"
                     HorizontalOptions="Fill"
                     VerticalOptions="Start"
                     Color="#79280F" />
 
                 <!-- Lista de opciones compacta -->
-                <StackLayout Grid.Row="2" Spacing="15" HorizontalOptions="Start" MaximumWidthRequest="600">
+                <StackLayout Grid.Row="2" Spacing="20" HorizontalOptions="Start" MaximumWidthRequest="800">
                     <!-- Carga de stock -->
-                    <StackLayout Orientation="Horizontal" Spacing="20">
+                    <StackLayout Orientation="Horizontal" Spacing="25">
                         <Image
-                            HeightRequest="40"
+                            HeightRequest="50"
                             HorizontalOptions="Start"
                             Source="add_stock_icon_small.png"
-                            WidthRequest="40"
+                            WidthRequest="50"
                             VerticalOptions="Center">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="AddStock" />
                             </Image.GestureRecognizers>
                         </Image>
                         <Label
-                            FontSize="20"
+                            FontSize="24"
                             HorizontalOptions="Start"
                             Text="Carga de stock"
                             TextColor="#303030"
                             VerticalOptions="Center"
-                            MinimumWidthRequest="200">
+                            MinimumWidthRequest="250">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="AddStock" />
                             </Label.GestureRecognizers>
@@ -984,24 +987,24 @@
                     </StackLayout>
 
                     <!-- Nuevo movimiento -->
-                    <StackLayout Orientation="Horizontal" Spacing="20">
+                    <StackLayout Orientation="Horizontal" Spacing="25">
                         <Image
-                            HeightRequest="40"
+                            HeightRequest="50"
                             HorizontalOptions="Start"
                             Source="new_movement_icon_small.png"
-                            WidthRequest="40"
+                            WidthRequest="50"
                             VerticalOptions="Center">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="NewMovement" />
                             </Image.GestureRecognizers>
                         </Image>
                         <Label
-                            FontSize="20"
+                            FontSize="24"
                             HorizontalOptions="Start"
                             Text="Nuevo movimiento"
                             TextColor="#303030"
                             VerticalOptions="Center"
-                            MinimumWidthRequest="200">
+                            MinimumWidthRequest="250">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="NewMovement" />
                             </Label.GestureRecognizers>
@@ -1009,24 +1012,24 @@
                     </StackLayout>
 
                     <!-- Consulta de stock -->
-                    <StackLayout Orientation="Horizontal" Spacing="20">
+                    <StackLayout Orientation="Horizontal" Spacing="25">
                         <Image
-                            HeightRequest="40"
+                            HeightRequest="50"
                             HorizontalOptions="Start"
                             Source="consult_stock_icon_small.png"
-                            WidthRequest="40"
+                            WidthRequest="50"
                             VerticalOptions="Center">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CheckStock" />
                             </Image.GestureRecognizers>
                         </Image>
                         <Label
-                            FontSize="20"
+                            FontSize="24"
                             HorizontalOptions="Start"
                             Text="Consulta de stock"
                             TextColor="#303030"
                             VerticalOptions="Center"
-                            MinimumWidthRequest="200">
+                            MinimumWidthRequest="250">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CheckStock" />
                             </Label.GestureRecognizers>
@@ -1034,24 +1037,24 @@
                     </StackLayout>
 
                     <!-- Editar stock -->
-                    <StackLayout Orientation="Horizontal" Spacing="20">
+                    <StackLayout Orientation="Horizontal" Spacing="25">
                         <Image
-                            HeightRequest="40"
+                            HeightRequest="50"
                             HorizontalOptions="Start"
                             Source="edit_stock_icon_small.png"
-                            WidthRequest="40"
+                            WidthRequest="50"
                             VerticalOptions="Center">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="EditStock" />
                             </Image.GestureRecognizers>
                         </Image>
                         <Label
-                            FontSize="20"
+                            FontSize="24"
                             HorizontalOptions="Start"
                             Text="Editar stock"
                             TextColor="#303030"
                             VerticalOptions="Center"
-                            MinimumWidthRequest="200">
+                            MinimumWidthRequest="250">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="EditStock" />
                             </Label.GestureRecognizers>
@@ -1059,24 +1062,24 @@
                     </StackLayout>
 
                     <!-- Inventario -->
-                    <StackLayout Orientation="Horizontal" Spacing="20">
+                    <StackLayout Orientation="Horizontal" Spacing="25">
                         <Image
-                            HeightRequest="40"
+                            HeightRequest="50"
                             HorizontalOptions="Start"
                             Source="inventory_icon_small.png"
-                            WidthRequest="40"
+                            WidthRequest="50"
                             VerticalOptions="Center">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="Inventory" />
                             </Image.GestureRecognizers>
                         </Image>
                         <Label
-                            FontSize="20"
+                            FontSize="24"
                             HorizontalOptions="Start"
                             Text="Inventario"
                             TextColor="#303030"
                             VerticalOptions="Center"
-                            MinimumWidthRequest="200">
+                            MinimumWidthRequest="250">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="Inventory" />
                             </Label.GestureRecognizers>
@@ -3260,8 +3263,8 @@
                 <!-- Título principal -->
                 <Label
                     Grid.Row="0"
-                    Margin="0,0,0,15"
-                    FontSize="24"
+                    Margin="0,0,0,20"
+                    FontSize="32"
                     HorizontalOptions="Start"
                     Text="Tareas"
                     TextColor="#79280F"
@@ -3269,33 +3272,33 @@
                     
                 <BoxView
                     Grid.Row="1"
-                    Margin="0,0,0,20"
-                    HeightRequest="2"
+                    Margin="0,0,0,30"
+                    HeightRequest="3"
                     HorizontalOptions="Fill"
                     VerticalOptions="Start"
                     Color="#79280F" />
 
                 <!-- Lista de opciones compacta -->
-                <StackLayout Grid.Row="2" Spacing="15" HorizontalOptions="Start" MaximumWidthRequest="600">
+                <StackLayout Grid.Row="2" Spacing="20" HorizontalOptions="Start" MaximumWidthRequest="800">
                     <!-- Administrar tareas -->
-                    <StackLayout Orientation="Horizontal" Spacing="20">
+                    <StackLayout Orientation="Horizontal" Spacing="25">
                         <Image
-                            HeightRequest="40"
+                            HeightRequest="50"
                             HorizontalOptions="Start"
                             Source="add_stock_icon_small.png"
-                            WidthRequest="40"
+                            WidthRequest="50"
                             VerticalOptions="Center">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="ManagementTasks" />
                             </Image.GestureRecognizers>
                         </Image>
                         <Label
-                            FontSize="20"
+                            FontSize="24"
                             HorizontalOptions="Start"
                             Text="Administrar tareas"
                             TextColor="#303030"
                             VerticalOptions="Center"
-                            MinimumWidthRequest="200">
+                            MinimumWidthRequest="250">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="ManagementTasks" />
                             </Label.GestureRecognizers>
@@ -3303,24 +3306,24 @@
                     </StackLayout>
 
                     <!-- Crear Tarea -->
-                    <StackLayout Orientation="Horizontal" Spacing="20">
+                    <StackLayout Orientation="Horizontal" Spacing="25">
                         <Image
-                            HeightRequest="40"
+                            HeightRequest="50"
                             HorizontalOptions="Start"
                             Source="new_movement_icon_small.png"
-                            WidthRequest="40"
+                            WidthRequest="50"
                             VerticalOptions="Center">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CreateTask" />
                             </Image.GestureRecognizers>
                         </Image>
                         <Label
-                            FontSize="20"
+                            FontSize="24"
                             HorizontalOptions="Start"
                             Text="Crear Tarea"
                             TextColor="#303030"
                             VerticalOptions="Center"
-                            MinimumWidthRequest="200">
+                            MinimumWidthRequest="250">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CreateTask" />
                             </Label.GestureRecognizers>
@@ -4345,8 +4348,8 @@
                 <!-- Título principal -->
                 <Label
                     Grid.Row="0"
-                    Margin="0,0,0,15"
-                    FontSize="24"
+                    Margin="0,0,0,20"
+                    FontSize="32"
                     HorizontalOptions="Start"
                     Text="Reservas y Pedidos"
                     TextColor="#79280F"
@@ -4354,33 +4357,33 @@
                     
                 <BoxView
                     Grid.Row="1"
-                    Margin="0,0,0,20"
-                    HeightRequest="2"
+                    Margin="0,0,0,30"
+                    HeightRequest="3"
                     HorizontalOptions="Fill"
                     VerticalOptions="Start"
                     Color="#79280F" />
 
                 <!-- Lista de opciones compacta -->
-                <StackLayout Grid.Row="2" Spacing="15" HorizontalOptions="Start" MaximumWidthRequest="600">
+                <StackLayout Grid.Row="2" Spacing="20" HorizontalOptions="Start" MaximumWidthRequest="800">
                     <!-- Nuevo Pedido/Reserva -->
-                    <StackLayout Orientation="Horizontal" Spacing="20">
+                    <StackLayout Orientation="Horizontal" Spacing="25">
                         <Image
-                            HeightRequest="40"
+                            HeightRequest="50"
                             HorizontalOptions="Start"
                             Source="add_stock_icon_small.png"
-                            WidthRequest="40"
+                            WidthRequest="50"
                             VerticalOptions="Center">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CreateBookingOrder" />
                             </Image.GestureRecognizers>
                         </Image>
                         <Label
-                            FontSize="20"
+                            FontSize="24"
                             HorizontalOptions="Start"
                             Text="Nuevo Pedido/Reserva"
                             TextColor="#303030"
                             VerticalOptions="Center"
-                            MinimumWidthRequest="200">
+                            MinimumWidthRequest="250">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="CreateBookingOrder" />
                             </Label.GestureRecognizers>
@@ -4388,24 +4391,24 @@
                     </StackLayout>
 
                     <!-- Lista de Reservas -->
-                    <StackLayout Orientation="Horizontal" Spacing="20">
+                    <StackLayout Orientation="Horizontal" Spacing="25">
                         <Image
-                            HeightRequest="40"
+                            HeightRequest="50"
                             HorizontalOptions="Start"
                             Source="new_movement_icon_small.png"
-                            WidthRequest="40"
+                            WidthRequest="50"
                             VerticalOptions="Center">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="ListBooking" />
                             </Image.GestureRecognizers>
                         </Image>
                         <Label
-                            FontSize="20"
+                            FontSize="24"
                             HorizontalOptions="Start"
                             Text="Lista de Reservas"
                             TextColor="#303030"
                             VerticalOptions="Center"
-                            MinimumWidthRequest="200">
+                            MinimumWidthRequest="250">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="ListBooking" />
                             </Label.GestureRecognizers>
@@ -4413,24 +4416,24 @@
                     </StackLayout>
 
                     <!-- Lista de Pedidos -->
-                    <StackLayout Orientation="Horizontal" Spacing="20">
+                    <StackLayout Orientation="Horizontal" Spacing="25">
                         <Image
-                            HeightRequest="40"
+                            HeightRequest="50"
                             HorizontalOptions="Start"
                             Source="new_movement_icon_small.png"
-                            WidthRequest="40"
+                            WidthRequest="50"
                             VerticalOptions="Center">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="ListOrders" />
                             </Image.GestureRecognizers>
                         </Image>
                         <Label
-                            FontSize="20"
+                            FontSize="24"
                             HorizontalOptions="Start"
                             Text="Lista de Pedidos"
                             TextColor="#303030"
                             VerticalOptions="Center"
-                            MinimumWidthRequest="200">
+                            MinimumWidthRequest="250">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ChangeViewCommand}" CommandParameter="ListOrders" />
                             </Label.GestureRecognizers>
@@ -5702,37 +5705,37 @@
                 <!-- Title Row -->
                 <Label
                     Grid.Row="0"
-                    FontSize="18"
+                    FontSize="32"
                     HorizontalOptions="Start"
                     Text="Movimientos"
                     TextColor="#79280F"
                     VerticalOptions="Center"
                     FontAttributes="Bold"
-                    Margin="8,0,0,0" />
+                    Margin="12,0,0,0" />
 
                 <!-- Filters Section with Frame -->
                 <Frame 
                     Grid.Row="1" 
                     BackgroundColor="White" 
                     BorderColor="#79280F" 
-                    CornerRadius="8" 
-                    Padding="12"
-                    Margin="4,0,4,0">
+                    CornerRadius="12" 
+                    Padding="16"
+                    Margin="6,0,6,0">
                     <Grid RowDefinitions="auto,auto" RowSpacing="12">
                         <!-- Filters Title -->
                         <Label 
                             Grid.Row="0"
-                            FontSize="13" 
+                            FontSize="18" 
                             Text="Filtros" 
                             TextColor="#79280F" 
                             FontAttributes="Bold" 
                             HorizontalOptions="Start"
-                            Margin="0,0,0,8" />
+                            Margin="0,0,0,12" />
                         
                         <!-- Filters Controls -->
-                        <Grid Grid.Row="1" ColumnDefinitions="auto,auto,auto,auto,auto" ColumnSpacing="15">
-                            <StackLayout Grid.Column="0" Orientation="Horizontal" Spacing="6">
-                                <Label FontSize="11" Text="Tipo:" TextColor="#79280F" VerticalOptions="Center" />
+                        <Grid Grid.Row="1" ColumnDefinitions="auto,auto,auto,auto,auto" ColumnSpacing="20">
+                            <StackLayout Grid.Column="0" Orientation="Horizontal" Spacing="8">
+                                <Label FontSize="14" Text="Tipo:" TextColor="#79280F" VerticalOptions="Center" />
                                 <Frame BackgroundColor="#F8F8F8" BorderColor="#DDD" CornerRadius="4" Padding="2" HeightRequest="35">
                                     <Picker
                                         ItemsSource="{Binding MovementTypes}"
@@ -7291,7 +7294,7 @@
             </Grid>
         </Grid>
 
-    </StackLayout>
+    </Grid>
 
 
 </pages:BaseContentPage>
