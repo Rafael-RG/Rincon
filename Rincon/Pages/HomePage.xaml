@@ -4663,59 +4663,72 @@
                     <!-- Lista de productos disponibles -->
                     <Frame
                         x:Name="FrameListProductsBookingOrder"
-                        CornerRadius="15"
-                        HeightRequest="80"
+                        Padding="8"
+                        CornerRadius="10"
+                        BackgroundColor="White"
+                        BorderColor="#79280F"
+                        HasShadow="True"
+                        HeightRequest="120"
                         IsVisible="{Binding IsVisibleListProductsBookingOrders}">
-                        <Frame.Background>
-                            <LinearGradientBrush EndPoint="0,1">
-                                <GradientStop Offset="0.1" Color="#FFFFFF" />
-                                <GradientStop Offset="1.0" Color="#FFF6ED" />
-                            </LinearGradientBrush>
-                        </Frame.Background>
                         <CollectionView
                             x:Name="ProductsBookingOrder"
                             HorizontalOptions="FillAndExpand"
                             ItemsSource="{Binding ProductsWithStock}"
                             SelectionChanged="CollectionProductsBookingOrder_SelectionChanged"
                             SelectionMode="Single"
-                            VerticalOptions="FillAndExpand">
+                            VerticalOptions="FillAndExpand"
+                            BackgroundColor="Transparent">
                             <CollectionView.ItemsLayout>
-                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="2" />
+                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="4" />
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:Product">
-                                    <Grid
-                                        ColumnDefinitions="0.8*,1.5*,0.7*"
-                                        RowDefinitions="*"
-                                        VerticalOptions="Start"
-                                        Padding="3,1">
-                                        <Label
-                                            FontSize="9"
-                                            Text="{Binding Id}"
-                                            TextColor="#000000"
-                                            VerticalOptions="Center" />
-                                        <Label
-                                            Grid.Column="1"
-                                            FontSize="9"
-                                            Text="{Binding Description}"
-                                            TextColor="#000000"
-                                            VerticalOptions="Center" />
-                                        <Label
-                                            Grid.Column="2"
-                                            FontSize="9"
-                                            Text="{Binding WoodState}"
-                                            TextColor="#000000"
-                                            VerticalOptions="Center" />
-                                    </Grid>
+                                    <Frame
+                                        Padding="8"
+                                        Margin="2"
+                                        BackgroundColor="#F8F8F8"
+                                        BorderColor="#E0E0E0"
+                                        CornerRadius="6"
+                                        HasShadow="False">
+                                        <Grid
+                                            ColumnDefinitions="0.8*,1.5*,0.7*"
+                                            RowDefinitions="*"
+                                            VerticalOptions="Center"
+                                            ColumnSpacing="8">
+                                            <Label
+                                                FontSize="12"
+                                                FontAttributes="Bold"
+                                                Text="{Binding Id}"
+                                                TextColor="#333333"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Grid.Column="1"
+                                                FontSize="12"
+                                                Text="{Binding Description}"
+                                                TextColor="#333333"
+                                                VerticalOptions="Center"
+                                                LineBreakMode="TailTruncation" />
+                                            <Label
+                                                Grid.Column="2"
+                                                FontSize="11"
+                                                Text="{Binding WoodState}"
+                                                TextColor="#666666"
+                                                VerticalOptions="Center" />
+                                        </Grid>
+                                    </Frame>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                             <CollectionView.EmptyView>
-                                <Label
-                                    FontSize="10"
-                                    HorizontalOptions="CenterAndExpand"
-                                    Text="No se encontraron productos"
-                                    TextColor="Black"
-                                    VerticalOptions="CenterAndExpand" />
+                                <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                                    <Label
+                                        FontSize="14"
+                                        FontAttributes="Italic"
+                                        HorizontalOptions="CenterAndExpand"
+                                        Text="🔍 No se encontraron productos"
+                                        TextColor="#999999"
+                                        VerticalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center" />
+                                </StackLayout>
                             </CollectionView.EmptyView>
                         </CollectionView>
                     </Frame>
