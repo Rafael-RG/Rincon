@@ -1810,38 +1810,38 @@
                         <!-- Búsqueda compacta -->
                         <Frame
                             Padding="0"
-                            HeightRequest="35"
-                            BackgroundColor="Transparent"
-                            BorderColor="#797979">
+                            HeightRequest="50"
+                            BackgroundColor="White"
+                            BorderColor="#79280F"
+                            CornerRadius="8"
+                            HasShadow="True">
                             <SearchBar
                                 x:Name="SearchBarAddStock"
                                 BackgroundColor="Transparent"
                                 CancelButtonColor="#79280F"
                                 Focused="SearchBar_Focused"
-                                HeightRequest="30"
+                                HeightRequest="32"
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Center"
                                 Placeholder="Buscar producto para agregar"
                                 PlaceholderColor="#999999"
                                 TextChanged="OnAddStockTextChanged"
                                 TextColor="#333333"
-                                FontSize="14"
+                                FontSize="13"
                                 Unfocused="SearchBar_Unfocused" />
                         </Frame>
 
                         <!-- Lista de productos para agregar -->
                         <Frame
                             x:Name="FrameListAddStock"
-                            CornerRadius="6"
+                            CornerRadius="8"
                             IsVisible="{Binding IsVisibleListAddStock}"
-                            HeightRequest="140"
-                            HorizontalOptions="Fill">
-                            <Frame.Background>
-                                <LinearGradientBrush EndPoint="0,1">
-                                    <GradientStop Offset="0.1" Color="#FFFFFF" />
-                                    <GradientStop Offset="1.0" Color="#FFF6ED" />
-                                </LinearGradientBrush>
-                            </Frame.Background>
+                            HeightRequest="180"
+                            HorizontalOptions="Fill"
+                            BackgroundColor="White"
+                            BorderColor="#79280F"
+                            HasShadow="True"
+                            Padding="8">
                             <CollectionView
                                 x:Name="ProductsAddStock"
                                 HorizontalOptions="Fill"
@@ -1851,151 +1851,190 @@
                                 VerticalOptions="Fill">
 
                                 <CollectionView.ItemsLayout>
-                                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="4" />
+                                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="8" />
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="models:Product">
-                                        <Grid
-                                            ColumnDefinitions="60,*,60"
-                                            ColumnSpacing="8"
-                                            RowDefinitions="auto"
-                                            Padding="6,3"
-                                            VerticalOptions="Center">
-                                            <Label
-                                                FontSize="12"
-                                                Text="{Binding Id}"
-                                                TextColor="#000000"
-                                                HorizontalTextAlignment="Center"
-                                                VerticalOptions="Center" />
+                                        <Frame
+                                            BackgroundColor="White"
+                                            BorderColor="#E0E0E0"
+                                            CornerRadius="6"
+                                            Padding="12,8"
+                                            Margin="4,2"
+                                            HasShadow="False">
+                                            <Grid
+                                                ColumnDefinitions="60,*,60"
+                                                ColumnSpacing="12"
+                                                RowDefinitions="auto"
+                                                VerticalOptions="Center">
+                                                <Label
+                                                    FontSize="14"
+                                                    Text="{Binding Id}"
+                                                    TextColor="#79280F"
+                                                    FontAttributes="Bold"
+                                                    HorizontalTextAlignment="Center"
+                                                    VerticalOptions="Center" />
 
-                                            <Label
-                                                Grid.Column="1"
-                                                FontSize="12"
-                                                Text="{Binding Description}"
-                                                TextColor="#000000"
-                                                VerticalOptions="Center"
-                                                LineBreakMode="TailTruncation" />
+                                                <Label
+                                                    Grid.Column="1"
+                                                    FontSize="14"
+                                                    Text="{Binding Description}"
+                                                    TextColor="#333333"
+                                                    VerticalOptions="Center"
+                                                    LineBreakMode="TailTruncation" />
 
-                                            <Label
-                                                Grid.Column="2"
-                                                FontSize="12"
-                                                Text="{Binding WoodState}"
-                                                TextColor="#000000"
-                                                HorizontalTextAlignment="Center"
-                                                VerticalOptions="Center" />
-                                        </Grid>
+                                                <Label
+                                                    Grid.Column="2"
+                                                    FontSize="14"
+                                                    Text="{Binding WoodState}"
+                                                    TextColor="#666666"
+                                                    HorizontalTextAlignment="Center"
+                                                    VerticalOptions="Center" />
+                                            </Grid>
+                                        </Frame>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                                 <CollectionView.EmptyView>
-                                    <Label
-                                        FontSize="12"
-                                        HorizontalOptions="Center"
-                                        Text="No se encontraron productos"
-                                        TextColor="Black"
-                                        Padding="10"
-                                        VerticalOptions="Center" />
+                                    <StackLayout Spacing="10" Padding="20" VerticalOptions="Center">
+                                        <Image Source="search_icon.png" HeightRequest="40" WidthRequest="40" HorizontalOptions="Center" Opacity="0.5" />
+                                        <Label
+                                            FontSize="14"
+                                            HorizontalOptions="Center"
+                                            Text="No se encontraron productos"
+                                            TextColor="#999999"
+                                            HorizontalTextAlignment="Center" />
+                                    </StackLayout>
                                 </CollectionView.EmptyView>
                             </CollectionView>
                         </Frame>
 
                         <!-- Lista de productos agregados para carga de stock -->
                         <StackLayout Spacing="8">
-                            <Label Text="Productos a cargar:" 
-                                   FontSize="16" 
-                                   FontAttributes="Bold" 
-                                   TextColor="#79280F" 
-                                   Margin="0,10,0,5" />
+                            <Frame 
+                                BackgroundColor="White" 
+                                BorderColor="#79280F" 
+                                CornerRadius="8" 
+                                HasShadow="True" 
+                                Padding="12,8"
+                                Margin="0,10,0,5">
+                                <Label Text="Productos a cargar:" 
+                                       FontSize="16" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#79280F" />
+                            </Frame>
                             
                             <!-- Header de la lista -->
-                            <Grid ColumnDefinitions="*,*,*,120,40" ColumnSpacing="8" Padding="8,4" BackgroundColor="#F0F0F0">
-                                <Label Text="Código" FontSize="13" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="1" Text="Descripción" FontSize="13" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="2" Text="Estado" FontSize="13" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="3" Text="Cantidad" FontSize="13" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="4" Text="" FontSize="13" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
-                            </Grid>
+                            <Frame 
+                                BackgroundColor="#F8F9FA" 
+                                BorderColor="#79280F" 
+                                CornerRadius="8" 
+                                HasShadow="False" 
+                                Padding="12,8">
+                                <Grid ColumnDefinitions="*,*,*,120,40" ColumnSpacing="8">
+                                    <Label Text="Código" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
+                                    <Label Grid.Column="1" Text="Descripción" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
+                                    <Label Grid.Column="2" Text="Estado" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
+                                    <Label Grid.Column="3" Text="Cantidad" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
+                                    <Label Grid.Column="4" Text="" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
+                                </Grid>
+                            </Frame>
                             
                             <!-- Lista de productos -->
-                            <Frame CornerRadius="6" Padding="4" BackgroundColor="#FAFAFA" BorderColor="#E0E0E0" HeightRequest="200">
+                            <Frame 
+                                CornerRadius="8" 
+                                Padding="8" 
+                                BackgroundColor="White" 
+                                BorderColor="#79280F" 
+                                HasShadow="True" 
+                                HeightRequest="220">
                                 <CollectionView
                                     ItemsSource="{Binding ProductsStock, Mode=TwoWay}"
                                     SelectionMode="Single"
                                     VerticalOptions="Fill">
                                     <CollectionView.ItemsLayout>
-                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="4" />
+                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="8" />
                                     </CollectionView.ItemsLayout>
                                     <CollectionView.EmptyView>
-                                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                                        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="15" Padding="40">
+                                            <Image Source="package_icon.png" HeightRequest="50" WidthRequest="50" HorizontalOptions="Center" Opacity="0.5" />
                                             <Label
-                                                FontSize="14"
+                                                FontSize="15"
                                                 HorizontalOptions="Center"
                                                 Text="No hay productos agregados para cargar"
-                                                TextColor="#797979"
+                                                TextColor="#999999"
                                                 VerticalOptions="Center" />
                                         </StackLayout>
                                     </CollectionView.EmptyView>
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="models:ProductStock">
-                                            <Grid
-                                                ColumnDefinitions="*,*,*,120,40"
-                                                ColumnSpacing="8"
-                                                RowDefinitions="auto"
-                                                Padding="4,6"
-                                                VerticalOptions="Center">
-                                                
-                                                <Label
-                                                    FontSize="12"
-                                                    Text="{Binding Product.Id}"
-                                                    TextColor="#000000"
-                                                    HorizontalTextAlignment="Center"
-                                                    VerticalOptions="Center" />
-
-                                                <Label
-                                                    Grid.Column="1"
-                                                    FontSize="12"
-                                                    Text="{Binding Product.Description}"
-                                                    TextColor="#000000"
-                                                    HorizontalTextAlignment="Center"
-                                                    VerticalOptions="Center"
-                                                    LineBreakMode="TailTruncation" />
-
-                                                <Label
-                                                    Grid.Column="2"
-                                                    FontSize="12"
-                                                    Text="{Binding Product.WoodState}"
-                                                    TextColor="#000000"
-                                                    HorizontalTextAlignment="Center"
-                                                    VerticalOptions="Center" />
-
-                                                <Frame
-                                                    Grid.Column="3"
-                                                    Padding="2"
-                                                    BackgroundColor="White"
-                                                    CornerRadius="8"
-                                                    HeightRequest="32"
-                                                    BorderColor="#CCCCCC">
-                                                    <Entry
-                                                        FontSize="12"
-                                                        HorizontalOptions="Fill"
+                                            <Frame
+                                                BackgroundColor="White"
+                                                BorderColor="#E0E0E0"
+                                                CornerRadius="6"
+                                                Padding="12,8"
+                                                Margin="4,2"
+                                                HasShadow="False">
+                                                <Grid
+                                                    ColumnDefinitions="*,*,*,120,40"
+                                                    ColumnSpacing="12"
+                                                    RowDefinitions="auto"
+                                                    VerticalOptions="Center">
+                                                    
+                                                    <Label
+                                                        FontSize="14"
+                                                        Text="{Binding Product.Id}"
+                                                        TextColor="#79280F"
+                                                        FontAttributes="Bold"
                                                         HorizontalTextAlignment="Center"
-                                                        HeightRequest="55"
-                                                        Text="{Binding Quantity, Mode=TwoWay}"
-                                                        TextColor="#000000"
-                                                        BackgroundColor="Transparent"
-                                                        Keyboard="Numeric"
                                                         VerticalOptions="Center" />
-                                                </Frame>
 
-                                                <ImageButton
-                                                    Grid.Column="4"
-                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=RemoveProductToAddedCommand}"
-                                                    CommandParameter="{Binding .}"
-                                                    HeightRequest="20"
-                                                    Source="delete_item_icon.png"
-                                                    WidthRequest="20"
-                                                    BackgroundColor="Transparent"
-                                                    VerticalOptions="Center" />
-                                            </Grid>
+                                                    <Label
+                                                        Grid.Column="1"
+                                                        FontSize="14"
+                                                        Text="{Binding Product.Description}"
+                                                        TextColor="#333333"
+                                                        HorizontalTextAlignment="Center"
+                                                        VerticalOptions="Center"
+                                                        LineBreakMode="TailTruncation" />
+
+                                                    <Label
+                                                        Grid.Column="2"
+                                                        FontSize="14"
+                                                        Text="{Binding Product.WoodState}"
+                                                        TextColor="#666666"
+                                                        HorizontalTextAlignment="Center"
+                                                        VerticalOptions="Center" />
+
+                                                    <Frame
+                                                        Grid.Column="3"
+                                                        Padding="8"
+                                                        BackgroundColor="#F8F9FA"
+                                                        BorderColor="#79280F"
+                                                        CornerRadius="8"
+                                                        HeightRequest="40"
+                                                        HasShadow="False">
+                                                        <Entry
+                                                            FontSize="14"
+                                                            HorizontalOptions="Fill"
+                                                            HorizontalTextAlignment="Center"
+                                                            Text="{Binding Quantity, Mode=TwoWay}"
+                                                            TextColor="#333333"
+                                                            BackgroundColor="Transparent"
+                                                            Keyboard="Numeric"
+                                                            VerticalOptions="Center" />
+                                                    </Frame>
+
+                                                    <ImageButton
+                                                        Grid.Column="4"
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=RemoveProductToAddedCommand}"
+                                                        CommandParameter="{Binding .}"
+                                                        HeightRequest="30"
+                                                        Source="delete_item_icon.png"
+                                                        WidthRequest="30"
+                                                        BackgroundColor="Transparent"
+                                                        VerticalOptions="Center" />
+                                                </Grid>
+                                            </Frame>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
@@ -2030,24 +2069,28 @@
                         WidthRequest="32" />
                     <Button
                         Grid.Column="1"
-                        BackgroundColor="#D3AA84"
+                        BackgroundColor="#79280F"
                         Clicked="AddStock_Clicked"
                         IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
-                        HeightRequest="36"
+                        HeightRequest="45"
                         Text="Cargar Stock"
-                        TextColor="#000000"
-                        FontSize="14"
-                        CornerRadius="5" />
+                        TextColor="White"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        CornerRadius="8" />
                     <Button
                         Grid.Column="2"
                         BackgroundColor="#FFF6ED"
                         Command="{Binding CancelAddStockCommand}"
                         IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
-                        HeightRequest="36"
+                        HeightRequest="45"
                         Text="Cancelar"
-                        TextColor="#000000"
-                        FontSize="14"
-                        CornerRadius="5" />
+                        TextColor="#79280F"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        BorderColor="#79280F"
+                        BorderWidth="2"
+                        CornerRadius="8" />
                 </Grid>
 
             </Grid>
