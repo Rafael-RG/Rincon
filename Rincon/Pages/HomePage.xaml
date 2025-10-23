@@ -244,47 +244,57 @@
                     VerticalOptions="Center"
                     BackgroundColor="Transparent" />
                 <!-- Header con botón de refresh -->
-                <Grid Grid.Row="0" Margin="10,10,10,5" ColumnDefinitions="*,auto" 
-                      IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
-                    <Label 
-                        Grid.Column="0"
-                        Text="Stock"
-                        FontSize="16"
-                        FontAttributes="Bold"
-                        TextColor="#79280F"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Start" />
-                    <ImageButton
-                        Grid.Column="1"
-                        BackgroundColor="Transparent"
-                        Command="{Binding RefreshStockCommand}"
-                        HeightRequest="30"
-                        WidthRequest="30"
-                        HorizontalOptions="End"
-                        VerticalOptions="Center"
-                        Source="refresh"
-                        Opacity="0.7" />
-                </Grid>
+                <Frame Grid.Row="0" 
+                       Margin="8,10,8,5" 
+                       Padding="12,8"
+                       BackgroundColor="White"
+                       BorderColor="#79280F"
+                       CornerRadius="8"
+                       HasShadow="True"
+                       IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
+                    <Grid ColumnDefinitions="*,auto" ColumnSpacing="10">
+                        <Label Grid.Column="0"
+                               Text="Stock"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="#79280F"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Start" />
+                        <ImageButton Grid.Column="1"
+                                     BackgroundColor="Transparent"
+                                     Command="{Binding RefreshStockCommand}"
+                                     HeightRequest="28"
+                                     WidthRequest="28"
+                                     HorizontalOptions="End"
+                                     VerticalOptions="Center"
+                                     Source="refresh.png"
+                                     Opacity="0.7" />
+                    </Grid>
+                </Frame>
                 <Frame
                     Grid.Row="1"
                     Margin="10,5,10,15"
-                    Padding="0,0,0,0"
-                    BackgroundColor="#FAFAFA"
-                    BorderColor="Transparent"
-                    CornerRadius="12"
-                    HeightRequest="45"
+                    Padding="0"
+                    BackgroundColor="White"
+                    BorderColor="#79280F"
+                    CornerRadius="8"
+                    HeightRequest="50"
+                    HasShadow="True"
                     IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}">
                     <SearchBar
                         x:Name="SearchBarLateralBar"
-                        BackgroundColor="White"
-                        CancelButtonColor="Black"
-                        HeightRequest="45"
+                        BackgroundColor="Transparent"
+                        CancelButtonColor="#79280F"
+                        HeightRequest="32"
                         HorizontalOptions="Fill"
-                        Placeholder="Buscar"
+                        VerticalOptions="Center"
+                        Placeholder="Buscar en stock"
+                        PlaceholderColor="#999999"
                         TextChanged="SearchBarLateralBar_TextChanged"
-                        TextColor="Black" />
+                        TextColor="#333333"
+                        FontSize="13" />
                 </Frame>
-
+            <!-- Stock List Home-->
                 <CollectionView
                     x:Name="LateraBarStock"
                     Grid.Row="2"
