@@ -3807,10 +3807,10 @@
                 RowDefinitions="auto,auto,auto,*"
                 RowSpacing="12">
 
-                <!-- Título y búsqueda optimizados para landscape -->
-                <Grid Grid.Row="0" ColumnDefinitions="auto,*" ColumnSpacing="25" Margin="0,0,0,0">
+                <!-- Título y búsqueda en la misma fila para tablets -->
+                <Grid Grid.Row="0" ColumnDefinitions="auto,*" ColumnSpacing="20" Margin="0,0,0,10">
                     <Label
-                        FontSize="22"
+                        FontSize="20"
                         FontAttributes="Bold"
                         HorizontalOptions="Start"
                         Text="Historial de Tareas"
@@ -3819,21 +3819,21 @@
                     
                     <Frame
                         Grid.Column="1"
-                        Padding="10,-2,10,-2"
-                        HeightRequest="42"
-                        BackgroundColor="LightGray"
-                        BorderColor="Transparent"
-                        CornerRadius="24"
-                        MaximumWidthRequest="450"
-                        HorizontalOptions="End">
+                        Padding="0"
+                        HeightRequest="32"
+                        BackgroundColor="Transparent"
+                        BorderColor="#797979"
+                        CornerRadius="8"
+                        MaximumWidthRequest="400">
                         <SearchBar
                             x:Name="SearchBarTask"
                             BackgroundColor="Transparent"
                             CancelButtonColor="#79280F"
                             Placeholder="Buscar tareas..."
+                            HeightRequest="28"
                             HorizontalOptions="Fill"
                             VerticalOptions="Center"
-                            FontSize="14"
+                            FontSize="13"
                             TextChanged="OnSearchTaskTextChanged"
                             TextColor="#333333"
                             PlaceholderColor="#999999" />
@@ -3842,7 +3842,7 @@
 
                 <BoxView
                     Grid.Row="1"
-                    Margin="0,0,0,0"
+                    Margin="0,0,0,8"
                     HeightRequest="2"
                     HorizontalOptions="Fill"
                     VerticalOptions="Start"
@@ -4006,7 +4006,7 @@
                                             Clicked="VisivilityTaskItem_Clicked"
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center"
-                                            ImageSource="visibility"
+                                            ImageSource="visibility.png"
                                             HeightRequest="28"
                                             WidthRequest="28"
                                             Padding="4"
@@ -4018,7 +4018,7 @@
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center"
                                             Clicked="VisivilityTaskItemEdit_Clicked"
-                                            ImageSource="edit_operators"
+                                            ImageSource="edit_operators.png"
                                             HeightRequest="28"
                                             WidthRequest="28"
                                             Padding="4"
