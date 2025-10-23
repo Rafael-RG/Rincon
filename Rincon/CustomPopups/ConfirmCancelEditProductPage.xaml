@@ -9,21 +9,60 @@
     CloseWhenBackgroundIsClicked="False">
 
     <Border
-        Margin="400,400,400,400"
+        Margin="200,150,200,150"
         HeightRequest="400"
         WidthRequest="800"
         Padding="40"
-        BackgroundColor="White">
+        BackgroundColor="White"
+        Stroke="#79280F"
+        StrokeThickness="2">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="18,18,18,18" />
+            <RoundRectangle CornerRadius="12,12,12,12" />
         </Border.StrokeShape>
-        <Grid RowDefinitions="*,*,*">
-            <Image Source="alert_icon.png" HorizontalOptions="Center" VerticalOptions="Start" HeightRequest="80" WidthRequest="80"/>
-            <Label Text="Al aceptar se borraran todos los cambios realizados" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" FontSize="24" FontAttributes="Bold"/>
-            <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" Spacing="30">
-                <Button Text="Seguir editando" BackgroundColor="#D3AA84" Clicked="ContinueEditProduct_Clicked" WidthRequest="150" HeightRequest="60" TextColor="Black" FontSize="16"/>
-                <Button Text="Aceptar" BackgroundColor="#FFF6ED" Clicked="CloseEditProduct_Clicked" WidthRequest="150" HeightRequest="60" TextColor="Black" FontSize="16"/>
-            </HorizontalStackLayout>
+        <Border.Shadow>
+            <Shadow Brush="Black" Offset="0,4" Radius="15" Opacity="0.2" />
+        </Border.Shadow>
+        <Grid RowDefinitions="auto,*,auto" RowSpacing="20">
+            <Image Source="alert_icon.png" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center" 
+                   HeightRequest="60" 
+                   WidthRequest="60"/>
+            <StackLayout Grid.Row="1" Spacing="10" VerticalOptions="Center">
+                <Label Text="¿Descartar cambios?" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center" 
+                       TextColor="#79280F" 
+                       FontSize="22" 
+                       FontAttributes="Bold"/>
+                <Label Text="Al aceptar se borrarán todos los cambios realizados" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center" 
+                       TextColor="#333333" 
+                       FontSize="16" 
+                       HorizontalTextAlignment="Center"
+                       LineBreakMode="WordWrap"/>
+            </StackLayout>
+            <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="20">
+                <Button Grid.Column="0"
+                        Text="Seguir editando" 
+                        BackgroundColor="#79280F" 
+                        Clicked="ContinueEditProduct_Clicked" 
+                        HeightRequest="50" 
+                        TextColor="White" 
+                        FontSize="16"
+                        CornerRadius="8"/>
+                <Button Grid.Column="1"
+                        Text="Aceptar" 
+                        BackgroundColor="#FFF6ED" 
+                        BorderColor="#79280F"
+                        BorderWidth="2"
+                        Clicked="CloseEditProduct_Clicked" 
+                        HeightRequest="50" 
+                        TextColor="#79280F" 
+                        FontSize="16"
+                        CornerRadius="8"/>
+            </Grid>
         </Grid>
     </Border>
 

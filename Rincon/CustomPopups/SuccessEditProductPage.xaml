@@ -9,38 +9,52 @@
     CloseWhenBackgroundIsClicked="False">
 
     <Border
-        Margin="400,400,400,400"
+        Margin="200,150,200,150"
         Padding="40"
         BackgroundColor="White"
-        HeightRequest="400"
-        WidthRequest="800">
+        HeightRequest="350"
+        WidthRequest="700"
+        Stroke="#79280F"
+        StrokeThickness="2">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="18,18,18,18" />
+            <RoundRectangle CornerRadius="12,12,12,12" />
         </Border.StrokeShape>
-        <Grid RowDefinitions="*,*,*">
+        <Border.Shadow>
+            <Shadow Brush="Black" Offset="0,4" Radius="15" Opacity="0.2" />
+        </Border.Shadow>
+        <Grid RowDefinitions="auto,*,auto" RowSpacing="20">
             <Image
-                HeightRequest="80"
+                HeightRequest="70"
                 HorizontalOptions="Center"
                 Source="check_icon.png"
-                VerticalOptions="Start"
-                WidthRequest="80" />
-            <Label
-                Grid.Row="1"
-                FontAttributes="Bold"
-                FontSize="24"
-                HorizontalOptions="Center"
-                Text="Producto editado con exito"
-                TextColor="Black"
-                VerticalOptions="Center" />
+                VerticalOptions="Center"
+                WidthRequest="70" />
+            <StackLayout Grid.Row="1" Spacing="10" VerticalOptions="Center">
+                <Label Text="¡Éxito!"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       TextColor="#79280F"
+                       FontSize="26"
+                       FontAttributes="Bold" />
+                <Label Text="Producto editado con éxito"
+                       FontSize="18"
+                       HorizontalOptions="Center"
+                       TextColor="#333333"
+                       VerticalOptions="Center"
+                       HorizontalTextAlignment="Center" />
+            </StackLayout>
             <Button
                 Grid.Row="2"
-                BackgroundColor="#D3AA84"
+                BackgroundColor="#79280F"
                 Clicked="CloseEditProduct_Clicked"
                 FontSize="16"
-                HeightRequest="60"
-                Text="Volver"
-                TextColor="Black"
-                WidthRequest="150" />
+                FontAttributes="Bold"
+                HeightRequest="50"
+                Text="Continuar"
+                TextColor="White"
+                CornerRadius="8"
+                HorizontalOptions="Center"
+                WidthRequest="180" />
 
         </Grid>
     </Border>
