@@ -2399,38 +2399,38 @@
                         <!-- Búsqueda compacta -->
                         <Frame
                             Padding="0"
-                            HeightRequest="35"
-                            BackgroundColor="Transparent"
-                            BorderColor="#797979">
+                            HeightRequest="50"
+                            BackgroundColor="White"
+                            BorderColor="#79280F"
+                            CornerRadius="8"
+                            HasShadow="True">
                             <SearchBar
                                 x:Name="SearchBarNewMovement"
                                 BackgroundColor="Transparent"
                                 CancelButtonColor="#79280F"
                                 Focused="SearchBar_NewMovementFocused"
-                                HeightRequest="30"
+                                HeightRequest="32"
                                 HorizontalOptions="Fill"
                                 VerticalOptions="Center"
                                 Placeholder="Buscar producto"
                                 PlaceholderColor="#999999"
                                 TextChanged="OnNewMovementTextChanged"
                                 TextColor="#333333"
-                                FontSize="14"
+                                FontSize="13"
                                 Unfocused="SearchBar_NewMovementUnfocused" />
                         </Frame>
 
                         <!-- Lista de productos compacta -->
                         <Frame
                             x:Name="FrameListNewMovoment"
-                            CornerRadius="6"
+                            CornerRadius="8"
                             IsVisible="{Binding IsVisibleListNewMovement}"
-                            HeightRequest="140"
-                            HorizontalOptions="Fill">
-                            <Frame.Background>
-                                <LinearGradientBrush EndPoint="0,1">
-                                    <GradientStop Offset="0.1" Color="#FFFFFF" />
-                                    <GradientStop Offset="1.0" Color="#FFF6ED" />
-                                </LinearGradientBrush>
-                            </Frame.Background>
+                            HeightRequest="180"
+                            HorizontalOptions="Fill"
+                            BackgroundColor="White"
+                            BorderColor="#79280F"
+                            HasShadow="True"
+                            Padding="8">
                             <CollectionView
                                 x:Name="ProductsNewMovement"
                                 HorizontalOptions="Fill"
@@ -2440,81 +2440,92 @@
                                 VerticalOptions="Fill">
 
                                 <CollectionView.ItemsLayout>
-                                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="4" />
+                                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="8" />
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="models:ProductStock">
-                                        <Grid
-                                            ColumnDefinitions="60,*,60"
-                                            ColumnSpacing="8"
-                                            RowDefinitions="auto"
-                                            Padding="6,3"
-                                            VerticalOptions="Center">
-                                            <Label
-                                                FontSize="12"
-                                                Text="{Binding Id}"
-                                                TextColor="#000000"
-                                                HorizontalTextAlignment="Center"
-                                                VerticalOptions="Center" />
+                                        <Frame
+                                            BackgroundColor="White"
+                                            BorderColor="#E0E0E0"
+                                            CornerRadius="6"
+                                            Padding="12,8"
+                                            Margin="4,2"
+                                            HasShadow="False">
+                                            <Grid
+                                                ColumnDefinitions="60,*,60"
+                                                ColumnSpacing="12"
+                                                RowDefinitions="auto"
+                                                VerticalOptions="Center">
+                                                <Label
+                                                    FontSize="14"
+                                                    Text="{Binding Id}"
+                                                    TextColor="#79280F"
+                                                    FontAttributes="Bold"
+                                                    HorizontalTextAlignment="Center"
+                                                    VerticalOptions="Center" />
 
-                                            <Label
-                                                Grid.Column="1"
-                                                FontSize="12"
-                                                Text="{Binding Product.Description}"
-                                                TextColor="#000000"
-                                                VerticalOptions="Center"
-                                                LineBreakMode="TailTruncation" />
+                                                <Label
+                                                    Grid.Column="1"
+                                                    FontSize="14"
+                                                    Text="{Binding Product.Description}"
+                                                    TextColor="#333333"
+                                                    VerticalOptions="Center"
+                                                    LineBreakMode="TailTruncation" />
 
-                                            <Label
-                                                Grid.Column="2"
-                                                FontSize="12"
-                                                Text="{Binding Product.WoodState}"
-                                                TextColor="#000000"
-                                                HorizontalTextAlignment="Center"
-                                                VerticalOptions="Center" />
-                                        </Grid>
+                                                <Label
+                                                    Grid.Column="2"
+                                                    FontSize="14"
+                                                    Text="{Binding Product.WoodState}"
+                                                    TextColor="#666666"
+                                                    HorizontalTextAlignment="Center"
+                                                    VerticalOptions="Center" />
+                                            </Grid>
+                                        </Frame>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                                 <CollectionView.EmptyView>
-                                    <Label
-                                        FontSize="12"
-                                        HorizontalOptions="Center"
-                                        Text="No se encontraron productos"
-                                        TextColor="Black"
-                                        Padding="10"
-                                        VerticalOptions="Center" />
+                                    <StackLayout Spacing="10" Padding="20" VerticalOptions="Center">
+                                        <Image Source="search_icon.png" HeightRequest="40" WidthRequest="40" HorizontalOptions="Center" Opacity="0.5" />
+                                        <Label
+                                            FontSize="14"
+                                            HorizontalOptions="Center"
+                                            Text="No se encontraron productos"
+                                            TextColor="#999999"
+                                            HorizontalTextAlignment="Center" />
+                                    </StackLayout>
                                 </CollectionView.EmptyView>
                             </CollectionView>
                         </Frame>
 
                         <!-- Información del producto seleccionado compacta -->
                         <Frame IsVisible="{Binding IsSelectedProductMovement}"
-                               BackgroundColor="#F5F5F5"
-                               BorderColor="#CCCCCC"
-                               CornerRadius="6"
-                               Padding="10">
-                            <Grid ColumnDefinitions="Auto, *" ColumnSpacing="54">
+                               BackgroundColor="White"
+                               BorderColor="#79280F"
+                               CornerRadius="8"
+                               HasShadow="True"
+                               Padding="15">
+                            <Grid ColumnDefinitions="Auto, *" ColumnSpacing="25">
                                 
-                                <Grid ColumnDefinitions="auto,*" RowDefinitions="auto,auto,auto,auto" ColumnSpacing="24" RowSpacing="4">
+                                <Grid ColumnDefinitions="auto,*" RowDefinitions="auto,auto,auto,auto" ColumnSpacing="15" RowSpacing="8">
                                     
-                                    <Label Grid.Row="1" Text="Código:" FontSize="14" FontAttributes="Bold" TextColor="#79280F" />
-                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding ProductMovement.Id}" FontSize="14" HorizontalOptions="Start" TextColor="#000000" />
+                                    <Label Grid.Row="1" Text="Código:" FontSize="15" FontAttributes="Bold" TextColor="#79280F" />
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding ProductMovement.Id}" FontSize="15" HorizontalOptions="Start" TextColor="#333333" />
                                     
-                                    <Label Grid.Row="2" Text="Descripción:" FontSize="14" FontAttributes="Bold" TextColor="#79280F" />
+                                    <Label Grid.Row="2" Text="Descripción:" FontSize="15" FontAttributes="Bold" TextColor="#79280F" />
                                     <Label Grid.Row="2" Grid.Column="1" Text="{Binding ProductMovement.Product.Description}" 
-                                           FontSize="14" TextColor="#000000" LineBreakMode="TailTruncation" />
+                                           FontSize="15" TextColor="#333333" LineBreakMode="TailTruncation" />
                                     
-                                    <Label Grid.Row="3" Text="Estado:" FontSize="11" FontAttributes="Bold" TextColor="#79280F" />
-                                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding ProductMovement.Product.WoodState}" FontSize="14" TextColor="#000000" />
+                                    <Label Grid.Row="3" Text="Estado:" FontSize="15" FontAttributes="Bold" TextColor="#79280F" />
+                                    <Label Grid.Row="3" Grid.Column="1" Text="{Binding ProductMovement.Product.WoodState}" FontSize="15" TextColor="#333333" />
                                 </Grid>
                                 
                                 <!-- Stock info en una línea -->
-                                <Grid Grid.Column="1" RowDefinitions="*,*,*" ColumnDefinitions="auto,*" ColumnSpacing="6">
-                                    <Label Text="Disponible:" FontSize="14" FontAttributes="Bold" TextColor="#79280F" />
-                                    <Label Grid.Column="1" Text="{Binding ProductMovement.Available}" FontSize="14" TextColor="#000000" />
+                                <Grid Grid.Column="1" RowDefinitions="*,*,*" ColumnDefinitions="auto,*" ColumnSpacing="15" RowSpacing="8">
+                                    <Label Text="Disponible:" FontSize="15" FontAttributes="Bold" TextColor="#79280F" />
+                                    <Label Grid.Column="1" Text="{Binding ProductMovement.Available}" FontSize="15" TextColor="#333333" />
 
-                                    <Label Grid.Row="1" Text="Reserva/Proceso:" FontSize="14" FontAttributes="Bold" TextColor="#79280F" />
-                                        <Label Grid.Row="1" Grid.Column="1" FontSize="14" TextColor="#000000">
+                                    <Label Grid.Row="1" Text="Reserva/Proceso:" FontSize="15" FontAttributes="Bold" TextColor="#79280F" />
+                                        <Label Grid.Row="1" Grid.Column="1" FontSize="15" TextColor="#333333">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="{Binding ProductMovement.Reserved}" />
@@ -2524,164 +2535,211 @@
                                             </Label.FormattedText>
                                         </Label>
                                     
-                                    <Label Grid.Row="2" Text="Total:" FontSize="14" FontAttributes="Bold" TextColor="#79280F" />
-                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding ProductMovement.Quantity}" FontSize="14" TextColor="#000000" />
+                                    <Label Grid.Row="2" Text="Total:" FontSize="15" FontAttributes="Bold" TextColor="#79280F" />
+                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding ProductMovement.Quantity}" FontSize="15" TextColor="#333333" />
                                     
                                 </Grid>
                             </Grid>
                         </Frame>
 
-                        <Label IsVisible="{Binding IsSelectedProductMovement,Converter = { StaticResource InvertedBoolConverter }}" 
-                               TextColor="#79280F" FontSize="14" Text="Seleccione un producto para realizar movimiento"
-                               HorizontalTextAlignment="Center" />
+                        <Frame IsVisible="{Binding IsSelectedProductMovement,Converter = { StaticResource InvertedBoolConverter }}"
+                               BackgroundColor="White" 
+                               BorderColor="#E0E0E0" 
+                               CornerRadius="8" 
+                               HasShadow="True" 
+                               Padding="20">
+                            <StackLayout Spacing="10" HorizontalOptions="Center">
+                                <Image Source="product_icon.png" HeightRequest="40" WidthRequest="40" HorizontalOptions="Center" Opacity="0.5" />
+                                <Label TextColor="#79280F" 
+                                       FontSize="15" 
+                                       FontAttributes="Bold"
+                                       Text="Seleccione un producto para realizar movimiento"
+                                       HorizontalTextAlignment="Center" />
+                            </StackLayout>
+                        </Frame>
                                 
                         <StackLayout Spacing="15">
                             
                             <!-- Tipo de movimiento optimizado -->
                             <Grid IsVisible="{Binding IsSelectedProductMovement}" ColumnDefinitions="*,*" ColumnSpacing="20" RowDefinitions="auto">
                                 <!-- Tipo de movimiento -->
-                                <StackLayout Grid.Column="0" Spacing="6">
-                                    <Label Text="Tipo de movimiento:" 
-                                           TextColor="#79280F"
-                                           FontSize="14" 
-                                           FontAttributes="Bold"/>
-                                    <StackLayout Orientation="Horizontal" Spacing="12">
-                                        <RadioButton
-                                            Content="Venta"
-                                            GroupName="MovementType"
-                                            IsChecked="{Binding IsSale}"
-                                            TextColor="#79280F"
-                                            FontSize="13"
-                                            Value="Sale" />
-                                        <RadioButton
-                                            Content="Cambio de estado"
-                                            GroupName="MovementType"
-                                            IsChecked="{Binding IsChangeOfState}"
-                                            TextColor="#79280F"
-                                            FontSize="13"
-                                            Value="ChangeOfState" />
-                                        <RadioButton
-                                            Content="Para pérdida"
-                                            GroupName="MovementType"
-                                            IsChecked="{Binding IsLoss}"
-                                            TextColor="#79280F"
-                                            FontSize="13"
-                                            Value="Loss" />
+                                <Frame Grid.Column="0" 
+                                       BackgroundColor="White" 
+                                       BorderColor="#79280F" 
+                                       CornerRadius="8" 
+                                       HasShadow="True" 
+                                       Padding="15">
+                                    <StackLayout Spacing="12">
+                                        <Label Text="Tipo de movimiento:" 
+                                               TextColor="#79280F"
+                                               FontSize="15" 
+                                               FontAttributes="Bold"/>
+                                        <StackLayout Orientation="Horizontal" Spacing="15">
+                                            <RadioButton
+                                                Content="Venta"
+                                                GroupName="MovementType"
+                                                IsChecked="{Binding IsSale}"
+                                                TextColor="#79280F"
+                                                FontSize="14"
+                                                Value="Sale" />
+                                            <RadioButton
+                                                Content="Cambio de estado"
+                                                GroupName="MovementType"
+                                                IsChecked="{Binding IsChangeOfState}"
+                                                TextColor="#79280F"
+                                                FontSize="14"
+                                                Value="ChangeOfState" />
+                                            <RadioButton
+                                                Content="Para pérdida"
+                                                GroupName="MovementType"
+                                                IsChecked="{Binding IsLoss}"
+                                                TextColor="#79280F"
+                                                FontSize="14"
+                                                Value="Loss" />
+                                        </StackLayout>
                                     </StackLayout>
-                                </StackLayout>
+                                </Frame>
 
                                 <!-- Cantidad -->
-                                <StackLayout Grid.Column="1" Spacing="6">
-                                    <Label
-                                        Text="Cantidad"
-                                        TextColor="#79280F"
-                                        FontSize="14"
-                                        FontAttributes="Bold" />
-                                    <Frame
-                                        Padding="3"
-                                        BackgroundColor="White"
-                                        CornerRadius="12"
-                                        HeightRequest="35"
-                                        HorizontalOptions="Start">
-                                        <Entry
-                                            HorizontalTextAlignment="Start"
-                                            Text="{Binding QuantityMovement}"
-                                            TextColor="Black"
-                                            FontSize="13"
-                                            Keyboard="Numeric"                                        
-                                            BackgroundColor="Transparent"
-                                            Placeholder="Ingrese cantidad"
-                                            HorizontalOptions="Start"
-                                            HeightRequest="55" />
-                                    </Frame>
-                                </StackLayout>
+                                <Frame Grid.Column="1" 
+                                       BackgroundColor="White" 
+                                       BorderColor="#79280F" 
+                                       CornerRadius="8" 
+                                       HasShadow="True" 
+                                       Padding="15">
+                                    <StackLayout Spacing="12">
+                                        <Label
+                                            Text="Cantidad"
+                                            TextColor="#79280F"
+                                            FontSize="15"
+                                            FontAttributes="Bold" />
+                                        <Frame
+                                            Padding="8"
+                                            BackgroundColor="#F8F9FA"
+                                            BorderColor="#79280F"
+                                            CornerRadius="8"
+                                            HeightRequest="45">
+                                            <Entry
+                                                HorizontalTextAlignment="Center"
+                                                Text="{Binding QuantityMovement}"
+                                                TextColor="#333333"
+                                                FontSize="14"
+                                                Keyboard="Numeric"                                        
+                                                BackgroundColor="Transparent"
+                                                Placeholder="Ingrese cantidad"
+                                                HorizontalOptions="Fill"
+                                                VerticalOptions="Center" />
+                                        </Frame>
+                                    </StackLayout>
+                                </Frame>
                             </Grid>
 
                             <!-- Opciones condicionales -->
                             <!-- Cambio de estado -->
-                            <Grid IsVisible="{Binding IsChangeOfState}" ColumnDefinitions="auto,*" ColumnSpacing="5" RowDefinitions="auto">
-                                <Label Grid.Column="0"
-                                    FontSize="14"
-                                    FontAttributes="Bold"
-                                    Text="Siguiente estado:"
-                                    TextColor="#79280F"
-                                    VerticalOptions="Center" />
+                            <Frame IsVisible="{Binding IsChangeOfState}" 
+                                   BackgroundColor="White" 
+                                   BorderColor="#79280F" 
+                                   CornerRadius="8" 
+                                   HasShadow="True" 
+                                   Padding="15">
+                                <Grid ColumnDefinitions="auto,*" ColumnSpacing="15" RowDefinitions="auto">
+                                    <Label Grid.Column="0"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        Text="Siguiente estado:"
+                                        TextColor="#79280F"
+                                        VerticalOptions="Center" />
 
-                                <Frame Grid.Column="1"
-                                    Padding="6"
-                                    BackgroundColor="White"
-                                    BorderColor="#CCCCCC"
-                                    CornerRadius="5"
-                                    HeightRequest="35"
-                                    WidthRequest="300"
-                                    HorizontalOptions="Start">
-                                    <Picker
-                                        ItemsSource="{Binding DependingProducts}"
-                                        SelectedItem="{Binding SelectedDependingProducts}"
-                                        TextColor="Black"
-                                        FontSize="13"
-                                        Title="Seleccione un estado"
-                                        HeightRequest="55"
-                                        BackgroundColor="Transparent"
-                                        HorizontalOptions="Fill" />
-                                </Frame>
-                            </Grid>
+                                    <Frame Grid.Column="1"
+                                        Padding="8"
+                                        BackgroundColor="#F8F9FA"
+                                        BorderColor="#79280F"
+                                        CornerRadius="8"
+                                        HeightRequest="75"
+                                        HorizontalOptions="Fill">
+                                        <Picker
+                                            ItemsSource="{Binding DependingProducts}"
+                                            SelectedItem="{Binding SelectedDependingProducts}"
+                                            TextColor="#333333"
+                                            FontSize="14"
+                                            Title="Seleccione un estado"
+                                            BackgroundColor="Transparent"
+                                            HorizontalOptions="Fill"
+                                            VerticalOptions="Center" />
+                                    </Frame>
+                                </Grid>
+                            </Frame>
 
                             <!-- Venta -->
-                            <Grid IsVisible="{Binding IsSale}" ColumnDefinitions="auto,*" ColumnSpacing="15" RowDefinitions="auto">
-                                <Label Grid.Column="0"
-                                    FontSize="14"
-                                    IsVisible="{Binding IsSelectedProductMovement}"
-                                    FontAttributes="Bold"
-                                    Text="Cliente:"
-                                    TextColor="#79280F"
-                                    VerticalOptions="Center" />
+                            <Frame IsVisible="{Binding IsSale}" 
+                                   BackgroundColor="White" 
+                                   BorderColor="#79280F" 
+                                   CornerRadius="8" 
+                                   HasShadow="True" 
+                                   Padding="15">
+                                <Grid ColumnDefinitions="auto,*" ColumnSpacing="15" RowDefinitions="auto">
+                                    <Label Grid.Column="0"
+                                        FontSize="15"
+                                        IsVisible="{Binding IsSelectedProductMovement}"
+                                        FontAttributes="Bold"
+                                        Text="Cliente:"
+                                        TextColor="#79280F"
+                                        VerticalOptions="Center" />
 
-                                <Frame Grid.Column="1"
-                                    Padding="3"
-                                    IsVisible="{Binding IsSelectedProductMovement}"
-                                    BackgroundColor="White"
-                                    CornerRadius="12"
-                                    HeightRequest="35"
-                                    HorizontalOptions="Start">
-                                    <Entry
-                                        Text="{Binding SaleClient}"
-                                        TextColor="Black"
-                                        FontSize="13"
-                                        WidthRequest="250"
-                                        BackgroundColor="Transparent"
-                                        Placeholder="Nombre del cliente"
-                                        HeightRequest="55" />
-                                </Frame>
-                            </Grid>
+                                    <Frame Grid.Column="1"
+                                        Padding="8"
+                                        IsVisible="{Binding IsSelectedProductMovement}"
+                                        BackgroundColor="#F8F9FA"
+                                        BorderColor="#79280F"
+                                        CornerRadius="8"
+                                        HeightRequest="45"
+                                        HorizontalOptions="Fill">
+                                        <Entry
+                                            Text="{Binding SaleClient}"
+                                            TextColor="#333333"
+                                            FontSize="14"
+                                            BackgroundColor="Transparent"
+                                            Placeholder="Nombre del cliente"
+                                            HorizontalOptions="Fill"
+                                            VerticalOptions="Center" />
+                                    </Frame>
+                                </Grid>
+                            </Frame>
 
                             <!-- Pérdida -->
-                            <Grid IsVisible="{Binding IsLoss}" ColumnDefinitions="auto,*" ColumnSpacing="15" RowDefinitions="auto">
-                                <Label Grid.Column="0"
-                                    FontSize="14"
-                                    FontAttributes="Bold"
-                                    Text="Motivo:"
-                                    TextColor="#79280F"
-                                    VerticalOptions="Start" />
+                            <Frame IsVisible="{Binding IsLoss}" 
+                                   BackgroundColor="White" 
+                                   BorderColor="#79280F" 
+                                   CornerRadius="8" 
+                                   HasShadow="True" 
+                                   Padding="15">
+                                <Grid ColumnDefinitions="auto,*" ColumnSpacing="15" RowDefinitions="auto">
+                                    <Label Grid.Column="0"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        Text="Motivo:"
+                                        TextColor="#79280F"
+                                        VerticalOptions="Start" />
 
-                                <Frame Grid.Column="1"
-                                    Padding="3"
-                                    BackgroundColor="Transparent"
-                                    BorderColor="#CCCCCC"
-                                    CornerRadius="5"
-                                    HeightRequest="60"
-                                    HorizontalOptions="Start">
-                                    <Editor
-                                        Text="{Binding LossMotive}"
-                                        TextColor="Black"
-                                        FontSize="13"
-                                        WidthRequest="450"
-                                        Margin="0,10,0,0"
-                                        Placeholder="Motivo de la pérdida"
+                                    <Frame Grid.Column="1"
+                                        Padding="8"
+                                        BackgroundColor="#F8F9FA"
+                                        BorderColor="#79280F"
+                                        CornerRadius="8"
                                         HeightRequest="80"
-                                        AutoSize="TextChanges" />
-                                </Frame>
-                            </Grid>
+                                        HorizontalOptions="Fill">
+                                        <Editor
+                                            Text="{Binding LossMotive}"
+                                            TextColor="#333333"
+                                            FontSize="14"
+                                            Placeholder="Motivo de la pérdida"
+                                            BackgroundColor="Transparent"
+                                            HorizontalOptions="Fill"
+                                            VerticalOptions="Fill"
+                                            AutoSize="TextChanges" />
+                                    </Frame>
+                                </Grid>
+                            </Frame>
                         </StackLayout>
                    
                     </StackLayout>
@@ -2704,22 +2762,26 @@
                     HorizontalOptions="Fill">
                     <Button
                         Grid.Column="1"
-                        BackgroundColor="#D3AA84"
+                        BackgroundColor="#79280F"
                         Clicked="NewMovement_Clicked"
-                        HeightRequest="36"
-                        Text="{Binding OkMovementText}"
-                        TextColor="#000000"
-                        FontSize="14"
-                        CornerRadius="5" />
+                        HeightRequest="45"
+                        Text="Confirmar"
+                        TextColor="White"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        CornerRadius="8" />
                     <Button
                         Grid.Column="2"
                         BackgroundColor="#FFF6ED"
                         Command="{Binding CancelNewMovementCommand}"
-                        HeightRequest="36"
+                        HeightRequest="45"
                         Text="Cancelar"
-                        TextColor="#000000"
-                        FontSize="14"
-                        CornerRadius="5" />
+                        TextColor="#79280F"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        BorderColor="#79280F"
+                        BorderWidth="2"
+                        CornerRadius="8" />
                 </Grid>
 
             </Grid>
