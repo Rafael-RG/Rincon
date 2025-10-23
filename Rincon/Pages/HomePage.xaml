@@ -4170,7 +4170,62 @@
                     
                     <!-- Panel izquierdo: Búsqueda y selección de producto -->
                     <StackLayout Grid.Column="0" Spacing="12">
-                       
+                       <Frame
+                        IsVisible="False"
+                            Padding="10,-2,10,-2"
+                            HeightRequest="42"
+                            BackgroundColor="LightGray"
+                            BorderColor="Transparent"
+                            CornerRadius="24"
+                            MaximumWidthRequest="450">
+                            <SearchBar
+                                x:Name="SearchBarEditTask"
+                                BackgroundColor="Transparent"
+                                CancelButtonColor="#79280F"
+                                Placeholder="Buscar producto..."
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Center"
+                                FontSize="14"
+                                Focused="SearchBar_EditTaskFocused"
+                                TextChanged="OnEditTaskTextChanged"
+                                TextColor="#333333"
+                                PlaceholderColor="#999999"
+                                Unfocused="SearchBar_EditTaskUnfocused" />
+                        </Frame>
+
+                        <!-- Lista de productos compacta -->
+                        <Frame
+                            x:Name="FrameListEditTask"
+                            Padding="8"
+                            BackgroundColor="#FAFAFA"
+                            CornerRadius="12"
+                            HasShadow="False"
+                            HeightRequest="180"
+                            IsVisible="False">
+                            <CollectionView
+                                x:Name="ProductsEditTask"
+                                ItemsSource="{Binding ProductsWithStock}"
+                                SelectionChanged="CollectionEditTask_SelectionChanged"
+                                SelectionMode="Single"
+                                VerticalOptions="FillAndExpand"
+                                VerticalScrollBarVisibility="Default">
+                                <CollectionView.ItemsLayout>
+                                    <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="4" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="models:ProductStock">
+                                        <Grid ColumnDefinitions="1.2*,2.5*,1.3*" ColumnSpacing="12" Padding="8,6" RowDefinitions="auto">
+                                            <Label FontSize="13" Text="{Binding Id}" TextColor="#333333" VerticalOptions="Center" />
+                                            <Label Grid.Column="1" FontSize="13" Text="{Binding Product.Description}" TextColor="#333333" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                            <Label Grid.Column="2" FontSize="13" Text="{Binding Product.WoodState}" TextColor="#333333" VerticalOptions="Center" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                                <CollectionView.EmptyView>
+                                    <Label FontSize="14" HorizontalOptions="Center" Text="No se encontraron productos" TextColor="#666666" VerticalOptions="Center" />
+                                </CollectionView.EmptyView>
+                            </CollectionView>
+                        </Frame>
                         <!-- Información del producto selecciónado compacta -->
                         <Frame IsVisible="{Binding IsSelectedProductTask}"
                                Padding="15"
