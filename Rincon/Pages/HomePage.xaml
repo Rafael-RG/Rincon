@@ -53,7 +53,7 @@
             RowSpacing="0"
             VerticalOptions="Fill">
 
-            <!--#region Botones principales-->
+            <!--#region botónes principales-->
             <ImageButton
                 Grid.Row="0"
                 Grid.Column="0"
@@ -878,7 +878,7 @@
                                                     VerticalOptions="Start">
                                                     <Label.FormattedText>
                                                         <FormattedString>
-                                                            <Span Text="Titulo: " FontAttributes="Bold" />
+                                                            <Span Text="Título: " FontAttributes="Bold" />
                                                             <Span Text="{Binding Title}" />
                                                         </FormattedString>
                                                     </Label.FormattedText>
@@ -930,7 +930,7 @@
                 </Frame>
             </Grid>
 
-            <!--  Gestion de Stock  -->
+            <!--  Gestión de Stock  -->
             <Grid
                 Grid.Row="2"
                 Grid.ColumnSpan="4"
@@ -1092,17 +1092,17 @@
             <Grid
                 Grid.Row="2"
                 Grid.ColumnSpan="4"
-                Padding="15"
+                Padding="25"
                 BackgroundColor="White"
                 IsVisible="{Binding IsAddProductView}"
                 RowDefinitions="auto,auto,*,auto,auto"
-                RowSpacing="8">
+                RowSpacing="15">
 
                 <Label
                     Grid.Row="0"
-                    Margin="0,0,0,8"
+                    Margin="0,0,0,15"
                     FontAttributes="Bold"
-                    FontSize="22"
+                    FontSize="32"
                     HorizontalOptions="Start"
                     Text="Nuevo Producto"
                     TextColor="#79280F"
@@ -1110,304 +1110,328 @@
 
                 <BoxView
                     Grid.Row="1"
-                    Margin="0,0,0,15"
-                    HeightRequest="2"
-                    HorizontalOptions="FillAndExpand"
+                    Margin="0,0,0,25"
+                    HeightRequest="3"
+                    HorizontalOptions="Fill"
                     VerticalOptions="Start"
                     Color="#79280F" />
 
-                <Grid Grid.Row="2" ColumnDefinitions="1.2*,*" ColumnSpacing="20" RowDefinitions="*" Padding="0" VerticalOptions="FillAndExpand">
+                <Grid Grid.Row="2" ColumnDefinitions="1.3*,1.2*" ColumnSpacing="35" RowDefinitions="*" Padding="0" VerticalOptions="Fill">
                     <!-- Columna izquierda - Información básica -->
-                    <StackLayout Grid.Column="0" Spacing="8" VerticalOptions="FillAndExpand">
+                    <StackLayout Grid.Column="0" Spacing="18" VerticalOptions="Fill">
                         <!-- Código del producto -->
-                        <Grid ColumnDefinitions="auto,250" ColumnSpacing="12" HorizontalOptions="Start" Padding="0">
+                        <Grid ColumnDefinitions="auto,300" ColumnSpacing="20" HorizontalOptions="Start" Padding="0">
                             <Label
-                                Grid.Column="0"
-                                FontSize="14"
+                                FontSize="18"
                                 Text="Código:"
                                 TextColor="#79280F"
-                                VerticalOptions="Center" />
+                                VerticalOptions="Center"
+                                FontAttributes="Bold" />
                             
                             <Frame
                                 Grid.Column="1"
                                 Padding="0"
-                                BackgroundColor="Transparent"
+                                BackgroundColor="White"
                                 BorderColor="#797979"
-                                HeightRequest="34">
+                                HeightRequest="45"
+                                CornerRadius="8">
                                 <Entry
-                                    FontSize="14"
-                                    HeightRequest="55"
+                                    FontSize="16"
+                                    HeightRequest="45"
                                     Placeholder="Código del producto"
                                     Text="{Binding ProductCode}"
                                     TextColor="Black"
                                     BackgroundColor="Transparent"
                                     IsSpellCheckEnabled="False"
-                                    IsTextPredictionEnabled="False" />
+                                    IsTextPredictionEnabled="False"
+                                    Margin="8,0" />
                             </Frame>
                         </Grid>
 
                         <!-- Tipo de producto -->
-                        <Label
-                            FontSize="14"
-                            Text="Tipo"
-                            TextColor="#79280F"
-                            Margin="0,5,0,0" />
+                        <StackLayout Spacing="12">
+                            <Label
+                                FontSize="18"
+                                Text="Tipo de Producto"
+                                TextColor="#79280F"
+                                FontAttributes="Bold" />
 
-                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="8" RowSpacing="0">
-                            <RadioButton
-                                Grid.Column="0"
-                                Content="Tirante"
-                                FontSize="12"
-                                GroupName="Type"
-                                HorizontalOptions="Center"
-                                IsChecked="{Binding IsTiranteSelect}"
-                                Value="Tirante" />
+                            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="15" RowSpacing="0">
+                                <RadioButton
+                                    Grid.Column="0"
+                                    Content="Tirante"
+                                    FontSize="16"
+                                    GroupName="Type"
+                                    HorizontalOptions="Center"
+                                    IsChecked="{Binding IsTiranteSelect}"
+                                    Value="Tirante" />
 
-                            <RadioButton
-                                Grid.Column="1"
-                                Content="Polin"
-                                FontSize="12"
-                                GroupName="Type"
-                                HorizontalOptions="Center"
-                                IsChecked="{Binding IsPolinSelect}"
-                                Value="Polin" />
+                                <RadioButton
+                                    Grid.Column="1"
+                                    Content="Polin"
+                                    FontSize="16"
+                                    GroupName="Type"
+                                    HorizontalOptions="Center"
+                                    IsChecked="{Binding IsPolinSelect}"
+                                    Value="Polin" />
 
-                            <RadioButton
-                                Grid.Column="2"
-                                Content="Medio Polin"
-                                FontSize="12"
-                                GroupName="Type"
-                                HorizontalOptions="Center"
-                                IsChecked="{Binding IsMedioPolinSelect}"
-                                Value="Medio Polin" />
+                                <RadioButton
+                                    Grid.Column="2"
+                                    Content="Medio Polin"
+                                    FontSize="16"
+                                    GroupName="Type"
+                                    HorizontalOptions="Center"
+                                    IsChecked="{Binding IsMedioPolinSelect}"
+                                    Value="Medio Polin" />
 
-                            <RadioButton
-                                Grid.Column="3"
-                                Content="Tabla"
-                                FontSize="12"
-                                GroupName="Type"
-                                HorizontalOptions="Center"
-                                IsChecked="{Binding IsTablaSelect}"
-                                Value="Tabla" />
-                        </Grid>
+                                <RadioButton
+                                    Grid.Column="3"
+                                    Content="Tabla"
+                                    FontSize="16"
+                                    GroupName="Type"
+                                    HorizontalOptions="Center"
+                                    IsChecked="{Binding IsTablaSelect}"
+                                    Value="Tabla" />
+                            </Grid>
+                        </StackLayout>
 
                         <!-- Medidas para productos con medidas -->
-                        <StackLayout IsVisible="{Binding IsMeasureSelect}" Spacing="6">
+                        <StackLayout IsVisible="{Binding IsMeasureSelect}" Spacing="12">
                             <Label
-                                FontSize="14"
+                                FontSize="18"
                                 Text="Medidas"
-                                TextColor="#79280F" />
+                                TextColor="#79280F"
+                                FontAttributes="Bold" />
                             
-                            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8" RowDefinitions="auto,auto">
+                            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="15" RowDefinitions="auto,auto">
                                 <!-- Grosor -->
-                                <StackLayout Grid.Column="0" Spacing="2">
+                                <StackLayout Grid.Column="0" Spacing="8">
                                     <Frame
-                                        Padding="3"
-                                        BackgroundColor="Transparent"
+                                        Padding="5"
+                                        BackgroundColor="White"
                                         BorderColor="#797979"
-                                        HeightRequest="34">
+                                        HeightRequest="45"
+                                        CornerRadius="8">
                                         <Entry
-                                            FontSize="12"
+                                            FontSize="16"
                                             HorizontalTextAlignment="Center"
-                                            HeightRequest="55"
+                                            HeightRequest="45"
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Grosor"
                                             Text="{Binding Thickness}"
-                                            TextColor="Black" />
+                                            TextColor="Black"
+                                            BackgroundColor="Transparent" />
                                     </Frame>
                                     <Label
-                                        FontSize="10"
+                                        FontSize="14"
                                         HorizontalOptions="Center"
-                                        Text="Grosor"
-                                        TextColor="Black" />
+                                        Text="Grosor (mm)"
+                                        TextColor="#666666" />
                                 </StackLayout>
 
                                 <!-- Ancho -->
-                                <StackLayout Grid.Column="1" Spacing="2">
+                                <StackLayout Grid.Column="1" Spacing="8">
                                     <Frame
-                                        Padding="3"
-                                        BackgroundColor="Transparent"
+                                        Padding="5"
+                                        BackgroundColor="White"
                                         BorderColor="#797979"
-                                        HeightRequest="34">
+                                        HeightRequest="45"
+                                        CornerRadius="8">
                                         <Entry
-                                            FontSize="12"
+                                            FontSize="16"
                                             HorizontalTextAlignment="Center"
-                                            HeightRequest="55"
+                                            HeightRequest="45"
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Ancho"
                                             Text="{Binding Width}"
-                                            TextColor="Black" />
+                                            TextColor="Black"
+                                            BackgroundColor="Transparent" />
                                     </Frame>
                                     <Label
-                                        FontSize="10"
+                                        FontSize="14"
                                         HorizontalOptions="Center"
-                                        Text="Ancho"
-                                        TextColor="Black" />
+                                        Text="Ancho (mm)"
+                                        TextColor="#666666" />
                                 </StackLayout>
 
                                 <!-- Largo -->
-                                <StackLayout Grid.Column="2" Spacing="2">
+                                <StackLayout Grid.Column="2" Spacing="8">
                                     <Frame
-                                        Padding="3"
-                                        BackgroundColor="Transparent"
+                                        Padding="5"
+                                        BackgroundColor="White"
                                         BorderColor="#797979"
-                                        HeightRequest="34">
+                                        HeightRequest="45"
+                                        CornerRadius="8">
                                         <Entry
-                                            FontSize="12"
+                                            FontSize="16"
                                             HorizontalTextAlignment="Center"
-                                            HeightRequest="55"
+                                            HeightRequest="45"
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Largo"
                                             Text="{Binding Length}"
-                                            TextColor="Black" />
+                                            TextColor="Black"
+                                            BackgroundColor="Transparent" />
                                     </Frame>
                                     <Label
-                                        FontSize="10"
+                                        FontSize="14"
                                         HorizontalOptions="Center"
-                                        Text="Largo"
-                                        TextColor="Black" />
+                                        Text="Largo (mm)"
+                                        TextColor="#666666" />
                                 </StackLayout>
                             </Grid>
                         </StackLayout>
 
                         <!-- Medidas para Polin -->
-                        <StackLayout IsVisible="{Binding IsPolinSelect}" Spacing="6">
+                        <StackLayout IsVisible="{Binding IsPolinSelect}" Spacing="12">
                             <Label
-                                FontSize="14"
+                                FontSize="18"
                                 Text="Medidas"
-                                TextColor="#79280F" />
+                                TextColor="#79280F"
+                                FontAttributes="Bold" />
                             
-                            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
                                 <!-- Diámetro -->
-                                <StackLayout Grid.Column="0" Spacing="2">
+                                <StackLayout Grid.Column="0" Spacing="8">
                                     <Frame
-                                        Padding="3"
-                                        BackgroundColor="Transparent"
+                                        Padding="5"
+                                        BackgroundColor="White"
                                         BorderColor="#797979"
-                                        HeightRequest="34">
+                                        HeightRequest="45"
+                                        CornerRadius="8">
                                         <Entry
-                                            FontSize="12"
+                                            FontSize="16"
                                             HorizontalTextAlignment="Center"
                                             Keyboard="Numeric"
-                                            HeightRequest="55"
+                                            HeightRequest="45"
                                             MaxLength="9"
                                             Placeholder="Diámetro"
                                             Text="{Binding Diameter}"
-                                            TextColor="Black" />
+                                            TextColor="Black"
+                                            BackgroundColor="Transparent" />
                                     </Frame>
                                     <Label
-                                        FontSize="10"
+                                        FontSize="14"
                                         HorizontalOptions="Center"
-                                        Text="Diámetro"
-                                        TextColor="Black" />
+                                        Text="Diámetro (mm)"
+                                        TextColor="#666666" />
                                 </StackLayout>
 
                                 <!-- Largo -->
-                                <StackLayout Grid.Column="1" Spacing="2">
+                                <StackLayout Grid.Column="1" Spacing="8">
                                     <Frame
-                                        Padding="3"
-                                        BackgroundColor="Transparent"
+                                        Padding="5"
+                                        BackgroundColor="White"
                                         BorderColor="#797979"
-                                        HeightRequest="34">
+                                        HeightRequest="45"
+                                        CornerRadius="8">
                                         <Entry
-                                            FontSize="12"
+                                            FontSize="16"
                                             HorizontalTextAlignment="Center"
-                                            HeightRequest="55"
+                                            HeightRequest="45"
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Largo"
                                             Text="{Binding Length}"
-                                            TextColor="Black" />
+                                            TextColor="Black"
+                                            BackgroundColor="Transparent" />
                                     </Frame>
                                     <Label
-                                        FontSize="10"
+                                        FontSize="14"
                                         HorizontalOptions="Center"
-                                        Text="Largo"
-                                        TextColor="Black" />
+                                        Text="Largo (mm)"
+                                        TextColor="#666666" />
                                 </StackLayout>
                             </Grid>
                         </StackLayout>
 
                         <!-- Medidas para Medio Polin -->
-                        <StackLayout IsVisible="{Binding IsMedioPolinSelect}" Spacing="6">
+                        <StackLayout IsVisible="{Binding IsMedioPolinSelect}" Spacing="12">
                             <Label
-                                FontSize="14"
+                                FontSize="18"
                                 Text="Medidas"
-                                TextColor="#79280F" />
+                                TextColor="#79280F"
+                                FontAttributes="Bold" />
                             
-                            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
                                 <!-- Diámetro -->
-                                <StackLayout Grid.Column="0" Spacing="2">
+                                <StackLayout Grid.Column="0" Spacing="8">
                                     <Frame
-                                        Padding="3"
-                                        BackgroundColor="Transparent"
+                                        Padding="5"
+                                        BackgroundColor="White"
                                         BorderColor="#797979"
-                                        HeightRequest="34">
+                                        HeightRequest="45"
+                                        CornerRadius="8">
                                         <Entry
-                                            FontSize="12"
+                                            FontSize="16"
                                             HorizontalTextAlignment="Center"
-                                            HeightRequest="55"
+                                            HeightRequest="45"
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Diámetro"
                                             Text="{Binding Diameter}"
-                                            TextColor="Black" />
+                                            TextColor="Black"
+                                            BackgroundColor="Transparent" />
                                     </Frame>
                                     <Label
-                                        FontSize="10"
+                                        FontSize="14"
                                         HorizontalOptions="Center"
-                                        Text="Diámetro"
-                                        TextColor="Black" />
+                                        Text="Diámetro (mm)"
+                                        TextColor="#666666" />
                                 </StackLayout>
 
                                 <!-- Largo -->
-                                <StackLayout Grid.Column="1" Spacing="2">
+                                <StackLayout Grid.Column="1" Spacing="8">
                                     <Frame
-                                        Padding="3"
-                                        BackgroundColor="Transparent"
+                                        Padding="5"
+                                        BackgroundColor="White"
                                         BorderColor="#797979"
-                                        HeightRequest="34">
+                                        HeightRequest="45"
+                                        CornerRadius="8">
                                         <Entry
-                                            FontSize="12"
+                                            FontSize="16"
                                             HorizontalTextAlignment="Center"
-                                            HeightRequest="55"
+                                            HeightRequest="45"
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Largo"
                                             Text="{Binding Length}"
-                                            TextColor="Black" />
+                                            TextColor="Black"
+                                            BackgroundColor="Transparent" />
                                     </Frame>
                                     <Label
-                                        FontSize="10"
+                                        FontSize="14"
                                         HorizontalOptions="Center"
-                                        Text="Largo"
-                                        TextColor="Black" />
+                                        Text="Largo (mm)"
+                                        TextColor="#666666" />
                                 </StackLayout>
                             </Grid>
                         </StackLayout>
                     </StackLayout>
 
                     <!-- Columna derecha - Información adicional -->
-                    <StackLayout Grid.Column="1" Spacing="8" VerticalOptions="FillAndExpand">
+                    <StackLayout Grid.Column="1" Spacing="18" VerticalOptions="Fill">
                         <!-- Estado -->
-                        <StackLayout Spacing="6">
+                        <StackLayout Spacing="10">
                             <Label
-                                FontSize="14"
+                                FontSize="18"
                                 Text="Estado"
-                                TextColor="#79280F" />
+                                TextColor="#79280F"
+                                FontAttributes="Bold" />
 
                             <Frame
-                                Padding="6,3"
+                                Padding="12,8"
                                 BackgroundColor="White"
-                                CornerRadius="15"
-                                HeightRequest="30">
+                                BorderColor="#797979"
+                                CornerRadius="8"
+                                HeightRequest="45">
                                 <Label
-                                    FontSize="12"
+                                    FontSize="16"
                                     Text="{Binding SelectedState, Mode=TwoWay}"
-                                    VerticalOptions="Center">
+                                    VerticalOptions="Center"
+                                    TextColor="Black">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding SelectStateCommand}" />
                                     </Label.GestureRecognizers>
@@ -1415,10 +1439,11 @@
                             </Frame>
                             
                             <Frame
-                                CornerRadius="15"
-                                HeightRequest="100"
+                                CornerRadius="8"
+                                HeightRequest="120"
                                 IsVisible="{Binding IsVisibleListStates}"
-                                VerticalOptions="Start">
+                                VerticalOptions="Start"
+                                BorderColor="#E0E0E0">
                                 <Frame.Background>
                                     <LinearGradientBrush EndPoint="0,1">
                                         <GradientStop Offset="0.1" Color="#FFFFFF" />
@@ -1427,22 +1452,24 @@
                                 </Frame.Background>
                                 <CollectionView
                                     x:Name="StatesList"
-                                    HeightRequest="100"
+                                    HeightRequest="120"
                                     ItemsSource="{Binding States}"
                                     SelectionChanged="States_SelectionChanged"
                                     SelectionMode="Single"
-                                    VerticalOptions="Start">
+                                    VerticalOptions="Start"
+                                    Margin="5">
 
                                     <CollectionView.ItemsLayout>
-                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="6" />
+                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="8" />
                                     </CollectionView.ItemsLayout>
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="x:String">
                                             <Label
-                                                FontSize="12"
+                                                FontSize="16"
                                                 Text="{Binding .}"
                                                 TextColor="#000000"
-                                                VerticalOptions="Start" />
+                                                VerticalOptions="Start"
+                                                Padding="8,4" />
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
@@ -1450,33 +1477,36 @@
                         </StackLayout>
 
                         <!-- Derivado de -->
-                        <StackLayout Spacing="6">
+                        <StackLayout Spacing="10">
                             <Label
-                                FontSize="14"
+                                FontSize="18"
                                 Text="Derivado de"
-                                TextColor="#79280F" />
+                                TextColor="#79280F"
+                                FontAttributes="Bold" />
 
                             <Frame
-                                Padding="6,3"
+                                Padding="12,8"
                                 BackgroundColor="White"
-                                CornerRadius="15"
-                                HeightRequest="30">
+                                BorderColor="#797979"
+                                CornerRadius="8"
+                                HeightRequest="45">
                                 <Grid ColumnDefinitions="*,auto">
                                     <Label
                                         Grid.Column="0"
-                                        FontSize="12"
-                                        Text="{Binding SelectedProduct.Description, TargetNullValue='Seleccionar producto (opcional)', FallbackValue='Seleccionar producto (opcional)'}"
-                                        VerticalOptions="Center" />
+                                        FontSize="16"
+                                        Text="{Binding SelectedProduct.Description, TargetNullValue='Selecciónar producto (opcional)', FallbackValue='selecciónar producto (opcional)'}"
+                                        VerticalOptions="Center"
+                                        TextColor="Black" />
                                     <Button
                                         Grid.Column="1"
-                                        Text="✕"
-                                        FontSize="12"
+                                        Text="?"
+                                        FontSize="16"
                                         BackgroundColor="Transparent"
                                         TextColor="#CC0000"
-                                        Padding="4,0"
-                                        WidthRequest="20"
-                                        HeightRequest="20"
-                                        CornerRadius="10"
+                                        Padding="8,0"
+                                        WidthRequest="30"
+                                        HeightRequest="30"
+                                        CornerRadius="15"
                                         Command="{Binding ClearSelectedProductCommand}" />
                                 </Grid>
                                 <Frame.GestureRecognizers>
@@ -1485,10 +1515,11 @@
                             </Frame>
                             
                             <Frame
-                                CornerRadius="20"
-                                HeightRequest="110"
+                                CornerRadius="8"
+                                HeightRequest="130"
                                 IsVisible="{Binding IsVisibleListProducts}"
-                                VerticalOptions="Start">
+                                VerticalOptions="Start"
+                                BorderColor="#E0E0E0">
                                 <Frame.Background>
                                     <LinearGradientBrush EndPoint="0,1">
                                         <GradientStop Offset="0.1" Color="#FFFFFF" />
@@ -1497,22 +1528,24 @@
                                 </Frame.Background>
                                 <CollectionView
                                     x:Name="ProductList"
-                                    HeightRequest="110"
+                                    HeightRequest="130"
                                     ItemsSource="{Binding Products}"
                                     SelectionChanged="Product_SelectionChanged"
                                     SelectionMode="Single"
-                                    VerticalOptions="Start">
+                                    VerticalOptions="Start"
+                                    Margin="5">
 
                                     <CollectionView.ItemsLayout>
-                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="8" />
+                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
                                     </CollectionView.ItemsLayout>
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="models:Product">
                                             <Label
-                                                FontSize="14"
+                                                FontSize="16"
                                                 Text="{Binding .}"
                                                 TextColor="#000000"
-                                                VerticalOptions="Start" />
+                                                VerticalOptions="Start"
+                                                Padding="8,4" />
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
@@ -1520,51 +1553,55 @@
                         </StackLayout>
 
                         <!-- Machimbre y Deck -->
-                        <Grid IsVisible="{Binding IsMachimbreOption}" ColumnDefinitions="*,auto,*,auto" ColumnSpacing="15" RowSpacing="10">
+                        <Grid IsVisible="{Binding IsMachimbreOption}" ColumnDefinitions="*,auto,*,auto" ColumnSpacing="20" RowSpacing="15">
                             <!-- Machimbre -->
                             <Label
                                 Grid.Column="0"
-                                FontSize="14"
+                                FontSize="16"
                                 Text="Machimbre"
                                 TextColor="#79280F"
-                                VerticalOptions="Center" />
+                                VerticalOptions="Center"
+                                FontAttributes="Bold" />
 
                             <CheckBox
                                 Grid.Column="1"
-                                HeightRequest="35"
+                                HeightRequest="40"
                                 IsChecked="{Binding IsMachimbre}"
-                                WidthRequest="35"
+                                WidthRequest="40"
                                 Color="#79280F" />
 
                             <!-- Deck -->
                             <Label
                                 Grid.Column="2"
-                                FontSize="14"
+                                FontSize="16"
                                 IsVisible="{Binding IsDeckOption}"
                                 Text="Deck"
                                 TextColor="#79280F"
-                                VerticalOptions="Center" />
+                                VerticalOptions="Center"
+                                FontAttributes="Bold" />
 
                             <CheckBox
                                 Grid.Column="3"
-                                HeightRequest="35"
+                                HeightRequest="40"
                                 IsChecked="{Binding IsDeck}"
                                 IsVisible="{Binding IsDeckOption}"
-                                WidthRequest="35"
+                                WidthRequest="40"
                                 Color="#79280F" />
                         </Grid>
 
                         <!-- Lista de Machimbre -->
-                        <StackLayout IsVisible="{Binding IsMachimbre}" Spacing="6">
+                        <StackLayout IsVisible="{Binding IsMachimbre}" Spacing="10">
                             <Frame
-                                Padding="6,3"
+                                Padding="12,8"
                                 BackgroundColor="White"
-                                CornerRadius="15"
-                                HeightRequest="30">
+                                BorderColor="#797979"
+                                CornerRadius="8"
+                                HeightRequest="45">
                                 <Label
-                                    FontSize="12"
+                                    FontSize="16"
                                     Text="{Binding SelectedMachimbre, Mode=TwoWay}"
-                                    VerticalOptions="Center">
+                                    VerticalOptions="Center"
+                                    TextColor="Black">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding SelectMachimbreCommand}" />
                                     </Label.GestureRecognizers>
@@ -1573,10 +1610,11 @@
                             
                             <Frame
                                 x:Name="FrameListMachimbres"
-                                CornerRadius="20"
-                                HeightRequest="110"
+                                CornerRadius="8"
+                                HeightRequest="130"
                                 IsVisible="{Binding IsVisibleListMachimbres}"
-                                VerticalOptions="Start">
+                                VerticalOptions="Start"
+                                BorderColor="#E0E0E0">
                                 <Frame.Background>
                                     <LinearGradientBrush EndPoint="0,1">
                                         <GradientStop Offset="0.1" Color="#FFFFFF" />
@@ -1585,101 +1623,111 @@
                                 </Frame.Background>
                                 <CollectionView
                                     x:Name="MachimbreList"
-                                    HeightRequest="110"
+                                    HeightRequest="130"
                                     ItemsSource="{Binding Machimbres}"
                                     SelectionChanged="Machimbres_SelectionChanged"
                                     SelectionMode="Single"
-                                    VerticalOptions="Start">
+                                    VerticalOptions="Start"
+                                    Margin="5">
 
                                     <CollectionView.ItemsLayout>
-                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="8" />
+                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
                                     </CollectionView.ItemsLayout>
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="x:String">
                                             <Label
-                                                FontSize="14"
+                                                FontSize="16"
                                                 Text="{Binding .}"
                                                 TextColor="#000000"
-                                                VerticalOptions="Start" />
+                                                VerticalOptions="Start"
+                                                Padding="8,4" />
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
                             </Frame>
                         </StackLayout>
 
-                        <!-- Ubicación, Comentarios y Proveedor en layout horizontal compacto -->
-                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12" RowDefinitions="auto,auto,auto,auto,auto" RowSpacing="6">
+                        <!-- Ubicación, Comentarios y Proveedor en layout vertical mejorado -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="20" RowDefinitions="auto,auto,auto,auto,auto" RowSpacing="12">
                             <!-- Ubicación -->
                             <Label
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                FontSize="14"
+                                FontSize="16"
                                 Text="Ubicación"
-                                TextColor="Black" />
+                                TextColor="#79280F"
+                                FontAttributes="Bold" />
 
                             <Frame
                                 Grid.Row="1"
                                 Grid.Column="0"
-                                Padding="3"
-                                BackgroundColor="Transparent"
+                                Padding="8"
+                                BackgroundColor="White"
                                 BorderColor="#797979"
-                                HeightRequest="34">
+                                HeightRequest="45"
+                                CornerRadius="8">
                                 <Entry
-                                    FontSize="12"
-                                    HeightRequest="55"
+                                    FontSize="16"
+                                    HeightRequest="45"
                                     Text="{Binding Location}"
                                     TextColor="Black"
-                                    Placeholder="Ubicación del producto" />
+                                    Placeholder="Ubicación del producto"
+                                    BackgroundColor="Transparent" />
                             </Frame>
 
                             <!-- Proveedor -->
                             <Label
                                 Grid.Row="2"
                                 Grid.Column="0"
-                                FontSize="14"
+                                FontSize="16"
                                 Text="Proveedor"
-                                TextColor="Black" />
+                                TextColor="#79280F"
+                                FontAttributes="Bold" />
 
                             <Frame
                                 Grid.Row="3"
                                 Grid.Column="0"
-                                Padding="3"
-                                BackgroundColor="Transparent"
+                                Padding="8"
+                                BackgroundColor="White"
                                 BorderColor="#797979"
-                                HeightRequest="34">
+                                HeightRequest="45"
+                                CornerRadius="8">
                                 <Entry
-                                    FontSize="12"
+                                    FontSize="16"
                                     Keyboard="Text"
-                                    HeightRequest="55"
+                                    HeightRequest="45"
                                     Text="{Binding Supplier}"
                                     TextColor="Black"
-                                    Placeholder="Nombre del proveedor" />
+                                    Placeholder="Nombre del proveedor"
+                                    BackgroundColor="Transparent" />
                             </Frame>
 
                             <!-- Comentarios -->
                             <Label
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                FontSize="14"
+                                FontSize="16"
                                 Text="Comentarios"
-                                TextColor="Black" />
+                                TextColor="#79280F"
+                                FontAttributes="Bold" />
 
                             <Frame
                                 Grid.Row="1"
                                 Grid.RowSpan="3"
                                 Grid.Column="1"
-                                Padding="3"
-                                BackgroundColor="Transparent"
+                                Padding="8"
+                                BackgroundColor="White"
                                 BorderColor="#797979"
-                                HeightRequest="75">
+                                HeightRequest="100"
+                                CornerRadius="8">
                                 <Editor
                                     AutoSize="TextChanges"
-                                    FontSize="12"
-                                    HeightRequest="95"
-                                    Margin="0,20,0,0"
+                                    FontSize="16"
+                                    HeightRequest="100"
                                     Text="{Binding Comments}"
                                     TextColor="Black"
-                                    Placeholder="Comentarios adicionales" />
+                                    Placeholder="Comentarios adicionales"
+                                    BackgroundColor="Transparent" />
                             </Frame>
                         </Grid>
                     </StackLayout>
@@ -1687,33 +1735,42 @@
 
                 <BoxView
                     Grid.Row="3"
-                    VerticalOptions="EndAndExpand"
-                    HeightRequest="2"
+                    VerticalOptions="End"
+                    HeightRequest="3"
                     Color="#79280F"
-                    Margin="0,15,0,0" />
+                    Margin="0,25,0,0" />
 
                 <Grid
                     Grid.Row="4"
-                    Margin="0,10,0,0"
+                    Margin="0,20,0,0"
                     ColumnDefinitions="*,*"
-                    ColumnSpacing="15">
+                    ColumnSpacing="25"
+                    HorizontalOptions="Center"
+                    MaximumWidthRequest="600">
                     <Button
                         Grid.Column="0"
                         BackgroundColor="#D3AA84"
                         Command="{Binding SaveProductCommand}"
                         CommandParameter="AddProduct"
-                        FontSize="14"
-                        HeightRequest="35"
+                        FontSize="18"
+                        HeightRequest="50"
                         Text="Crear Producto"
-                        TextColor="#000000" />
+                        TextColor="#000000"
+                        CornerRadius="8"
+                        FontAttributes="Bold"
+                        MinimumWidthRequest="180" />
                     <Button
                         Grid.Column="1"
                         BackgroundColor="#FFF6ED"
                         Command="{Binding CancelAddProductCommand}"
-                        FontSize="14"
-                        HeightRequest="35"
+                        FontSize="18"
+                        HeightRequest="50"
                         Text="Cancelar"
-                        TextColor="#000000" />
+                        TextColor="#000000"
+                        CornerRadius="8"
+                        BorderColor="#D3AA84"
+                        BorderWidth="2"
+                        MinimumWidthRequest="180" />
                 </Grid>
 
             </Grid>
@@ -1955,7 +2012,7 @@
                     Margin="0,10,0,0"
                     Color="#79280F" />
 
-                <!-- Botones optimizados para horizontal -->
+                <!-- botónes optimizados para horizontal -->
                 <Grid
                     Grid.Row="4"
                     Margin="0,12,0,5"
@@ -2118,12 +2175,12 @@
                     IsVisible="{Binding IsSelectedProductEditStock}">
                     <Label
                         FontSize="18"
-                        Text="Codigo"
+                        Text="Código"
                         TextColor="#79280F" />
                     <Label
                         Grid.Column="1"
                         FontSize="18"
-                        Text="Descripcion"
+                        Text="Descripción"
                         TextColor="#79280F" />
                     <Label
                         Grid.Column="2"
@@ -2595,7 +2652,7 @@
                     Margin="0,10,0,0"
                     Color="#79280F" />
 
-                <!-- Botones optimizados para horizontal -->
+                <!-- Botónes optimizados para horizontal -->
                 <Grid
                     Grid.Row="4"
                     Margin="0,12,0,5"
@@ -2634,7 +2691,7 @@
                 IsVisible="{Binding IsInventoryView}"
                 RowDefinitions="auto,auto,auto,*"
                 RowSpacing="8">
-                
+
                 <!-- Título y búsqueda en la misma fila para tablets -->
                 <Grid Grid.Row="0" ColumnDefinitions="auto,*" ColumnSpacing="20" Margin="0,0,0,10">
                     <Label
@@ -2753,7 +2810,7 @@
                     FontSize="22"
                     FontAttributes="Bold"
                     HorizontalOptions="Start"
-                    Text="Detalle del Producto"
+                    Text="Detalle del producto"
                     TextColor="#79280F"
                     VerticalOptions="Center"
                     Margin="0,0,0,5" />
@@ -2904,7 +2961,7 @@
 
             </Grid>
 
-            <!--  Inventario vista de edicion de productos  -->
+            <!--  Inventario vista de edición de productos  -->
             <Grid
                 Grid.Row="2"
                 Grid.ColumnSpan="4"
@@ -3456,7 +3513,7 @@
                             </CollectionView>
                         </Frame>
 
-                        <!-- Información del producto seleccionado compacta -->
+                        <!-- Información del producto selecciónado compacta -->
                         <Frame IsVisible="{Binding IsSelectedProductTask}"
                                BackgroundColor="#F5F5F5"
                                BorderColor="#CCCCCC"
@@ -4053,7 +4110,7 @@
                             </CollectionView>
                         </Frame>
 
-                        <!-- Información del producto seleccionado compacta -->
+                        <!-- Información del producto selecciónado compacta -->
                         <Frame IsVisible="{Binding IsSelectedProductTask}"
                                Padding="12"
                                BackgroundColor="#F8F8F8"
@@ -4233,7 +4290,7 @@
                     
                     <!-- Panel izquierdo: Información del producto -->
                     <StackLayout Grid.Column="0" Spacing="12">
-                        <!-- Información del producto seleccionado compacta -->
+                        <!-- Información del producto selecciónado compacta -->
                         <Frame IsVisible="{Binding IsSelectedProductTask}"
                                Padding="12"
                                BackgroundColor="#F8F8F8"
@@ -4312,7 +4369,7 @@
                     Margin="0,10,0,0"
                     Color="#79280F" />
 
-                <!-- Botones optimizados para horizontal -->
+                <!-- botónes optimizados para horizontal -->
                 <Grid
                     Grid.Row="4"
                     Margin="0,12,0,5"
@@ -4658,7 +4715,7 @@
                         </CollectionView>
                     </Frame>
                     
-                    <!-- Headers de productos seleccionados -->
+                    <!-- Headers de productos selecciónados -->
                     <Grid Margin="0,8,0,3" ColumnDefinitions="0.8*,1.5*,0.8*,1*,0.3*">
                         <Label
                             FontSize="11"
@@ -4693,7 +4750,7 @@
                             HorizontalTextAlignment="Center" />
                     </Grid>
                     
-                    <!-- Lista de productos seleccionados -->
+                    <!-- Lista de productos selecciónados -->
                     <Frame
                         Padding="3"
                         CornerRadius="8"
@@ -4714,7 +4771,7 @@
                                     <Label
                                         FontSize="12"
                                         HorizontalOptions="CenterAndExpand"
-                                        Text="No se han seleccionado productos"
+                                        Text="No se han selecciónado productos"
                                         TextColor="#797979"
                                         VerticalOptions="CenterAndExpand" />
                                 </StackLayout>
@@ -4794,11 +4851,11 @@
                         </Frame>
                 </StackLayout>
 
-                <!-- Headers de productos seleccionados - Eliminar -->
+                <!-- Headers de productos selecciónados - Eliminar -->
                 
-                <!-- Lista de productos seleccionados - Eliminar -->
+                <!-- Lista de productos selecciónados - Eliminar -->
 
-                <!-- Separador final y botones -->
+                <!-- Separador final y botónes -->
                 <BoxView
                     Grid.Row="3"
                     Grid.ColumnSpan="2"
@@ -5233,7 +5290,7 @@
                     </StackLayout>
                 </ScrollView>
 
-                <!-- Botones de acción -->
+                <!-- botónes de acción -->
                 <Grid
                     Grid.Row="3"
                     Grid.ColumnSpan="2"
@@ -5649,7 +5706,7 @@
                     </StackLayout>
                 </ScrollView>
 
-                <!-- Botones de acción -->
+                <!-- botónes de acción -->
                 <Grid
                     Grid.Row="3"
                     Grid.ColumnSpan="2"
@@ -5742,7 +5799,7 @@
                                         SelectedItem="{Binding SelectedFilterMovementType, Mode=TwoWay}"
                                         TextColor="Black"
                                         HeightRequest="55"
-                                        Title="Seleccionar tipo"
+                                        Title="Selecciónar tipo"
                                         FontSize="11"
                                         BackgroundColor="Transparent"
                                         WidthRequest="120" />
@@ -5758,7 +5815,7 @@
                                         TextColor="Black"
                                         HeightRequest="55"
                                         FontSize="11"
-                                        Title="Seleccionar producto"
+                                        Title="Selecciónar producto"
                                         BackgroundColor="Transparent"
                                         WidthRequest="150" />
                                 </Frame>
@@ -6196,7 +6253,7 @@
                                             IsTextPredictionEnabled="False" />
                                     </Frame>
 
-                                    <!-- Botones -->
+                                    <!-- botónes -->
                                     <Grid
                                         Grid.Row="6"
                                         Grid.Column="0"
@@ -6749,7 +6806,7 @@
                                             IsTextPredictionEnabled="False" />
                                     </Frame>
 
-                                    <!-- Botones -->
+                                    <!-- botónes -->
                                     <Grid
                                         Grid.Row="5"
                                         Grid.Column="0"
@@ -7150,7 +7207,7 @@
                                             IsTextPredictionEnabled="False" />
                                     </Frame>
 
-                                    <!-- Botones -->
+                                    <!-- botónes -->
                                     <Grid
                                         Grid.Row="5"
                                         Grid.Column="0"
@@ -7298,3 +7355,6 @@
 
 
 </pages:BaseContentPage>
+
+
+
