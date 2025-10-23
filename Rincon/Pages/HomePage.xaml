@@ -4544,86 +4544,90 @@
                     RowSpacing="8">
                     
                     <!-- Tipo y Cliente -->
-                    <StackLayout Grid.Column="0" Spacing="8" Grid.ColumnSpan="2">
-                        <Label Text="Tipo:" FontSize="14" TextColor="#79280F"/>
-                        <StackLayout Orientation="Horizontal" Spacing="10">
+                    <StackLayout Grid.Column="0" Spacing="12" Grid.ColumnSpan="2">
+                        <Label Text="Tipo:" FontSize="16" TextColor="#79280F" FontAttributes="Bold"/>
+                        <StackLayout Orientation="Horizontal" Spacing="20">
                             <RadioButton
                                 Content="Reserva"
                                 GroupName="BookingOrderType"
                                 IsChecked="{Binding IsBooking}"
-                                FontSize="12"
+                                FontSize="14"
                                 TextColor="Black"
                                 Value="reserva" />
                             <RadioButton
                                 Content="Pedido"
                                 GroupName="BookingOrderType"
                                 IsChecked="{Binding IsOrder}"
-                                FontSize="12"
+                                FontSize="14"
                                 TextColor="Black"
                                 Value="pedido" />
                         </StackLayout>
                         
-                        <Label Text="Cliente" TextColor="#79280F" FontSize="14"/>
-                        <Frame Padding="3" BackgroundColor="White" BorderColor="#797979" CornerRadius="8" HeightRequest="30">
+                        <Label Text="Cliente" TextColor="#79280F" FontSize="16" FontAttributes="Bold"/>
+                        <Frame Padding="10" BackgroundColor="White" BorderColor="#79280F" CornerRadius="8" HeightRequest="50" HasShadow="True">
                             <Entry 
-                                BackgroundColor="transparent"
-                                FontSize="12"
-                                HeightRequest="55"
+                                BackgroundColor="Transparent"
+                                FontSize="15"
+                                HeightRequest="40"
                                 Placeholder="Nombre del cliente"
                                 Text="{Binding ClientBookingOrder}"
-                                TextColor="Black"
+                                TextColor="#333333"
+                                VerticalOptions="Center"
                                 IsSpellCheckEnabled="False"
                                 IsTextPredictionEnabled="False" />
                         </Frame>
                         
-                        <Label Text="Fecha despacho" FontSize="14" TextColor="#79280F"/>
-                        <Frame Padding="3" BackgroundColor="White" BorderColor="#797979" CornerRadius="8" HeightRequest="30">
+                        <Label Text="Fecha despacho" FontSize="16" TextColor="#79280F" FontAttributes="Bold"/>
+                        <Frame Padding="10" BackgroundColor="White" BorderColor="#79280F" CornerRadius="8" HeightRequest="50" HasShadow="True">
                         <DatePicker
                             Date="{Binding DateBookingOrder}"
-                            TextColor="Black"
-                            HeightRequest="55"
-                            FontSize="12" />
+                            TextColor="#333333"
+                            HeightRequest="40"
+                            FontSize="15"
+                            VerticalOptions="Center" />
                         </Frame>
-                        <Label Text="Dirección" FontSize="14" TextColor="#79280F"/>
-                        <Frame Padding="3" BackgroundColor="White" BorderColor="#797979" CornerRadius="8" HeightRequest="30">
+                        <Label Text="Dirección" FontSize="16" TextColor="#79280F" FontAttributes="Bold"/>
+                        <Frame Padding="10" BackgroundColor="White" BorderColor="#79280F" CornerRadius="8" HeightRequest="50" HasShadow="True">
                             <Entry
-                                BackgroundColor="transparent"
-                                FontSize="12"
-                                HeightRequest="55"
+                                BackgroundColor="Transparent"
+                                FontSize="15"
+                                HeightRequest="40"
                                 Placeholder="Dirección de entrega"
                                 Text="{Binding AddressBookingOrder}"
-                                TextColor="Black"
+                                TextColor="#333333"
+                                VerticalOptions="Center"
                                 IsSpellCheckEnabled="False"
                                 IsTextPredictionEnabled="False" />
                         </Frame>
-                    <Label Text="Teléfono" FontSize="14" TextColor="#79280F"/>
-                        <Frame Padding="3" BackgroundColor="White" BorderColor="#797979" CornerRadius="8" HeightRequest="30">
+                    <Label Text="Teléfono" FontSize="16" TextColor="#79280F" FontAttributes="Bold"/>
+                        <Frame Padding="10" BackgroundColor="White" BorderColor="#79280F" CornerRadius="8" HeightRequest="50" HasShadow="True">
                             <Entry
-                                BackgroundColor="transparent"
-                                FontSize="12"
-                                HeightRequest="55"
+                                BackgroundColor="Transparent"
+                                FontSize="15"
+                                HeightRequest="40"
                                 Placeholder="Número de teléfono"
                                 Text="{Binding PhoneBookingOrder}"
-                                TextColor="Black"
+                                TextColor="#333333"
+                                VerticalOptions="Center"
                                 Keyboard="Telephone"
                                 IsSpellCheckEnabled="False"
                                 IsTextPredictionEnabled="False" />
                         </Frame>
                         
-                        <Label Text="Envío" FontSize="14" TextColor="#79280F" />
-                        <StackLayout Orientation="Horizontal" Spacing="15">
+                        <Label Text="Envío" FontSize="16" TextColor="#79280F" FontAttributes="Bold" />
+                        <StackLayout Orientation="Horizontal" Spacing="20">
                             <RadioButton
                                 Content="No"
                                 GroupName="BookingOrderShipment"
                                 IsChecked="{Binding IsNoShipmentTask}"
-                                FontSize="12"
+                                FontSize="14"
                                 TextColor="Black"
                                 Value="no" />
                             <RadioButton
                                 Content="Sí"
                                 GroupName="BookingOrderShipment"
                                 IsChecked="{Binding IsShipmentTask}"
-                                FontSize="12"
+                                FontSize="14"
                                 TextColor="Black"
                                 Value="si" />
                         </StackLayout>
@@ -4639,19 +4643,20 @@
                     Spacing="8">
                     
                     <!-- Búsqueda de productos -->
-                    <Label Text="Buscar productos" FontSize="14" TextColor="#79280F"/>
-                    <Frame Padding="8,3" BackgroundColor="LightGray" CornerRadius="15" HeightRequest="32">
+                    <Label Text="Buscar productos" FontSize="16" TextColor="#79280F" FontAttributes="Bold"/>
+                    <Frame Padding="12" BackgroundColor="White" BorderColor="#79280F" CornerRadius="8" HeightRequest="50" HasShadow="True">
                         <SearchBar
                             x:Name="SearchBarAddProductsBookingOrder"
-                            BackgroundColor="LightGray"
-                            CancelButtonColor="Black"
+                            BackgroundColor="Transparent"
+                            CancelButtonColor="#79280F"
                             Focused="SearchBarProductBookingOrder_Focused"
-                            FontSize="12"
-                            HeightRequest="26"
+                            FontSize="15"
+                            HeightRequest="40"
                             HorizontalOptions="FillAndExpand"
                             Placeholder="Buscar producto"
                             TextChanged="OnProductsBookingORderTextChanged"
-                            TextColor="Black"
+                            TextColor="#333333"
+                            VerticalOptions="Center"
                             Unfocused="SearchBarProductBookingOrder_Unfocused" />
                     </Frame>
 
@@ -4716,135 +4721,171 @@
                     </Frame>
                     
                     <!-- Headers de productos selecciónados -->
-                    <Grid Margin="0,8,0,3" ColumnDefinitions="0.8*,1.5*,0.8*,1*,0.3*">
-                        <Label
-                            FontSize="11"
-                            Text="Código"
-                            TextColor="#79280F"
-                            FontAttributes="Bold" />
-                        <Label
-                            Grid.Column="1"
-                            FontSize="11"
-                            Text="Descripción"
-                            TextColor="#79280F"
-                            FontAttributes="Bold" />
-                        <Label
-                            Grid.Column="2"
-                            FontSize="11"
-                            Text="Estado"
-                            TextColor="#79280F"
-                            FontAttributes="Bold" />
-                        <Label
-                            Grid.Column="3"
-                            FontSize="11"
-                            Text="Cantidad"
-                            TextColor="#79280F"
-                            FontAttributes="Bold"
-                            HorizontalTextAlignment="Center" />
-                        <Label
-                            Grid.Column="4"
-                            FontSize="11"
-                            Text="Acción"
-                            TextColor="#79280F"
-                            FontAttributes="Bold"
-                            HorizontalTextAlignment="Center" />
-                    </Grid>
+                    <Frame Padding="12,8" BackgroundColor="#79280F" CornerRadius="8" HasShadow="True" Margin="0,15,0,8">
+                        <Grid ColumnDefinitions="0.8*,1.5*,0.8*,1*,0.3*" ColumnSpacing="8">
+                            <Label
+                                FontSize="14"
+                                Text="Código"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="1"
+                                FontSize="14"
+                                Text="Descripción"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="2"
+                                FontSize="14"
+                                Text="Estado"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="3"
+                                FontSize="14"
+                                Text="Cantidad"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                HorizontalTextAlignment="Center"
+                                VerticalOptions="Center" />
+                            <Label
+                                Grid.Column="4"
+                                FontSize="14"
+                                Text=""
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                HorizontalTextAlignment="Center"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Frame>
                     
                     <!-- Lista de productos selecciónados -->
                     <Frame
-                        Padding="3"
-                        CornerRadius="8"
-                        BackgroundColor="#FAFAFA"
-                        BorderColor="#E0E0E0"
-                        HeightRequest="180">
+                        Padding="8"
+                        CornerRadius="10"
+                        BackgroundColor="White"
+                        BorderColor="#79280F"
+                        HasShadow="True"
+                        HeightRequest="200">
                         <CollectionView
                             ItemsSource="{Binding ProductsBookingOrder, Mode=TwoWay}"
                             SelectionMode="Single"
                             HorizontalOptions="FillAndExpand"
                             VerticalOptions="FillAndExpand"
-                            VerticalScrollBarVisibility="Default">
+                            VerticalScrollBarVisibility="Default"
+                            BackgroundColor="Transparent">
                             <CollectionView.ItemsLayout>
-                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="3" />
+                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5" />
                             </CollectionView.ItemsLayout>
                             <CollectionView.EmptyView>
-                                <StackLayout>
+                                <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
                                     <Label
-                                        FontSize="12"
+                                        FontSize="15"
+                                        FontAttributes="Italic"
                                         HorizontalOptions="CenterAndExpand"
-                                        Text="No se han selecciónado productos"
-                                        TextColor="#797979"
-                                        VerticalOptions="CenterAndExpand" />
+                                        Text="No se han seleccionado productos"
+                                        TextColor="#999999"
+                                        VerticalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center" />
                                 </StackLayout>
                             </CollectionView.EmptyView>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:ProductStock">
-                                    <Grid  
-                                        ColumnDefinitions="0.8*,1.5*,0.8*,1*,0.3*"
-                                        RowDefinitions="*"
-                                        VerticalOptions="Start"
-                                        Padding="2"
-                                        BackgroundColor="White">
-                                        <Label
-                                            FontSize="10"
-                                            Text="{Binding Product.Id}"
-                                            TextColor="#000000"
-                                            VerticalOptions="Center" />
-                                        <Label
-                                            Grid.Column="1"
-                                            FontSize="10"
-                                            Text="{Binding Product.Description}"
-                                            TextColor="#000000"
-                                            VerticalOptions="Center" />
-                                        <Label
-                                            Grid.Column="2"
-                                            FontSize="10"
-                                            Text="{Binding Product.WoodState}"
-                                            TextColor="#000000"
-                                            VerticalOptions="Center" />
-                                        <Frame
-                                            Grid.Column="3"
-                                            Padding="1"
-                                            BackgroundColor="White"
-                                            BorderColor="#797979"
-                                            CornerRadius="4"
-                                            HeightRequest="22"
-                                            HorizontalOptions="Center"
-                                            WidthRequest="60">
-                                            <Entry
-                                                BackgroundColor="transparent"
-                                                HeightRequest="40"
-                                                FontSize="9"
-                                                Keyboard="Numeric"
-                                                HorizontalTextAlignment="Center"
-                                                Text="{Binding QuantityBookingOrder, Mode=TwoWay}"
-                                                TextColor="#000000"
+                                    <Frame
+                                        Padding="8"
+                                        Margin="2"
+                                        BackgroundColor="#F8F8F8"
+                                        BorderColor="#E0E0E0"
+                                        CornerRadius="6"
+                                        HasShadow="False">
+                                        <Grid  
+                                            ColumnDefinitions="0.8*,1.5*,0.8*,1*,0.3*"
+                                            RowDefinitions="*"
+                                            VerticalOptions="Center"
+                                            ColumnSpacing="8">
+                                            <Label
+                                                FontSize="13"
+                                                FontAttributes="Bold"
+                                                Text="{Binding Product.Id}"
+                                                TextColor="#333333"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Grid.Column="1"
+                                                FontSize="13"
+                                                Text="{Binding Product.Description}"
+                                                TextColor="#333333"
                                                 VerticalOptions="Center"
-                                                IsSpellCheckEnabled="False"
-                                                IsTextPredictionEnabled="False" />
-                                        </Frame>
-                                        <ImageButton
-                                            Grid.Column="4"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=RemoveProductToAddedBookingOrderCommand}"
-                                            CommandParameter="{Binding .}"
-                                            HeightRequest="16"
-                                            Source="delete_item_icon.png"
-                                            WidthRequest="16"
-                                            HorizontalOptions="Center"
-                                            VerticalOptions="Center" />
-                                    </Grid>
+                                                LineBreakMode="TailTruncation" />
+                                            <Label
+                                                Grid.Column="2"
+                                                FontSize="12"
+                                                Text="{Binding Product.WoodState}"
+                                                TextColor="#666666"
+                                                VerticalOptions="Center" />
+                                            <Frame
+                                                Grid.Column="3"
+                                                Padding="5"
+                                                BackgroundColor="White"
+                                                BorderColor="#79280F"
+                                                CornerRadius="6"
+                                                HeightRequest="35"
+                                                HorizontalOptions="Center"
+                                                WidthRequest="80"
+                                                HasShadow="False">
+                                                <Entry
+                                                    BackgroundColor="Transparent"
+                                                    HeightRequest="30"
+                                                    FontSize="14"
+                                                    FontAttributes="Bold"
+                                                    Keyboard="Numeric"
+                                                    HorizontalTextAlignment="Center"
+                                                    Text="{Binding QuantityBookingOrder, Mode=TwoWay}"
+                                                    TextColor="#333333"
+                                                    VerticalOptions="Center"
+                                                    VerticalTextAlignment="Center"
+                                                    IsSpellCheckEnabled="False"
+                                                    IsTextPredictionEnabled="False" />
+                                            </Frame>
+                                            <Frame
+                                                Grid.Column="4"
+                                                Padding="3"
+                                                BackgroundColor="#FFE6E6"
+                                                BorderColor="#FFE6E6"
+                                                CornerRadius="20"
+                                                HeightRequest="30"
+                                                WidthRequest="30"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="Center"
+                                                HasShadow="False">
+                                                <ImageButton
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=RemoveProductToAddedBookingOrderCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    HeightRequest="20"
+                                                    Source="delete_item_icon.png"
+                                                    WidthRequest="20"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center"
+                                                    BackgroundColor="Transparent" />
+                                            </Frame>
+                                        </Grid>
+                                    </Frame>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
                     </Frame>
-                    <Label Text="Comentarios" FontSize="14" TextColor="#79280F"/>
-                        <Frame Padding="3" BackgroundColor="White" BorderColor="#797979" CornerRadius="8" HeightRequest="50">
+                    <Label Text="Comentarios" FontSize="16" TextColor="#79280F" FontAttributes="Bold"/>
+                        <Frame Padding="10" BackgroundColor="White" BorderColor="#79280F" CornerRadius="8" HeightRequest="70" HasShadow="True">
                             <Entry
-                                BackgroundColor="transparent"
-                                FontSize="12"
-                                HeightRequest="65"
+                                BackgroundColor="Transparent"
+                                FontSize="15"
+                                HeightRequest="60"
                                 Placeholder="Comentarios adicionales"
                                 Text="{Binding CommentsBookingOrder}"
-                                TextColor="Black"
+                                TextColor="#333333"
+                                VerticalOptions="Center"
                                 VerticalTextAlignment="Start"
                                 IsSpellCheckEnabled="False"
                                 IsTextPredictionEnabled="False" />
@@ -4868,38 +4909,46 @@
                 <Grid
                     Grid.Row="3"
                     Grid.ColumnSpan="2"
-                    Margin="0,15,0,0"
+                    Margin="0,20,0,0"
                     ColumnDefinitions="*,*"
-                    ColumnSpacing="15"
+                    ColumnSpacing="20"
                     HorizontalOptions="Center"
-                    WidthRequest="400">
+                    WidthRequest="500">
                     <ActivityIndicator
-            HeightRequest="32"
+            HeightRequest="40"
             Grid.ColumnSpan="2"
             HorizontalOptions="CenterAndExpand"
             IsRunning="True"
             Color="#4A744C"
             IsVisible="{Binding IsBusy}"
             VerticalOptions="CenterAndExpand"
-            WidthRequest="32" />
+            WidthRequest="40" />
                     <Button
                         Grid.Column="0"
-                        BackgroundColor="#D3AA84"
+                        BackgroundColor="#79280F"
+                        BorderColor="#79280F"
                         IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
                         Clicked="CreateBookingOrder_Clicked"
-                        FontSize="14"
-                        HeightRequest="35"
-                        Text="Crear"
-                        TextColor="#000000" />
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        HeightRequest="50"
+                        Text="CREAR"
+                        TextColor="White"
+                        CornerRadius="8"
+                        Padding="15,5" />
                     <Button
                         Grid.Column="1"
                         IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
-                        BackgroundColor="#FFF6ED"
+                        BackgroundColor="#F5F5F5"
+                        BorderColor="#CCCCCC"
                         Command="{Binding CancelCreateBookingOrderCommand}"
-                        FontSize="14"
-                        HeightRequest="35"
-                        Text="Cancelar"
-                        TextColor="#000000" />
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        HeightRequest="50"
+                        Text="CANCELAR"
+                        TextColor="#666666"
+                        CornerRadius="8"
+                        Padding="15,5" />
                 </Grid>
 
             </Grid>
