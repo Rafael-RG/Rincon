@@ -3090,163 +3090,174 @@
             <Grid
                 Grid.Row="2"
                 Grid.ColumnSpan="4"
-                Padding="15,20,15,15"
+                Padding="25"
                 BackgroundColor="White"
                 ColumnDefinitions="*"
                 IsVisible="{Binding IsInventoryEditProductView}"
                 RowDefinitions="auto,auto,*,auto"
-                RowSpacing="10">
+                RowSpacing="15">
                 
-                <!-- Título compacto -->
+                <!-- Título principal -->
                 <Label
                     Grid.Row="0"
-                    FontSize="22"
+                    FontSize="32"
                     FontAttributes="Bold"
                     HorizontalOptions="Start"
                     Text="Editar Producto"
                     TextColor="#79280F"
                     VerticalOptions="Center"
-                    Margin="0,0,0,5" />
+                    Margin="0,0,0,15" />
 
                 <!-- Separador -->
                 <BoxView
                     Grid.Row="1"
-                    Margin="0,0,0,15"
-                    HeightRequest="2"
+                    Margin="0,0,0,25"
+                    HeightRequest="3"
                     HorizontalOptions="Fill"
                     VerticalOptions="Start"
                     Color="#79280F" />
 
-                <!-- Formulario de edición en layout horizontal optimizado para tablet -->
+                <!-- Formulario de edición optimizado para desktop -->
                 <Frame
                     Grid.Row="2"
-                    BackgroundColor="#F5F5F5"
-                    CornerRadius="8"
-                    HasShadow="False"
-                    Padding="20"
-                    Margin="0,0,0,15">
+                    BackgroundColor="White"
+                    BorderColor="#79280F"
+                    CornerRadius="12"
+                    HasShadow="True"
+                    Padding="25"
+                    Margin="0,0,0,20">
 
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="40" RowDefinitions="auto,auto,auto,auto">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="50" RowDefinitions="auto,auto,auto,auto">
                         
                         <!-- Primera columna - Información básica (solo lectura) -->
-                        <StackLayout Grid.Column="0" Spacing="15">
-                            <StackLayout Orientation="Horizontal" Spacing="12">
+                        <StackLayout Grid.Column="0" Spacing="20">
+                            <StackLayout Orientation="Horizontal" Spacing="15">
                                 <Label
-                                    FontSize="16"
+                                    FontSize="18"
                                     FontAttributes="Bold"
                                     Text="Código:"
                                     TextColor="#79280F"
                                     VerticalOptions="Center"
-                                    WidthRequest="90" />
-                                <Label
-                                    FontSize="16"
-                                    Text="{Binding SelectedProduct.Id}"
-                                    TextColor="#000000"
-                                    VerticalOptions="Center" />
+                                    WidthRequest="120" />
+                                <Frame BackgroundColor="#F8F9FA" BorderColor="#E0E0E0" CornerRadius="6" Padding="10,8" HasShadow="False">
+                                    <Label
+                                        FontSize="16"
+                                        Text="{Binding SelectedProduct.Id}"
+                                        TextColor="#333333"
+                                        VerticalOptions="Center" />
+                                </Frame>
                             </StackLayout>
                             
-                            <StackLayout Orientation="Horizontal" Spacing="12">
+                            <StackLayout Orientation="Horizontal" Spacing="15">
                                 <Label
-                                    FontSize="16"
+                                    FontSize="18"
                                     FontAttributes="Bold"
                                     Text="Descripción:"
                                     TextColor="#79280F"
                                     VerticalOptions="Center"
-                                    WidthRequest="90" />
-                                <Label
-                                    FontSize="16"
-                                    Text="{Binding SelectedProduct.Description}"
-                                    TextColor="#000000"
-                                    VerticalOptions="Center"
-                                    LineBreakMode="WordWrap" />
+                                    WidthRequest="120" />
+                                <Frame BackgroundColor="#F8F9FA" BorderColor="#E0E0E0" CornerRadius="6" Padding="10,8" HasShadow="False" VerticalOptions="Fill">
+                                    <Label
+                                        FontSize="16"
+                                        Text="{Binding SelectedProduct.Description}"
+                                        TextColor="#333333"
+                                        VerticalOptions="Center"
+                                        LineBreakMode="WordWrap" />
+                                </Frame>
                             </StackLayout>
                             
-                            <StackLayout Orientation="Horizontal" Spacing="12">
+                            <StackLayout Orientation="Horizontal" Spacing="15">
                                 <Label
-                                    FontSize="16"
+                                    FontSize="18"
                                     FontAttributes="Bold"
                                     Text="Estado:"
                                     TextColor="#79280F"
                                     VerticalOptions="Center"
-                                    WidthRequest="90" />
-                                <Label
-                                    FontSize="16"
-                                    Text="{Binding SelectedProduct.WoodState}"
-                                    TextColor="#000000"
-                                    VerticalOptions="Center" />
+                                    WidthRequest="120" />
+                                <Frame BackgroundColor="#F8F9FA" BorderColor="#E0E0E0" CornerRadius="6" Padding="10,8" HasShadow="False">
+                                    <Label
+                                        FontSize="16"
+                                        Text="{Binding SelectedProduct.WoodState}"
+                                        TextColor="#333333"
+                                        VerticalOptions="Center" />
+                                </Frame>
                             </StackLayout>
                         </StackLayout>
 
                         <!-- Segunda columna - Campos editables -->
-                        <StackLayout Grid.Column="1" Spacing="15">
-                            <StackLayout Spacing="8">
+                        <StackLayout Grid.Column="1" Spacing="20">
+                            <StackLayout Spacing="12">
                                 <Label
-                                    FontSize="16"
+                                    FontSize="18"
                                     FontAttributes="Bold"
                                     Text="Ubicación:"
                                     TextColor="#79280F" />
                                 <Frame
-                                    Padding="8"
+                                    Padding="0"
                                     BackgroundColor="White"
-                                    BorderColor="#CCCCCC"
-                                    CornerRadius="5"
-                                    HeightRequest="35">
+                                    BorderColor="#79280F"
+                                    CornerRadius="8"
+                                    HasShadow="True"
+                                    HeightRequest="50">
                                     <Entry
-                                        FontSize="14"
+                                        FontSize="16"
                                         Text="{Binding ProductLocationEdit}"
-                                        TextColor="#000000"
-                                        HeightRequest="35"
+                                        TextColor="#333333"
                                         Placeholder="Ingrese ubicación"
                                         PlaceholderColor="#999999"
                                         BackgroundColor="Transparent"
-                                        VerticalOptions="Center" />
+                                        VerticalOptions="Center"
+                                        Margin="15,8" />
                                 </Frame>
                             </StackLayout>
                             
-                            <StackLayout Spacing="8">
+                            <StackLayout Spacing="12">
                                 <Label
-                                    FontSize="16"
+                                    FontSize="18"
                                     FontAttributes="Bold"
                                     Text="Proveedor:"
                                     TextColor="#79280F" />
                                 <Frame
-                                    Padding="8"
+                                    Padding="0"
                                     BackgroundColor="White"
-                                    BorderColor="#CCCCCC"
-                                    CornerRadius="5"
-                                    HeightRequest="35">
+                                    BorderColor="#79280F"
+                                    CornerRadius="8"
+                                    HasShadow="True"
+                                    HeightRequest="50">
                                     <Entry
-                                        FontSize="14"
+                                        FontSize="16"
                                         Text="{Binding ProduSupplierEdit}"
-                                        TextColor="#000000"
-                                        HeightRequest="35"
+                                        TextColor="#333333"
                                         Placeholder="Ingrese proveedor"
                                         PlaceholderColor="#999999"
                                         BackgroundColor="Transparent"
-                                        VerticalOptions="Center" />
+                                        VerticalOptions="Center"
+                                        Margin="15,8" />
                                 </Frame>
                             </StackLayout>
                             
-                            <StackLayout Spacing="8">
+                            <StackLayout Spacing="12">
                                 <Label
-                                    FontSize="16"
+                                    FontSize="18"
                                     FontAttributes="Bold"
                                     Text="Comentarios:"
                                     TextColor="#79280F" />
                                 <Frame
-                                    Padding="8"
+                                    Padding="0"
                                     BackgroundColor="White"
-                                    BorderColor="#CCCCCC"
-                                    CornerRadius="5"
-                                    HeightRequest="80">
+                                    BorderColor="#79280F"
+                                    CornerRadius="8"
+                                    HasShadow="True"
+                                    HeightRequest="100">
                                     <Editor
-                                        FontSize="14"
+                                        FontSize="15"
                                         Text="{Binding ProductCommentEdit}"
-                                        TextColor="#000000"
+                                        TextColor="#333333"
                                         Placeholder="Ingrese comentarios"
                                         PlaceholderColor="#999999"
                                         BackgroundColor="Transparent"
-                                        VerticalOptions="Fill" />
+                                        VerticalOptions="Fill"
+                                        Margin="15,12" />
                                 </Frame>
                             </StackLayout>
                         </StackLayout>
@@ -3255,29 +3266,36 @@
 
                 </Frame>
 
-                <!-- Botones de acción compactos -->
-                <HorizontalStackLayout
+                <!-- Botones de acción optimizados -->
+                <Grid
                     Grid.Row="3"
                     HorizontalOptions="Center"
-                    Spacing="20"
-                    Margin="0,10,0,0">
+                    ColumnDefinitions="200,200"
+                    ColumnSpacing="25"
+                    Margin="0,15,0,0">
                     <Button
+                        Grid.Column="0"
                         BackgroundColor="#FFF6ED"
+                        BorderColor="#79280F"
+                        BorderWidth="2"
                         Clicked="CancelEditProductPage_Clicked"
-                        FontSize="14"
-                        HeightRequest="35"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        HeightRequest="50"
                         Text="Cancelar"
-                        TextColor="#000000"
-                        WidthRequest="180" />
+                        TextColor="#79280F"
+                        CornerRadius="8" />
                     <Button
-                        BackgroundColor="#D3AA84"
+                        Grid.Column="1"
+                        BackgroundColor="#79280F"
                         Clicked="SaveEditProductPage_Clicked"
-                        FontSize="14"
-                        HeightRequest="35"
-                        Text="Guardar"
-                        TextColor="#000000"
-                        WidthRequest="180" />
-                </HorizontalStackLayout>
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        HeightRequest="50"
+                        Text="Guardar Cambios"
+                        TextColor="White"
+                        CornerRadius="8" />
+                </Grid>
 
             </Grid>
 
