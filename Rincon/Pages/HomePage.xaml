@@ -311,119 +311,141 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:CardStock">
                             <Frame
-                                BackgroundColor="#EAEAEA"
-                                BorderColor="Transparent"
+                                BackgroundColor="White"
+                                BorderColor="#79280F"
                                 CornerRadius="12"
-                                HeightRequest="110"
+                                HeightRequest="160"
+                                HasShadow="True"
                                 VerticalOptions="FillAndExpand"
                                 HorizontalOptions="FillAndExpand"
-                                Margin="0,0,0,0">
+                                Margin="2,4,2,4">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="Frame_Tapped" />
                                 </Frame.GestureRecognizers>
                                 <Grid
-                                    Padding="0"
+                                    Padding="12"
                                     ColumnSpacing="10"
                                     HorizontalOptions="FillAndExpand"
-                                    RowSpacing="2"
+                                    RowSpacing="6"
                                     VerticalOptions="FillAndExpand">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
                                     </Grid.RowDefinitions>
 
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="125" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
                                     <StackLayout
                                         Grid.Row="0"
-                                        Grid.RowSpan="3"
+                                        Grid.RowSpan="2"
                                         Grid.Column="0"
-                                        Margin="0,0,0,0"
+                                        Margin="0"
                                         HorizontalOptions="Center"
-                                        Spacing="3"
+                                        Spacing="8"
                                         VerticalOptions="Center">
-                                        <Label
-                                            FontSize="15"
-                                            HorizontalOptions="Center"
-                                            Text="{Binding Id}"
-                                            TextColor="#79280F"
-                                            VerticalOptions="Center" />
+                                        <Frame
+                                            BackgroundColor="#79280F"
+                                            CornerRadius="6"
+                                            Padding="8,4"
+                                            WidthRequest="100"
+                                            HasShadow="False"
+                                            HorizontalOptions="Center">
+                                            <Label
+                                                FontSize="13"
+                                                FontAttributes="Bold"
+                                                Text="{Binding Id}"
+                                                TextColor="White"
+                                                HorizontalOptions="Center" />
+                                        </Frame>
 
                                         <Image
-                                            HeightRequest="35"
+                                            HeightRequest="50"
                                             HorizontalOptions="Center"
                                             Source="{Binding Icon}"
-                                            WidthRequest="35" />
-
+                                            WidthRequest="50" />
                                     </StackLayout>
 
                                     <Label
                                         Grid.Row="0"
                                         Grid.Column="1"
                                         Grid.ColumnSpan="2"
-                                        Margin="0,0,5,0"
-                                        FontSize="18"
-                                        MaxLines="1"
+                                        Margin="0,4,4,0"
+                                        FontSize="15"
+                                        FontAttributes="Bold"
+                                        MaxLines="2"
                                         HorizontalOptions="Start"
                                         TextColor="#303030"
                                         VerticalOptions="Start"
-                                        LineBreakMode="TailTruncation">
+                                        LineBreakMode="WordWrap">
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <Span Text="{Binding Description}" />
                                             </FormattedString>
                                         </Label.FormattedText>
-
                                     </Label>
 
                                     <StackLayout
                                         Grid.Row="1"
                                         Grid.Column="1"
-                                        Margin="0,10,0,0"
+                                        Margin="0,8,4,4"
                                         HorizontalOptions="Center"
-                                        Spacing="2"
-                                        VerticalOptions="FillAndExpand">
+                                        Spacing="4"
+                                        VerticalOptions="Center">
 
                                         <Label
-                                            FontSize="14"
+                                            FontSize="16"
+                                            FontAttributes="Bold"
                                             HorizontalOptions="Center"
                                             Text="Disponible"
-                                            TextColor="#000000" />
-                                        <Label
-                                            FontAttributes="Bold"
-                                            FontSize="16"
-                                            HorizontalOptions="Center"
-                                            Text="{Binding StockAvailable}"
-                                            TextColor="#000000" />
-
+                                            TextColor="#666666" />
+                                        <Frame
+                                            BackgroundColor="#E8F5E8"
+                                            BorderColor="#4CAF50"
+                                            CornerRadius="8"
+                                            Padding="8,4"
+                                            HasShadow="False"
+                                            HorizontalOptions="Center">
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="15"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding StockAvailable}"
+                                                TextColor="#2E7D32" />
+                                        </Frame>
                                     </StackLayout>
 
                                     <StackLayout
                                         Grid.Row="1"
                                         Grid.Column="2"
-                                        Margin="0,10,0,0"
+                                        Margin="4,8,0,4"
                                         HorizontalOptions="Center"
-                                        Spacing="2"
-                                        VerticalOptions="Start">
+                                        Spacing="4"
+                                        VerticalOptions="Center">
 
                                         <Label
-                                            FontAttributes="None"
-                                            FontSize="14"
-                                            HorizontalOptions="Center"
-                                            Text="Reservado"
-                                            TextColor="#000000" />
-                                        <Label
-                                            FontAttributes="None"
+                                            FontAttributes="Bold"
                                             FontSize="16"
                                             HorizontalOptions="Center"
-                                            Text="{Binding StockReserved}"
-                                            TextColor="#000000" />
-
+                                            Text="Reservado"
+                                            TextColor="#666666" />
+                                        <Frame
+                                            BackgroundColor="#FFF3E0"
+                                            BorderColor="#FF9800"
+                                            CornerRadius="8"
+                                            Padding="8,4"
+                                            HasShadow="False"
+                                            HorizontalOptions="Center">
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="15"
+                                                HorizontalOptions="Center"
+                                                Text="{Binding StockReserved}"
+                                                TextColor="#F57C00" />
+                                        </Frame>
                                     </StackLayout>
 
 
@@ -7572,6 +7594,3 @@
 
 
 </pages:BaseContentPage>
-
-
-
