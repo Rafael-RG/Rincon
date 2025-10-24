@@ -40,6 +40,9 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private bool isVisibleListQuestions;
 
+        [ObservableProperty]
+        private string userId;
+
 
         /// <summary>
         /// Gets by DI the required services
@@ -91,6 +94,8 @@ namespace Rincon.ViewModels
                     return;
                 }
 
+                this.UserId = user?.UserId;
+
                 this.IsVisibleFirstForm = false;
                 this.IsVisibleNewPassword = true;
                 this.IsVisibleOkRecovery = false;
@@ -122,6 +127,7 @@ namespace Rincon.ViewModels
 
                 var user = new User()
                 {
+                    UserId = this.UserId,
                     Name = this.Username,
                     Password = this.Password,
                     Question = this.SeletedQuestion,
@@ -129,7 +135,7 @@ namespace Rincon.ViewModels
                     Role = Role.Admin
                 };
 
-                var result = await this.DataService.InsertOrUpdateItemsAsync(user);
+                var result = await this.DataService.UpdateItemAsync(user);
 
                 if (result > 0)
                 {
@@ -145,7 +151,7 @@ namespace Rincon.ViewModels
                 this.IsVisibleNewPassword = false;
                 this.IsVisibleOkRecovery = true;
             }
-            catch
+            catch (Exception ex)
             {
                 await NotificationService.NotifyAsync("Error", $"Hubo un error al intentar recuperar la contraseña.", "Cerrar");
             }
