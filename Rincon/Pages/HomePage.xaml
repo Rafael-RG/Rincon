@@ -6275,403 +6275,411 @@
 
             <!--  Configurations  -->
             <Grid
-                Grid.RowSpan="3"
-                Grid.ColumnSpan="5"
-                Padding="0"
-                BackgroundColor="#FFF6ED"
-                IsVisible="{Binding IsConfigurationView}">
-                <StackLayout
-                    Margin="0"
-                    Padding="0"
-                    HorizontalOptions="FillAndExpand"
-                    VerticalOptions="FillAndExpand">
-                    <StackLayout.Background>
-                        <LinearGradientBrush EndPoint="0,1">
-                            <GradientStop Offset="0.1" Color="#AD6B2A" />
-                            <GradientStop Offset="1.0" Color="#D3AA84" />
-                        </LinearGradientBrush>
-                    </StackLayout.Background>
+                Grid.Row="2"
+                Grid.ColumnSpan="4"
+                Padding="25"
+                BackgroundColor="White"
+                IsVisible="{Binding IsConfigurationView}"
+                RowDefinitions="auto,auto,*"
+                RowSpacing="15">
+                
+                <!-- Título principal -->
+                <Label
+                    Grid.Row="0"
+                    FontSize="32"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Start"
+                    Text="Configuración"
+                    TextColor="#79280F"
+                    VerticalOptions="Center"
+                    Margin="0,0,0,15" />
 
-                    <StackLayout
-                        Margin="0,0,0,0"
-                        >
-                        <ActivityIndicator
-                            HeightRequest="28"
-                            Color="#4A744C"
-                            IsRunning="True"
-                            IsVisible="{Binding IsBusy}"
-                            WidthRequest="28" />
-                    </StackLayout>
+                <!-- Separador -->
+                <BoxView
+                    Grid.Row="1"
+                    Margin="0,0,0,25"
+                    HeightRequest="3"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Start"
+                    Color="#79280F" />
 
-                    <Image
-                        Margin="20,20,0,0"
-                        HeightRequest="100"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Start"
-                        Source="rincon_white.png"
-                        WidthRequest="200" />
-                    
-                    <Grid
-                        ColumnDefinitions="*,1.5*,*"
+                <!-- Contenido principal -->
+                <Grid Grid.Row="2" VerticalOptions="Fill">
+                    <!-- Indicador de carga -->
+                    <ActivityIndicator
+                        HeightRequest="40"
+                        Color="#79280F"
+                        IsRunning="True"
+                        IsVisible="{Binding IsBusy}"
+                        WidthRequest="40"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center" />
+                    <!-- Formulario de configuración -->
+                    <Frame
                         IsVisible="{Binding ConfirmUserChanges, Converter={StaticResource InvertedBoolConverter}}"
-                        RowDefinitions="auto,auto,auto"
-                        VerticalOptions="FillAndExpand"
-                        Margin="0,20,0,0">
-                        <Frame
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            BackgroundColor="#D3AA84"
-                            CornerRadius="15"
-                            Padding="20">
-                            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Spacing="12">
-                                <Label
-                                    Margin="0,10,0,15"
-                                    FontAttributes="Bold"
-                                    FontSize="22"
-                                    Text="Configuración"
-                                    TextColor="Black"
-                                    HorizontalOptions="Center" />
+                        BackgroundColor="White"
+                        BorderColor="#79280F"
+                        CornerRadius="12"
+                        HasShadow="True"
+                        Padding="30"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        MaximumWidthRequest="700">
+                        
+                        <Grid RowDefinitions="auto,*" RowSpacing="25">
+                            <!-- Título del formulario -->
+                            <Label
+                                Grid.Row="0"
+                                FontAttributes="Bold"
+                                FontSize="26"
+                                Text="Actualizar Información"
+                                TextColor="#79280F"
+                                HorizontalOptions="Center" />
+                            
+                            <!-- Campos del formulario -->
+                            <Grid
+                                Grid.Row="1"
+                                ColumnDefinitions="*,auto"
+                                ColumnSpacing="25"
+                                RowDefinitions="auto,auto,auto,auto,auto,auto"
+                                RowSpacing="20">
                                 
-                                <Grid
-                                    ColumnDefinitions="*,*"
-                                    ColumnSpacing="15"
-                                    HorizontalOptions="FillAndExpand"
-                                    RowDefinitions="auto,auto,auto,auto,auto,auto,auto"
-                                    RowSpacing="8"
-                                    VerticalOptions="FillAndExpand">
-                                    
-                                    <!-- Nombre -->
+                                <!-- Nombre -->
+                                <StackLayout Grid.Row="0" Grid.Column="0" Spacing="8">
                                     <Label
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        FontSize="14"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
                                         Text="Nombre"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
+                                        TextColor="#79280F" />
                                     <Frame
-                                        Grid.Row="0"
-                                        Grid.Column="1"
-                                        Padding="3"
+                                        Padding="0"
                                         BackgroundColor="White"
-                                        CornerRadius="12"
-                                        HeightRequest="35"
-                                        HorizontalOptions="FillAndExpand">
+                                        BorderColor="#79280F"
+                                        CornerRadius="8"
+                                        HeightRequest="50"
+                                        HasShadow="True">
                                         <Entry
-                                            BackgroundColor="transparent"
-                                            FontSize="12"
-                                            HeightRequest="55"
-                                            MaxLength="25"
-                                            Placeholder="Nombre"
-                                            PlaceholderColor="#848484"
-                                            Text="{Binding NameConfigurations}"
-                                            TextColor="Black"
-                                            IsSpellCheckEnabled="False"
-                                            IsTextPredictionEnabled="False" />
-                                    </Frame>
-                                    
-                                    <!-- Contraseña -->
-                                    <Label
-                                        Grid.Row="1"
-                                        Grid.Column="0"
-                                        FontSize="14"
-                                        Text="Contraseña"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
-                                    <Frame
-                                        Grid.Row="1"
-                                        Grid.Column="1"
-                                        Padding="3"
-                                        BackgroundColor="White"
-                                        CornerRadius="12"
-                                        HeightRequest="35"
-                                        HorizontalOptions="FillAndExpand">
-                                        <Entry
-                                            BackgroundColor="transparent"
-                                            FontSize="12"
-                                            HeightRequest="55"
-                                            MaxLength="25"
-                                            Placeholder="Contraseña"
-                                            PlaceholderColor="#848484"
-                                            Text="{Binding PasswordConfigurations}"
-                                            TextColor="Black"
-                                            IsPassword="True"
-                                            IsSpellCheckEnabled="False"
-                                            IsTextPredictionEnabled="False" />
-                                    </Frame>
-                                    
-                                    <!-- Repetir contraseña -->
-                                    <Label
-                                        Grid.Row="2"
-                                        Grid.Column="0"
-                                        FontSize="14"
-                                        Text="Repetir contraseña"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
-                                    <Frame
-                                        Grid.Row="2"
-                                        Grid.Column="1"
-                                        Padding="3"
-                                        BackgroundColor="White"
-                                        CornerRadius="12"
-                                        HeightRequest="35"
-                                        HorizontalOptions="FillAndExpand">
-                                        <Entry
-                                            BackgroundColor="transparent"
-                                            FontSize="12"
-                                            HeightRequest="55"
-                                            MaxLength="25"
-                                            Placeholder="Repetir contraseña"
-                                            PlaceholderColor="#848484"
-                                            Text="{Binding RepeatPasswordConfigrations}"
-                                            TextColor="Black"
-                                            IsPassword="True"
-                                            IsSpellCheckEnabled="False"
-                                            IsTextPredictionEnabled="False" />
-                                    </Frame>
-
-                                    <!-- Pregunta de seguridad -->
-                                    <Label
-                                        Grid.Row="3"
-                                        Grid.Column="0"
-                                        FontSize="14"
-                                        Text="Pregunta de seguridad"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
-                                    <StackLayout
-                                        Grid.Row="3"
-                                        Grid.Column="1"
-                                        HorizontalOptions="FillAndExpand">
-                                        <Frame
-                                            Padding="8,3"
-                                            BackgroundColor="White"
-                                            CornerRadius="12"
-                                            HeightRequest="32">
-                                            <Label
-                                                FontSize="12"
-                                                Text="{Binding SelectedQuestionConfigurations, Mode=TwoWay}"
-                                                TextColor="Black"
-                                                VerticalOptions="Center">
-                                                <Label.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding SelectQuestionCommand}" />
-                                                </Label.GestureRecognizers>
-                                            </Label>
-                                        </Frame>
-                                        <Frame
-                                            Padding="0"
                                             BackgroundColor="Transparent"
-                                            CornerRadius="15"
-                                            HeightRequest="120"
-                                            IsVisible="{Binding IsVisibleListQuestions}">
-                                            <Frame
-                                                x:Name="FrameListQuestions"
-                                                CornerRadius="15"
-                                                HeightRequest="120"
-                                                IsVisible="{Binding IsVisibleListQuestions}"
-                                                VerticalOptions="Start">
-                                                <Frame.Background>
-                                                    <LinearGradientBrush EndPoint="0,1">
-                                                        <GradientStop Offset="0.1" Color="#FFFFFF" />
-                                                        <GradientStop Offset="1.0" Color="#FFF6ED" />
-                                                    </LinearGradientBrush>
-                                                </Frame.Background>
-                                                <CollectionView
-                                                    x:Name="Questions"
-                                                    Margin="0,5,0,5"
-                                                    HeightRequest="110"
-                                                    HorizontalOptions="Start"
-                                                    ItemsSource="{Binding Questions}"
-                                                    SelectionChanged="Questions_SelectionChanged"
-                                                    SelectionMode="Single"
-                                                    VerticalOptions="Start">
-                                                    <CollectionView.ItemsLayout>
-                                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="6" />
-                                                    </CollectionView.ItemsLayout>
-                                                    <CollectionView.ItemTemplate>
-                                                        <DataTemplate x:DataType="x:String">
-                                                            <Label
-                                                                FontSize="12"
-                                                                Text="{Binding .}"
-                                                                TextColor="#000000"
-                                                                VerticalOptions="Start" />
-                                                        </DataTemplate>
-                                                    </CollectionView.ItemTemplate>
-                                                </CollectionView>
-                                            </Frame>
-                                        </Frame>
-                                    </StackLayout>
-                                    
-                                    <!-- Respuesta -->
+                                            FontSize="16"
+                                            MaxLength="25"
+                                            Placeholder="Ingrese su nombre"
+                                            PlaceholderColor="#999999"
+                                            Text="{Binding NameConfigurations}"
+                                            TextColor="#333333"
+                                            VerticalOptions="Center"
+                                            Margin="15,0"
+                                            IsSpellCheckEnabled="False"
+                                            IsTextPredictionEnabled="False" />
+                                    </Frame>
+                                </StackLayout>
+                                
+                                <!-- Contraseña -->
+                                <StackLayout Grid.Row="0" Grid.Column="1" Spacing="8">
                                     <Label
-                                        Grid.Row="4"
-                                        Grid.Column="0"
-                                        FontSize="14"
-                                        Text="Respuesta"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        Text="Nueva Contraseña"
+                                        TextColor="#79280F" />
                                     <Frame
-                                        Grid.Row="4"
-                                        Grid.Column="1"
-                                        Padding="3"
+                                        Padding="0"
                                         BackgroundColor="White"
-                                        CornerRadius="12"
-                                        HeightRequest="35"
-                                        HorizontalOptions="FillAndExpand"
+                                        BorderColor="#79280F"
+                                        CornerRadius="8"
+                                        HeightRequest="50"
+                                        HasShadow="True">
+                                        <Entry
+                                            BackgroundColor="Transparent"
+                                            FontSize="16"
+                                            MaxLength="25"
+                                            Placeholder="Nueva contraseña"
+                                            PlaceholderColor="#999999"
+                                            Text="{Binding PasswordConfigurations}"
+                                            TextColor="#333333"
+                                            VerticalOptions="Center"
+                                            Margin="15,0"
+                                            IsPassword="True"
+                                            IsSpellCheckEnabled="False"
+                                            IsTextPredictionEnabled="False" />
+                                    </Frame>
+                                </StackLayout>
+                                
+                                <!-- Repetir contraseña -->
+                                <StackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="8">
+                                    <Label
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        Text="Confirmar Nueva Contraseña"
+                                        TextColor="#79280F" />
+                                    <Frame
+                                        Padding="0"
+                                        BackgroundColor="White"
+                                        BorderColor="#79280F"
+                                        CornerRadius="8"
+                                        HeightRequest="50"
+                                        HasShadow="True">
+                                        <Entry
+                                            BackgroundColor="Transparent"
+                                            FontSize="16"
+                                            MaxLength="25"
+                                            Placeholder="Confirme la nueva contraseña"
+                                            PlaceholderColor="#999999"
+                                            Text="{Binding RepeatPasswordConfigrations}"
+                                            TextColor="#333333"
+                                            VerticalOptions="Center"
+                                            Margin="15,0"
+                                            IsPassword="True"
+                                            IsSpellCheckEnabled="False"
+                                            IsTextPredictionEnabled="False" />
+                                    </Frame>
+                                </StackLayout>
+
+                                <!-- Pregunta de seguridad -->
+                                <StackLayout Grid.Row="2" Grid.ColumnSpan="2" Spacing="8">
+                                    <Label
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        Text="Pregunta de Seguridad"
+                                        TextColor="#79280F" />
+                                    <Frame
+                                        Padding="0"
+                                        BackgroundColor="White"
+                                        BorderColor="#79280F"
+                                        CornerRadius="8"
+                                        HeightRequest="50"
+                                        HasShadow="True">
+                                        <Label
+                                            FontSize="16"
+                                            Text="{Binding SelectedQuestionConfigurations, Mode=TwoWay}"
+                                            TextColor="#333333"
+                                            VerticalOptions="Center"
+                                            Margin="15,0"
+                                            BackgroundColor="Transparent">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding SelectQuestionCommand}" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </Frame>
+                                    
+                                    <!-- Lista desplegable de preguntas -->
+                                    <Frame
+                                        IsVisible="{Binding IsVisibleListQuestions}"
+                                        BackgroundColor="White"
+                                        BorderColor="#79280F"
+                                        CornerRadius="8"
+                                        HasShadow="True"
+                                        HeightRequest="150"
+                                        Padding="8">
+                                        <CollectionView
+                                            x:Name="Questions"
+                                            ItemsSource="{Binding Questions}"
+                                            SelectionChanged="Questions_SelectionChanged"
+                                            SelectionMode="Single"
+                                            VerticalOptions="Fill">
+                                            <CollectionView.ItemsLayout>
+                                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="5" />
+                                            </CollectionView.ItemsLayout>
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate x:DataType="x:String">
+                                                    <Frame Padding="10,8" BackgroundColor="Transparent" HasShadow="False">
+                                                        <Label
+                                                            FontSize="14"
+                                                            Text="{Binding .}"
+                                                            TextColor="#333333"
+                                                            VerticalOptions="Center" />
+                                                    </Frame>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                    </Frame>
+                                </StackLayout>
+                                
+                                <!-- Respuesta -->
+                                <StackLayout Grid.Row="3" Grid.ColumnSpan="2" Spacing="8">
+                                    <Label
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        Text="Respuesta de Seguridad"
+                                        TextColor="#79280F" />
+                                    <Frame
+                                        Padding="0"
+                                        BackgroundColor="White"
+                                        BorderColor="#79280F"
+                                        CornerRadius="8"
+                                        HeightRequest="50"
+                                        HasShadow="True"
                                         IsVisible="{Binding IsVisibleListQuestions, Converter={StaticResource InvertedBoolConverter}}">
                                         <Entry
-                                            BackgroundColor="transparent"
-                                            FontSize="12"
-                                            HeightRequest="55"
+                                            BackgroundColor="Transparent"
+                                            FontSize="16"
                                             MaxLength="25"
-                                            Placeholder="Respuesta"
-                                            PlaceholderColor="#848484"
+                                            Placeholder="Ingrese la respuesta"
+                                            PlaceholderColor="#999999"
                                             Text="{Binding ResponseConfigurations}"
-                                            TextColor="Black"
+                                            TextColor="#333333"
+                                            VerticalOptions="Center"
+                                            Margin="15,0"
                                             IsSpellCheckEnabled="False"
                                             IsTextPredictionEnabled="False" />
                                     </Frame>
+                                </StackLayout>
 
-                                    <!-- botónes -->
-                                    <Grid
-                                        Grid.Row="6"
-                                        Grid.Column="0"
-                                        Grid.ColumnSpan="2"
-                                        Margin="0,15,0,0"
-                                        ColumnDefinitions="*,*"
-                                        ColumnSpacing="10">
-                                        <Button
-                                            Grid.Column="0"
-                                            BackgroundColor="#AD6B2A"
-                                            Command="{Binding CancelConfigurationCommand}"
-                                            FontSize="14"
-                                            HeightRequest="35"
-                                            Text="Volver"
-                                            TextColor="#FFF6ED" />
-                                        <Button
-                                            Grid.Column="1"
-                                            BackgroundColor="#4A744C"
-                                            Command="{Binding UpdateDataUserCommand}"
-                                            FontSize="14"
-                                            HeightRequest="35"
-                                            Text="Guardar Cambios"
-                                            TextColor="White" />
-                                    </Grid>
-                                </Grid>
-                            </StackLayout>
-                        </Frame>
-
-                    </Grid>
-                    <Grid
-                        ColumnDefinitions="*,1.2*,*"
-                        IsVisible="{Binding ConfirmUserChanges}"
-                        RowDefinitions="auto,auto,auto"
-                        VerticalOptions="FillAndExpand"
-                        Margin="0,20,0,0">
-                        <Frame
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            BackgroundColor="#FFF6ED"
-                            CornerRadius="15"
-                            Padding="20">
-                            <StackLayout Spacing="15">
-                                <Label
-                                    Margin="0,10,0,15"
-                                    FontSize="22"
-                                    Text="Identificación"
-                                    TextColor="Black"
-                                    HorizontalOptions="Center" />
+                                <!-- Botones de acción -->
                                 <Grid
+                                    Grid.Row="4"
+                                    Grid.ColumnSpan="2"
+                                    Margin="0,25,0,0"
                                     ColumnDefinitions="*,*"
-                                    RowDefinitions="auto,auto,auto"
-                                    RowSpacing="12"
-                                    ColumnSpacing="15">
-                                    
-                                    <Label
-                                        Grid.Row="0"
+                                    ColumnSpacing="20"
+                                    HorizontalOptions="Center"
+                                    MaximumWidthRequest="400">
+                                    <Button
                                         Grid.Column="0"
-                                        FontSize="14"
-                                        Text="Usuario"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
-                                    <Frame
-                                        Grid.Row="0"
+                                        BackgroundColor="#FFF6ED"
+                                        BorderColor="#79280F"
+                                        BorderWidth="2"
+                                        Command="{Binding CancelConfigurationCommand}"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        HeightRequest="55"
+                                        Text="Cancelar"
+                                        TextColor="#79280F"
+                                        CornerRadius="8" />
+                                    <Button
                                         Grid.Column="1"
-                                        Padding="3"
+                                        BackgroundColor="#79280F"
+                                        Command="{Binding UpdateDataUserCommand}"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        HeightRequest="55"
+                                        Text="Guardar Cambios"
+                                        TextColor="White"
+                                        CornerRadius="8" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                    
+                    <!-- Confirmación de cambios -->
+                    <Frame
+                        IsVisible="{Binding ConfirmUserChanges}"
+                        BackgroundColor="White"
+                        BorderColor="#79280F"
+                        CornerRadius="12"
+                        HasShadow="True"
+                        Padding="30"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        MaximumWidthRequest="500">
+                        
+                        <Grid RowDefinitions="auto,*,auto" RowSpacing="25">
+                            <!-- Título de verificación -->
+                            <Label
+                                Grid.Row="0"
+                                FontAttributes="Bold"
+                                FontSize="24"
+                                Text="Verificación de Identidad"
+                                TextColor="#79280F"
+                                HorizontalOptions="Center" />
+                            
+                            <!-- Campos de verificación -->
+                            <Grid
+                                Grid.Row="1"
+                                RowDefinitions="auto,auto"
+                                RowSpacing="20">
+                                
+                                <!-- Usuario -->
+                                <StackLayout Grid.Row="0" Spacing="8">
+                                    <Label
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        Text="Nombre de Usuario"
+                                        TextColor="#79280F" />
+                                    <Frame
+                                        Padding="0"
                                         BackgroundColor="White"
-                                        CornerRadius="12"
-                                        HeightRequest="35"
-                                        HorizontalOptions="FillAndExpand">
+                                        BorderColor="#79280F"
+                                        CornerRadius="8"
+                                        HeightRequest="50"
+                                        HasShadow="True">
                                         <Entry
-                                            BackgroundColor="transparent"
-                                            FontSize="12"
-                                            HeightRequest="55"
+                                            BackgroundColor="Transparent"
+                                            FontSize="16"
                                             MaxLength="25"
-                                            Placeholder="Nombre de usuario"
-                                            PlaceholderColor="#848484"
+                                            Placeholder="Ingrese su usuario"
+                                            PlaceholderColor="#999999"
                                             Text="{Binding ConfirmUserConfigurations}"
-                                            TextColor="Black"
+                                            TextColor="#333333"
+                                            VerticalOptions="Center"
+                                            Margin="15,0"
                                             IsSpellCheckEnabled="False"
                                             IsTextPredictionEnabled="False" />
                                     </Frame>
-                                    
+                                </StackLayout>
+                                
+                                <!-- Contraseña -->
+                                <StackLayout Grid.Row="1" Spacing="8">
                                     <Label
-                                        Grid.Row="1"
-                                        Grid.Column="0"
-                                        FontSize="14"
-                                        Text="Contraseña"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        Text="Contraseña Actual"
+                                        TextColor="#79280F" />
                                     <Frame
-                                        Grid.Row="1"
-                                        Grid.Column="1"
-                                        Padding="3"
+                                        Padding="0"
                                         BackgroundColor="White"
-                                        CornerRadius="12"
-                                        HeightRequest="35"
-                                        HorizontalOptions="FillAndExpand">
+                                        BorderColor="#79280F"
+                                        CornerRadius="8"
+                                        HeightRequest="50"
+                                        HasShadow="True">
                                         <Entry
-                                            BackgroundColor="transparent"
-                                            FontSize="12"
-                                            HeightRequest="55"
+                                            BackgroundColor="Transparent"
+                                            FontSize="16"
                                             MaxLength="25"
-                                            Placeholder="Contraseña"
-                                            PlaceholderColor="#848484"
+                                            Placeholder="Ingrese su contraseña"
+                                            PlaceholderColor="#999999"
                                             Text="{Binding ConfirmPasswordConfigurations}"
-                                            TextColor="Black"
+                                            TextColor="#333333"
+                                            VerticalOptions="Center"
+                                            Margin="15,0"
                                             IsPassword="True"
                                             IsSpellCheckEnabled="False"
                                             IsTextPredictionEnabled="False" />
                                     </Frame>
-                                    
-                                    <Grid
-                                        Grid.Row="2"
-                                        Grid.Column="0"
-                                        Grid.ColumnSpan="2"
-                                        Margin="0,15,0,0"
-                                        ColumnDefinitions="*,*"
-                                        ColumnSpacing="10">
-                                        <Button
-                                            Grid.Column="0"
-                                            BackgroundColor="#AD6B2A"
-                                            Command="{Binding CancelConfirmConfigurationCommand}"
-                                            FontSize="14"
-                                            HeightRequest="35"
-                                            Text="Volver"
-                                            TextColor="#FFF6ED" />
-                                        <Button
-                                            Grid.Column="1"
-                                            BackgroundColor="#79280F"
-                                            Clicked="ConfirmChange_Clicked"
-                                            FontSize="14"
-                                            HeightRequest="35"
-                                            Text="Confirmar Cambios"
-                                            TextColor="White" />
-                                    </Grid>
-                                </Grid>
-                            </StackLayout>
-                        </Frame>
-                    </Grid>
-                </StackLayout>
-
+                                </StackLayout>
+                            </Grid>
+                            
+                            <!-- Botones de verificación -->
+                            <Grid
+                                Grid.Row="2"
+                                ColumnDefinitions="*,*"
+                                ColumnSpacing="20"
+                                HorizontalOptions="Center"
+                                MaximumWidthRequest="350">
+                                <Button
+                                    Grid.Column="0"
+                                    BackgroundColor="#FFF6ED"
+                                    BorderColor="#79280F"
+                                    BorderWidth="2"
+                                    Command="{Binding CancelConfirmConfigurationCommand}"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    HeightRequest="50"
+                                    Text="Cancelar"
+                                    TextColor="#79280F"
+                                    CornerRadius="8" />
+                                <Button
+                                    Grid.Column="1"
+                                    BackgroundColor="#79280F"
+                                    Clicked="ConfirmChange_Clicked"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    HeightRequest="50"
+                                    Text="Confirmar"
+                                    TextColor="White"
+                                    CornerRadius="8" />
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                </Grid>
             </Grid>
 
             <!--  Management operators  -->
