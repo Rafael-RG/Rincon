@@ -14,86 +14,283 @@
         </ResourceDictionary>
     </ContentView.Resources>
 
-  <Grid>
-    <Frame Margin="140,100,140,100" Padding="25" BackgroundColor="#FAFAFA" CornerRadius="12" HasShadow="True" VerticalOptions="Fill" HorizontalOptions="Fill">
-      <StackLayout >
-        <Grid>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-          </Grid.ColumnDefinitions>
-          <Label Text="Finalizar tarea"  FontSize="22" FontAttributes="Bold" TextColor="#222"  />
-          <Label Text="{Binding SelectedTask.Id, StringFormat='Tarea #{0:D5}'}" Grid.Column="2" FontSize="16" TextColor="#888" VerticalTextAlignment="End" HorizontalOptions="End" />
-        </Grid>
-        <BoxView HeightRequest="1" Color="#000000" Margin="0,10,0,10" />
-        <Grid ColumnSpacing="20" RowSpacing="10">
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-          </Grid.RowDefinitions>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-          </Grid.ColumnDefinitions>
-          <!-- Info tarea -->
-          <Label Text="Material" Grid.Row="0" Grid.Column="0" TextColor="#666" />
-          <Label Text="{Binding SelectedTask.ProductSource}" Grid.Row="0" Grid.Column="1" TextColor="#222" />
-          <Label Text="Producir" Grid.Row="1" Grid.Column="0" TextColor="#666" />
-          <Label Text="{Binding SelectedTask.ProductDestination}" Grid.Row="1" Grid.Column="1" TextColor="#222" />
-          <Label Text="Unidades de material" Grid.Row="2" Grid.Column="0" TextColor="#666" />
-          <Label Text="{Binding SelectedTask.Quantity}" Grid.Row="2" Grid.Column="1" TextColor="#222" />
-          <Label Text="Prioridad" Grid.Row="3" Grid.Column="0" TextColor="#666" />
-          <Label IsVisible="{Binding SelectedTask.Priority}" Text="Dar prioridad" Grid.Row="3" Grid.Column="1" TextColor="#222" />
-          <Label IsVisible="{Binding SelectedTask.Priority, Converter={StaticResource InvertedBoolConverter}}" Text="Sin prioridad" Grid.Row="3" Grid.Column="1" TextColor="#222" />
-          <Label Text="Descripción" Grid.Row="4" Grid.Column="0" TextColor="#666" />
-          <Label Text="{Binding SelectedTask.Description}" Grid.Row="4" Grid.Column="1" TextColor="#222" />
-          <Label Text="Operario" Grid.Row="5" Grid.Column="0" TextColor="#666" />
-          <Label Text="{Binding SelectedTask.OperatorName}" Grid.Row="5" Grid.Column="1" TextColor="#222" />
-          <!-- Material para pérdida -->
-          <StackLayout Grid.Column="2" Grid.RowSpan="2" Margin="70,0,0,0">
-            <Label Text="Material para pérdida"  TextColor="#666" />
-            <Frame 
-                    HeightRequest="30"
-                    CornerRadius="12" 
-                    BackgroundColor="#FFF6ED"
-                    BorderColor="grey"
-                    HasShadow="False"
-                    Padding="1"
-                    WidthRequest="100"
-                    HorizontalOptions="Start">
-            <Entry Text="{Binding LossMaterial, Mode=TwoWay}" Keyboard="Numeric" FontSize="12" TextColor="#222" BackgroundColor="transparent" HeightRequest="55" WidthRequest="100" Margin="10,0,0,0"/>
-          </Frame>          
-          </StackLayout>
-            <!-- Comentarios adicionales -->
-          <StackLayout Grid.Column="2" Grid.Row="2" Grid.RowSpan="2" Margin="70,0,0,0">
-            <Label Text="Comentarios" Grid.Row="6" Grid.Column="0" TextColor="#666" />
-            <Frame 
-                    Grid.Row="6" 
-                    Grid.Column="1"
-                    HeightRequest="80"
-                    CornerRadius="12" 
-                    BackgroundColor="#FFF6ED"
-                    BorderColor="grey"
-                    HasShadow="False"
-                    Padding="1"
-                    WidthRequest="300"
-                    HorizontalOptions="Start">
-            <Editor Text="{Binding AdditionalComments}" Margin="3,10,0,0" BackgroundColor="transparent" HeightRequest="100" />
-          </Frame>
-          </StackLayout>
-        </Grid>
-        <BoxView HeightRequest="1" Color="#000000" Margin="0,20,0,10" VerticalOptions="EndAndExpand" />
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
-          <ImageButton Source="back_brown" BackgroundColor="Transparent" Command="{Binding ClosePopupCommand}" />
-          <Button Text="Completar" BackgroundColor="#4A744C" TextColor="#FAFAFA" CornerRadius="8" HorizontalOptions="CenterAndExpand" WidthRequest="420"  Command="{Binding ShowFinishTaskAuthPopupCommand}" />
-        </StackLayout>
-      </StackLayout>
-    </Frame>
-  </Grid>
+    <Grid>
+        <Frame Margin="100,60,100,60" 
+               Padding="30" 
+               BackgroundColor="White" 
+               BorderColor="#4A744C"
+               CornerRadius="12" 
+               HasShadow="True" 
+               VerticalOptions="Fill" 
+               HorizontalOptions="Fill">
+            <Grid RowDefinitions="auto,auto,*,auto,auto" RowSpacing="25">
+                <!-- Header con título e ID -->
+                <Grid Grid.Row="0" ColumnDefinitions="*,auto" ColumnSpacing="15">
+                    <Label Grid.Column="0"
+                           Text="Finalizar Tarea" 
+                           FontSize="26" 
+                           FontAttributes="Bold" 
+                           TextColor="#4A744C" 
+                           VerticalOptions="Center" />
+                    <Frame Grid.Column="1"
+                           BackgroundColor="#4A744C"
+                           CornerRadius="8"
+                           Padding="12,8"
+                           HasShadow="False">
+                        <Label Text="{Binding SelectedTask.Id, StringFormat='#{0:D5}'}" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="White" 
+                               VerticalOptions="Center" />
+                    </Frame>
+                </Grid>
+                
+                <!-- Separador -->
+                <BoxView Grid.Row="1" 
+                         HeightRequest="2" 
+                         Color="#4A744C" 
+                         HorizontalOptions="Fill" />
+                
+                <!-- Contenido principal -->
+                <ScrollView Grid.Row="2" VerticalOptions="Fill">
+                    <Grid ColumnDefinitions="1.2*,*" ColumnSpacing="30" RowSpacing="25">
+                        <!-- Información de la tarea -->
+                        <StackLayout Grid.Column="0" Spacing="20">
+                            <Label Text="Información de la Tarea" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   TextColor="#4A744C" />
+                            
+                            <Grid RowDefinitions="auto,auto,auto,auto,auto,auto" 
+                                  RowSpacing="15" 
+                                  ColumnDefinitions="auto,*" 
+                                  ColumnSpacing="15">
+                                
+                                <!-- Material -->
+                                <Label Grid.Row="0" Grid.Column="0" 
+                                       Text="Material:" 
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#4A744C" 
+                                       VerticalOptions="Center" />
+                                <Frame Grid.Row="0" Grid.Column="1"
+                                       BackgroundColor="#F0F8FF"
+                                       BorderColor="#E0E0E0"
+                                       CornerRadius="6"
+                                       Padding="10"
+                                       HasShadow="False">
+                                    <Label Text="{Binding SelectedTask.ProductSource}" 
+                                           FontSize="14"
+                                           TextColor="#333333"
+                                           LineBreakMode="WordWrap" />
+                                </Frame>
+                                
+                                <!-- Producir -->
+                                <Label Grid.Row="1" Grid.Column="0" 
+                                       Text="Producir:" 
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#4A744C" 
+                                       VerticalOptions="Center" />
+                                <Frame Grid.Row="1" Grid.Column="1"
+                                       BackgroundColor="#F0F8FF"
+                                       BorderColor="#E0E0E0"
+                                       CornerRadius="6"
+                                       Padding="10"
+                                       HasShadow="False">
+                                    <Label Text="{Binding SelectedTask.ProductDestination}" 
+                                           FontSize="14"
+                                           TextColor="#333333"
+                                           LineBreakMode="WordWrap" />
+                                </Frame>
+                                
+                                <!-- Cantidad -->
+                                <Label Grid.Row="2" Grid.Column="0" 
+                                       Text="Cantidad:" 
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#4A744C" 
+                                       VerticalOptions="Center" />
+                                <Frame Grid.Row="2" Grid.Column="1"
+                                       BackgroundColor="#F0F8FF"
+                                       BorderColor="#E0E0E0"
+                                       CornerRadius="6"
+                                       Padding="10"
+                                       HasShadow="False">
+                                    <Label Text="{Binding SelectedTask.Quantity, StringFormat='{0} unidades'}" 
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           TextColor="#4A744C" />
+                                </Frame>
+                                
+                                <!-- Prioridad -->
+                                <Label Grid.Row="3" Grid.Column="0" 
+                                       Text="Prioridad:" 
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#4A744C" 
+                                       VerticalOptions="Center" />
+                                <Frame Grid.Row="3" Grid.Column="1"
+                                       BackgroundColor="#F0F8FF"
+                                       BorderColor="#E0E0E0"
+                                       CornerRadius="6"
+                                       Padding="10"
+                                       HasShadow="False">
+                                    <StackLayout>
+                                        <Label IsVisible="{Binding SelectedTask.Priority}" 
+                                               Text="Alta prioridad" 
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="#FF5722" />
+                                        <Label IsVisible="{Binding SelectedTask.Priority, Converter={StaticResource InvertedBoolConverter}}" 
+                                               Text="Prioridad normal" 
+                                               FontSize="14"
+                                               TextColor="#666666" />
+                                    </StackLayout>
+                                </Frame>
+                                
+                                <!-- Descripción -->
+                                <Label Grid.Row="4" Grid.Column="0" 
+                                       Text="Descripción:" 
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#4A744C" 
+                                       VerticalOptions="Start" />
+                                <Frame Grid.Row="4" Grid.Column="1"
+                                       BackgroundColor="#F0F8FF"
+                                       BorderColor="#E0E0E0"
+                                       CornerRadius="6"
+                                       Padding="10"
+                                       HasShadow="False"
+                                       MinimumHeightRequest="40">
+                                    <Label Text="{Binding SelectedTask.Description}" 
+                                           FontSize="14"
+                                           TextColor="#333333"
+                                           LineBreakMode="WordWrap"
+                                           VerticalOptions="Start" />
+                                </Frame>
+                                
+                                <!-- Operario -->
+                                <Label Grid.Row="5" Grid.Column="0" 
+                                       Text="Operario:" 
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#4A744C" 
+                                       VerticalOptions="Center" />
+                                <Frame Grid.Row="5" Grid.Column="1"
+                                       BackgroundColor="#E8F5E8"
+                                       BorderColor="#4A744C"
+                                       CornerRadius="6"
+                                       Padding="10"
+                                       HasShadow="False">
+                                    <Label Text="{Binding SelectedTask.OperatorName}" 
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           TextColor="#4A744C" />
+                                </Frame>
+                            </Grid>
+                        </StackLayout>
+                        
+                        <!-- Panel de finalización -->
+                        <StackLayout Grid.Column="1" Spacing="20">
+                            <Label Text="Finalización de Tarea" 
+                                   FontSize="18" 
+                                   FontAttributes="Bold" 
+                                   TextColor="#4A744C" />
+                            
+                            <!-- Material para pérdida -->
+                            <StackLayout Spacing="10">
+                                <Label Text="⚠️ Material para pérdida" 
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="#FF9800" />
+                                <Frame BackgroundColor="White"
+                                       BorderColor="#FF9800"
+                                       CornerRadius="8"
+                                       Padding="0"
+                                       HeightRequest="50"
+                                       HasShadow="True">
+                                    <Entry Text="{Binding LossMaterial, Mode=TwoWay}" 
+                                           Keyboard="Numeric" 
+                                           FontSize="16" 
+                                           TextColor="#333333" 
+                                           BackgroundColor="Transparent" 
+                                           Placeholder="0"
+                                           PlaceholderColor="#999999"
+                                           VerticalOptions="Center"
+                                           Margin="15,0" />
+                                </Frame>
+                                <Label Text="Especifique las unidades perdidas durante la producción" 
+                                       FontSize="12"
+                                       TextColor="#666666"
+                                       LineBreakMode="WordWrap" />
+                            </StackLayout>
+                            
+                            <!-- Comentarios adicionales -->
+                            <StackLayout Spacing="10">
+                                <Label Text="Comentarios Adicionales" 
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="#4A744C" />
+                                <Frame BackgroundColor="White"
+                                       BorderColor="#4A744C"
+                                       CornerRadius="8"
+                                       Padding="0"
+                                       MinimumHeightRequest="100"
+                                       HasShadow="True">
+                                    <Editor Text="{Binding AdditionalComments}" 
+                                            BackgroundColor="Transparent" 
+                                            FontSize="14"
+                                            TextColor="#333333"
+                                            Placeholder="Ingrese comentarios sobre la finalización de la tarea..."
+                                            PlaceholderColor="#999999"
+                                            AutoSize="TextChanges"
+                                            Margin="15" />
+                                </Frame>
+                                <Label Text="Opcional: Agregue observaciones sobre la tarea completada" 
+                                       FontSize="12"
+                                       TextColor="#666666"
+                                       LineBreakMode="WordWrap" />
+                            </StackLayout>
+                        </StackLayout>
+                    </Grid>
+                </ScrollView>
+                
+                <!-- Separador inferior -->
+                <BoxView Grid.Row="3" 
+                         HeightRequest="2" 
+                         Color="#4A744C" 
+                         HorizontalOptions="Fill" />
+                
+                <!-- Botones de acción -->
+                <Grid Grid.Row="4" 
+                      ColumnDefinitions="auto,*" 
+                      ColumnSpacing="20" 
+                      HorizontalOptions="Fill">
+                    <Frame Grid.Column="0"
+                           Padding="12"
+                           BackgroundColor="#F8F9FA"
+                           BorderColor="#4A744C"
+                           CornerRadius="25"
+                           HasShadow="False">
+                        <ImageButton Source="back_brown.png" 
+                                     BackgroundColor="Transparent"
+                                     WidthRequest="32"
+                                     HeightRequest="32"
+                                     Command="{Binding ClosePopupCommand}" />
+                    </Frame>
+                    <Button Grid.Column="1"
+                            Text="Completar Tarea" 
+                            BackgroundColor="#4A744C" 
+                            TextColor="White" 
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            CornerRadius="8" 
+                            HeightRequest="60"
+                            HorizontalOptions="Fill"
+                            Command="{Binding ShowFinishTaskAuthPopupCommand}" />
+                </Grid>
+            </Grid>
+        </Frame>
+    </Grid>
 </ContentView>
