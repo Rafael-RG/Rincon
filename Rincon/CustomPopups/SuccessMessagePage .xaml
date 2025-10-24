@@ -9,38 +9,58 @@
     CloseWhenBackgroundIsClicked="False">
 
     <Border
-        Margin="400,400,400,200"
+        Margin="200,150,200,150"
         Padding="40"
         BackgroundColor="White"
-        HeightRequest="400"
-        WidthRequest="800">
+        HeightRequest="350"
+        WidthRequest="700"
+        Stroke="#79280F"
+        StrokeThickness="2">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="18,18,18,18" />
+            <RoundRectangle CornerRadius="12,12,12,12" />
         </Border.StrokeShape>
-        <Grid RowDefinitions="*,*,*">
-            <Image
-                HeightRequest="80"
-                HorizontalOptions="Center"
-                Source="check_icon.png"
-                VerticalOptions="Start"
-                WidthRequest="80" />
+        <Border.Shadow>
+            <Shadow Brush="Black" Offset="0,4" Radius="15" Opacity="0.2" />
+        </Border.Shadow>
+        <Grid RowDefinitions="auto,*,auto" RowSpacing="20">
+            <Frame BackgroundColor="#E8F5E8" 
+                   BorderColor="#4CAF50" 
+                   CornerRadius="50" 
+                   HeightRequest="90" 
+                   WidthRequest="90" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"
+                   HasShadow="False"
+                   Padding="0">
+                <Image
+                    HeightRequest="60"
+                    HorizontalOptions="Center"
+                    Source="check_icon.png"
+                    VerticalOptions="Center"
+                    WidthRequest="60" />
+            </Frame>
             <Label
                 x:Name="Message"
                 Grid.Row="1"
                 FontAttributes="Bold"
-                FontSize="24"
+                FontSize="20"
                 HorizontalOptions="Center"
-                TextColor="Black"
-                VerticalOptions="Center" />
+                TextColor="#333333"
+                VerticalOptions="Center"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="WordWrap" />
             <Button
                 Grid.Row="2"
-                BackgroundColor="#D3AA84"
+                BackgroundColor="#79280F"
                 Clicked="ConfirmEditUser_Clicked"
                 FontSize="16"
-                HeightRequest="60"
-                Text="Cerrar"
-                TextColor="Black"
-                WidthRequest="150" />
+                FontAttributes="Bold"
+                HeightRequest="50"
+                Text="Continuar"
+                TextColor="White"
+                CornerRadius="8"
+                HorizontalOptions="Center"
+                MinimumWidthRequest="180" />
         </Grid>
     </Border>
 </mopups:PopupPage>

@@ -11,16 +11,21 @@
     HasSystemPadding="True">
 
     <Border
-        Margin="50"
-        MaximumWidthRequest="600"
-        MinimumWidthRequest="400"
+        Margin="100,80,100,80"
+        MaximumWidthRequest="700"
+        MinimumWidthRequest="500"
         Padding="40"
         BackgroundColor="White"
         HorizontalOptions="Center"
-        VerticalOptions="Center">
+        VerticalOptions="Center"
+        Stroke="#79280F"
+        StrokeThickness="2">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="18,18,18,18" />
+            <RoundRectangle CornerRadius="12,12,12,12" />
         </Border.StrokeShape>
+        <Border.Shadow>
+            <Shadow Brush="Black" Offset="0,4" Radius="15" Opacity="0.2" />
+        </Border.Shadow>
 
         <Grid
             BackgroundColor="White"
@@ -45,70 +50,89 @@
                 Color="#79280F" />
 
             <StackLayout Grid.Row="2" Margin="30,10,0,0">
-                <Label Text="Titulo" TextColor="#79280F" />
+                <Label Text="Titulo" TextColor="#79280F" FontSize="16" FontAttributes="Bold"/>
                 <Frame
                     Padding="0"
-                    BackgroundColor="Transparent"
-                    BorderColor="#797979">
+                    BackgroundColor="White"
+                    BorderColor="#79280F"
+                    CornerRadius="8"
+                    HasShadow="True"
+                    HeightRequest="45">
                     <Entry
                         x:Name="NoteTitle"
-                        FontSize="18"
-                        HorizontalOptions="FillAndExpand"
+                        FontSize="16"
+                        HorizontalOptions="Fill"
                         Placeholder="Ingresa un titulo"
-                        TextColor="Black"
-                        VerticalOptions="FillAndExpand" />
+                        TextColor="#333333"
+                        VerticalOptions="Center"
+                        BackgroundColor="Transparent"
+                        Margin="15,0" />
                 </Frame>
 
                 <Label
                     Margin="0,20,0,0"
                     Text="Descripción"
-                    TextColor="#79280F" />
+                    TextColor="#79280F" 
+                    FontSize="16" 
+                    FontAttributes="Bold"/>
                 <Frame
                     Margin="0,0,0,0"
                     Padding="0"
-                    BackgroundColor="Transparent"
-                    BorderColor="#797979">
+                    BackgroundColor="White"
+                    BorderColor="#79280F"
+                    CornerRadius="8"
+                    HasShadow="True"
+                    HeightRequest="200">
                     <Editor
                         x:Name="NoteDescription"
                         AutoSize="TextChanges"
-                        FontSize="18"
-                        HeightRequest="250"
-                        HorizontalOptions="FillAndExpand"
+                        FontSize="15"
+                        HorizontalOptions="Fill"
                         Placeholder="Ingresa la descripcion"
-                        TextColor="Black"
-                        VerticalOptions="FillAndExpand" />
+                        TextColor="#333333"
+                        VerticalOptions="Fill"
+                        BackgroundColor="Transparent"
+                        Margin="15,10" />
                 </Frame>
             </StackLayout>
             <BoxView
                 Grid.Row="4"
                 HeightRequest="2"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="EndAndExpand"
+                HorizontalOptions="Fill"
+                VerticalOptions="End"
                 Color="#79280F" />
 
-            <HorizontalStackLayout
+            <Grid
                 Grid.Row="5"
                 Margin="0,20,0,0"
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="FillAndExpand">
+                ColumnDefinitions="*,*"
+                ColumnSpacing="20"
+                HorizontalOptions="Center">
                 <Button
-                    BackgroundColor="#D3AA84"
+                    Grid.Column="0"
+                    BackgroundColor="#79280F"
                     Clicked="OkAddNote_Clicked"
-                    HeightRequest="35"
-                    HorizontalOptions="Center"
+                    HeightRequest="50"
                     Text="Confirmar"
-                    TextColor="#000000"
-                    WidthRequest="220" />
+                    TextColor="White"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    CornerRadius="8"
+                    MinimumWidthRequest="150" />
                 <Button
-                    Margin="20,0,20,0"
+                    Grid.Column="1"
                     BackgroundColor="#FFF6ED"
+                    BorderColor="#79280F"
+                    BorderWidth="2"
                     Clicked="CancelAddNote_Clicked"
-                    HeightRequest="35"
-                    HorizontalOptions="CenterAndExpand"
+                    HeightRequest="50"
                     Text="Cancelar"
-                    TextColor="#000000"
-                    WidthRequest="220" />
-            </HorizontalStackLayout>
+                    TextColor="#79280F"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    CornerRadius="8"
+                    MinimumWidthRequest="150" />
+            </Grid>
         </Grid>
     </Border>
 

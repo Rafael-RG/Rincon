@@ -11,68 +11,89 @@
 
     <Border
         VerticalOptions="Start"
-        HorizontalOptions="EndAndExpand"
-        Margin="10,0,0,0"
-        Padding="30"
-        BackgroundColor="#FFF6ED"
-        HeightRequest="300"
-        WidthRequest="300">
+        HorizontalOptions="End"
+        Margin="20,20,20,0"
+        Padding="25"
+        BackgroundColor="White"
+        HeightRequest="320"
+        WidthRequest="320"
+        Stroke="#79280F"
+        StrokeThickness="2">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="0,0,0,0" />
+            <RoundRectangle CornerRadius="12,12,12,12" />
         </Border.StrokeShape>
+        <Border.Shadow>
+            <Shadow Brush="Black" Offset="0,4" Radius="15" Opacity="0.2" />
+        </Border.Shadow>
 
         <Grid
             BackgroundColor="Transparent"
             ColumnDefinitions="*"
-            HorizontalOptions="FillAndExpand"
-            RowDefinitions="auto,auto,auto,auto"
-            VerticalOptions="FillAndExpand">
-            <StackLayout Orientation="Horizontal">
-                <Image
-                    Margin="10,0,0,0"
-                    HeightRequest="30"
-                    WidthRequest="30"
-                    Source="account_brawn.png" />
-                <Label
-                    x:Name="UserName"
-                    FontSize="22"
-                    Margin="10,0,0,0"
-                    HorizontalOptions="Start"
-                    TextColor="#AD6B2A"
-                    VerticalOptions="Center" />
-            </StackLayout>
+            HorizontalOptions="Fill"
+            RowDefinitions="auto,auto,auto,auto,auto"
+            VerticalOptions="Fill"
+            RowSpacing="15">
+            <!-- Header del usuario -->
+            <Frame Grid.Row="0" 
+                   BackgroundColor="#F8F9FA" 
+                   BorderColor="#E0E0E0" 
+                   CornerRadius="8" 
+                   Padding="15"
+                   HasShadow="False">
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                    <Image
+                        HeightRequest="30"
+                        WidthRequest="30"
+                        Source="account_brawn.png" />
+                    <Label
+                        x:Name="UserName"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Start"
+                        TextColor="#79280F"
+                        VerticalOptions="Center" />
+                </StackLayout>
+            </Frame>
 
-            <Button
-                Margin="0,20,0,0"
-                Grid.Row="1"
-                FontSize ="18"
-                BackgroundColor="Transparent"
-                Clicked="Configuration_Clicked"
-                HorizontalOptions="Start"
-                Text="Configuracion"
-                TextColor="#000000"
-                VerticalOptions="EndAndExpand" />
+            <!-- Separador -->
+            <BoxView Grid.Row="1" HeightRequest="1" Color="#E0E0E0" HorizontalOptions="Fill"/>
 
+            <!-- Botones de menú -->
             <Button
                 Grid.Row="2"
-                FontSize ="18"
+                FontSize="16"
                 BackgroundColor="Transparent"
-                Clicked="ManagementOperators_Clicked"
-                HorizontalOptions="Start"
-                Text="Administrar operarios"
-                TextColor="#000000"
-                VerticalOptions="EndAndExpand" />
+                Clicked="Configuration_Clicked"
+                HorizontalOptions="Fill"
+                Text="⚙️  Configuración"
+                TextColor="#333333"
+                VerticalOptions="Center"
+                HeightRequest="45" />
 
             <Button
                 Grid.Row="3"
-                FontSize ="18"
-                Margin="0,30,0,0"
+                FontSize="16"
                 BackgroundColor="Transparent"
+                Clicked="ManagementOperators_Clicked"
+                HorizontalOptions="Fill"
+                Text="👥  Administrar operarios"
+                TextColor="#333333"
+                VerticalOptions="Center"
+                HeightRequest="45" />
+
+            <Button
+                Grid.Row="4"
+                FontSize="16"
+                Margin="0,10,0,0"
+                BackgroundColor="#79280F"
                 Clicked="Logout_Clicked"
-                HorizontalOptions="Start"
-                Text="Cerrar sesion"
-                TextColor="#79280F"
-                VerticalOptions="EndAndExpand" />
+                HorizontalOptions="Fill"
+                Text="🚪  Cerrar sesión"
+                TextColor="White"
+                VerticalOptions="Center"
+                HeightRequest="45"
+                CornerRadius="8"
+                FontAttributes="Bold" />
         </Grid>
     </Border>
 

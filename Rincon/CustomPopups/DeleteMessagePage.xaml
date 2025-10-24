@@ -9,62 +9,81 @@
     CloseWhenBackgroundIsClicked="False">
 
     <Border
-        Margin="50,100,50,100"
-        Padding="30"
+        Margin="150,120,150,120"
+        Padding="40"
         BackgroundColor="White"
-        HeightRequest="380"
-        WidthRequest="550"
-        MaximumHeightRequest="450"
-        MaximumWidthRequest="650"
+        HeightRequest="400"
+        WidthRequest="600"
         HorizontalOptions="Center"
-        VerticalOptions="Center">
+        VerticalOptions="Center"
+        Stroke="#79280F"
+        StrokeThickness="2">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="20,20,20,20" />
+            <RoundRectangle CornerRadius="12,12,12,12" />
         </Border.StrokeShape>
-        <Grid RowDefinitions="auto,auto,auto" RowSpacing="25">
-            <Image
-                HeightRequest="90"
-                HorizontalOptions="Center"
-                Source="alert_icon.png"
-                VerticalOptions="Center"
-                WidthRequest="90" />
+        <Border.Shadow>
+            <Shadow Brush="Black" Offset="0,4" Radius="15" Opacity="0.2" />
+        </Border.Shadow>
+        <Grid RowDefinitions="auto,*,auto" RowSpacing="25">
+            <Frame BackgroundColor="#FFF3E0" 
+                   BorderColor="#FF9800" 
+                   CornerRadius="50" 
+                   HeightRequest="90" 
+                   WidthRequest="90" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"
+                   HasShadow="False"
+                   Padding="0">
+                <Image
+                    HeightRequest="60"
+                    HorizontalOptions="Center"
+                    Source="alert_icon.png"
+                    VerticalOptions="Center"
+                    WidthRequest="60" />
+            </Frame>
             <Label
                 x:Name="Message"
                 Grid.Row="1"
                 FontAttributes="Bold"
-                FontSize="26"
+                FontSize="20"
                 HorizontalOptions="Center"
-                TextColor="Black"
+                TextColor="#333333"
                 VerticalOptions="Center"
                 LineBreakMode="WordWrap"
                 HorizontalTextAlignment="Center"
                 Margin="10,0,10,0" />
 
-            <StackLayout
+            <Grid
                 Grid.Row="2"
-                HorizontalOptions="Center"
-                Orientation="Horizontal"
-                Spacing="40">
+                ColumnDefinitions="*,*"
+                ColumnSpacing="20"
+                HorizontalOptions="Center">
                 <Button
-                    BackgroundColor="#D3AA84"
+                    Grid.Column="0"
+                    BackgroundColor="#FFF6ED"
+                    BorderColor="#79280F"
+                    BorderWidth="2"
                     Clicked="BackDeleteOperator_Clicked"
-                    FontSize="18"
+                    FontSize="16"
+                    FontAttributes="Bold"
                     HeightRequest="50"
-                    Text="Volver"
-                    TextColor="Black"
-                    WidthRequest="180"
-                    CornerRadius="10" />
+                    Text="Cancelar"
+                    TextColor="#79280F"
+                    MinimumWidthRequest="150"
+                    CornerRadius="8" />
 
                 <Button
-                    BackgroundColor="#FFF6ED"
+                    Grid.Column="1"
+                    BackgroundColor="#DC3545"
                     Clicked="ConfirmDeleteOperator_Clicked"
-                    FontSize="18"
+                    FontSize="16"
+                    FontAttributes="Bold"
                     HeightRequest="50"
                     Text="Eliminar"
-                    TextColor="Black"
-                    WidthRequest="180"
-                    CornerRadius="10" />
-            </StackLayout>
+                    TextColor="White"
+                    MinimumWidthRequest="150"
+                    CornerRadius="8" />
+            </Grid>
 
         </Grid>
     </Border>

@@ -374,7 +374,7 @@
                                         Grid.Column="1"
                                         Grid.ColumnSpan="2"
                                         Margin="0,4,4,0"
-                                        FontSize="15"
+                                        FontSize="18"
                                         FontAttributes="Bold"
                                         MaxLines="2"
                                         HorizontalOptions="Start"
