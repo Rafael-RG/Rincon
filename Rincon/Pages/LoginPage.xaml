@@ -10,7 +10,9 @@
     xmlns:local="clr-namespace:Rincon.Converters"
     x:TypeArguments="viewModels:LoginViewModel"
     Shell.NavBarIsVisible="False"
-    Shell.NavBarHasShadow="False">
+    Shell.TabBarIsVisible="False"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.BackButtonBehavior="{BackButtonBehavior IsVisible=False}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
