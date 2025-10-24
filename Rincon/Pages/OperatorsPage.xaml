@@ -50,7 +50,7 @@
         <popups:FinishTaskAuthPopup IsVisible="{Binding IsFinishTaskAuthPopupVisible}" ZIndex="1003" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
         <ImageButton Grid.Column="1" 
-                    Source="home_operators"
+                    Source="home_operators.png"
                     BackgroundColor="Transparent"
                     HorizontalOptions="End"
                     VerticalOptions="Center"
@@ -58,7 +58,7 @@
                     Margin="0,20,30,0"
                     WidthRequest="40"
                     HeightRequest="40" />
-        <Image Source="rincon_white" 
+        <Image Source="rincon_white.png" 
                         HorizontalOptions="Start"
                         Margin="30,20,0,0"
                         WidthRequest="200"
