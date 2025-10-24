@@ -11,7 +11,10 @@
     xmlns:viewModels="clr-namespace:Rincon.ViewModels"
     x:DataType="viewModels:HomeViewModel"
     x:TypeArguments="viewModels:HomeViewModel"
-    Shell.NavBarIsVisible="false">
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.BackButtonBehavior="{BackButtonBehavior IsVisible=False}">
 
     <ContentPage.Resources>
         <ResourceDictionary>

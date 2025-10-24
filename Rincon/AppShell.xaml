@@ -6,8 +6,10 @@
     xmlns:local="clr-namespace:Rincon"
     xmlns:pages="clr-namespace:Rincon.Pages"
     FlyoutHeaderBehavior="CollapseOnScroll"
-    Shell.FlyoutBehavior="Flyout"
-    Shell.NavBarIsVisible="False">
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"
+    Shell.BackButtonBehavior="{BackButtonBehavior IsVisible=False}">
 
     <ShellContent
         ContentTemplate="{DataTemplate pages:SplashPage}"
