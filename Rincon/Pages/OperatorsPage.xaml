@@ -142,28 +142,31 @@
                                 Grid.Column="0" 
                                 VerticalOptions="Fill"
                                 VerticalScrollBarVisibility="Always"
-                                HorizontalScrollBarVisibility="Never">
+                                HorizontalScrollBarVisibility="Never"
+                                Padding="5">
                         <CollectionView x:Name="TaskPendingList" 
                                         ItemsSource="{Binding PendingTasks}" 
                                         SelectionMode="Single" 
                                         SelectionChanged="TaskPendingSelectionChanged" 
                                         SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
-                                        VerticalOptions="Start">
+                                        VerticalOptions="Start"
+                                        BackgroundColor="Transparent">
                             <CollectionView.ItemsLayout>
-                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="20" />
+                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="0" />
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:TaskItem">
-                                    <Frame BackgroundColor="White" 
-                                           BorderColor="#79280F"
-                                           CornerRadius="10" 
-                                           Padding="15" 
-                                           HasShadow="True"
-                                           Margin="2,8,2,8">
-                                        <Grid ColumnDefinitions="*,auto" 
-                                              RowDefinitions="auto,auto,auto"
-                                              RowSpacing="8"
-                                              ColumnSpacing="10">
+                                    <Grid Padding="5,10,5,10">
+                                        <Frame BackgroundColor="White" 
+                                               BorderColor="#79280F"
+                                               CornerRadius="10" 
+                                               Padding="15" 
+                                               HasShadow="True"
+                                               Margin="0">
+                                            <Grid ColumnDefinitions="*,auto" 
+                                                  RowDefinitions="auto,auto,auto"
+                                                  RowSpacing="8"
+                                                  ColumnSpacing="10">
                                             
                                             <!-- ID de tarea -->
                                             <Frame Grid.Row="0"
@@ -236,6 +239,7 @@
                                             </StackLayout>
                                         </Grid>
                                     </Frame>
+                                </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                             <CollectionView.EmptyView>
@@ -262,28 +266,31 @@
                                 Grid.Column="1" 
                                 VerticalOptions="Fill"
                                 VerticalScrollBarVisibility="Always"
-                                HorizontalScrollBarVisibility="Never">
+                                HorizontalScrollBarVisibility="Never"
+                                Padding="5">
                         <CollectionView x:Name="TaskAssignedList" 
                                         ItemsSource="{Binding AssignedTasks}" 
                                         SelectionMode="Single" 
                                         SelectionChanged="TaskAssignedSelectionChanged" 
                                         SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
-                                        VerticalOptions="Start">
+                                        VerticalOptions="Start"
+                                        BackgroundColor="Transparent">
                             <CollectionView.ItemsLayout>
-                                <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="20" />
+                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="0" />
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:TaskItem">
-                                    <Frame BackgroundColor="White" 
-                                           BorderColor="#4CAF50"
-                                           CornerRadius="10" 
-                                           Padding="15" 
-                                           HasShadow="True"
-                                           Margin="2,8,2,8">
-                                        <Grid ColumnDefinitions="*,auto" 
-                                              RowDefinitions="auto,auto,auto"
-                                              RowSpacing="8"
-                                              ColumnSpacing="10">
+                                    <Grid Padding="5,10,5,10">
+                                        <Frame BackgroundColor="White" 
+                                               BorderColor="#4CAF50"
+                                               CornerRadius="10" 
+                                               Padding="15" 
+                                               HasShadow="True"
+                                               Margin="0">
+                                            <Grid ColumnDefinitions="*,auto" 
+                                                  RowDefinitions="auto,auto,auto"
+                                                  RowSpacing="8"
+                                                  ColumnSpacing="10">
                                             
                                             <!-- ID de tarea -->
                                             <Frame Grid.Row="0"
@@ -357,6 +364,7 @@
                                             </StackLayout>
                                         </Grid>
                                     </Frame>
+                                </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                             <CollectionView.EmptyView>
