@@ -192,35 +192,64 @@
                 </Button.Shadow>
 
             </Button>
-            <StackLayout
+            <!--Menu usuario-->
+            <Frame
                 Grid.Row="0"
                 Grid.Column="4"
-                Margin="0,25,0,0"
-                HorizontalOptions="EndAndExpand"
-                Orientation="Horizontal"
-                Spacing="0"
-                BackgroundColor="Transparent"
-                WidthRequest="350">
-                <Button
-                    Margin="0,0,0,0"
-                    BackgroundColor="Transparent"
-                    BorderColor="Transparent"
-                    Clicked="Menu_Clicked"
-                    FontSize="18"
-                    HorizontalOptions="End"
-                    VerticalOptions="Start"
-                    Text="{Binding User.Name}"
-                    TextColor="White" />
-                <ImageButton
-                    Margin="0,0,25,0"
-                    BackgroundColor="Transparent"
-                    Clicked="Menu_Clicked"
-                    HeightRequest="40"
-                    HorizontalOptions="Start"
-                    Source="account.png"
-                    WidthRequest="40" />
+                Margin="0,20,20,0"
+                Padding="15,8"
+                BackgroundColor="White"
+                BorderColor="#79280F"
+                CornerRadius="25"
+                HasShadow="True"
+                HorizontalOptions="End"
+                VerticalOptions="Start"
+                MaximumWidthRequest="280">
+                <Grid ColumnDefinitions="*,auto" ColumnSpacing="12" HorizontalOptions="Fill">
+                    <!-- Información del usuario -->
+                    <StackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                        <Label
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            Text="{Binding User.Name}"
+                            TextColor="#79280F"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            LineBreakMode="TailTruncation" />
+                        <Label
+                            FontSize="12"
+                            Text="Usuario activo"
+                            TextColor="#666666"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    
+                    <!-- Botón de menú con avatar -->
+                    <Frame Grid.Column="1"
+                           Padding="0"
+                           BackgroundColor="#79280F"
+                           CornerRadius="20"
+                           HeightRequest="40"
+                           WidthRequest="40"
+                           HasShadow="False"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center">
+                        <ImageButton
+                            BackgroundColor="Transparent"
+                            Clicked="Menu_Clicked"
+                            HeightRequest="30"
+                            WidthRequest="30"
+                            Source="account.png"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center" />
+                    </Frame>
+                </Grid>
                 
-            </StackLayout>
+                <!-- Gesture recognizer para toda el área -->
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Menu_Clicked" />
+                </Frame.GestureRecognizers>
+            </Frame>
 
 
             <!--  Barra lateral  -->
