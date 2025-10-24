@@ -13,6 +13,9 @@
     xmlns:pagespop="clr-namespace:Rincon.Pages"
     x:TypeArguments="viewModels:OperatorsViewModel"
     Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.BackButtonBehavior="{BackButtonBehavior IsVisible=False}"
     Shell.NavBarHasShadow="False">
 
     <ContentPage.Resources>
