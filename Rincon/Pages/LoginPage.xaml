@@ -47,7 +47,7 @@
 
         <Image Grid.Row="0" Source="logo_login.png" HeightRequest="160" Margin="0,40,0,20" HorizontalOptions="Center" VerticalOptions="Start"/>
 
-        <Grid Grid.Row="1" HorizontalOptions="Fill" VerticalOptions="Fill">
+        <Grid Grid.Row="1" HorizontalOptions="Fill" VerticalOptions="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="1.5*"/>
@@ -61,8 +61,8 @@
                         BackgroundColor="#4A744C"
                         CornerRadius="24" 
                         Margin="20" 
-                        VerticalOptions="FillAndExpand" 
-                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center" 
+                        HorizontalOptions="Fill"
                         HeightRequest="360"
                         Command="{Binding OperatorsCommand}"
                         Pressed="OnOperatorsPressed"
@@ -79,11 +79,11 @@
                   VerticalOptions="Center" 
                   HorizontalOptions="Fill"
                   InputTransparent="True">
-                <StackLayout HeightRequest="320" WidthRequest="320" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <StackLayout HeightRequest="320" WidthRequest="320" VerticalOptions="Center" HorizontalOptions="Center">
                     <Image Source="operator_login_icon.png" 
                            HeightRequest="120" 
                            WidthRequest="220" 
-                           VerticalOptions="FillAndExpand"
+                           VerticalOptions="Center"
                            HorizontalOptions="Center"/>
                     <Label Text="Operarios" 
                            HorizontalTextAlignment="Center" 
@@ -94,37 +94,55 @@
             </Grid>
 
             <!-- Columna derecha: Login -->
-            <Frame IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" Grid.Column="1" HasShadow="True" BackgroundColor="#D3AA84" BorderColor="#40000000" CornerRadius="24" Margin="20" VerticalOptions="Center" HorizontalOptions="Fill">
+            <Frame IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}" 
+                   Grid.Column="1" 
+                   HasShadow="True" 
+                   BackgroundColor="#D3AA84" 
+                   BorderColor="#40000000" 
+                   CornerRadius="24" 
+                   Margin="20" 
+                   VerticalOptions="Fill" 
+                   HorizontalOptions="Fill">
                 <StackLayout VerticalOptions="Fill" Spacing="10" Padding="20,30">
-                    <StackLayout  Spacing="15">
-                        <Frame HorizontalOptions="Fill" HeightRequest="45" VerticalOptions="Start" CornerRadius="18" BackgroundColor="#FAFAFA" BorderColor="Transparent" Padding="0">
-                            <Entry
-                                BackgroundColor="Transparent"
-                                PlaceholderColor="#797979"
-                                FontSize="18"
-                                Margin="10,0,0,0"
-                                AutomationId="userNameEntry"
-                                HorizontalOptions="Fill"
-                                HeightRequest="65"
-                                MaxLength="50"
-                                Placeholder="{extensions:Localize Username}"
-                                Text="{Binding Username}"
-                                TextColor="#303030"/>
+                    <StackLayout Spacing="15">
+                        <Frame HorizontalOptions="Fill" 
+                               HeightRequest="55" 
+                               VerticalOptions="Start" 
+                               CornerRadius="12" 
+                               BackgroundColor="White" 
+                               BorderColor="#79280F"
+                               HasShadow="True" 
+                               Padding="0">
+                            <Entry BackgroundColor="Transparent"
+                                   PlaceholderColor="#999999"
+                                   FontSize="18"
+                                   Margin="15,0"
+                                   AutomationId="userNameEntry"
+                                   HorizontalOptions="Fill"
+                                   MaxLength="50"
+                                   Placeholder="{extensions:Localize Username}"
+                                   Text="{Binding Username}"
+                                   TextColor="#333333"/>
                         </Frame>
 
-                        <Frame CornerRadius="18" HeightRequest="45" BackgroundColor="#FAFAFA" BorderColor="Transparent" HorizontalOptions="Fill" VerticalOptions="Start" Padding="0">
-                            <Entry
-                                VerticalOptions="Center"
-                                TextColor="#303030"
-                                FontSize="18"
-                                HeightRequest="65"
-                                Margin="10,0,0,0"
-                                PlaceholderColor="#797979"
-                                HorizontalOptions="Fill"
-                                IsPassword="true"
-                                MaxLength="50"
-                                Placeholder="{extensions:Localize Password}"
-                                Text="{Binding Password}" />
+                        <Frame CornerRadius="12" 
+                               HeightRequest="55" 
+                               BackgroundColor="White" 
+                               BorderColor="#79280F"
+                               HasShadow="True"
+                               HorizontalOptions="Fill" 
+                               VerticalOptions="Start" 
+                               Padding="0">
+                            <Entry VerticalOptions="Center"
+                                   TextColor="#333333"
+                                   FontSize="18"
+                                   Margin="15,0"
+                                   PlaceholderColor="#999999"
+                                   HorizontalOptions="Fill"
+                                   IsPassword="true"
+                                   MaxLength="50"
+                                   Placeholder="{extensions:Localize Password}"
+                                   Text="{Binding Password}" />
                         </Frame>
 
                         <Label Text="{extensions:Localize RecoverPassword}" FontSize="16" HorizontalTextAlignment="End" TextColor="#79280F" VerticalOptions="Start" Margin="0,0,0,0">
