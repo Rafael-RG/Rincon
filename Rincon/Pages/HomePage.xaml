@@ -6857,7 +6857,6 @@
                                                                 BackgroundColor="Transparent"
                                                                 Clicked="ViewEditOperator_Clicked"
                                                                 HorizontalOptions="End"
-                                                                WidthRequest="42"
                                                                 ImageSource="edit_operators.png" />
                                                             <Button
                                                                 Margin="0,0,0,0"
@@ -6944,7 +6943,7 @@
 
                     <!--  Add operator  -->
                     <Grid
-                        ColumnDefinitions="*,1.4*,*"
+                        ColumnDefinitions="*,1.2*,*"
                         IsVisible="{Binding IsAddOperatorView}"
                         RowDefinitions="auto,auto,auto"
                         VerticalOptions="FillAndExpand"
@@ -6952,176 +6951,187 @@
                         <Frame
                             Grid.Row="1"
                             Grid.Column="1"
-                            BackgroundColor="#D3AA84"
-                            CornerRadius="15"
-                            Padding="20">
-                            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Spacing="15">
+                            BackgroundColor="White"
+                            BorderColor="#79280F"
+                            CornerRadius="12"
+                            HasShadow="True"
+                            Padding="30">
+                            
+                            <Grid RowDefinitions="auto,*,auto" RowSpacing="25">
+                                <!-- Título del formulario -->
                                 <Label
-                                    Margin="0,5,0,10"
+                                    Grid.Row="0"
                                     FontAttributes="Bold"
-                                    FontSize="22"
+                                    FontSize="26"
                                     Text="Nuevo Operario"
-                                    TextColor="Black"
+                                    TextColor="#79280F"
                                     HorizontalOptions="Center" />
+                                
+                                <!-- Campos del formulario -->
                                 <Grid
+                                    Grid.Row="1"
                                     ColumnDefinitions="*,*"
-                                    ColumnSpacing="15"
-                                    HorizontalOptions="FillAndExpand"
-                                    RowDefinitions="auto,auto,auto,auto,auto,auto"
-                                    RowSpacing="10"
-                                    VerticalOptions="FillAndExpand">
+                                    ColumnSpacing="20"
+                                    RowDefinitions="auto,auto,auto,auto"
+                                    RowSpacing="20">
                                     
                                     <!-- Nombre -->
-                                    <Label
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        FontSize="14"
-                                        Text="Nombre"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
-                                    <Frame
-                                        Grid.Row="0"
-                                        Grid.Column="1"
-                                        Padding="3"
-                                        BackgroundColor="White"
-                                        CornerRadius="12"
-                                        HeightRequest="35"
-                                        HorizontalOptions="FillAndExpand">
-                                        <Entry
-                                            BackgroundColor="transparent"
-                                            FontSize="12"
-                                            HeightRequest="55"
-                                            MaxLength="25"
-                                            Placeholder="Nombre"
-                                            PlaceholderColor="Black"
-                                            Text="{Binding OperatorName}"
-                                            TextColor="Black"
-                                            IsSpellCheckEnabled="False"
-                                            IsTextPredictionEnabled="False" />
-                                    </Frame>
+                                    <StackLayout Grid.Row="0" Grid.Column="0" Spacing="8">
+                                        <Label
+                                            FontSize="16"
+                                            FontAttributes="Bold"
+                                            Text="Nombre"
+                                            TextColor="#79280F" />
+                                        <Frame
+                                            Padding="0"
+                                            BackgroundColor="White"
+                                            BorderColor="#79280F"
+                                            CornerRadius="8"
+                                            HeightRequest="50"
+                                            HasShadow="True">
+                                            <Entry
+                                                BackgroundColor="Transparent"
+                                                FontSize="16"
+                                                MaxLength="25"
+                                                Placeholder="Ingrese el nombre"
+                                                PlaceholderColor="#999999"
+                                                Text="{Binding OperatorName}"
+                                                TextColor="#333333"
+                                                VerticalOptions="Center"
+                                                Margin="15,0"
+                                                IsSpellCheckEnabled="False"
+                                                IsTextPredictionEnabled="False" />
+                                        </Frame>
+                                    </StackLayout>
                                     
                                     <!-- Apellido -->
-                                    <Label
-                                        Grid.Row="1"
-                                        Grid.Column="0"
-                                        FontSize="14"
-                                        Text="Apellido"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
-                                    <Frame
-                                        Grid.Row="1"
-                                        Grid.Column="1"
-                                        Padding="3"
-                                        BackgroundColor="White"
-                                        CornerRadius="12"
-                                        HeightRequest="35"
-                                        HorizontalOptions="FillAndExpand">
-                                        <Entry
-                                            BackgroundColor="transparent"
-                                            FontSize="12"
-                                            HeightRequest="55"
-                                            MaxLength="25"
-                                            Placeholder="Apellido"
-                                            PlaceholderColor="Black"
-                                            Text="{Binding OperatorLastName}"
-                                            TextColor="Black"
-                                            IsSpellCheckEnabled="False"
-                                            IsTextPredictionEnabled="False" />
-                                    </Frame>
+                                    <StackLayout Grid.Row="0" Grid.Column="1" Spacing="8">
+                                        <Label
+                                            FontSize="16"
+                                            FontAttributes="Bold"
+                                            Text="Apellido"
+                                            TextColor="#79280F" />
+                                        <Frame
+                                            Padding="0"
+                                            BackgroundColor="White"
+                                            BorderColor="#79280F"
+                                            CornerRadius="8"
+                                            HeightRequest="50"
+                                            HasShadow="True">
+                                            <Entry
+                                                BackgroundColor="Transparent"
+                                                FontSize="16"
+                                                MaxLength="25"
+                                                Placeholder="Ingrese el apellido"
+                                                PlaceholderColor="#999999"
+                                                Text="{Binding OperatorLastName}"
+                                                TextColor="#333333"
+                                                VerticalOptions="Center"
+                                                Margin="15,0"
+                                                IsSpellCheckEnabled="False"
+                                                IsTextPredictionEnabled="False" />
+                                        </Frame>
+                                    </StackLayout>
                                     
                                     <!-- PIN -->
-                                    <Label
-                                        Grid.Row="2"
-                                        Grid.Column="0"
-                                        FontSize="14"
-                                        Text="PIN"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
-                                    <Frame
-                                        Grid.Row="2"
-                                        Grid.Column="1"
-                                        Padding="3"
-                                        BackgroundColor="White"
-                                        CornerRadius="12"
-                                        HeightRequest="35"
-                                        HorizontalOptions="FillAndExpand">
-                                        <Entry
-                                            BackgroundColor="transparent"
-                                            FontSize="12"
-                                            HeightRequest="55"
-                                            MaxLength="25"
-                                            Keyboard="Numeric"
-                                            Placeholder="Escriba un PIN"
-                                            PlaceholderColor="Black"
-                                            Text="{Binding OperatorPin}"
-                                            TextColor="Black"
-                                            IsPassword="True"
-                                            IsSpellCheckEnabled="False"
-                                            IsTextPredictionEnabled="False" />
-                                    </Frame>
+                                    <StackLayout Grid.Row="1" Grid.Column="0" Spacing="8">
+                                        <Label
+                                            FontSize="16"
+                                            FontAttributes="Bold"
+                                            Text="PIN de Acceso"
+                                            TextColor="#79280F" />
+                                        <Frame
+                                            Padding="0"
+                                            BackgroundColor="White"
+                                            BorderColor="#79280F"
+                                            CornerRadius="8"
+                                            HeightRequest="50"
+                                            HasShadow="True">
+                                            <Entry
+                                                BackgroundColor="Transparent"
+                                                FontSize="16"
+                                                MaxLength="6"
+                                                Keyboard="Numeric"
+                                                Placeholder="Escriba un PIN"
+                                                PlaceholderColor="#999999"
+                                                Text="{Binding OperatorPin}"
+                                                TextColor="#333333"
+                                                VerticalOptions="Center"
+                                                Margin="15,0"
+                                                IsPassword="True"
+                                                IsSpellCheckEnabled="False"
+                                                IsTextPredictionEnabled="False" />
+                                        </Frame>
+                                    </StackLayout>
 
                                     <!-- Confirmar PIN -->
-                                    <Label
-                                        Grid.Row="3"
-                                        Grid.Column="0"
-                                        FontSize="14"
-                                        Text="Confirmar PIN"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
-                                    <Frame
-                                        Grid.Row="3"
-                                        Grid.Column="1"
-                                        Padding="3"
-                                        BackgroundColor="White"
-                                        CornerRadius="12"
-                                        HeightRequest="35"
-                                        HorizontalOptions="FillAndExpand">
-                                        <Entry
-                                            BackgroundColor="transparent"
-                                            FontSize="12"
-                                            HeightRequest="55"
-                                            MaxLength="25"
-                                            Keyboard="Numeric"
-                                            Placeholder="Confirme su PIN"
-                                            PlaceholderColor="Black"
-                                            Text="{Binding RepeatOperatorPin}"
-                                            TextColor="Black"
-                                            IsPassword="True"
-                                            IsSpellCheckEnabled="False"
-                                            IsTextPredictionEnabled="False" />
-                                    </Frame>
-
-                                    <!-- botónes -->
-                                    <Grid
-                                        Grid.Row="5"
-                                        Grid.Column="0"
-                                        Grid.ColumnSpan="2"
-                                        Margin="0,20,0,0"
-                                        ColumnDefinitions="*,*"
-                                        ColumnSpacing="10">
-                                        <Button
-                                            Grid.Column="0"
-                                            BackgroundColor="#AD6B2A"
-                                            Command="{Binding CancelAddOperatorCommand}"
-                                            FontSize="14"
-                                            HeightRequest="35"
-                                            Text="Volver"
-                                            TextColor="#FFF6ED" />
-                                        <Button
-                                            Grid.Column="1"
-                                            BackgroundColor="#4A744C"
-                                            Command="{Binding OkAddOperatorCommand}"
-                                            FontSize="14"
-                                            HeightRequest="35"
-                                            Text="Agregar"
-                                            TextColor="White" />
-                                    </Grid>
+                                    <StackLayout Grid.Row="1" Grid.Column="1" Spacing="8">
+                                        <Label
+                                            FontSize="16"
+                                            FontAttributes="Bold"
+                                            Text="Confirmar PIN"
+                                            TextColor="#79280F" />
+                                        <Frame
+                                            Padding="0"
+                                            BackgroundColor="White"
+                                            BorderColor="#79280F"
+                                            CornerRadius="8"
+                                            HeightRequest="50"
+                                            HasShadow="True">
+                                            <Entry
+                                                BackgroundColor="Transparent"
+                                                FontSize="16"
+                                                MaxLength="6"
+                                                Keyboard="Numeric"
+                                                Placeholder="Confirme el PIN"
+                                                PlaceholderColor="#999999"
+                                                Text="{Binding RepeatOperatorPin}"
+                                                TextColor="#333333"
+                                                VerticalOptions="Center"
+                                                Margin="15,0"
+                                                IsPassword="True"
+                                                IsSpellCheckEnabled="False"
+                                                IsTextPredictionEnabled="False" />
+                                        </Frame>
+                                    </StackLayout>
                                 </Grid>
-                            </StackLayout>
+
+                                <!-- Botones de acción -->
+                                <Grid
+                                    Grid.Row="2"
+                                    ColumnDefinitions="*,*"
+                                    ColumnSpacing="20"
+                                    HorizontalOptions="Center"
+                                    MaximumWidthRequest="400">
+                                    <Button
+                                        Grid.Column="0"
+                                        BackgroundColor="#FFF6ED"
+                                        BorderColor="#79280F"
+                                        BorderWidth="2"
+                                        Command="{Binding CancelAddOperatorCommand}"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        HeightRequest="55"
+                                        Text="Cancelar"
+                                        TextColor="#79280F"
+                                        CornerRadius="8" />
+                                    <Button
+                                        Grid.Column="1"
+                                        BackgroundColor="#4A744C"
+                                        Command="{Binding OkAddOperatorCommand}"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        HeightRequest="55"
+                                        Text="Agregar Operario"
+                                        TextColor="White"
+                                        CornerRadius="8" />
+                                </Grid>
+                            </Grid>
                         </Frame>
                     </Grid>
+                    <!--  Confirm Add operator  -->
                     <Grid
-                        ColumnDefinitions="*,1.2*,*"
+                        ColumnDefinitions="*,1.1*,*"
                         IsVisible="{Binding ValidateAddOperator}"
                         RowDefinitions="auto,auto,auto"
                         VerticalOptions="FillAndExpand"
@@ -7129,105 +7139,132 @@
                         <Frame
                             Grid.Row="1"
                             Grid.Column="1"
-                            BackgroundColor="#FFF6ED"
-                            CornerRadius="15"
-                            Padding="20">
-                            <StackLayout Spacing="15">
+                            BackgroundColor="White"
+                            BorderColor="#79280F"
+                            CornerRadius="12"
+                            HasShadow="True"
+                            Padding="30">
+                            
+                            <Grid RowDefinitions="auto,*,auto" RowSpacing="25">
+                                <!-- Título de verificación -->
                                 <Label
-                                    Margin="0,10,0,15"
-                                    FontSize="22"
-                                    Text="Identificación"
-                                    TextColor="Black"
+                                    Grid.Row="0"
+                                    FontAttributes="Bold"
+                                    FontSize="24"
+                                    Text="Verificación de Identidad"
+                                    TextColor="#79280F"
                                     HorizontalOptions="Center" />
-                                <Grid
-                                    ColumnDefinitions="*,*"
-                                    RowDefinitions="auto,auto,auto"
-                                    RowSpacing="12"
-                                    ColumnSpacing="15">
-                                    
-                                    <Label
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        FontSize="14"
-                                        Text="Usuario"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
+                                
+                                <!-- Mensaje informativo -->
+                                <StackLayout Grid.Row="1" Spacing="20">
                                     <Frame
-                                        Grid.Row="0"
-                                        Grid.Column="1"
-                                        Padding="3"
-                                        BackgroundColor="White"
-                                        CornerRadius="12"
-                                        HeightRequest="35"
-                                        HorizontalOptions="FillAndExpand">
-                                        <Entry
-                                            BackgroundColor="transparent"
-                                            FontSize="12"
-                                            HeightRequest="55"
-                                            MaxLength="25"
-                                            Placeholder="Nombre de usuario"
-                                            PlaceholderColor="#848484"
-                                            Text="{Binding ConfirmUserConfigurations}"
-                                            TextColor="Black"
-                                            IsSpellCheckEnabled="False"
-                                            IsTextPredictionEnabled="False" />
+                                        BackgroundColor="#F0F8FF"
+                                        BorderColor="#79280F"
+                                        CornerRadius="8"
+                                        Padding="15"
+                                        HasShadow="False">
+                                        <Label
+                                            FontSize="14"
+                                            Text="Por favor confirme su identidad para agregar el nuevo operario al sistema."
+                                            TextColor="#666666"
+                                            HorizontalTextAlignment="Center"
+                                            LineBreakMode="WordWrap" />
                                     </Frame>
                                     
-                                    <Label
-                                        Grid.Row="1"
-                                        Grid.Column="0"
-                                        FontSize="14"
-                                        Text="Contraseña"
-                                        TextColor="Black"
-                                        VerticalOptions="Center" />
-                                    <Frame
-                                        Grid.Row="1"
-                                        Grid.Column="1"
-                                        Padding="3"
-                                        BackgroundColor="White"
-                                        CornerRadius="12"
-                                        HeightRequest="35"
-                                        HorizontalOptions="FillAndExpand">
-                                        <Entry
-                                            BackgroundColor="transparent"
-                                            FontSize="12"
-                                            HeightRequest="55"
-                                            MaxLength="25"
-                                            Placeholder="Contraseña"
-                                            PlaceholderColor="#848484"
-                                            Text="{Binding ConfirmPasswordConfigurations}"
-                                            TextColor="Black"
-                                            IsPassword="True"
-                                            IsSpellCheckEnabled="False"
-                                            IsTextPredictionEnabled="False" />
-                                    </Frame>
-                                    
-                                    <Grid
-                                        Grid.Row="2"
-                                        Grid.Column="0"
-                                        Grid.ColumnSpan="2"
-                                        Margin="0,15,0,0"
-                                        ColumnDefinitions="*,*"
-                                        ColumnSpacing="10">
-                                        <Button
-                                            Grid.Column="0"
-                                            BackgroundColor="#AD6B2A"
-                                            Command="{Binding CancelValidateAddOperatorCommand}"
-                                            FontSize="14"
-                                            HeightRequest="35"
-                                            Text="Volver"
-                                            TextColor="#FFF6ED" />
-                                        <Button
-                                            Grid.Column="1"
-                                            BackgroundColor="#79280F"
-                                            Clicked="ConfirmAddOperator_Clicked"
-                                            FontSize="14"
-                                            HeightRequest="35"
-                                            Text="Aceptar"
-                                            TextColor="White" />
+                                    <!-- Campos de verificación -->
+                                    <Grid RowDefinitions="auto,auto" RowSpacing="20">
+                                        <!-- Usuario -->
+                                        <StackLayout Grid.Row="0" Spacing="8">
+                                            <Label
+                                                FontSize="16"
+                                                FontAttributes="Bold"
+                                                Text="Nombre de Usuario"
+                                                TextColor="#79280F" />
+                                            <Frame
+                                                Padding="0"
+                                                BackgroundColor="White"
+                                                BorderColor="#79280F"
+                                                CornerRadius="8"
+                                                HeightRequest="50"
+                                                HasShadow="True">
+                                                <Entry
+                                                    BackgroundColor="Transparent"
+                                                    FontSize="16"
+                                                    MaxLength="25"
+                                                    Placeholder="Ingrese su nombre de usuario"
+                                                    PlaceholderColor="#999999"
+                                                    Text="{Binding ConfirmUserConfigurations}"
+                                                    TextColor="#333333"
+                                                    VerticalOptions="Center"
+                                                    Margin="15,0"
+                                                    IsSpellCheckEnabled="False"
+                                                    IsTextPredictionEnabled="False" />
+                                            </Frame>
+                                        </StackLayout>
+                                        
+                                        <!-- Contraseña -->
+                                        <StackLayout Grid.Row="1" Spacing="8">
+                                            <Label
+                                                FontSize="16"
+                                                FontAttributes="Bold"
+                                                Text="Contraseña Actual"
+                                                TextColor="#79280F" />
+                                            <Frame
+                                                Padding="0"
+                                                BackgroundColor="White"
+                                                BorderColor="#79280F"
+                                                CornerRadius="8"
+                                                HeightRequest="50"
+                                                HasShadow="True">
+                                                <Entry
+                                                    BackgroundColor="Transparent"
+                                                    FontSize="16"
+                                                    MaxLength="25"
+                                                    Placeholder="Ingrese su contraseña"
+                                                    PlaceholderColor="#999999"
+                                                    Text="{Binding ConfirmPasswordConfigurations}"
+                                                    TextColor="#333333"
+                                                    VerticalOptions="Center"
+                                                    Margin="15,0"
+                                                    IsPassword="True"
+                                                    IsSpellCheckEnabled="False"
+                                                    IsTextPredictionEnabled="False" />
+                                            </Frame>
+                                        </StackLayout>
                                     </Grid>
+                                </StackLayout>
+                                
+                                <!-- Botones de verificación -->
+                                <Grid
+                                    Grid.Row="2"
+                                    ColumnDefinitions="*,*"
+                                    ColumnSpacing="20"
+                                    HorizontalOptions="Center"
+                                    MaximumWidthRequest="400">
+                                    <Button
+                                        Grid.Column="0"
+                                        BackgroundColor="#FFF6ED"
+                                        BorderColor="#79280F"
+                                        BorderWidth="2"
+                                        Command="{Binding CancelValidateAddOperatorCommand}"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        HeightRequest="50"
+                                        Text="Cancelar"
+                                        TextColor="#79280F"
+                                        CornerRadius="8" />
+                                    <Button
+                                        Grid.Column="1"
+                                        BackgroundColor="#4A744C"
+                                        Clicked="ConfirmAddOperator_Clicked"
+                                        FontSize="16"
+                                        FontAttributes="Bold"
+                                        HeightRequest="50"
+                                        Text="Confirmar"
+                                        TextColor="White"
+                                        CornerRadius="8" />
                                 </Grid>
-                            </StackLayout>
+                            </Grid>
                         </Frame>
                     </Grid>
 
