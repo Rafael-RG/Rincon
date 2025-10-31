@@ -36,7 +36,6 @@ namespace Rincon.Models
         RusticoTratado,
         Cepillado,
         CepilladoTratado,
-        Tratado,
         SinTratar
     }
 
