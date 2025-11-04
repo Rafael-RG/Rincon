@@ -752,7 +752,7 @@
                                                 Grid.Row="2"
                                                 FontSize="12"
                                                 HorizontalOptions="EndAndExpand"
-                                                Text="{Binding OrderDate, StringFormat='Creada {0:dd/MM/yyyy}'}"
+                                                Text="{Binding CreatedAt, StringFormat='Creada {0:dd/MM/yyyy}'}"
                                                 TextColor="#D3AA84"
                                                 VerticalOptions="EndAndExpand" />
 
@@ -1150,7 +1150,7 @@
                             TextColor="#79280F"
                             Margin="0,5,0,0" />
 
-                        <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="8" RowSpacing="0">
+                        <Grid ColumnDefinitions="*,*,*,*,*" ColumnSpacing="8" RowSpacing="0">
                             <RadioButton
                                 Grid.Column="0"
                                 Content="Tirante"
@@ -1186,6 +1186,14 @@
                                 HorizontalOptions="Center"
                                 IsChecked="{Binding IsTablaSelect}"
                                 Value="Tabla" />
+                            <RadioButton
+                                    Grid.Column="4"
+                                    Content="Poste"
+                                    FontSize="12"
+                                    GroupName="Type"
+                                    HorizontalOptions="Center"
+                                    IsChecked="{Binding IsPosteSelect}"
+                                    Value="Poste" />
                         </Grid>
 
                         <!-- Medidas para productos con medidas -->
@@ -1385,6 +1393,65 @@
                                 </StackLayout>
                             </Grid>
                         </StackLayout>
+                    
+                        <!-- Medidas para Polin -->
+                        <StackLayout IsVisible="{Binding IsPosteSelect}" Spacing="6">
+                            <Label
+                                FontSize="14"
+                                Text="Medidas"
+                                TextColor="#79280F" />
+                            
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                <!-- Diámetro -->
+                                <StackLayout Grid.Column="0" Spacing="2">
+                                    <Frame
+                                        Padding="3"
+                                        BackgroundColor="Transparent"
+                                        BorderColor="#797979"
+                                        HeightRequest="34">
+                                        <Entry
+                                            FontSize="12"
+                                            HorizontalTextAlignment="Center"
+                                            Keyboard="Numeric"
+                                            HeightRequest="55"
+                                            MaxLength="9"
+                                            Placeholder="Diámetro"
+                                            Text="{Binding Diameter}"
+                                            TextColor="Black" />
+                                    </Frame>
+                                    <Label
+                                        FontSize="10"
+                                        HorizontalOptions="Center"
+                                        Text="Diámetro"
+                                        TextColor="Black" />
+                                </StackLayout>
+
+                                <!-- Largo -->
+                                <StackLayout Grid.Column="1" Spacing="2">
+                                    <Frame
+                                        Padding="3"
+                                        BackgroundColor="Transparent"
+                                        BorderColor="#797979"
+                                        HeightRequest="34">
+                                        <Entry
+                                            FontSize="12"
+                                            HorizontalTextAlignment="Center"
+                                            HeightRequest="55"
+                                            Keyboard="Numeric"
+                                            MaxLength="9"
+                                            Placeholder="Largo"
+                                            Text="{Binding Length}"
+                                            TextColor="Black" />
+                                    </Frame>
+                                    <Label
+                                        FontSize="10"
+                                        HorizontalOptions="Center"
+                                        Text="Largo"
+                                        TextColor="Black" />
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+
                     </StackLayout>
 
                     <!-- Columna derecha - Información adicional -->
@@ -1552,7 +1619,7 @@
                         </Grid>
 
                         <!-- Lista de Machimbre -->
-                        <StackLayout IsVisible="{Binding IsMachimbre}" Spacing="6">
+                        <StackLayout IsVisible="{Binding IsMachimbreTablaSelect}" Spacing="6">
                             <Frame
                                 Padding="6,3"
                                 BackgroundColor="White"
@@ -4618,29 +4685,23 @@
                                 <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="2" />
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="models:Product">
+                                <DataTemplate x:DataType="models:ProductStock">
                                     <Grid
-                                        ColumnDefinitions="0.8*,1.5*,0.7*"
+                                        ColumnDefinitions="*"
                                         RowDefinitions="*"
                                         VerticalOptions="Start"
                                         Padding="3,1">
-                                        <Label
-                                            FontSize="9"
-                                            Text="{Binding Id}"
-                                            TextColor="#000000"
-                                            VerticalOptions="Center" />
-                                        <Label
-                                            Grid.Column="1"
-                                            FontSize="9"
-                                            Text="{Binding Description}"
-                                            TextColor="#000000"
-                                            VerticalOptions="Center" />
-                                        <Label
-                                            Grid.Column="2"
-                                            FontSize="9"
-                                            Text="{Binding WoodState}"
-                                            TextColor="#000000"
-                                            VerticalOptions="Center" />
+                                        <Label FontSize="9" VerticalOptions="Center">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Id}" FontAttributes="Bold" TextColor="#000000" />
+                                                        <Span Text=" " />
+                                                        <Span Text="{Binding Product.Description}" TextColor="#000000" />
+                                                        <Span Text=" " />
+                                                        <Span Text="{Binding Product.WoodState}" TextColor="#000000" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                        </Label>
                                     </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
@@ -5115,13 +5176,18 @@
                             </StackLayout>
                             
                             <StackLayout Orientation="Horizontal" Spacing="10">
-                                <Label Text="Fecha:" FontSize="14" FontAttributes="Bold" TextColor="#79280F" VerticalOptions="Center" />
+                                <Label Text="Fecha despacho:" FontSize="14" FontAttributes="Bold" TextColor="#79280F" VerticalOptions="Center" />
                                 <Label Text="{Binding SelectedBookingOrder.OrderDate}" FontSize="14" TextColor="#000000" VerticalOptions="Center" />
                             </StackLayout>
                             
                             <StackLayout Orientation="Horizontal" Spacing="10">
                                 <Label Text="Dirección:" FontSize="14" FontAttributes="Bold" TextColor="#79280F" VerticalOptions="Center" />
                                 <Label Text="{Binding SelectedBookingOrder.Address}" FontSize="14" TextColor="#000000" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Label Text="Fecha de creación:" FontSize="14" FontAttributes="Bold" TextColor="#79280F" VerticalOptions="Center" />
+                                <Label Text="{Binding SelectedBookingOrder.CreatedAt, StringFormat='{0:dd/MM/yyyy HH:mm}'}" FontSize="14" TextColor="#000000" VerticalOptions="Center" />
                             </StackLayout>
                         </StackLayout>
 
@@ -5532,13 +5598,18 @@
                             </StackLayout>
                             
                             <StackLayout Orientation="Horizontal" Spacing="10">
-                                <Label Text="Fecha:" FontSize="14" FontAttributes="Bold" TextColor="#79280F" VerticalOptions="Center" />
+                                <Label Text="Fecha despacho:" FontSize="14" FontAttributes="Bold" TextColor="#79280F" VerticalOptions="Center" />
                                 <Label Text="{Binding SelectedBookingOrder.OrderDate}" FontSize="14" TextColor="#000000" VerticalOptions="Center" />
                             </StackLayout>
                             
                             <StackLayout Orientation="Horizontal" Spacing="10">
                                 <Label Text="Dirección:" FontSize="14" FontAttributes="Bold" TextColor="#79280F" VerticalOptions="Center" />
                                 <Label Text="{Binding SelectedBookingOrder.Address}" FontSize="14" TextColor="#000000" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Label Text="Fecha de creación:" FontSize="14" FontAttributes="Bold" TextColor="#79280F" VerticalOptions="Center" />
+                                <Label Text="{Binding SelectedBookingOrder.CreatedAt, StringFormat='{0:dd/MM/yyyy HH:mm}'}" FontSize="14" TextColor="#000000" VerticalOptions="Center" />
                             </StackLayout>
                         </StackLayout>
 

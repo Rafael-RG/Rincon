@@ -158,6 +158,7 @@ namespace Rincon.ViewModels
                 {
                     OnPropertyChanged(nameof(IsMeasureSelect));
                     OnPropertyChanged(nameof(IsMachimbreOption));
+                    OnPropertyChanged(nameof(IsMachimbreTablaSelect));
                     OnPropertyChanged(nameof(IsDeckOption));
                     ReloadStates();
                 }
@@ -177,6 +178,7 @@ namespace Rincon.ViewModels
                 if (SetProperty(ref isPolinSelect, value))
                 {
                     OnPropertyChanged(nameof(IsMachimbreOption));
+                    OnPropertyChanged(nameof(IsMachimbreTablaSelect));
                     OnPropertyChanged(nameof(IsDeckOption));
                     ReloadStates();
                 }
@@ -196,6 +198,27 @@ namespace Rincon.ViewModels
                 if (SetProperty(ref isMedioPolinSelect, value))
                 {
                     OnPropertyChanged(nameof(IsMachimbreOption));
+                    OnPropertyChanged(nameof(IsMachimbreTablaSelect));
+                    OnPropertyChanged(nameof(IsDeckOption));
+                    ReloadStates();
+                }
+            }
+        }
+
+        ///// <summary>
+        ///// Is Poste
+        ///// </summary>
+        private bool isPosteSelect;
+
+        public bool IsPosteSelect
+        {
+            get { return isPosteSelect; }
+            set
+            {
+                if (SetProperty(ref isPosteSelect, value))
+                {
+                    OnPropertyChanged(nameof(IsMachimbreOption));
+                    OnPropertyChanged(nameof(IsMachimbreTablaSelect));
                     OnPropertyChanged(nameof(IsDeckOption));
                     ReloadStates();
                 }
@@ -218,6 +241,7 @@ namespace Rincon.ViewModels
                     OnPropertyChanged(nameof(IsMeasureSelect));
                     OnPropertyChanged(nameof(IsMachimbreOption));
                     OnPropertyChanged(nameof(IsDeckOption));
+                    OnPropertyChanged(nameof(IsMachimbreTablaSelect));
                     ReloadStates();
                 }
             }
@@ -227,7 +251,13 @@ namespace Rincon.ViewModels
         {
             get
             {
-                return IsPolinSelect || IsTablaSelect || IsMedioPolinSelect;
+                return IsPolinSelect || IsTablaSelect || IsMedioPolinSelect || IsPosteSelect;
+            }
+            set
+            {
+                
+                OnPropertyChanged(nameof(IsMachimbreTablaSelect));
+                
             }
         }
 
@@ -246,6 +276,16 @@ namespace Rincon.ViewModels
                 return IsTiranteSelect || IsTablaSelect;
             }
         }
+
+
+        public bool IsMachimbreTablaSelect
+        {
+            get
+            {
+                return IsMachimbre && IsTablaSelect;
+            }
+        }
+
 
         ///// <summary>
         ///// Cards
@@ -325,6 +365,8 @@ namespace Rincon.ViewModels
                     {
                         this.IsDeck = false;
                     }
+
+                    OnPropertyChanged(nameof(IsMachimbreTablaSelect));
                 }
             }
         }
@@ -1823,7 +1865,7 @@ namespace Rincon.ViewModels
                             this.Products = this.Products ?? new List<Product>();
                             this.Products.Add(product);
                         }
-                        
+                        this.Products = await this.DataService.LoadProductsAsync();
 
                     }
                     catch (Exception ex)
@@ -1855,7 +1897,7 @@ namespace Rincon.ViewModels
         {
             this.States = new List<string>();
 
-            if(this.IsPolinSelect || this.IsMedioPolinSelect)
+            if(this.IsPolinSelect || this.IsMedioPolinSelect || this.IsPosteSelect)
             {
                 foreach (var item in Enum.GetValues(typeof(WoodState)))
                 {
@@ -1871,6 +1913,8 @@ namespace Rincon.ViewModels
                 {
                     this.States.Add(item.ToString());
                 }
+
+                this.States.Remove("Tratado");
             }
             this.SelectedState = this.States.First();
         }
@@ -3867,7 +3911,7 @@ namespace Rincon.ViewModels
         {
             try
             {
-                var pdfName = $"Stock_{DateTime.Now.ToString("ddMMyyyy")}.pdf";
+                var pdfName = $"Carga_de_stock_{DateTime.Now:yyyyMMddHHmmss}.pdf";
                 
                 // Obtener la ruta correcta para guardar archivos en diferentes plataformas
                 string downloadsPath;
@@ -3941,7 +3985,7 @@ namespace Rincon.ViewModels
                 this.IsBusy = true;
                 
                 var productos = await this.DataService.LoadOrderDetailsItemsAsync(this.SelectedBookingOrder.BookingOrderId);
-                var pdfName = $"{this.SelectedBookingOrder.Client}_{this.SelectedBookingOrder.Id}.pdf";
+                var pdfName = $"Orden_{this.SelectedBookingOrder.Client}_{this.SelectedBookingOrder.Id}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
 
                 // Obtener la ruta correcta para guardar archivos en diferentes plataformas
                 string downloadsPath;

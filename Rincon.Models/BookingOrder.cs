@@ -23,6 +23,7 @@ namespace Rincon.Models
         public bool IsOrder { get; set; }
         public bool IsBooking { get; set; }
         public OrderStatus Status { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public string Comments { get; set; }
         [NotMapped]
         public bool IsCancellable 

@@ -23,7 +23,8 @@ namespace Rincon.Models
         Tirante,
         Polin,
         MedioPolin,
-        Tabla
+        Tabla,
+        Poste
     }
 
     /// <summary>
@@ -36,7 +37,7 @@ namespace Rincon.Models
         RusticoTratado,
         Cepillado,
         CepilladoTratado,
-        SinTratar
+        Tratado
     }
 
     /// <summary>
