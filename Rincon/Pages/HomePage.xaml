@@ -1829,6 +1829,12 @@
 
                         <!-- Lista de Machimbre -->
                         <StackLayout IsVisible="{Binding IsMachimbreTablaSelect}" Spacing="10">
+                            <Label
+                                FontSize="18"
+                                Text="Tipo de Machimbre"
+                                TextColor="#79280F"
+                                FontAttributes="Bold" />
+
                             <Frame
                                 Padding="12,8"
                                 BackgroundColor="White"
@@ -1837,13 +1843,12 @@
                                 HeightRequest="45">
                                 <Label
                                     FontSize="16"
-                                    Text="{Binding SelectedMachimbre, Mode=TwoWay}"
+                                    Text="{Binding SelectedMachimbre, TargetNullValue='Seleccionar tipo de machimbre', FallbackValue='Seleccionar tipo de machimbre'}"
                                     VerticalOptions="Center"
-                                    TextColor="Black">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SelectMachimbreCommand}" />
-                                    </Label.GestureRecognizers>
-                                </Label>
+                                    TextColor="Black" />
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectMachimbreCommand}" />
+                                </Frame.GestureRecognizers>
                             </Frame>
                             
                             <Frame
@@ -1852,7 +1857,9 @@
                                 HeightRequest="130"
                                 IsVisible="{Binding IsVisibleListMachimbres}"
                                 VerticalOptions="Start"
-                                BorderColor="#E0E0E0">
+                                BorderColor="#E0E0E0"
+                                HasShadow="True"
+                                Padding="8">
                                 <Frame.Background>
                                     <LinearGradientBrush EndPoint="0,1">
                                         <GradientStop Offset="0.1" Color="#FFFFFF" />
@@ -1861,24 +1868,31 @@
                                 </Frame.Background>
                                 <CollectionView
                                     x:Name="MachimbreList"
-                                    HeightRequest="130"
                                     ItemsSource="{Binding Machimbres}"
                                     SelectionChanged="Machimbres_SelectionChanged"
                                     SelectionMode="Single"
-                                    VerticalOptions="Start"
-                                    Margin="5">
+                                    VerticalOptions="Fill"
+                                    Margin="0">
 
                                     <CollectionView.ItemsLayout>
-                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="10" />
+                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="6" />
                                     </CollectionView.ItemsLayout>
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="x:String">
-                                            <Label
-                                                FontSize="16"
-                                                Text="{Binding .}"
-                                                TextColor="#000000"
-                                                VerticalOptions="Start"
-                                                Padding="8,4" />
+                                            <Frame
+                                                Margin="2,1"
+                                                Padding="10,6"
+                                                BackgroundColor="#FFFFFF"
+                                                BorderColor="#E0E0E0"
+                                                CornerRadius="6"
+                                                HasShadow="False">
+                                                <Label
+                                                    FontSize="16"
+                                                    Text="{Binding .}"
+                                                    TextColor="#000000"
+                                                    VerticalOptions="Center"
+                                                    HorizontalOptions="Start" />
+                                            </Frame>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
