@@ -365,7 +365,7 @@ namespace Rincon.ViewModels
                     {
                         this.IsDeck = false;
                     }
-
+                    ReloadStates();
                     OnPropertyChanged(nameof(IsMachimbreTablaSelect));
                 }
             }
@@ -1902,6 +1902,11 @@ namespace Rincon.ViewModels
                 foreach (var item in Enum.GetValues(typeof(WoodState)))
                 {
                     if (item.ToString() == "Fresco" || item.ToString() == "Tratado")
+                    {
+                        this.States.Add(item.ToString());
+                    }
+
+                    if(this.IsMachimbre && item.ToString() == "CepilladoTratado")
                     {
                         this.States.Add(item.ToString());
                     }
