@@ -8,6 +8,7 @@ using Rincon.Common.Extensions;
 using Rincon.Common.Interfaces;
 using Rincon.Common.Services;
 using Rincon.DataAccess;
+using Rincon.BackgroundServices;
 
 namespace Rincon;
 
@@ -45,7 +46,7 @@ public static class MauiProgram
             });
         builder.Services.AddLocalization();
 		builder.Services.AddDbContext<DatabaseContext>();
-		builder.Services.AddSingleton<IDataService, DataService>();
+		builder.Services.AddSingleton<DatabaseBackupService>();
         //builder.Services.AddSingleton<IFileSaver>(FileSaver.Default);
         builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
         return builder.Build();

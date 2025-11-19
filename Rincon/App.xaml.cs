@@ -1,4 +1,7 @@
-﻿namespace Rincon;
+﻿using Rincon.BackgroundServices;
+using Rincon.Helpers;
+
+namespace Rincon;
 
 public partial class App : Application
 {
@@ -9,5 +12,8 @@ public partial class App : Application
 	{
 		InitializeComponent();
 		MainPage = new AppShell();
+		
+		// Inicializar el servicio de backup
+		var backupService = ServiceHelper.GetService<DatabaseBackupService>();
 	}
 }
