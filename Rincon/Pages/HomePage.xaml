@@ -1401,7 +1401,7 @@
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Ancho"
-                                            Text="{Binding Width}"
+                                            Text="{Binding Length}"
                                             TextColor="Black"
                                             BackgroundColor="Transparent" />
                                     </Frame>
@@ -1427,7 +1427,7 @@
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Largo"
-                                            Text="{Binding Length}"
+                                            Text="{Binding Width}"
                                             TextColor="Black"
                                             BackgroundColor="Transparent" />
                                     </Frame>
