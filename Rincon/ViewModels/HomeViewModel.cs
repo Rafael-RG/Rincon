@@ -251,7 +251,7 @@ namespace Rincon.ViewModels
         {
             get
             {
-                return IsPolinSelect || IsTablaSelect || IsMedioPolinSelect || IsPosteSelect;
+                return IsPolinSelect || IsTablaSelect || IsMedioPolinSelect;
             }
             set
             {
@@ -1854,7 +1854,7 @@ namespace Rincon.ViewModels
                             ProductType = this.IsTiranteSelect ? ProductType.Tirante : this.IsPolinSelect ? ProductType.Polin : this.IsTablaSelect ? ProductType.Tabla : ProductType.MedioPolin,
                             WoodState =  (WoodState)Enum.Parse(typeof(WoodState),this.SelectedState),
                             MachimbreSate = (Machimbre)Enum.Parse(typeof(Machimbre),this.SelectedMachimbre),
-                            Description = this.IsPolinSelect ? $"{this.Diameter} x {this.Length}" : $"{this.Thickness} x {this.Length} x {this.Width}",
+                            Description = this.IsPolinSelect || this.IsMedioPolinSelect || this.IsPosteSelect ? $"{this.Diameter} x {this.Length}" : $"{this.Thickness} x {this.Length} x {this.Width}",
                             DependOf = this.SelectedProduct != null ? this.SelectedProduct.Id : null
                         };
 

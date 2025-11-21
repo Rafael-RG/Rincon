@@ -1242,7 +1242,7 @@
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Ancho"
-                                            Text="{Binding Width}"
+                                            Text="{Binding Length}"
                                             TextColor="Black" />
                                     </Frame>
                                     <Label
@@ -1266,7 +1266,7 @@
                                             Keyboard="Numeric"
                                             MaxLength="9"
                                             Placeholder="Largo"
-                                            Text="{Binding Length}"
+                                            Text="{Binding Width}"
                                             TextColor="Black" />
                                     </Frame>
                                     <Label
