@@ -37,6 +37,7 @@ namespace Rincon.Models
         RusticoTratado,
         Cepillado,
         CepilladoTratado,
+        Cepillado4Caras,
         Tratado
     }
 
@@ -48,6 +49,15 @@ namespace Rincon.Models
         FrenteIngles,
         Entrepiso,
         Piso
+    }
+
+    /// <summary>
+    /// Deck type
+    /// </summary>
+    public enum DeckType
+    {
+        Comun,
+        Clear
     }
 
     /// <summary>

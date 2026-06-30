@@ -221,13 +221,10 @@ public partial class HomePage
     void EditProductPage_Clicked(System.Object sender, System.EventArgs e)
     {
         this.ViewModel.ProductCommentEdit = this.ViewModel.SelectedProduct.Comment;
-
         this.ViewModel.ProductLocationEdit = this.ViewModel.SelectedProduct.Location;
-
         this.ViewModel.ProduSupplierEdit = this.ViewModel.SelectedProduct.Supplier;
-
+        this.ViewModel.InitEditProductFields(this.ViewModel.SelectedProduct);
         this.ViewModel.ChangeViewCommand.Execute("EditProductDetaildInventory");
-
     }
 
     async void CancelEditProductPage_Clicked(System.Object sender, System.EventArgs e)
@@ -240,10 +237,11 @@ public partial class HomePage
         this.ViewModel.SelectedProduct.Comment = this.ViewModel.ProductCommentEdit;
         this.ViewModel.SelectedProduct.Location = this.ViewModel.ProductLocationEdit;
         this.ViewModel.SelectedProduct.Supplier = this.ViewModel.ProduSupplierEdit;
+        this.ViewModel.SelectedProduct.Description = this.ViewModel.ProductDescriptionEdit;
+        this.ViewModel.SelectedProduct.WoodState = (Rincon.Models.WoodState)Enum.Parse(typeof(Rincon.Models.WoodState), this.ViewModel.SelectedStateEdit);
 
         this.ViewModel.UpdateProductCommand.Execute(this.ViewModel.SelectedProduct);
 
-        // Usar el método centralizado para refrescar la lista
         RefreshInventoryList();
 
         this.ProductsSearchStockInventory.SelectedItem = this.ViewModel.SelectedProduct;
@@ -301,8 +299,25 @@ public partial class HomePage
         this.ViewModel.SelectedMachimbre = (string)MachimbreList.SelectedItem;
         this.ViewModel.IsVisibleListMachimbres = false;
         
-        // Limpiar la selección para permitir re-selección del mismo item
         MachimbreList.SelectedItem = null;
+    }
+
+    void Decks_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    {
+        if (DeckList.SelectedItem == null) return;
+
+        this.ViewModel.SelectedDeck = (string)DeckList.SelectedItem;
+        this.ViewModel.IsVisibleListDecks = false;
+        DeckList.SelectedItem = null;
+    }
+
+    void StatesEdit_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    {
+        if (StatesEditList.SelectedItem == null) return;
+
+        this.ViewModel.SelectedStateEdit = (string)StatesEditList.SelectedItem;
+        this.ViewModel.IsVisibleListStatesEdit = false;
+        StatesEditList.SelectedItem = null;
     }
 
     void OnSearchStockInventoryTextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)

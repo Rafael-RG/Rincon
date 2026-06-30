@@ -242,6 +242,7 @@ namespace Rincon.ViewModels
                     OnPropertyChanged(nameof(IsMachimbreOption));
                     OnPropertyChanged(nameof(IsDeckOption));
                     OnPropertyChanged(nameof(IsMachimbreTablaSelect));
+                    OnPropertyChanged(nameof(IsDeckTablaSelect));
                     ReloadStates();
                 }
             }
@@ -285,6 +286,8 @@ namespace Rincon.ViewModels
                 return IsMachimbre && IsTablaSelect;
             }
         }
+
+        public bool IsDeckTablaSelect => IsDeck && IsTablaSelect;
 
 
         ///// <summary>
@@ -384,6 +387,7 @@ namespace Rincon.ViewModels
                 if (SetProperty(ref isDeck, value))
                 {
                     OnPropertyChanged(nameof(IsDeck));
+                    OnPropertyChanged(nameof(IsDeckTablaSelect));
 
                     if (value)
                     {
@@ -482,6 +486,33 @@ namespace Rincon.ViewModels
         ///// </summary>
         [ObservableProperty]
         private bool isVisibleListAddStock;
+
+        //// <summary>
+        ///// Deck list for selector
+        ///// </summary>
+        [ObservableProperty]
+        private List<string> decks;
+
+        [ObservableProperty]
+        private string selectedDeck;
+
+        [ObservableProperty]
+        private bool isVisibleListDecks;
+
+        //// <summary>
+        ///// Edit product fields
+        ///// </summary>
+        [ObservableProperty]
+        private string productDescriptionEdit;
+
+        [ObservableProperty]
+        private string selectedStateEdit;
+
+        [ObservableProperty]
+        private bool isVisibleListStatesEdit;
+
+        [ObservableProperty]
+        private List<string> statesEdit;
 
         //// <summary>
         ///// Is visible list add stock
@@ -963,6 +994,15 @@ namespace Rincon.ViewModels
                 }
 
                 this.SelectedMachimbre = this.Machimbres.First();
+
+                this.Decks = new List<string>();
+
+                foreach (var item in Enum.GetValues(typeof(DeckType)))
+                {
+                    this.Decks.Add(item.ToString());
+                }
+
+                this.SelectedDeck = this.Decks.First();
 
                 this.Products = await this.DataService.LoadProductsAsync();
 
@@ -1782,8 +1822,45 @@ namespace Rincon.ViewModels
         public ICommand SelectMachimbreCommand => new Command(() =>
         {
             this.IsVisibleListMachimbres = !this.IsVisibleListMachimbres;
-
         });
+
+        public ICommand SelectDeckCommand => new Command(() =>
+        {
+            this.IsVisibleListDecks = !this.IsVisibleListDecks;
+        });
+
+        public ICommand SelectStateEditCommand => new Command(() =>
+        {
+            this.IsVisibleListStatesEdit = !this.IsVisibleListStatesEdit;
+        });
+
+        public void InitEditProductFields(Product product)
+        {
+            ProductDescriptionEdit = product.Description;
+            SelectedStateEdit = product.WoodState.ToString();
+
+            StatesEdit = new List<string>();
+            if (product.ProductType == ProductType.Polin || product.ProductType == ProductType.MedioPolin)
+            {
+                StatesEdit.Add(WoodState.Fresco.ToString());
+                StatesEdit.Add(WoodState.Tratado.ToString());
+                if (product.Machimbre == true) StatesEdit.Add(WoodState.CepilladoTratado.ToString());
+            }
+            else if (product.ProductType == ProductType.Poste)
+            {
+                StatesEdit.Add(WoodState.Fresco.ToString());
+                StatesEdit.Add(WoodState.Tratado.ToString());
+                StatesEdit.Add(WoodState.Cepillado4Caras.ToString());
+            }
+            else
+            {
+                foreach (var item in Enum.GetValues(typeof(WoodState)))
+                {
+                    if (item.ToString() != "Tratado")
+                        StatesEdit.Add(item.ToString());
+                }
+            }
+        }
 
         public ICommand SaveProductCommand => new Command(async () =>
         {
@@ -1851,9 +1928,10 @@ namespace Rincon.ViewModels
                             Width = this?.Width,
                             Machimbre = this.IsMachimbre,
                             Deck = this.IsDeck,
-                            ProductType = this.IsTiranteSelect ? ProductType.Tirante : this.IsPolinSelect ? ProductType.Polin : this.IsTablaSelect ? ProductType.Tabla : ProductType.MedioPolin,
-                            WoodState =  (WoodState)Enum.Parse(typeof(WoodState),this.SelectedState),
-                            MachimbreSate = (Machimbre)Enum.Parse(typeof(Machimbre),this.SelectedMachimbre),
+                            ProductType = this.IsTiranteSelect ? ProductType.Tirante : this.IsPolinSelect ? ProductType.Polin : this.IsTablaSelect ? ProductType.Tabla : this.IsPosteSelect ? ProductType.Poste : ProductType.MedioPolin,
+                            WoodState = (WoodState)Enum.Parse(typeof(WoodState), this.SelectedState),
+                            MachimbreSate = IsMachimbreTablaSelect && !string.IsNullOrEmpty(this.SelectedMachimbre) ? (Machimbre?)Enum.Parse(typeof(Machimbre), this.SelectedMachimbre) : null,
+                            DeckSate = IsDeckTablaSelect && !string.IsNullOrEmpty(this.SelectedDeck) ? (DeckType?)Enum.Parse(typeof(DeckType), this.SelectedDeck) : null,
                             Description = this.IsPolinSelect || this.IsMedioPolinSelect || this.IsPosteSelect ? $"{this.Diameter} x {this.Length}" : $"{this.Thickness} x {this.Length} x {this.Width}",
                             DependOf = this.SelectedProduct != null ? this.SelectedProduct.Id : null
                         };
@@ -1897,29 +1975,30 @@ namespace Rincon.ViewModels
         {
             this.States = new List<string>();
 
-            if(this.IsPolinSelect || this.IsMedioPolinSelect || this.IsPosteSelect)
+            if (this.IsPolinSelect || this.IsMedioPolinSelect)
             {
                 foreach (var item in Enum.GetValues(typeof(WoodState)))
                 {
                     if (item.ToString() == "Fresco" || item.ToString() == "Tratado")
-                    {
                         this.States.Add(item.ToString());
-                    }
 
-                    if(this.IsMachimbre && item.ToString() == "CepilladoTratado")
-                    {
+                    if (this.IsMachimbre && item.ToString() == "CepilladoTratado")
                         this.States.Add(item.ToString());
-                    }
                 }
+            }
+            else if (this.IsPosteSelect)
+            {
+                this.States.Add(WoodState.Fresco.ToString());
+                this.States.Add(WoodState.Tratado.ToString());
+                this.States.Add(WoodState.Cepillado4Caras.ToString());
             }
             else
             {
                 foreach (var item in Enum.GetValues(typeof(WoodState)))
                 {
-                    this.States.Add(item.ToString());
+                    if (item.ToString() != "Tratado")
+                        this.States.Add(item.ToString());
                 }
-
-                this.States.Remove("Tratado");
             }
             this.SelectedState = this.States.First();
         }
@@ -1935,10 +2014,11 @@ namespace Rincon.ViewModels
             this.Thickness = 0;
             this.Width = 0;
             this.IsMachimbre = false;
+            this.IsDeck = false;
             this.IsPolinSelect = false;
             this.IsTablaSelect = false;
             this.IsTiranteSelect = true;
-            this.SelectedProduct = null; // Limpiar el producto seleccionado para "Derivado de"
+            this.SelectedProduct = null;
         }
         #endregion
 
@@ -2501,19 +2581,16 @@ namespace Rincon.ViewModels
         {
             try
             {
-
                 var result = await this.DataService.InsertOrUpdateItemsAsync<Product>(product);
 
                 if (result > 0)
                 {
-
-                    this.Stock.ToList().ForEach(x =>
+                    this.Stock?.ToList().ForEach(x =>
                     {
                         if (x.Product.Id == product.Id)
-                        {
                             x.Product = product;
-                        }
                     });
+                    OnPropertyChanged(nameof(SelectedProduct));
                 }
             }
             catch
