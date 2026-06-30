@@ -1915,31 +1915,42 @@
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="models:Product">
                                         <Grid
-                                            ColumnDefinitions="60,*,60"
+                                            ColumnDefinitions="Auto,*,Auto"
                                             ColumnSpacing="8"
                                             RowDefinitions="auto"
-                                            Padding="6,3"
+                                            Padding="6,4"
                                             VerticalOptions="Center">
                                             <Label
                                                 FontSize="12"
                                                 Text="{Binding Id}"
-                                                TextColor="#000000"
+                                                TextColor="#79280F"
+                                                FontAttributes="Bold"
+                                                LineBreakMode="NoWrap"
                                                 HorizontalTextAlignment="Center"
                                                 VerticalOptions="Center" />
 
-                                            <Label
+                                            <VerticalStackLayout
                                                 Grid.Column="1"
-                                                FontSize="12"
-                                                Text="{Binding Description}"
-                                                TextColor="#000000"
-                                                VerticalOptions="Center"
-                                                LineBreakMode="TailTruncation" />
+                                                Spacing="1"
+                                                VerticalOptions="Center">
+                                                <Label
+                                                    FontSize="12"
+                                                    Text="{Binding Description}"
+                                                    TextColor="#000000"
+                                                    LineBreakMode="TailTruncation" />
+                                                <StackLayout Orientation="Horizontal" Spacing="6">
+                                                    <Label FontSize="10" Text="{Binding ProductType}" TextColor="#999999" />
+                                                    <Label FontSize="10" FontAttributes="Bold" Text="{Binding MachimbreDeckLabel}" TextColor="#79280F" />
+                                                    <Label FontSize="10" Text="{Binding MachimbreDeckSubLabel}" TextColor="#79280F" />
+                                                </StackLayout>
+                                            </VerticalStackLayout>
 
                                             <Label
                                                 Grid.Column="2"
                                                 FontSize="12"
                                                 Text="{Binding WoodState}"
-                                                TextColor="#000000"
+                                                TextColor="#555555"
+                                                LineBreakMode="NoWrap"
                                                 HorizontalTextAlignment="Center"
                                                 VerticalOptions="Center" />
                                         </Grid>
@@ -1966,12 +1977,13 @@
                                    Margin="0,10,0,5" />
                             
                             <!-- Header de la lista -->
-                            <Grid ColumnDefinitions="*,*,*,120,40" ColumnSpacing="8" Padding="8,4" BackgroundColor="#F0F0F0">
+                            <Grid ColumnDefinitions="Auto,*,1.2*,*,100,40" ColumnSpacing="8" Padding="8,4" BackgroundColor="#F0F0F0">
                                 <Label Text="Código" FontSize="13" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
                                 <Label Grid.Column="1" Text="Descripción" FontSize="13" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="2" Text="Estado" FontSize="13" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="3" Text="Cantidad" FontSize="13" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
-                                <Label Grid.Column="4" Text="" FontSize="13" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
+                                <Label Grid.Column="2" Text="Tipo" FontSize="13" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
+                                <Label Grid.Column="3" Text="Estado" FontSize="13" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
+                                <Label Grid.Column="4" Text="Cantidad" FontSize="13" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
+                                <Label Grid.Column="5" Text="" FontSize="13" TextColor="#79280F" HorizontalTextAlignment="Center" />
                             </Grid>
                             
                             <!-- Lista de productos -->
@@ -1996,7 +2008,7 @@
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="models:ProductStock">
                                             <Grid
-                                                ColumnDefinitions="*,*,*,120,40"
+                                                ColumnDefinitions="Auto,*,1.2*,*,100,40"
                                                 ColumnSpacing="8"
                                                 RowDefinitions="auto"
                                                 Padding="4,6"
@@ -2005,7 +2017,9 @@
                                                 <Label
                                                     FontSize="12"
                                                     Text="{Binding Product.Id}"
-                                                    TextColor="#000000"
+                                                    TextColor="#79280F"
+                                                    FontAttributes="Bold"
+                                                    LineBreakMode="NoWrap"
                                                     HorizontalTextAlignment="Center"
                                                     VerticalOptions="Center" />
 
@@ -2018,8 +2032,30 @@
                                                     VerticalOptions="Center"
                                                     LineBreakMode="TailTruncation" />
 
-                                                <Label
+                                                <VerticalStackLayout
                                                     Grid.Column="2"
+                                                    Spacing="1"
+                                                    VerticalOptions="Center">
+                                                    <Label
+                                                        FontSize="12"
+                                                        Text="{Binding Product.ProductType}"
+                                                        TextColor="#555555"
+                                                        HorizontalTextAlignment="Center" />
+                                                    <Label
+                                                        FontSize="11"
+                                                        FontAttributes="Bold"
+                                                        Text="{Binding Product.MachimbreDeckLabel}"
+                                                        TextColor="#79280F"
+                                                        HorizontalTextAlignment="Center" />
+                                                    <Label
+                                                        FontSize="10"
+                                                        Text="{Binding Product.MachimbreDeckSubLabel}"
+                                                        TextColor="#79280F"
+                                                        HorizontalTextAlignment="Center" />
+                                                </VerticalStackLayout>
+
+                                                <Label
+                                                    Grid.Column="3"
                                                     FontSize="12"
                                                     Text="{Binding Product.WoodState}"
                                                     TextColor="#000000"
@@ -2027,7 +2063,7 @@
                                                     VerticalOptions="Center" />
 
                                                 <Frame
-                                                    Grid.Column="3"
+                                                    Grid.Column="4"
                                                     Padding="2"
                                                     BackgroundColor="White"
                                                     CornerRadius="8"
@@ -2046,7 +2082,7 @@
                                                 </Frame>
 
                                                 <ImageButton
-                                                    Grid.Column="4"
+                                                    Grid.Column="5"
                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=RemoveProductToAddedCommand}"
                                                     CommandParameter="{Binding .}"
                                                     HeightRequest="20"
