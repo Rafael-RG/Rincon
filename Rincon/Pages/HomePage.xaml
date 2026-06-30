@@ -1899,6 +1899,78 @@
                             </Frame>
                         </StackLayout>
 
+                        <!-- Lista de Deck -->
+                        <StackLayout IsVisible="{Binding IsDeckTablaSelect}" Spacing="10">
+                            <Label
+                                FontSize="18"
+                                Text="Tipo de Deck"
+                                TextColor="#79280F"
+                                FontAttributes="Bold" />
+
+                            <Frame
+                                Padding="12,8"
+                                BackgroundColor="White"
+                                BorderColor="#797979"
+                                CornerRadius="8"
+                                HeightRequest="45">
+                                <Label
+                                    FontSize="16"
+                                    Text="{Binding SelectedDeck, TargetNullValue='Seleccionar tipo de deck', FallbackValue='Seleccionar tipo de deck'}"
+                                    VerticalOptions="Center"
+                                    TextColor="Black" />
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectDeckCommand}" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
+
+                            <Frame
+                                x:Name="FrameListDecks"
+                                CornerRadius="8"
+                                HeightRequest="100"
+                                IsVisible="{Binding IsVisibleListDecks}"
+                                VerticalOptions="Start"
+                                BorderColor="#E0E0E0"
+                                HasShadow="True"
+                                Padding="8">
+                                <Frame.Background>
+                                    <LinearGradientBrush EndPoint="0,1">
+                                        <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                        <GradientStop Offset="1.0" Color="#FFF6ED" />
+                                    </LinearGradientBrush>
+                                </Frame.Background>
+                                <CollectionView
+                                    x:Name="DeckList"
+                                    ItemsSource="{Binding Decks}"
+                                    SelectionChanged="Decks_SelectionChanged"
+                                    SelectionMode="Single"
+                                    VerticalOptions="Fill"
+                                    Margin="0">
+
+                                    <CollectionView.ItemsLayout>
+                                        <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="6" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="x:String">
+                                            <Frame
+                                                Margin="2,1"
+                                                Padding="10,6"
+                                                BackgroundColor="#FFFFFF"
+                                                BorderColor="#E0E0E0"
+                                                CornerRadius="6"
+                                                HasShadow="False">
+                                                <Label
+                                                    FontSize="16"
+                                                    Text="{Binding .}"
+                                                    TextColor="#000000"
+                                                    VerticalOptions="Center"
+                                                    HorizontalOptions="Start" />
+                                            </Frame>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Frame>
+                        </StackLayout>
+
                         <!-- Ubicación, Comentarios y Proveedor en layout vertical mejorado -->
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="20" RowDefinitions="auto,auto,auto,auto,auto" RowSpacing="12">
                             <!-- Ubicación -->
@@ -3059,13 +3131,15 @@
                     Color="#79280F" />
 
                 <!-- Encabezados de columnas ultra-compactos -->
-                <Grid Grid.Row="2" Margin="12,5,12,8" ColumnDefinitions="1.8*,2.5*,1.5*,1.5*,0.8*,0.8*" ColumnSpacing="8">
+                <Grid Grid.Row="2" Margin="12,5,12,8" ColumnDefinitions="1.5*,2*,1.3*,1.3*,1.3*,1.2*,0.7*,0.7*" ColumnSpacing="8">
                     <Label Grid.Column="0" FontSize="14" FontAttributes="Bold" Text="#Código" TextColor="#79280F" VerticalOptions="Center" />
                     <Label Grid.Column="1" FontSize="14" FontAttributes="Bold" Text="Descripción" TextColor="#79280F" VerticalOptions="Center" />
-                    <Label Grid.Column="2" FontSize="14" FontAttributes="Bold" Text="Estado" TextColor="#79280F" VerticalOptions="Center" />
-                    <Label Grid.Column="3" FontSize="14" FontAttributes="Bold" Text="Ubicación" TextColor="#79280F" VerticalOptions="Center" />
-                    <Label Grid.Column="4" FontSize="14" FontAttributes="Bold" Text="" TextColor="#79280F" VerticalOptions="Center" HorizontalTextAlignment="Center" />
-                    <Label Grid.Column="5" FontSize="14" FontAttributes="Bold" Text="" TextColor="#79280F" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                    <Label Grid.Column="2" FontSize="14" FontAttributes="Bold" Text="Tipo" TextColor="#79280F" VerticalOptions="Center" />
+                    <Label Grid.Column="3" FontSize="14" FontAttributes="Bold" Text="M/Deck" TextColor="#79280F" VerticalOptions="Center" />
+                    <Label Grid.Column="4" FontSize="14" FontAttributes="Bold" Text="Estado" TextColor="#79280F" VerticalOptions="Center" />
+                    <Label Grid.Column="5" FontSize="14" FontAttributes="Bold" Text="Ubicación" TextColor="#79280F" VerticalOptions="Center" />
+                    <Label Grid.Column="6" FontSize="14" FontAttributes="Bold" Text="" TextColor="#79280F" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                    <Label Grid.Column="7" FontSize="14" FontAttributes="Bold" Text="" TextColor="#79280F" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                 </Grid>
 
                 <!-- Lista de productos ultra-compacta -->
@@ -3082,13 +3156,18 @@
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Product">
                                 <Frame Margin="0,2" Padding="8,6" BackgroundColor="White" CornerRadius="8" HasShadow="False">
-                                    <Grid ColumnDefinitions="1.8*,2.5*,1.5*,1.5*,0.8*,0.8*" ColumnSpacing="8" RowDefinitions="auto" MinimumHeightRequest="32">
+                                    <Grid ColumnDefinitions="1.5*,2*,1.3*,1.3*,1.3*,1.2*,0.7*,0.7*" ColumnSpacing="8" RowDefinitions="auto" MinimumHeightRequest="32">
                                         <Label Grid.Column="0" FontSize="13" Text="{Binding Id}" TextColor="#000000" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                         <Label Grid.Column="1" FontSize="13" Text="{Binding Description}" TextColor="#000000" VerticalOptions="Center" LineBreakMode="TailTruncation" />
-                                        <Label Grid.Column="2" FontSize="13" Text="{Binding WoodState}" TextColor="#000000" VerticalOptions="Center" LineBreakMode="TailTruncation" />
-                                        <Label Grid.Column="3" FontSize="13" Text="{Binding Location}" TextColor="#000000" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                        <Label Grid.Column="2" FontSize="13" Text="{Binding ProductType}" TextColor="#000000" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                        <VerticalStackLayout Grid.Column="3" VerticalOptions="Center" Spacing="1">
+                                            <Label FontSize="13" FontAttributes="Bold" Text="{Binding MachimbreDeckLabel}" TextColor="#79280F" LineBreakMode="TailTruncation" />
+                                            <Label FontSize="11" Text="{Binding MachimbreDeckSubLabel}" TextColor="#79280F" LineBreakMode="TailTruncation" />
+                                        </VerticalStackLayout>
+                                        <Label Grid.Column="4" FontSize="13" Text="{Binding WoodState}" TextColor="#000000" VerticalOptions="Center" LineBreakMode="TailTruncation" />
+                                        <Label Grid.Column="5" FontSize="13" Text="{Binding Location}" TextColor="#000000" VerticalOptions="Center" LineBreakMode="TailTruncation" />
                                         <Button
-                                            Grid.Column="4"
+                                            Grid.Column="6"
                                             BackgroundColor="Transparent"
                                             Clicked="VisivilityProduct_Clicked"
                                             ImageSource="visibility.png"
@@ -3099,7 +3178,7 @@
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center" />
                                         <Button
-                                            Grid.Column="5"
+                                            Grid.Column="7"
                                             BackgroundColor="Transparent"
                                             Clicked="DeleteProduct_Clicked"
                                             ImageSource="delete_item_icon.png"
@@ -3212,6 +3291,49 @@
                                         Text="{Binding SelectedProduct.WoodState}"
                                         TextColor="#333333"
                                         VerticalOptions="Center" />
+                                </Frame>
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" Spacing="15">
+                                <Label
+                                    FontSize="18"
+                                    FontAttributes="Bold"
+                                    Text="Tipo:"
+                                    TextColor="#79280F"
+                                    VerticalOptions="Center"
+                                    WidthRequest="120" />
+                                <Frame BackgroundColor="#F8F9FA" BorderColor="#E0E0E0" CornerRadius="6" Padding="10,8" HasShadow="False">
+                                    <Label
+                                        FontSize="16"
+                                        Text="{Binding SelectedProduct.ProductType}"
+                                        TextColor="#333333"
+                                        VerticalOptions="Center" />
+                                </Frame>
+                            </StackLayout>
+
+                            <StackLayout
+                                Orientation="Horizontal"
+                                Spacing="15"
+                                IsVisible="{Binding SelectedProduct.HasMachimbreOrDeck}">
+                                <Label
+                                    FontSize="18"
+                                    FontAttributes="Bold"
+                                    Text="Machimbre/Deck:"
+                                    TextColor="#79280F"
+                                    VerticalOptions="Center"
+                                    WidthRequest="120" />
+                                <Frame BackgroundColor="#FFF6ED" BorderColor="#79280F" CornerRadius="6" Padding="10,8" HasShadow="False">
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label
+                                            FontSize="16"
+                                            FontAttributes="Bold"
+                                            Text="{Binding SelectedProduct.MachimbreDeckLabel}"
+                                            TextColor="#79280F" />
+                                        <Label
+                                            FontSize="13"
+                                            Text="{Binding SelectedProduct.MachimbreDeckSubLabel}"
+                                            TextColor="#79280F" />
+                                    </VerticalStackLayout>
                                 </Frame>
                             </StackLayout>
                         </StackLayout>
@@ -3368,38 +3490,96 @@
                                 </Frame>
                             </StackLayout>
                             
-                            <StackLayout Orientation="Horizontal" Spacing="15">
+                            <StackLayout Spacing="12">
                                 <Label
                                     FontSize="18"
                                     FontAttributes="Bold"
-                                    Text="Descripción:"
-                                    TextColor="#79280F"
-                                    VerticalOptions="Center"
-                                    WidthRequest="120" />
-                                <Frame BackgroundColor="#F8F9FA" BorderColor="#E0E0E0" CornerRadius="6" Padding="10,8" HasShadow="False" VerticalOptions="Fill">
-                                    <Label
+                                    Text="Descripci&#243;n:"
+                                    TextColor="#79280F" />
+                                <Frame
+                                    Padding="0"
+                                    BackgroundColor="White"
+                                    BorderColor="#79280F"
+                                    CornerRadius="8"
+                                    HasShadow="True"
+                                    HeightRequest="50">
+                                    <Entry
                                         FontSize="16"
-                                        Text="{Binding SelectedProduct.Description}"
+                                        Text="{Binding ProductDescriptionEdit}"
                                         TextColor="#333333"
+                                        Placeholder="Ingrese descripci&#243;n"
+                                        PlaceholderColor="#999999"
+                                        BackgroundColor="Transparent"
                                         VerticalOptions="Center"
-                                        LineBreakMode="WordWrap" />
+                                        Margin="15,8" />
                                 </Frame>
                             </StackLayout>
                             
-                            <StackLayout Orientation="Horizontal" Spacing="15">
+                            <StackLayout Spacing="12">
                                 <Label
                                     FontSize="18"
                                     FontAttributes="Bold"
                                     Text="Estado:"
-                                    TextColor="#79280F"
-                                    VerticalOptions="Center"
-                                    WidthRequest="120" />
-                                <Frame BackgroundColor="#F8F9FA" BorderColor="#E0E0E0" CornerRadius="6" Padding="10,8" HasShadow="False">
+                                    TextColor="#79280F" />
+                                <Frame
+                                    Padding="12,8"
+                                    BackgroundColor="White"
+                                    BorderColor="#79280F"
+                                    CornerRadius="8"
+                                    HeightRequest="45">
                                     <Label
                                         FontSize="16"
-                                        Text="{Binding SelectedProduct.WoodState}"
-                                        TextColor="#333333"
-                                        VerticalOptions="Center" />
+                                        Text="{Binding SelectedStateEdit, TargetNullValue='Seleccionar estado', FallbackValue='Seleccionar estado'}"
+                                        VerticalOptions="Center"
+                                        TextColor="Black" />
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectStateEditCommand}" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                <Frame
+                                    x:Name="FrameListStatesEdit"
+                                    CornerRadius="8"
+                                    HeightRequest="180"
+                                    IsVisible="{Binding IsVisibleListStatesEdit}"
+                                    VerticalOptions="Start"
+                                    BorderColor="#E0E0E0"
+                                    HasShadow="True"
+                                    Padding="8">
+                                    <Frame.Background>
+                                        <LinearGradientBrush EndPoint="0,1">
+                                            <GradientStop Offset="0.1" Color="#FFFFFF" />
+                                            <GradientStop Offset="1.0" Color="#FFF6ED" />
+                                        </LinearGradientBrush>
+                                    </Frame.Background>
+                                    <CollectionView
+                                        x:Name="StatesEditList"
+                                        ItemsSource="{Binding StatesEdit}"
+                                        SelectionChanged="StatesEdit_SelectionChanged"
+                                        SelectionMode="Single"
+                                        VerticalOptions="Fill"
+                                        Margin="0">
+                                        <CollectionView.ItemsLayout>
+                                            <GridItemsLayout Orientation="Vertical" VerticalItemSpacing="6" />
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate x:DataType="x:String">
+                                                <Frame
+                                                    Margin="2,1"
+                                                    Padding="10,6"
+                                                    BackgroundColor="#FFFFFF"
+                                                    BorderColor="#E0E0E0"
+                                                    CornerRadius="6"
+                                                    HasShadow="False">
+                                                    <Label
+                                                        FontSize="16"
+                                                        Text="{Binding .}"
+                                                        TextColor="#000000"
+                                                        VerticalOptions="Center"
+                                                        HorizontalOptions="Start" />
+                                                </Frame>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
                                 </Frame>
                             </StackLayout>
                         </StackLayout>

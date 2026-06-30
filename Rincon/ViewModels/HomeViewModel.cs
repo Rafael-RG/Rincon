@@ -243,6 +243,7 @@ namespace Rincon.ViewModels
                     OnPropertyChanged(nameof(IsMachimbreOption));
                     OnPropertyChanged(nameof(IsDeckOption));
                     OnPropertyChanged(nameof(IsMachimbreTablaSelect));
+                    OnPropertyChanged(nameof(IsDeckTablaSelect));
                     ReloadStates();
                 }
             }
@@ -283,6 +284,14 @@ namespace Rincon.ViewModels
             get
             {
                 return IsMachimbre && IsTablaSelect;
+            }
+        }
+
+        public bool IsDeckTablaSelect
+        {
+            get
+            {
+                return IsDeck && IsTablaSelect;
             }
         }
 
@@ -383,6 +392,7 @@ namespace Rincon.ViewModels
                 if (SetProperty(ref isDeck, value))
                 {
                     OnPropertyChanged(nameof(IsDeck));
+                    OnPropertyChanged(nameof(IsDeckTablaSelect));
 
                     if (value)
                     {
@@ -397,6 +407,12 @@ namespace Rincon.ViewModels
         ///// </summary>
         [ObservableProperty]
         private bool isVisibleListMachimbres;
+
+        ///// <summary>
+        ///// IsVisibleListDecks
+        ///// </summary>
+        [ObservableProperty]
+        private bool isVisibleListDecks;
 
         ///// <summary>
         ///// IsMachimbre
@@ -415,6 +431,18 @@ namespace Rincon.ViewModels
         ///// </summary>
         [ObservableProperty]
         private string selectedMachimbre;
+
+        ///// <summary>
+        ///// Selected deck type
+        ///// </summary>
+        [ObservableProperty]
+        private string selectedDeck;
+
+        ///// <summary>
+        ///// deck types list
+        ///// </summary>
+        [ObservableProperty]
+        private List<string> decks;
 
         ///// <summary>
         ///// IsMachimbre
@@ -500,6 +528,18 @@ namespace Rincon.ViewModels
         [ObservableProperty]
         private string produSupplierEdit;
 
+
+        [ObservableProperty]
+        private string productDescriptionEdit;
+
+        [ObservableProperty]
+        private string selectedStateEdit;
+
+        [ObservableProperty]
+        private bool isVisibleListStatesEdit;
+
+        [ObservableProperty]
+        private List<string> statesEdit;
         //// <summary>
         ///// Is visible list add stock
         ///// </summary>
@@ -962,6 +1002,15 @@ namespace Rincon.ViewModels
                 }
 
                 this.SelectedMachimbre = this.Machimbres.First();
+
+                this.Decks = new List<string>();
+
+                foreach (var item in Enum.GetValues(typeof(DeckType)))
+                {
+                    this.Decks.Add(item.ToString());
+                }
+
+                this.SelectedDeck = this.Decks.First();
 
                 this.Products = await this.DataService.LoadProductsAsync();
 
@@ -1778,10 +1827,47 @@ namespace Rincon.ViewModels
             this.IsVisibleListProducts = false;
         });
 
+        public ICommand SelectStateEditCommand => new Command(() =>
+        {
+            this.IsVisibleListStatesEdit = !this.IsVisibleListStatesEdit;
+        });
+
+        public void InitEditProductFields(Product product)
+        {
+            this.ProductDescriptionEdit = product.Description;
+            this.SelectedStateEdit = product.WoodState.ToString();
+
+            this.StatesEdit = new List<string>();
+
+            if (product.ProductType == ProductType.Polin || product.ProductType == ProductType.MedioPolin)
+            {
+                this.StatesEdit.Add(WoodState.Fresco.ToString());
+                this.StatesEdit.Add(WoodState.Tratado.ToString());
+            }
+            else if (product.ProductType == ProductType.Poste)
+            {
+                this.StatesEdit.Add(WoodState.Fresco.ToString());
+                this.StatesEdit.Add(WoodState.Tratado.ToString());
+                this.StatesEdit.Add(WoodState.Cepillado4Caras.ToString());
+            }
+            else
+            {
+                foreach (var item in Enum.GetValues(typeof(WoodState)))
+                {
+                    if (item.ToString() != "Tratado")
+                        this.StatesEdit.Add(item.ToString());
+                }
+            }
+        }
         public ICommand SelectMachimbreCommand => new Command(() =>
         {
             this.IsVisibleListMachimbres = !this.IsVisibleListMachimbres;
 
+        });
+
+        public ICommand SelectDeckCommand => new Command(() =>
+        {
+            this.IsVisibleListDecks = !this.IsVisibleListDecks;
         });
 
         public ICommand SaveProductCommand => new Command(async () =>
@@ -1850,9 +1936,10 @@ namespace Rincon.ViewModels
                             Width = this?.Width,
                             Machimbre = this.IsMachimbre,
                             Deck = this.IsDeck,
-                            ProductType = this.IsTiranteSelect ? ProductType.Tirante : this.IsPolinSelect ? ProductType.Polin : this.IsTablaSelect ? ProductType.Tabla : ProductType.MedioPolin,
+                            ProductType = this.IsTiranteSelect ? ProductType.Tirante : this.IsPolinSelect ? ProductType.Polin : this.IsTablaSelect ? ProductType.Tabla : this.IsPosteSelect ? ProductType.Poste : ProductType.MedioPolin,
                             WoodState =  (WoodState)Enum.Parse(typeof(WoodState),this.SelectedState),
-                            MachimbreSate = (Machimbre)Enum.Parse(typeof(Machimbre),this.SelectedMachimbre),
+                            MachimbreSate = this.IsMachimbreTablaSelect ? (Machimbre)Enum.Parse(typeof(Machimbre), this.SelectedMachimbre) : null,
+                            DeckSate = this.IsDeckTablaSelect ? (DeckType)Enum.Parse(typeof(DeckType), this.SelectedDeck) : null,
                             Description = this.IsPolinSelect || this.IsMedioPolinSelect || this.IsPosteSelect ? $"{this.Diameter} x {this.Length}" : $"{this.Thickness} x {this.Length} x {this.Width}",
                             DependOf = this.SelectedProduct != null ? this.SelectedProduct.Id : null
                         };
@@ -1897,7 +1984,7 @@ namespace Rincon.ViewModels
         {
             this.States = new List<string>();
 
-            if(this.IsPolinSelect || this.IsMedioPolinSelect || this.IsPosteSelect)
+            if(this.IsPolinSelect || this.IsMedioPolinSelect)
             {
                 foreach (var item in Enum.GetValues(typeof(WoodState)))
                 {
@@ -1907,6 +1994,16 @@ namespace Rincon.ViewModels
                     }
 
                     if(this.IsMachimbre && item.ToString() == "CepilladoTratado")
+                    {
+                        this.States.Add(item.ToString());
+                    }
+                }
+            }
+            else if(this.IsPosteSelect)
+            {
+                foreach (var item in Enum.GetValues(typeof(WoodState)))
+                {
+                    if (item.ToString() == "Fresco" || item.ToString() == "Tratado" || item.ToString() == "Cepillado4Caras")
                     {
                         this.States.Add(item.ToString());
                     }
@@ -1935,6 +2032,7 @@ namespace Rincon.ViewModels
             this.Thickness = 0;
             this.Width = 0;
             this.IsMachimbre = false;
+            this.IsDeck = false;
             this.IsPolinSelect = false;
             this.IsTablaSelect = false;
             this.IsTiranteSelect = true;
@@ -2502,19 +2600,18 @@ namespace Rincon.ViewModels
             try
             {
 
-                var result = await this.DataService.InsertOrUpdateItemsAsync<Product>(product);
+                await this.DataService.InsertOrUpdateItemsAsync<Product>(product);
 
-                if (result > 0)
+                this.Stock?.ToList().ForEach(x =>
                 {
-
-                    this.Stock.ToList().ForEach(x =>
+                    if (x.Product.Id == product.Id)
                     {
-                        if (x.Product.Id == product.Id)
-                        {
-                            x.Product = product;
-                        }
-                    });
-                }
+                        x.Product = product;
+                    }
+                });
+
+                // Forzar actualización de la vista de detalle
+                OnPropertyChanged(nameof(SelectedProduct));
             }
             catch
             {

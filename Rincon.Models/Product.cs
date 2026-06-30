@@ -15,11 +15,20 @@ namespace Rincon.Models
         private string location;
         private string supplier;
         private string comment;
+        private string description;
+        private WoodState woodState;
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Id { get; set; }
-        public string Description { get; set; }
+        public string Description {
+            get => this.description;
+            set
+            {
+                this.description = value;
+                OnPropertyChanged(nameof(Description));
+            }
+        }
         public bool? Machimbre { get; set; }
         public bool? Deck { get; set; }
         public double? Thickness { get; set; }
@@ -27,8 +36,16 @@ namespace Rincon.Models
         public double? Length { get; set; }
         public double? Diameter { get; set; }
         public  ProductType  ProductType { get; set; }
-        public WoodState WoodState { get; set; }
+        public WoodState WoodState {
+            get => this.woodState;
+            set
+            {
+                this.woodState = value;
+                OnPropertyChanged(nameof(WoodState));
+            }
+        }
         public Machimbre? MachimbreSate { get; set; }
+        public DeckType? DeckSate { get; set; }
         public string Location {
             get => this.location;
             set
@@ -55,6 +72,21 @@ namespace Rincon.Models
         }
 
         public string DependOf { get; set; }
+
+        [NotMapped]
+        public string MachimbreDeckLabel =>
+            Machimbre == true ? "Machimbre" :
+            Deck == true ? "Deck" :
+            string.Empty;
+
+        [NotMapped]
+        public string MachimbreDeckSubLabel =>
+            Machimbre == true && MachimbreSate.HasValue ? MachimbreSate.ToString() :
+            Deck == true && DeckSate.HasValue ? DeckSate.ToString() :
+            string.Empty;
+
+        [NotMapped]
+        public bool HasMachimbreOrDeck => Machimbre == true || Deck == true;
 
 
         public override string ToString()

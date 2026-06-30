@@ -226,6 +226,8 @@ public partial class HomePage
 
         this.ViewModel.ProduSupplierEdit = this.ViewModel.SelectedProduct.Supplier;
 
+        this.ViewModel.InitEditProductFields(this.ViewModel.SelectedProduct);
+
         this.ViewModel.ChangeViewCommand.Execute("EditProductDetaildInventory");
 
     }
@@ -240,6 +242,8 @@ public partial class HomePage
         this.ViewModel.SelectedProduct.Comment = this.ViewModel.ProductCommentEdit;
         this.ViewModel.SelectedProduct.Location = this.ViewModel.ProductLocationEdit;
         this.ViewModel.SelectedProduct.Supplier = this.ViewModel.ProduSupplierEdit;
+        this.ViewModel.SelectedProduct.Description = this.ViewModel.ProductDescriptionEdit;
+        this.ViewModel.SelectedProduct.WoodState = (Rincon.Models.WoodState)Enum.Parse(typeof(Rincon.Models.WoodState), this.ViewModel.SelectedStateEdit);
 
         this.ViewModel.UpdateProductCommand.Execute(this.ViewModel.SelectedProduct);
 
@@ -303,6 +307,26 @@ public partial class HomePage
         
         // Limpiar la selección para permitir re-selección del mismo item
         MachimbreList.SelectedItem = null;
+    }
+
+
+    void StatesEdit_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    {
+        if (StatesEditList.SelectedItem == null) return;
+
+        this.ViewModel.SelectedStateEdit = (string)StatesEditList.SelectedItem;
+        this.ViewModel.IsVisibleListStatesEdit = false;
+
+        StatesEditList.SelectedItem = null;
+    }    void Decks_SelectionChanged(System.Object sender, Microsoft.Maui.Controls.SelectionChangedEventArgs e)
+    {
+        if (DeckList.SelectedItem == null) return;
+
+        this.ViewModel.SelectedDeck = (string)DeckList.SelectedItem;
+        this.ViewModel.IsVisibleListDecks = false;
+
+        // Limpiar la selección para permitir re-selección del mismo item
+        DeckList.SelectedItem = null;
     }
 
     void OnSearchStockInventoryTextChanged(System.Object sender, Microsoft.Maui.Controls.TextChangedEventArgs e)
