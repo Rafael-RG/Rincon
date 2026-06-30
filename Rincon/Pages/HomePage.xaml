@@ -2187,9 +2187,8 @@
                                             Margin="4,2"
                                             HasShadow="False">
                                             <Grid
-                                                ColumnDefinitions="60,*,60"
+                                                ColumnDefinitions="Auto,*,Auto"
                                                 ColumnSpacing="12"
-                                                RowDefinitions="auto"
                                                 VerticalOptions="Center">
                                                 <Label
                                                     FontSize="14"
@@ -2197,22 +2196,32 @@
                                                     TextColor="#79280F"
                                                     FontAttributes="Bold"
                                                     HorizontalTextAlignment="Center"
+                                                    LineBreakMode="NoWrap"
                                                     VerticalOptions="Center" />
 
-                                                <Label
+                                                <VerticalStackLayout
                                                     Grid.Column="1"
-                                                    FontSize="14"
-                                                    Text="{Binding Description}"
-                                                    TextColor="#333333"
-                                                    VerticalOptions="Center"
-                                                    LineBreakMode="TailTruncation" />
+                                                    Spacing="2"
+                                                    VerticalOptions="Center">
+                                                    <Label
+                                                        FontSize="14"
+                                                        Text="{Binding Description}"
+                                                        TextColor="#333333"
+                                                        LineBreakMode="TailTruncation" />
+                                                    <StackLayout Orientation="Horizontal" Spacing="6">
+                                                        <Label FontSize="11" Text="{Binding ProductType}" TextColor="#999999" />
+                                                        <Label FontSize="11" FontAttributes="Bold" Text="{Binding MachimbreDeckLabel}" TextColor="#79280F" />
+                                                        <Label FontSize="11" Text="{Binding MachimbreDeckSubLabel}" TextColor="#79280F" />
+                                                    </StackLayout>
+                                                </VerticalStackLayout>
 
                                                 <Label
                                                     Grid.Column="2"
-                                                    FontSize="14"
+                                                    FontSize="13"
                                                     Text="{Binding WoodState}"
                                                     TextColor="#666666"
                                                     HorizontalTextAlignment="Center"
+                                                    LineBreakMode="TailTruncation"
                                                     VerticalOptions="Center" />
                                             </Grid>
                                         </Frame>
@@ -2254,12 +2263,13 @@
                                 CornerRadius="8" 
                                 HasShadow="False" 
                                 Padding="12,8">
-                                <Grid ColumnDefinitions="*,*,*,120,40" ColumnSpacing="8">
+                                <Grid ColumnDefinitions="Auto,*,1.2*,*,110,40" ColumnSpacing="8">
                                     <Label Text="Código" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
                                     <Label Grid.Column="1" Text="Descripción" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
-                                    <Label Grid.Column="2" Text="Estado" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
-                                    <Label Grid.Column="3" Text="Cantidad" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
-                                    <Label Grid.Column="4" Text="" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
+                                    <Label Grid.Column="2" Text="Tipo" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
+                                    <Label Grid.Column="3" Text="Estado" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
+                                    <Label Grid.Column="4" Text="Cantidad" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
+                                    <Label Grid.Column="5" Text="" FontSize="14" FontAttributes="Bold" TextColor="#79280F" HorizontalTextAlignment="Center" />
                                 </Grid>
                             </Frame>
                             
@@ -2299,7 +2309,7 @@
                                                 Margin="4,2"
                                                 HasShadow="False">
                                                 <Grid
-                                                    ColumnDefinitions="*,*,*,120,40"
+                                                    ColumnDefinitions="Auto,*,1.2*,*,110,40"
                                                     ColumnSpacing="12"
                                                     RowDefinitions="auto"
                                                     VerticalOptions="Center">
@@ -2310,6 +2320,7 @@
                                                         TextColor="#79280F"
                                                         FontAttributes="Bold"
                                                         HorizontalTextAlignment="Center"
+                                                        LineBreakMode="NoWrap"
                                                         VerticalOptions="Center" />
 
                                                     <Label
@@ -2321,8 +2332,30 @@
                                                         VerticalOptions="Center"
                                                         LineBreakMode="TailTruncation" />
 
-                                                    <Label
+                                                    <VerticalStackLayout
                                                         Grid.Column="2"
+                                                        Spacing="2"
+                                                        VerticalOptions="Center">
+                                                        <Label
+                                                            FontSize="13"
+                                                            Text="{Binding Product.ProductType}"
+                                                            TextColor="#555555"
+                                                            HorizontalTextAlignment="Center" />
+                                                        <Label
+                                                            FontSize="12"
+                                                            FontAttributes="Bold"
+                                                            Text="{Binding Product.MachimbreDeckLabel}"
+                                                            TextColor="#79280F"
+                                                            HorizontalTextAlignment="Center" />
+                                                        <Label
+                                                            FontSize="11"
+                                                            Text="{Binding Product.MachimbreDeckSubLabel}"
+                                                            TextColor="#79280F"
+                                                            HorizontalTextAlignment="Center" />
+                                                    </VerticalStackLayout>
+
+                                                    <Label
+                                                        Grid.Column="3"
                                                         FontSize="14"
                                                         Text="{Binding Product.WoodState}"
                                                         TextColor="#666666"
@@ -2330,7 +2363,7 @@
                                                         VerticalOptions="Center" />
 
                                                     <Frame
-                                                        Grid.Column="3"
+                                                        Grid.Column="4"
                                                         Padding="8"
                                                         BackgroundColor="#F8F9FA"
                                                         BorderColor="#79280F"
@@ -2349,7 +2382,7 @@
                                                     </Frame>
 
                                                     <ImageButton
-                                                        Grid.Column="4"
+                                                        Grid.Column="5"
                                                         Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:HomeViewModel}}, Path=RemoveProductToAddedCommand}"
                                                         CommandParameter="{Binding .}"
                                                         HeightRequest="30"
