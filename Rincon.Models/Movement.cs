@@ -15,6 +15,10 @@ namespace Rincon.Models
         public string Id { get; set; }
         public DateTime Date { get; set; }
         public string ProductName { get; set; }
+        [NotMapped]
+        public Product Product { get; set; }
+        [NotMapped]
+        public string ProductDescription => Product?.Description ?? ProductName;
         public double Quantity { get; set; }
         public string MovementType { get; set; }
         public string UserName { get; set; }

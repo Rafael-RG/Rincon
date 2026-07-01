@@ -43,9 +43,25 @@
           </Grid.ColumnDefinitions>
           <!-- Info tarea -->
           <Label Text="Material" Grid.Row="0" Grid.Column="0" TextColor="#666" />
-          <Label Text="{Binding SelectedTask.ProductSource}" Grid.Row="0" Grid.Column="1" TextColor="#222" />
+          <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+            <Label Text="{Binding SelectedTask.ProductSourceDetail.Description}" TextColor="#222" />
+            <StackLayout Orientation="Horizontal" Spacing="6">
+              <Label FontSize="11" Text="{Binding SelectedTask.ProductSourceDetail.ProductType}" TextColor="#666666" />
+              <Label FontSize="11" FontAttributes="Bold" Text="{Binding SelectedTask.ProductSourceDetail.MachimbreDeckLabel}" TextColor="#4A744C" />
+              <Label FontSize="11" Text="{Binding SelectedTask.ProductSourceDetail.MachimbreDeckSubLabel}" TextColor="#4A744C" />
+              <Label FontSize="11" Text="{Binding SelectedTask.ProductSourceDetail.WoodState}" TextColor="#666666" />
+            </StackLayout>
+          </VerticalStackLayout>
           <Label Text="Producir" Grid.Row="1" Grid.Column="0" TextColor="#666" />
-          <Label Text="{Binding SelectedTask.ProductDestination}" Grid.Row="1" Grid.Column="1" TextColor="#222" />
+          <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
+            <Label Text="{Binding SelectedTask.ProductDestinationDetail.Description}" TextColor="#222" />
+            <StackLayout Orientation="Horizontal" Spacing="6">
+              <Label FontSize="11" Text="{Binding SelectedTask.ProductDestinationDetail.ProductType}" TextColor="#666666" />
+              <Label FontSize="11" FontAttributes="Bold" Text="{Binding SelectedTask.ProductDestinationDetail.MachimbreDeckLabel}" TextColor="#4A744C" />
+              <Label FontSize="11" Text="{Binding SelectedTask.ProductDestinationDetail.MachimbreDeckSubLabel}" TextColor="#4A744C" />
+              <Label FontSize="11" Text="{Binding SelectedTask.ProductDestinationDetail.WoodState}" TextColor="#666666" />
+            </StackLayout>
+          </VerticalStackLayout>
           <Label Text="Unidades de material" Grid.Row="2" Grid.Column="0" TextColor="#666" />
           <Label Text="{Binding SelectedTask.Quantity}" Grid.Row="2" Grid.Column="1" TextColor="#222" />
           <Label Text="Prioridad" Grid.Row="3" Grid.Column="0" TextColor="#666" />

@@ -127,7 +127,7 @@
                                         Margin="0,0,0,10">
                                     <Grid ColumnDefinitions="*, Auto" 
                                         RowSpacing="9"
-                                          RowDefinitions="Auto,Auto,Auto"
+                                          RowDefinitions="Auto,Auto,Auto,Auto,Auto"
                                           VerticalOptions="Fill">
                                         <Label Text="{Binding Id, StringFormat='Tarea #{0:D5}'}" FontSize="14" TextColor="#797979" FontAttributes="Bold"/>
                                         
@@ -135,20 +135,32 @@
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="Material: " FontAttributes="Bold" />
-                                                    <Span Text="{Binding ProductSource}" />
+                                                    <Span Text="{Binding ProductSourceDetail.Description}" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label Grid.Row="2" FontSize="14" TextColor="#000000">
+                                        <StackLayout Grid.Row="2" Orientation="Horizontal" Spacing="5">
+                                            <Label FontSize="11" Text="{Binding ProductSourceDetail.ProductType}" TextColor="#666666" />
+                                            <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductSourceDetail.MachimbreDeckLabel}" TextColor="#AD6B2A" />
+                                            <Label FontSize="11" Text="{Binding ProductSourceDetail.MachimbreDeckSubLabel}" TextColor="#AD6B2A" />
+                                            <Label FontSize="11" Text="{Binding ProductSourceDetail.WoodState}" TextColor="#666666" />
+                                        </StackLayout>
+                                        <Label Grid.Row="3" FontSize="14" TextColor="#000000">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="Producir: " FontAttributes="Bold" />
-                                                    <Span Text="{Binding ProductDestination}" />
+                                                    <Span Text="{Binding ProductDestinationDetail.Description}" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
+                                        <StackLayout Grid.Row="4" Orientation="Horizontal" Spacing="5">
+                                            <Label FontSize="11" Text="{Binding ProductDestinationDetail.ProductType}" TextColor="#666666" />
+                                            <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductDestinationDetail.MachimbreDeckLabel}" TextColor="#AD6B2A" />
+                                            <Label FontSize="11" Text="{Binding ProductDestinationDetail.MachimbreDeckSubLabel}" TextColor="#AD6B2A" />
+                                            <Label FontSize="11" Text="{Binding ProductDestinationDetail.WoodState}" TextColor="#666666" />
+                                        </StackLayout>
                                         <StackLayout
-                                            Grid.RowSpan="3"
+                                            Grid.RowSpan="5"
                                             Grid.Column="1" 
                                             WidthRequest="90"
                                             HorizontalOptions="Center" 
@@ -184,27 +196,39 @@
                                             Margin="0,0,0,10">
                                             <Grid ColumnDefinitions="*, Auto" 
                                         RowSpacing="9"
-                                          RowDefinitions="Auto,Auto,Auto"
+                                          RowDefinitions="Auto,Auto,Auto,Auto,Auto"
                                           VerticalOptions="Fill">
                                         <Label Text="{Binding Id, StringFormat='Tarea #{0:D5}'}" FontSize="14" TextColor="#797979" FontAttributes="Bold"/>
                                         <Label Grid.Row="1" FontSize="14" TextColor="#000000">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="Material: " FontAttributes="Bold" />
-                                                    <Span Text="{Binding ProductSource}" />
+                                                    <Span Text="{Binding ProductSourceDetail.Description}" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label Grid.Row="2" FontSize="14" TextColor="#000000">
+                                        <StackLayout Grid.Row="2" Orientation="Horizontal" Spacing="5">
+                                            <Label FontSize="11" Text="{Binding ProductSourceDetail.ProductType}" TextColor="#666666" />
+                                            <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductSourceDetail.MachimbreDeckLabel}" TextColor="#4A744C" />
+                                            <Label FontSize="11" Text="{Binding ProductSourceDetail.MachimbreDeckSubLabel}" TextColor="#4A744C" />
+                                            <Label FontSize="11" Text="{Binding ProductSourceDetail.WoodState}" TextColor="#666666" />
+                                        </StackLayout>
+                                        <Label Grid.Row="3" FontSize="14" TextColor="#000000">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="Producir: " FontAttributes="Bold" />
-                                                    <Span Text="{Binding ProductDestination}" />
+                                                    <Span Text="{Binding ProductDestinationDetail.Description}" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
+                                        <StackLayout Grid.Row="4" Orientation="Horizontal" Spacing="5">
+                                            <Label FontSize="11" Text="{Binding ProductDestinationDetail.ProductType}" TextColor="#666666" />
+                                            <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductDestinationDetail.MachimbreDeckLabel}" TextColor="#4A744C" />
+                                            <Label FontSize="11" Text="{Binding ProductDestinationDetail.MachimbreDeckSubLabel}" TextColor="#4A744C" />
+                                            <Label FontSize="11" Text="{Binding ProductDestinationDetail.WoodState}" TextColor="#666666" />
+                                        </StackLayout>
                                         <StackLayout
-                                            Grid.RowSpan="3"
+                                            Grid.RowSpan="5"
                                             Grid.Column="1" 
                                             WidthRequest="90"
                                             HorizontalOptions="Center" 

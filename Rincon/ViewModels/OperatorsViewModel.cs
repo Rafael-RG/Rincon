@@ -358,6 +358,7 @@ namespace Rincon.ViewModels
             try
             {
                 var allTasks = await _dataService.LoadTaskItemsAsync();
+                await EnrichTaskProductsAsync(allTasks);
 
                 // Log temporal para depuración
                 System.Diagnostics.Debug.WriteLine($"Total tareas cargadas: {allTasks.Count}");
@@ -378,6 +379,22 @@ namespace Rincon.ViewModels
             {
                 System.Diagnostics.Debug.WriteLine($"Error al cargar tareas: {ex.Message}");
                 await NotificationService.NotifyAsync("Error", $"Error al cargar tareas: {ex.Message}", "OK");
+            }
+        }
+
+        private async Task EnrichTaskProductsAsync(IEnumerable<TaskItem> taskItems)
+        {
+            if (taskItems == null)
+            {
+                return;
+            }
+
+            var products = await _dataService.LoadProductsAsync();
+
+            foreach (var taskItem in taskItems)
+            {
+                taskItem.ProductSourceDetail = products?.FirstOrDefault(product => product.Id == taskItem.ProductSourceId);
+                taskItem.ProductDestinationDetail = products?.FirstOrDefault(product => product.Id == taskItem.ProductDestinationId);
             }
         }
 
@@ -416,6 +433,7 @@ namespace Rincon.ViewModels
                 OnPropertyChanged(nameof(IsAnyPopupVisible));
                 
                 var allTasks = await _dataService.LoadTaskItemsAsync();
+                await EnrichTaskProductsAsync(allTasks);
                 PendingTasks = allTasks.Where(t => t.TaskStatus == Rincon.Models.TaskStatus.Pendiente).ToList();
                 AssignedTasks = allTasks.Where(t => t.TaskStatus == Rincon.Models.TaskStatus.Iniciada).ToList();
                 

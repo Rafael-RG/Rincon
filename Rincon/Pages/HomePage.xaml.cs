@@ -259,8 +259,15 @@ public partial class HomePage
             }
             else
             {
-                LateraBarStock.ItemsSource = this.ViewModel.Cards.Where(x => x.Id.ToLower().Contains(e.NewTextValue.ToLower())
-                    || x.Description.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+                var searchText = e.NewTextValue.ToLower();
+                LateraBarStock.ItemsSource = this.ViewModel.Cards.Where(x => x.Id.ToLower().Contains(searchText)
+                    || (x.Description?.ToLower().Contains(searchText) ?? false)
+                    || (x.ProductDescription?.ToLower().Contains(searchText) ?? false)
+                    || (x.ProductLocation?.ToLower().Contains(searchText) ?? false)
+                    || (x.ProductType?.ToLower().Contains(searchText) ?? false)
+                    || (x.MachimbreDeckLabel?.ToLower().Contains(searchText) ?? false)
+                    || (x.MachimbreDeckSubLabel?.ToLower().Contains(searchText) ?? false)
+                    || (x.WoodState?.ToLower().Contains(searchText) ?? false)).ToList();
             }
         }
         catch
@@ -640,8 +647,20 @@ public partial class HomePage
             }
             else
             {
-                TaskItemsSearch.ItemsSource = this.ViewModel.TaskItems.Where(x => x.TaskStatus.ToString().ToLower().Contains(e.NewTextValue.ToLower())
-                    || x.ProductSource.ToLower().Contains(e.NewTextValue.ToLower())).ToList();
+                var searchText = e.NewTextValue.ToLower();
+                TaskItemsSearch.ItemsSource = this.ViewModel.TaskItems.Where(x => x.TaskStatus.ToString().ToLower().Contains(searchText)
+                    || (x.ProductSource?.ToLower().Contains(searchText) ?? false)
+                    || (x.ProductDestination?.ToLower().Contains(searchText) ?? false)
+                    || (x.ProductSourceDetail?.Description?.ToLower().Contains(searchText) ?? false)
+                    || (x.ProductSourceDetail?.ProductType.ToString().ToLower().Contains(searchText) ?? false)
+                    || (x.ProductSourceDetail?.WoodState.ToString().ToLower().Contains(searchText) ?? false)
+                    || (x.ProductSourceDetail?.MachimbreDeckLabel?.ToLower().Contains(searchText) ?? false)
+                    || (x.ProductSourceDetail?.MachimbreDeckSubLabel?.ToLower().Contains(searchText) ?? false)
+                    || (x.ProductDestinationDetail?.Description?.ToLower().Contains(searchText) ?? false)
+                    || (x.ProductDestinationDetail?.ProductType.ToString().ToLower().Contains(searchText) ?? false)
+                    || (x.ProductDestinationDetail?.WoodState.ToString().ToLower().Contains(searchText) ?? false)
+                    || (x.ProductDestinationDetail?.MachimbreDeckLabel?.ToLower().Contains(searchText) ?? false)
+                    || (x.ProductDestinationDetail?.MachimbreDeckSubLabel?.ToLower().Contains(searchText) ?? false)).ToList();
             }
         }
         catch

@@ -301,7 +301,7 @@
                                 BackgroundColor="#EAEAEA"
                                 BorderColor="Transparent"
                                 CornerRadius="12"
-                                HeightRequest="110"
+                                HeightRequest="135"
                                 VerticalOptions="FillAndExpand"
                                 HorizontalOptions="FillAndExpand"
                                 Margin="0,0,0,0">
@@ -315,13 +315,14 @@
                                     RowSpacing="2"
                                     VerticalOptions="FillAndExpand">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
 
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
@@ -352,7 +353,7 @@
                                     <Label
                                         Grid.Row="0"
                                         Grid.Column="1"
-                                        Grid.ColumnSpan="2"
+                                        Grid.ColumnSpan="3"
                                         Margin="0,0,5,0"
                                         FontSize="18"
                                         MaxLines="1"
@@ -362,7 +363,7 @@
                                         LineBreakMode="TailTruncation">
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="{Binding Description}" />
+                                                <Span Text="{Binding ProductDescription}" />
                                             </FormattedString>
                                         </Label.FormattedText>
 
@@ -371,7 +372,20 @@
                                     <StackLayout
                                         Grid.Row="1"
                                         Grid.Column="1"
-                                        Margin="0,10,0,0"
+                                        Grid.ColumnSpan="3"
+                                        Margin="0,2,5,0"
+                                        Orientation="Horizontal"
+                                        Spacing="5">
+                                        <Label FontSize="11" Text="{Binding ProductType}" TextColor="#666666" />
+                                        <Label FontSize="11" FontAttributes="Bold" Text="{Binding MachimbreDeckLabel}" TextColor="#79280F" />
+                                        <Label FontSize="11" Text="{Binding MachimbreDeckSubLabel}" TextColor="#79280F" />
+                                        <Label FontSize="11" Text="{Binding WoodState}" TextColor="#666666" />
+                                    </StackLayout>
+
+                                    <StackLayout
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Margin="0,8,0,0"
                                         HorizontalOptions="Center"
                                         Spacing="2"
                                         VerticalOptions="FillAndExpand">
@@ -391,9 +405,9 @@
                                     </StackLayout>
 
                                     <StackLayout
-                                        Grid.Row="1"
+                                        Grid.Row="2"
                                         Grid.Column="2"
-                                        Margin="0,10,0,0"
+                                        Margin="0,8,0,0"
                                         HorizontalOptions="Center"
                                         Spacing="2"
                                         VerticalOptions="Start">
@@ -413,6 +427,25 @@
 
                                     </StackLayout>
 
+                                    <StackLayout
+                                        Grid.Row="2"
+                                        Grid.Column="3"
+                                        Margin="0,8,0,0"
+                                        HorizontalOptions="Center"
+                                        Spacing="2"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            FontSize="12"
+                                            HorizontalOptions="Center"
+                                            Text="Proceso"
+                                            TextColor="#000000" />
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="15"
+                                            HorizontalOptions="Center"
+                                            Text="{Binding StockProcess}"
+                                            TextColor="#000000" />
+                                    </StackLayout>
 
 
                                 </Grid>
@@ -568,7 +601,7 @@
                                                 <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="Material: " FontAttributes="Bold" />
-                                                    <Span Text="{Binding ProductSource}" />
+                                                    <Span Text="{Binding ProductSourceDetail.Description}" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                             </Label>
@@ -582,7 +615,7 @@
                                                 <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="Producir: " FontAttributes="Bold" />
-                                                    <Span Text="{Binding ProductDestination}" />
+                                                    <Span Text="{Binding ProductDestinationDetail.Description}" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                             </Label>
@@ -4109,11 +4142,22 @@
                                         <Label
                                             Grid.Column="1"
                                             FontSize="12"
-                                            Text="{Binding ProductSource}"
                                             TextColor="#000000"
                                             HorizontalTextAlignment="Start"
                                             VerticalOptions="Center"
-                                            LineBreakMode="TailTruncation" />
+                                            LineBreakMode="TailTruncation">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding ProductSourceDetail.Description}" />
+                                                    <Span Text=" · " />
+                                                    <Span Text="{Binding ProductSourceDetail.ProductType}" />
+                                                    <Span Text=" " />
+                                                    <Span Text="{Binding ProductSourceDetail.MachimbreDeckLabel}" />
+                                                    <Span Text=" " />
+                                                    <Span Text="{Binding ProductSourceDetail.WoodState}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
 
                                         <Label
                                             Grid.Column="2"
@@ -4126,11 +4170,22 @@
                                         <Label
                                             Grid.Column="3"
                                             FontSize="12"
-                                            Text="{Binding ProductDestination}"
                                             TextColor="#000000"
                                             HorizontalTextAlignment="Start"
                                             VerticalOptions="Center"
-                                            LineBreakMode="TailTruncation" />
+                                            LineBreakMode="TailTruncation">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding ProductDestinationDetail.Description}" />
+                                                    <Span Text=" · " />
+                                                    <Span Text="{Binding ProductDestinationDetail.ProductType}" />
+                                                    <Span Text=" " />
+                                                    <Span Text="{Binding ProductDestinationDetail.MachimbreDeckLabel}" />
+                                                    <Span Text=" " />
+                                                    <Span Text="{Binding ProductDestinationDetail.WoodState}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
 
                                         <Label
                                             Grid.Column="4"
@@ -5445,13 +5500,18 @@
                                                 TextColor="#000000"
                                                 VerticalOptions="Center" />
 
-                                            <Label
+                                            <VerticalStackLayout
                                                 Grid.Column="1"
-                                                FontSize="12"
-                                                Text="{Binding ProductName}"
-                                                TextColor="#000000"
-                                                VerticalOptions="Center"
-                                                LineBreakMode="TailTruncation" />
+                                                Spacing="1"
+                                                VerticalOptions="Center">
+                                                <Label FontSize="12" Text="{Binding Product.Description}" TextColor="#000000" LineBreakMode="TailTruncation" />
+                                                <StackLayout Orientation="Horizontal" Spacing="5">
+                                                    <Label FontSize="10" Text="{Binding Product.ProductType}" TextColor="#666666" />
+                                                    <Label FontSize="10" FontAttributes="Bold" Text="{Binding Product.MachimbreDeckLabel}" TextColor="#79280F" />
+                                                    <Label FontSize="10" Text="{Binding Product.MachimbreDeckSubLabel}" TextColor="#79280F" />
+                                                    <Label FontSize="10" Text="{Binding Product.WoodState}" TextColor="#666666" />
+                                                </StackLayout>
+                                            </VerticalStackLayout>
 
                                             <Label
                                                 Grid.Column="2"
@@ -5862,17 +5922,22 @@
                                             <Label
                                                 Grid.Column="0"
                                                 FontSize="12"
-                                                Text="{Binding Id}"
+                                                Text="{Binding ProductId}"
                                                 TextColor="#000000"
                                                 VerticalOptions="Center" />
 
-                                            <Label
+                                            <VerticalStackLayout
                                                 Grid.Column="1"
-                                                FontSize="12"
-                                                Text="{Binding ProductName}"
-                                                TextColor="#000000"
-                                                VerticalOptions="Center"
-                                                LineBreakMode="TailTruncation" />
+                                                Spacing="1"
+                                                VerticalOptions="Center">
+                                                <Label FontSize="12" Text="{Binding Product.Description}" TextColor="#000000" LineBreakMode="TailTruncation" />
+                                                <StackLayout Orientation="Horizontal" Spacing="5">
+                                                    <Label FontSize="10" Text="{Binding Product.ProductType}" TextColor="#666666" />
+                                                    <Label FontSize="10" FontAttributes="Bold" Text="{Binding Product.MachimbreDeckLabel}" TextColor="#79280F" />
+                                                    <Label FontSize="10" Text="{Binding Product.MachimbreDeckSubLabel}" TextColor="#79280F" />
+                                                    <Label FontSize="10" Text="{Binding Product.WoodState}" TextColor="#666666" />
+                                                </StackLayout>
+                                            </VerticalStackLayout>
 
                                             <Label
                                                 Grid.Column="2"
@@ -6143,13 +6208,18 @@
                                                     TextColor="#000000"
                                                     HorizontalTextAlignment="Center"
                                                     VerticalOptions="Center" />
-                                                <Label
+                                                <VerticalStackLayout
                                                     Grid.Column="1"
-                                                    FontSize="11"
-                                                    Text="{Binding ProductName}"
-                                                    TextColor="#000000"
-                                                    HorizontalTextAlignment="Center"
-                                                    VerticalOptions="Center" />
+                                                    Spacing="1"
+                                                    VerticalOptions="Center">
+                                                    <Label FontSize="11" Text="{Binding ProductDescription}" TextColor="#000000" HorizontalTextAlignment="Center" LineBreakMode="TailTruncation" />
+                                                    <StackLayout Orientation="Horizontal" Spacing="4" HorizontalOptions="Center">
+                                                        <Label FontSize="9" Text="{Binding Product.ProductType}" TextColor="#666666" />
+                                                        <Label FontSize="9" FontAttributes="Bold" Text="{Binding Product.MachimbreDeckLabel}" TextColor="#79280F" />
+                                                        <Label FontSize="9" Text="{Binding Product.MachimbreDeckSubLabel}" TextColor="#79280F" />
+                                                        <Label FontSize="9" Text="{Binding Product.WoodState}" TextColor="#666666" />
+                                                    </StackLayout>
+                                                </VerticalStackLayout>
                                                 <Label
                                                     Grid.Column="2"
                                                     FontSize="11"

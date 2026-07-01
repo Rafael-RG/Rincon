@@ -28,6 +28,10 @@ namespace Rincon.Models
         public DateTime? StartDate { get; set; }
         public string OperatorComment { get; set; }
         public string ProcessErrorQuantity { get; set; }
+        [NotMapped]
+        public Product ProductSourceDetail { get; set; }
+        [NotMapped]
+        public Product ProductDestinationDetail { get; set; }
     }
 
     public enum TaskStatus 
