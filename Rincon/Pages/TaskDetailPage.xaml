@@ -71,10 +71,16 @@
                                CornerRadius="8"
                                Padding="12"
                                HasShadow="False">
-                            <Label Text="{Binding SelectedTask.ProductSource}" 
-                                   FontSize="15"
-                                   TextColor="#333333"
-                                   LineBreakMode="WordWrap" />
+                            <VerticalStackLayout Spacing="3">
+                                <Label FontSize="13" FontAttributes="Bold" Text="{Binding SelectedTask.ProductSourceId}" TextColor="#79280F" />
+                                <Label FontSize="15" Text="{Binding SelectedTask.ProductSourceDetail.Description}" TextColor="#333333" LineBreakMode="WordWrap" />
+                                <StackLayout Orientation="Horizontal" Spacing="6">
+                                    <Label FontSize="12" Text="{Binding SelectedTask.ProductSourceDetail.ProductType}" TextColor="#555555" />
+                                    <Label FontSize="12" FontAttributes="Bold" Text="{Binding SelectedTask.ProductSourceDetail.MachimbreDeckLabel}" TextColor="#79280F" />
+                                    <Label FontSize="12" Text="{Binding SelectedTask.ProductSourceDetail.MachimbreDeckSubLabel}" TextColor="#79280F" />
+                                    <Label FontSize="12" Text="{Binding SelectedTask.ProductSourceDetail.WoodState}" TextColor="#666666" />
+                                </StackLayout>
+                            </VerticalStackLayout>
                         </Frame>
                         
                         <!-- Producir -->
@@ -90,10 +96,16 @@
                                CornerRadius="8"
                                Padding="12"
                                HasShadow="False">
-                            <Label Text="{Binding SelectedTask.ProductDestination}" 
-                                   FontSize="15"
-                                   TextColor="#333333"
-                                   LineBreakMode="WordWrap" />
+                            <VerticalStackLayout Spacing="3">
+                                <Label FontSize="13" FontAttributes="Bold" Text="{Binding SelectedTask.ProductDestinationId}" TextColor="#79280F" />
+                                <Label FontSize="15" Text="{Binding SelectedTask.ProductDestinationDetail.Description}" TextColor="#333333" LineBreakMode="WordWrap" />
+                                <StackLayout Orientation="Horizontal" Spacing="6">
+                                    <Label FontSize="12" Text="{Binding SelectedTask.ProductDestinationDetail.ProductType}" TextColor="#555555" />
+                                    <Label FontSize="12" FontAttributes="Bold" Text="{Binding SelectedTask.ProductDestinationDetail.MachimbreDeckLabel}" TextColor="#79280F" />
+                                    <Label FontSize="12" Text="{Binding SelectedTask.ProductDestinationDetail.MachimbreDeckSubLabel}" TextColor="#79280F" />
+                                    <Label FontSize="12" Text="{Binding SelectedTask.ProductDestinationDetail.WoodState}" TextColor="#666666" />
+                                </StackLayout>
+                            </VerticalStackLayout>
                         </Frame>
                         
                         <!-- Cantidad -->

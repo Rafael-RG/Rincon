@@ -268,7 +268,7 @@ namespace Rincon.DataAccess
         {
             using (var databaseContext = new DatabaseContext())
             {
-                var orderItems = await databaseContext.BookingOrder.Where(b => b.IsOrder).OrderByDescending(x => x.OrderDate).ToListAsync();
+                var orderItems = await databaseContext.BookingOrder.Where(b => b.IsOrder && !b.IsBooking).OrderByDescending(x => x.OrderDate).ToListAsync();
                 return orderItems;
             }
         }

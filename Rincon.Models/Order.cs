@@ -19,5 +19,8 @@ namespace Rincon.Models
         public string ProductName { get; set; }
         public int Quantity { get; set; }
 
+        [NotMapped]
+        public Product Product { get; set; }
+
     }
 }

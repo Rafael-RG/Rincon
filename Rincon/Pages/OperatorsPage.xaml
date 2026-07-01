@@ -194,10 +194,20 @@
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="📦 Material: " FontAttributes="Bold" TextColor="#79280F" />
-                                                        <Span Text="{Binding ProductSource}" />
+                                                        <Span Text="{Binding ProductSourceDetail.Description}" />
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
+                                            <StackLayout Grid.Row="1"
+                                                         Grid.Column="0"
+                                                         Margin="0,20,0,0"
+                                                         Orientation="Horizontal"
+                                                         Spacing="5">
+                                                <Label FontSize="11" Text="{Binding ProductSourceDetail.ProductType}" TextColor="#666666" />
+                                                <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductSourceDetail.MachimbreDeckLabel}" TextColor="#79280F" />
+                                                <Label FontSize="11" Text="{Binding ProductSourceDetail.MachimbreDeckSubLabel}" TextColor="#79280F" />
+                                                <Label FontSize="11" Text="{Binding ProductSourceDetail.WoodState}" TextColor="#666666" />
+                                            </StackLayout>
                                             
                                             <!-- Producto destino -->
                                             <Label Grid.Row="2" 
@@ -208,10 +218,20 @@
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="🔨 Producir: " FontAttributes="Bold" TextColor="#79280F" />
-                                                        <Span Text="{Binding ProductDestination}" />
+                                                        <Span Text="{Binding ProductDestinationDetail.Description}" />
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
+                                            <StackLayout Grid.Row="2"
+                                                         Grid.Column="0"
+                                                         Margin="0,20,0,0"
+                                                         Orientation="Horizontal"
+                                                         Spacing="5">
+                                                <Label FontSize="11" Text="{Binding ProductDestinationDetail.ProductType}" TextColor="#666666" />
+                                                <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductDestinationDetail.MachimbreDeckLabel}" TextColor="#79280F" />
+                                                <Label FontSize="11" Text="{Binding ProductDestinationDetail.MachimbreDeckSubLabel}" TextColor="#79280F" />
+                                                <Label FontSize="11" Text="{Binding ProductDestinationDetail.WoodState}" TextColor="#666666" />
+                                            </StackLayout>
                                             
                                             <!-- Estado y prioridad -->
                                             <StackLayout Grid.Row="1"
@@ -318,10 +338,20 @@
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="📦 Material: " FontAttributes="Bold" TextColor="#4CAF50" />
-                                                        <Span Text="{Binding ProductSource}" />
+                                                        <Span Text="{Binding ProductSourceDetail.Description}" />
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
+                                            <StackLayout Grid.Row="1"
+                                                         Grid.Column="0"
+                                                         Margin="0,20,0,0"
+                                                         Orientation="Horizontal"
+                                                         Spacing="5">
+                                                <Label FontSize="11" Text="{Binding ProductSourceDetail.ProductType}" TextColor="#666666" />
+                                                <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductSourceDetail.MachimbreDeckLabel}" TextColor="#4CAF50" />
+                                                <Label FontSize="11" Text="{Binding ProductSourceDetail.MachimbreDeckSubLabel}" TextColor="#4CAF50" />
+                                                <Label FontSize="11" Text="{Binding ProductSourceDetail.WoodState}" TextColor="#666666" />
+                                            </StackLayout>
                                             
                                             <!-- Producto destino -->
                                             <Label Grid.Row="2" 
@@ -332,10 +362,20 @@
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="🔨 Producir: " FontAttributes="Bold" TextColor="#4CAF50" />
-                                                        <Span Text="{Binding ProductDestination}" />
+                                                        <Span Text="{Binding ProductDestinationDetail.Description}" />
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
+                                            <StackLayout Grid.Row="2"
+                                                         Grid.Column="0"
+                                                         Margin="0,20,0,0"
+                                                         Orientation="Horizontal"
+                                                         Spacing="5">
+                                                <Label FontSize="11" Text="{Binding ProductDestinationDetail.ProductType}" TextColor="#666666" />
+                                                <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductDestinationDetail.MachimbreDeckLabel}" TextColor="#4CAF50" />
+                                                <Label FontSize="11" Text="{Binding ProductDestinationDetail.MachimbreDeckSubLabel}" TextColor="#4CAF50" />
+                                                <Label FontSize="11" Text="{Binding ProductDestinationDetail.WoodState}" TextColor="#666666" />
+                                            </StackLayout>
                                             
                                             <!-- Operario asignado -->
                                             <StackLayout Grid.Row="1"

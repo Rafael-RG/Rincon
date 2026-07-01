@@ -880,6 +880,22 @@ namespace Rincon.ViewModels
         private ObservableCollection<Booking> bookingItems;
         #endregion
 
+        partial void OnIsBookingChanged(bool value)
+        {
+            if (value && this.IsOrder)
+            {
+                this.IsOrder = false;
+            }
+        }
+
+        partial void OnIsOrderChanged(bool value)
+        {
+            if (value && this.IsBooking)
+            {
+                this.IsBooking = false;
+            }
+        }
+
         /// <summary>
         /// Gets by DI the required services
         /// </summary>
@@ -922,34 +938,40 @@ namespace Rincon.ViewModels
         {
             var stock = await this.DataService.LoadStockAsync();
 
-            this.ProductsWithStock = new ObservableCollection<ProductStock>(stock);
-
-            if (stock != null && stock.Any())
-            {
-                this.Stock = new ObservableCollection<ProductStock>(stock);
-            }
-
-
+            this.ProductsWithStock = new ObservableCollection<ProductStock>(stock ?? new List<ProductStock>());
+            this.Stock = new ObservableCollection<ProductStock>(stock ?? new List<ProductStock>());
+            this.Cards = new ObservableCollection<CardStock>();
             this.CheckStockQuantityPages = new List<int>();
 
             if (this.Stock != null && this.Stock.Any())
             {
                 var count = 0;
 
-                this.Cards = new ObservableCollection<CardStock>();
-
                 this.Stock.ToList().ForEach(product =>
                 {
 
-                    product.Product = this.Products.Find(x => x.Id == product.Id);
+                    product.Product = this.Products?.Find(x => x.Id == product.Id);
+
+                    if (product.Product == null)
+                    {
+                        return;
+                    }
 
                     this.Cards.Add(
                         new CardStock
                         {
                             Id = product.Id,
                             Description = $"{product.Product.ProductType} {product.Product.Description}",
+                            ProductDescription = product.Product.Description,
+                            ProductLocation = product.Product.Location,
+                            ProductType = product.Product.ProductType.ToString(),
+                            MachimbreDeckLabel = product.Product.MachimbreDeckLabel,
+                            MachimbreDeckSubLabel = product.Product.MachimbreDeckSubLabel,
+                            WoodState = product.Product.WoodState.ToString(),
                             StockAvailable = product.Available,
                             StockReserved = product.Reserved,
+                            StockProcess = product.Process,
+                            StockTotal = product.Quantity,
                             Icon = $"{product.Product.WoodState.ToString().ToLower()}.png"
                         });
 
@@ -2446,10 +2468,14 @@ namespace Rincon.ViewModels
             try
             {
                 var movements = await this.DataService.LoadMovementsAsync();
+                var products = await this.DataService.LoadProductsAsync();
+
+                EnrichMovementProducts(movements, products);
+
                 this.Movements = new ObservableCollection<Movement>(movements);
                 this.MovementsFilter = new ObservableCollection<Movement>(this.Movements);
 
-                this.ProductsMovementsFilter = new ObservableCollection<Product>(await this.DataService.LoadProductsAsync());
+                this.ProductsMovementsFilter = new ObservableCollection<Product>(products);
 
                 var movementTypeList = Enum.GetValues(typeof(MovementType)).Cast<MovementType>().Select(x => new MovementTypes { Name = x.ToString() }).ToList();
                 this.MovementTypes = new ObservableCollection<MovementTypes>(movementTypeList);
@@ -2498,7 +2524,7 @@ namespace Rincon.ViewModels
 
                 if (this.SelectedFilterMovementProduct != null)
                 {
-                    this.MovementsFilter = new ObservableCollection<Movement>(this.MovementsFilter.Where(x => x.ProductName == $"{this.SelectedFilterMovementProduct.Id} - {this.SelectedFilterMovementProduct.Description}"));
+                    this.MovementsFilter = new ObservableCollection<Movement>(this.MovementsFilter.Where(x => x.Product?.Id == this.SelectedFilterMovementProduct.Id || x.ProductName == $"{this.SelectedFilterMovementProduct.Id} - {this.SelectedFilterMovementProduct.Description}"));
                 }
 
                 if (this.SelectedFilterMovementType != null && this.SelectedFilterMovementType.Name.ToLower() != "todos")
@@ -2520,6 +2546,36 @@ namespace Rincon.ViewModels
             {
                 this.IsFiltersLoading = false;
             }
+        }
+
+        private void EnrichMovementProducts(IEnumerable<Movement> movements, IEnumerable<Product> products)
+        {
+            if (movements == null || products == null)
+            {
+                return;
+            }
+
+            var productsList = products.ToList();
+
+            foreach (var movement in movements)
+            {
+                movement.Product = FindMovementProduct(movement.ProductName, productsList);
+            }
+        }
+
+        private Product FindMovementProduct(string productName, IEnumerable<Product> products)
+        {
+            if (string.IsNullOrWhiteSpace(productName))
+            {
+                return null;
+            }
+
+            var productId = productName.Split(" - ", StringSplitOptions.None).FirstOrDefault()?.Trim();
+
+            return products.FirstOrDefault(product => product.Id == productId)
+                ?? products.FirstOrDefault(product => productName.Equals($"{product.Id} - {product.Description}", StringComparison.OrdinalIgnoreCase))
+                ?? products.FirstOrDefault(product => productName.Equals(product.ToString(), StringComparison.OrdinalIgnoreCase))
+                ?? products.FirstOrDefault(product => productName.Contains(product.Description, StringComparison.OrdinalIgnoreCase));
         }
 
         #endregion
@@ -2864,17 +2920,17 @@ namespace Rincon.ViewModels
             this.ValidateAddOperator = false;
             this.ValidateEditOperator = false;
 
-            var operatorsList = await this.DataService.LoadOperatorsAsync();
-
-            if (operatorsList != null && operatorsList.Any())
-            {
-                this.Operators = new ObservableCollection<Operator>(operatorsList);
-
-            }
-
-            this.AnyOperators = this.Operators!=null && this.Operators.Any()? true : false;
+            await RefreshOperatorsAsync();
 
             this.ChangeViewCommand.Execute("Operators");
+        }
+
+        private async Task RefreshOperatorsAsync()
+        {
+            var operatorsList = await this.DataService.LoadOperatorsAsync();
+
+            this.Operators = new ObservableCollection<Operator>(operatorsList ?? new List<Operator>());
+            this.AnyOperators = this.Operators.Any();
         }
 
         [RelayCommand]
@@ -2979,17 +3035,7 @@ namespace Rincon.ViewModels
 
                 if (result > 0)
                 {
-                    this.Operators ??= new ObservableCollection<Operator>();
-                    this.Operators.Add(operatorNew);
-
-                    var operatorsList = await this.DataService.LoadOperatorsAsync();
-
-                    if (operatorsList != null && operatorsList.Any())
-                    {
-                        this.Operators = new ObservableCollection<Operator>(operatorsList);
-
-                    }
-
+                    await RefreshOperatorsAsync();
                 }
                 else
                 {
@@ -3052,7 +3098,7 @@ namespace Rincon.ViewModels
 
                 if (result > 0)
                 {
-                    this.Operators.Remove(this.OperatorToDelete);
+                    await RefreshOperatorsAsync();
 
                     this.IsAddOperatorView = false;
                     this.IsEditOperatorView = false;
@@ -3184,8 +3230,7 @@ namespace Rincon.ViewModels
 
                 if (result > 0)
                 {
-                    this.Operators ??= new ObservableCollection<Operator>();
-
+                    await RefreshOperatorsAsync();
                 }
                 else
                 {
@@ -3322,6 +3367,7 @@ namespace Rincon.ViewModels
                 }
 
                 await RefreshBar();
+                await LoadTaskItems();
 
                 this.IsSelectedProductTask = false;
                 return true;
@@ -3438,6 +3484,7 @@ namespace Rincon.ViewModels
 
                 if (taskItems != null && taskItems.Any())
                 {
+                    await EnrichTaskProductsAsync(taskItems);
                     this.TaskItems = new ObservableCollection<TaskItem>(taskItems);
                     OnPropertyChanged(nameof(TaskItems));
                     
@@ -3455,6 +3502,20 @@ namespace Rincon.ViewModels
             catch
             {
                 await NotificationService.NotifyAsync("Error", "Hubo un error al cargar las tareas. Vuleva a intentar.", "Cerrar");
+            }
+        }
+
+        private async Task EnrichTaskProductsAsync(IEnumerable<TaskItem> taskItems)
+        {
+            if (this.Products == null || !this.Products.Any())
+            {
+                this.Products = await this.DataService.LoadProductsAsync();
+            }
+
+            foreach (var taskItem in taskItems)
+            {
+                taskItem.ProductSourceDetail = this.Products?.FirstOrDefault(product => product.Id == taskItem.ProductSourceId);
+                taskItem.ProductDestinationDetail = this.Products?.FirstOrDefault(product => product.Id == taskItem.ProductDestinationId);
             }
         }
         #endregion
@@ -3517,6 +3578,9 @@ namespace Rincon.ViewModels
                     return false;
                 }
 
+                var isBooking = this.IsBooking && !this.IsOrder;
+                var isOrder = this.IsOrder && !this.IsBooking;
+
                 if (string.IsNullOrEmpty(this.ClientBookingOrder))
                 {
                     await NotificationService.NotifyAsync("Atencion", "Debe ingresar la infromacion del cliente", "Cerrar");
@@ -3575,12 +3639,12 @@ namespace Rincon.ViewModels
                     Client = this.ClientBookingOrder,
                     Phone = this.PhoneBookingOrder,
                     Address = this.AddressBookingOrder,
-                    IsBooking = this.IsBooking,
-                    IsOrder = this.IsOrder,
+                    IsBooking = isBooking,
+                    IsOrder = isOrder,
                     OrderDate = this.DateBookingOrder,
                     Shipment = this.IsShipmentTask,
                     Comments = this.CommentsBookingOrder,
-                    Status = OrderStatus.Reserva,
+                    Status = isBooking ? OrderStatus.Reserva : (this.IsShipmentTask ? OrderStatus.Enviado : OrderStatus.Despachado),
                 };
 
                 var saveBookingOrder = await this.DataService.InsertItemAsync<BookingOrder>(newBookingOrder);
@@ -3591,7 +3655,7 @@ namespace Rincon.ViewModels
                     return false;
                 }
 
-                if (this.IsBooking)
+                if (isBooking)
                 {
                     foreach (var product in this.ProductsBookingOrder)
                     {
@@ -3702,6 +3766,7 @@ namespace Rincon.ViewModels
             this.DateBookingOrder = DateTime.Now;
             this.IsNoShipmentTask = true;
             this.IsBooking = true;
+            this.IsOrder = false;
         }
 
         [RelayCommand]
@@ -3860,10 +3925,17 @@ namespace Rincon.ViewModels
         {
             try
             {
+                if (bookingOrder.IsBooking)
+                {
+                    await ViewBookingAsync(bookingOrder);
+                    return;
+                }
+
                 var orders = await this.DataService.LoadOrderDetailsItemsAsync(bookingOrder.BookingOrderId);
 
                 if (orders != null && orders.Any())
                 {
+                    await EnrichOrderProductsAsync(orders);
                     this.SelectedBookingOrder = bookingOrder;
                     this.OrderItems = new ObservableCollection<Order>(orders);
                     this.ChangeViewCommand.Execute("Order");
@@ -3877,6 +3949,19 @@ namespace Rincon.ViewModels
             catch
             {
                 await NotificationService.NotifyAsync("Error", "Hubo un error al cargar la orden. Vuleva a intentar.", "Cerrar");
+            }
+        }
+
+        private async Task EnrichOrderProductsAsync(IEnumerable<Order> orders)
+        {
+            if (this.Products == null || !this.Products.Any())
+            {
+                this.Products = await this.DataService.LoadProductsAsync();
+            }
+
+            foreach (var order in orders)
+            {
+                order.Product = this.Products?.FirstOrDefault(product => product.Id == order.ProductId);
             }
         }
 
@@ -3988,6 +4073,7 @@ namespace Rincon.ViewModels
 
                 if (booking != null && booking.Any())
                 {
+                    await EnrichBookingProductsAsync(booking);
                     this.SelectedBookingOrder = bookingOrder;
                     this.BookingItems = new ObservableCollection<Booking>(booking);
                     this.ChangeViewCommand.Execute("Booking");
@@ -4001,6 +4087,19 @@ namespace Rincon.ViewModels
             catch
             {
                 await NotificationService.NotifyAsync("Error", "Hubo un error al cargar la reserva. Vuleva a intentar.", "Cerrar");
+            }
+        }
+
+        private async Task EnrichBookingProductsAsync(IEnumerable<Booking> bookings)
+        {
+            if (this.Products == null || !this.Products.Any())
+            {
+                this.Products = await this.DataService.LoadProductsAsync();
+            }
+
+            foreach (var booking in bookings)
+            {
+                booking.Product = this.Products?.FirstOrDefault(product => product.Id == booking.ProductId);
             }
         }
 

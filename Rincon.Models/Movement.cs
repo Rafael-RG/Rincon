@@ -18,6 +18,12 @@ namespace Rincon.Models
         public double Quantity { get; set; }
         public string MovementType { get; set; }
         public string UserName { get; set; }
+
+        [NotMapped]
+        public Product Product { get; set; }
+
+        [NotMapped]
+        public string ProductDescription => Product?.Description ?? ProductName;
     }
 
     public class MovementTypes 
