@@ -13,6 +13,9 @@
     xmlns:pagespop="clr-namespace:Rincon.Pages"
     x:TypeArguments="viewModels:OperatorsViewModel"
     Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.BackButtonBehavior="{BackButtonBehavior IsVisible=False}"
     Shell.NavBarHasShadow="False">
 
     <ContentPage.Resources>
@@ -50,7 +53,7 @@
         <popups:FinishTaskAuthPopup IsVisible="{Binding IsFinishTaskAuthPopupVisible}" ZIndex="1003" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
         <ImageButton Grid.Column="1" 
-                    Source="home_operators"
+                    Source="home_operators.png"
                     BackgroundColor="Transparent"
                     HorizontalOptions="End"
                     VerticalOptions="Center"
@@ -58,191 +61,373 @@
                     Margin="0,20,30,0"
                     WidthRequest="40"
                     HeightRequest="40" />
-        <Image Source="rincon_white" 
+        <Image Source="rincon_white.png" 
                         HorizontalOptions="Start"
                         Margin="30,20,0,0"
                         WidthRequest="200"
                         HeightRequest="60"/>
         <!-- Contenido principal debajo de los popups -->
-        <Frame Grid.ColumnSpan="2" Grid.Row="1" Margin="30" Padding="20" BackgroundColor="#D3AA84" BorderColor="Transparent" CornerRadius="15" HasShadow="True" ZIndex="1"
+        <Frame Grid.ColumnSpan="2" 
+               Grid.Row="1" 
+               Margin="25,15,25,25" 
+               Padding="25" 
+               BackgroundColor="White" 
+               BorderColor="#79280F" 
+               CornerRadius="12" 
+               HasShadow="True" 
+               ZIndex="1"
                IsVisible="{Binding IsAnyPopupVisible, Converter={StaticResource InvertedBoolConverter}}">
-               <Frame.Shadow>
-                    <Shadow Brush="Black" 
-                            Opacity="0.5" 
-                            Offset="0,4" 
-                            Radius="10"/>
-                </Frame.Shadow>
-            <Grid RowDefinitions="Auto,Auto,*">
-                <Grid Margin="0,0,0,10" Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="Lista de Tareas" FontSize="22" TextColor="#000000" FontAttributes="Bold" VerticalOptions="Center" />
-                    <ImageButton
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        Source="refresh"
-                        BackgroundColor="Transparent"
-                        Padding="8,0"
-                        HorizontalOptions="End"
-                        VerticalOptions="Center"
-                        Command="{Binding ReloadTasksCommand}" />  
+            <Grid RowDefinitions="auto,auto,*" RowSpacing="20">
+                <!-- Header mejorado -->
+                <Grid Grid.Row="0" ColumnDefinitions="*,auto" RowDefinitions="*" ColumnSpacing="15">
+                    <Label Grid.Column="0" 
+                           Text="📋 Gestión de Tareas" 
+                           FontSize="24" 
+                           FontAttributes="Bold"
+                           TextColor="#79280F" 
+                           VerticalOptions="Center" />
+                    <Frame Grid.Column="1"
+                           Padding="8"
+                           BackgroundColor="#F0F8FF"
+                           BorderColor="#79280F"
+                           CornerRadius="20"
+                           HasShadow="False">
+                        <ImageButton Source="refresh.png"
+                                     BackgroundColor="Transparent"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center"
+                                     WidthRequest="40"
+                                     HeightRequest="40"
+                                     Command="{Binding ReloadTasksCommand}" />
+                    </Frame>
                 </Grid>
-                <BoxView HeightRequest="1" Color="#000000" Margin="0,0,0,10" Grid.Row="1" />
-                <Grid ColumnSpacing="20" Grid.Row="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Encabezados y botón recargar -->
-                    <Label Margin="0,0,0,10" Grid.Row="0" Grid.Column="0" Text="Pendientes" FontSize="16" TextColor="#000000" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                    <Label Margin="0,0,0,10" Grid.Row="0" Grid.Column="1" Text="Asignadas" FontSize="16" TextColor="#000000" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                
+                <!-- Separador -->
+                <BoxView Grid.Row="1" 
+                         HeightRequest="2" 
+                         Color="#79280F" 
+                         HorizontalOptions="Fill" />
+                
+                <!-- Contenido principal -->
+                <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="25" RowDefinitions="auto,*" RowSpacing="15">
                     
+                    <!-- Headers de las columnas -->
+                    <Frame Grid.Row="0" 
+                           Grid.Column="0"
+                           BackgroundColor="#F8F8F8" 
+                           BorderColor="#79280F"
+                           CornerRadius="8" 
+                           Padding="12,8"
+                           HasShadow="False">
+                        <Label Text="📌 Tareas Pendientes" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="#79280F" 
+                               HorizontalTextAlignment="Center"/>
+                    </Frame>
+                    
+                    <Frame Grid.Row="0" 
+                           Grid.Column="1"
+                           BackgroundColor="#F8F8F8" 
+                           BorderColor="#79280F"
+                           CornerRadius="8" 
+                           Padding="12,8"
+                           HasShadow="False">
+                        <Label Text="✅ Tareas Asignadas" 
+                               FontSize="16" 
+                               FontAttributes="Bold"
+                               TextColor="#79280F" 
+                               HorizontalTextAlignment="Center"/>
+                    </Frame>
 
-                    <!-- Listas de tareas desde el ViewModel -->
-                    <CollectionView x:Name="TaskPendingList" 
-                                    Grid.Row="1" 
-                                    Grid.Column="0" 
-                                    ItemsSource="{Binding PendingTasks}" 
-                                    VerticalOptions="Fill"
-                                    SelectionMode="Single" 
-                                    SelectionChanged="TaskPendingSelectionChanged" 
-                                    SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
-                                    VerticalScrollBarVisibility="Always"
-                                    HorizontalScrollBarVisibility="Never"
-                                    HeightRequest="400">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:TaskItem">
-                                <Border BackgroundColor="#FFFFFF" 
-                                        StrokeThickness="0" 
-                                        StrokeShape="RoundRectangle 10" 
-                                        Padding="15" 
-                                        Margin="0,0,0,10">
-                                    <Grid ColumnDefinitions="*, Auto" 
-                                        RowSpacing="9"
-                                          RowDefinitions="Auto,Auto,Auto,Auto,Auto"
-                                          VerticalOptions="Fill">
-                                        <Label Text="{Binding Id, StringFormat='Tarea #{0:D5}'}" FontSize="14" TextColor="#797979" FontAttributes="Bold"/>
-                                        
-                                        <Label Grid.Row="1" FontSize="14" TextColor="#000000">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="Material: " FontAttributes="Bold" />
-                                                    <Span Text="{Binding ProductSourceDetail.Description}" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-                                        <StackLayout Grid.Row="2" Orientation="Horizontal" Spacing="5">
-                                            <Label FontSize="11" Text="{Binding ProductSourceDetail.ProductType}" TextColor="#666666" />
-                                            <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductSourceDetail.MachimbreDeckLabel}" TextColor="#AD6B2A" />
-                                            <Label FontSize="11" Text="{Binding ProductSourceDetail.MachimbreDeckSubLabel}" TextColor="#AD6B2A" />
-                                            <Label FontSize="11" Text="{Binding ProductSourceDetail.WoodState}" TextColor="#666666" />
-                                        </StackLayout>
-                                        <Label Grid.Row="3" FontSize="14" TextColor="#000000">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="Producir: " FontAttributes="Bold" />
-                                                    <Span Text="{Binding ProductDestinationDetail.Description}" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-                                        <StackLayout Grid.Row="4" Orientation="Horizontal" Spacing="5">
-                                            <Label FontSize="11" Text="{Binding ProductDestinationDetail.ProductType}" TextColor="#666666" />
-                                            <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductDestinationDetail.MachimbreDeckLabel}" TextColor="#AD6B2A" />
-                                            <Label FontSize="11" Text="{Binding ProductDestinationDetail.MachimbreDeckSubLabel}" TextColor="#AD6B2A" />
-                                            <Label FontSize="11" Text="{Binding ProductDestinationDetail.WoodState}" TextColor="#666666" />
-                                        </StackLayout>
-                                        <StackLayout
-                                            Grid.RowSpan="5"
-                                            Grid.Column="1" 
-                                            WidthRequest="90"
-                                            HorizontalOptions="Center" 
-                                            VerticalOptions="Center">
-                                        <Image  Source="user_task" 
-                                            WidthRequest="40" 
-                                            HeightRequest="40" />
-                                        <Label Margin="10" IsVisible="{Binding Priority}" HorizontalTextAlignment="Center" Text="Dar prioridad" FontSize="12" FontAttributes="Bold" TextColor="#000000" />
-                                    </StackLayout>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-                    <CollectionView x:Name="TaskAssignedList" 
-                                    Grid.Row="1" 
-                                    Grid.Column="1" 
-                                    ItemsSource="{Binding AssignedTasks}" 
-                                    VerticalOptions="Fill"
-                                    SelectionMode="Single" 
-                                    SelectionChanged="TaskAssignedSelectionChanged" 
-                                    SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
-                                    VerticalScrollBarVisibility="Always"
-                                    HorizontalScrollBarVisibility="Never"
-                                    HeightRequest="400">
+                    <!-- Lista de tareas pendientes -->
+                    <ScrollView Grid.Row="1" 
+                                Grid.Column="0" 
+                                VerticalOptions="Fill"
+                                VerticalScrollBarVisibility="Always"
+                                HorizontalScrollBarVisibility="Never"
+                                Padding="5">
+                        <CollectionView x:Name="TaskPendingList" 
+                                        ItemsSource="{Binding PendingTasks}" 
+                                        SelectionMode="Single" 
+                                        SelectionChanged="TaskPendingSelectionChanged" 
+                                        SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
+                                        VerticalOptions="Start"
+                                        BackgroundColor="Transparent">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="0" />
+                            </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="models:TaskItem">
-                                    <Border BackgroundColor="#FFFFFF" 
-                                            StrokeThickness="0" 
-                                            StrokeShape="RoundRectangle 10" 
-                                            Padding="15" 
-                                            Margin="0,0,0,10">
-                                            <Grid ColumnDefinitions="*, Auto" 
-                                        RowSpacing="9"
-                                          RowDefinitions="Auto,Auto,Auto,Auto,Auto"
-                                          VerticalOptions="Fill">
-                                        <Label Text="{Binding Id, StringFormat='Tarea #{0:D5}'}" FontSize="14" TextColor="#797979" FontAttributes="Bold"/>
-                                        <Label Grid.Row="1" FontSize="14" TextColor="#000000">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="Material: " FontAttributes="Bold" />
-                                                    <Span Text="{Binding ProductSourceDetail.Description}" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-                                        <StackLayout Grid.Row="2" Orientation="Horizontal" Spacing="5">
-                                            <Label FontSize="11" Text="{Binding ProductSourceDetail.ProductType}" TextColor="#666666" />
-                                            <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductSourceDetail.MachimbreDeckLabel}" TextColor="#4A744C" />
-                                            <Label FontSize="11" Text="{Binding ProductSourceDetail.MachimbreDeckSubLabel}" TextColor="#4A744C" />
-                                            <Label FontSize="11" Text="{Binding ProductSourceDetail.WoodState}" TextColor="#666666" />
-                                        </StackLayout>
-                                        <Label Grid.Row="3" FontSize="14" TextColor="#000000">
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="Producir: " FontAttributes="Bold" />
-                                                    <Span Text="{Binding ProductDestinationDetail.Description}" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-                                        <StackLayout Grid.Row="4" Orientation="Horizontal" Spacing="5">
-                                            <Label FontSize="11" Text="{Binding ProductDestinationDetail.ProductType}" TextColor="#666666" />
-                                            <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductDestinationDetail.MachimbreDeckLabel}" TextColor="#4A744C" />
-                                            <Label FontSize="11" Text="{Binding ProductDestinationDetail.MachimbreDeckSubLabel}" TextColor="#4A744C" />
-                                            <Label FontSize="11" Text="{Binding ProductDestinationDetail.WoodState}" TextColor="#666666" />
-                                        </StackLayout>
-                                        <StackLayout
-                                            Grid.RowSpan="5"
-                                            Grid.Column="1" 
-                                            WidthRequest="90"
-                                            HorizontalOptions="Center" 
-                                            VerticalOptions="Center">
-                                        <Image  Source="double_check" 
-                                            WidthRequest="40" 
-                                            HeightRequest="40" />
-                                        <Label Margin="10" FontAttributes="Bold" IsVisible="true" HorizontalTextAlignment="Center" Text="{Binding OperatorName}" FontSize="12" TextColor="#000000" />
-                                    </StackLayout>
-                                    </Grid>
-                                    </Border>
+                                    <Grid Padding="5,10,5,10">
+                                        <Frame BackgroundColor="White" 
+                                               BorderColor="#79280F"
+                                               CornerRadius="10" 
+                                               Padding="15" 
+                                               HasShadow="True"
+                                               Margin="0">
+                                            <Grid ColumnDefinitions="*,auto" 
+                                                  RowDefinitions="auto,auto,auto"
+                                                  RowSpacing="8"
+                                                  ColumnSpacing="10">
+                                            
+                                            <!-- ID de tarea -->
+                                            <Frame Grid.Row="0"
+                                                   Grid.ColumnSpan="2"
+                                                   BackgroundColor="#79280F"
+                                                   CornerRadius="6"
+                                                   Padding="8,4"
+                                                   HasShadow="False"
+                                                   HorizontalOptions="Start">
+                                                <Label Text="{Binding Id, StringFormat='Tarea #{0:D5}'}" 
+                                                       FontSize="12" 
+                                                       FontAttributes="Bold"
+                                                       TextColor="White" />
+                                            </Frame>
+                                            
+                                            <!-- Material origen -->
+                                            <Label Grid.Row="1" 
+                                                   Grid.Column="0"
+                                                   FontSize="13" 
+                                                   TextColor="#333333"
+                                                   LineBreakMode="WordWrap">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="📦 Material: " FontAttributes="Bold" TextColor="#79280F" />
+                                                        <Span Text="{Binding ProductSourceDetail.Description}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <StackLayout Grid.Row="1"
+                                                         Grid.Column="0"
+                                                         Margin="0,20,0,0"
+                                                         Orientation="Horizontal"
+                                                         Spacing="5">
+                                                <Label FontSize="11" Text="{Binding ProductSourceDetail.ProductType}" TextColor="#666666" />
+                                                <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductSourceDetail.MachimbreDeckLabel}" TextColor="#79280F" />
+                                                <Label FontSize="11" Text="{Binding ProductSourceDetail.MachimbreDeckSubLabel}" TextColor="#79280F" />
+                                                <Label FontSize="11" Text="{Binding ProductSourceDetail.WoodState}" TextColor="#666666" />
+                                            </StackLayout>
+                                            
+                                            <!-- Producto destino -->
+                                            <Label Grid.Row="2" 
+                                                   Grid.Column="0"
+                                                   FontSize="13" 
+                                                   TextColor="#333333"
+                                                   LineBreakMode="WordWrap">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="🔨 Producir: " FontAttributes="Bold" TextColor="#79280F" />
+                                                        <Span Text="{Binding ProductDestinationDetail.Description}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <StackLayout Grid.Row="2"
+                                                         Grid.Column="0"
+                                                         Margin="0,20,0,0"
+                                                         Orientation="Horizontal"
+                                                         Spacing="5">
+                                                <Label FontSize="11" Text="{Binding ProductDestinationDetail.ProductType}" TextColor="#666666" />
+                                                <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductDestinationDetail.MachimbreDeckLabel}" TextColor="#79280F" />
+                                                <Label FontSize="11" Text="{Binding ProductDestinationDetail.MachimbreDeckSubLabel}" TextColor="#79280F" />
+                                                <Label FontSize="11" Text="{Binding ProductDestinationDetail.WoodState}" TextColor="#666666" />
+                                            </StackLayout>
+                                            
+                                            <!-- Estado y prioridad -->
+                                            <StackLayout Grid.Row="1"
+                                                         Grid.RowSpan="2"
+                                                         Grid.Column="1" 
+                                                         Spacing="6"
+                                                         HorizontalOptions="Center" 
+                                                         VerticalOptions="Center">
+                                                <Frame BackgroundColor="White"
+                                                       BorderColor="#FF9800"
+                                                       CornerRadius="20"
+                                                       Padding="10"
+                                                       HasShadow="True"
+                                                       WidthRequest="48"
+                                                       HeightRequest="48">
+                                                    <Image Source="user_task.png" 
+                                                           WidthRequest="28" 
+                                                           HeightRequest="28"
+                                                           HorizontalOptions="Center"
+                                                           VerticalOptions="Center" />
+                                                </Frame>
+                                                <Label IsVisible="{Binding Priority}" 
+                                                       HorizontalTextAlignment="Center" 
+                                                       Text="⚡ Prioridad" 
+                                                       FontSize="16" 
+                                                       FontAttributes="Bold" 
+                                                       TextColor="#FF5722" />
+                                            </StackLayout>
+                                        </Grid>
+                                    </Frame>
+                                </Grid>
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
-                    </CollectionView>
+                            <CollectionView.EmptyView>
+                                <StackLayout Spacing="10" Padding="20" VerticalOptions="Center">
+                                    <Label Text="📋"
+                                           FontSize="32"
+                                           TextColor="#CCCCCC"
+                                           HorizontalOptions="Center" />
+                                    <Label FontSize="14"
+                                           HorizontalOptions="Center"
+                                           Text="No hay tareas pendientes"
+                                           TextColor="#666666" />
+                                    <Label FontSize="12"
+                                           HorizontalOptions="Center"
+                                           Text="Las nuevas tareas aparecerán aquí"
+                                           TextColor="#999999" />
+                                </StackLayout>
+                            </CollectionView.EmptyView>
+                        </CollectionView>
+                    </ScrollView>
+
+                    <!-- Lista de tareas asignadas -->
+                    <ScrollView Grid.Row="1" 
+                                Grid.Column="1" 
+                                VerticalOptions="Fill"
+                                VerticalScrollBarVisibility="Always"
+                                HorizontalScrollBarVisibility="Never"
+                                Padding="5">
+                        <CollectionView x:Name="TaskAssignedList" 
+                                        ItemsSource="{Binding AssignedTasks}" 
+                                        SelectionMode="Single" 
+                                        SelectionChanged="TaskAssignedSelectionChanged" 
+                                        SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
+                                        VerticalOptions="Start"
+                                        BackgroundColor="Transparent">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="0" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:TaskItem">
+                                    <Grid Padding="5,10,5,10">
+                                        <Frame BackgroundColor="White" 
+                                               BorderColor="#4CAF50"
+                                               CornerRadius="10" 
+                                               Padding="15" 
+                                               HasShadow="True"
+                                               Margin="0">
+                                            <Grid ColumnDefinitions="*,auto" 
+                                                  RowDefinitions="auto,auto,auto"
+                                                  RowSpacing="8"
+                                                  ColumnSpacing="10">
+                                            
+                                            <!-- ID de tarea -->
+                                            <Frame Grid.Row="0"
+                                                   Grid.ColumnSpan="2"
+                                                   BackgroundColor="#4CAF50"
+                                                   CornerRadius="6"
+                                                   Padding="8,4"
+                                                   HasShadow="False"
+                                                   HorizontalOptions="Start">
+                                                <Label Text="{Binding Id, StringFormat='Tarea #{0:D5}'}" 
+                                                       FontSize="12" 
+                                                       FontAttributes="Bold"
+                                                       TextColor="White" />
+                                            </Frame>
+                                            
+                                            <!-- Material origen -->
+                                            <Label Grid.Row="1" 
+                                                   Grid.Column="0"
+                                                   FontSize="13" 
+                                                   TextColor="#333333"
+                                                   LineBreakMode="WordWrap">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="📦 Material: " FontAttributes="Bold" TextColor="#4CAF50" />
+                                                        <Span Text="{Binding ProductSourceDetail.Description}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <StackLayout Grid.Row="1"
+                                                         Grid.Column="0"
+                                                         Margin="0,20,0,0"
+                                                         Orientation="Horizontal"
+                                                         Spacing="5">
+                                                <Label FontSize="11" Text="{Binding ProductSourceDetail.ProductType}" TextColor="#666666" />
+                                                <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductSourceDetail.MachimbreDeckLabel}" TextColor="#4CAF50" />
+                                                <Label FontSize="11" Text="{Binding ProductSourceDetail.MachimbreDeckSubLabel}" TextColor="#4CAF50" />
+                                                <Label FontSize="11" Text="{Binding ProductSourceDetail.WoodState}" TextColor="#666666" />
+                                            </StackLayout>
+                                            
+                                            <!-- Producto destino -->
+                                            <Label Grid.Row="2" 
+                                                   Grid.Column="0"
+                                                   FontSize="13" 
+                                                   TextColor="#333333"
+                                                   LineBreakMode="WordWrap">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="🔨 Producir: " FontAttributes="Bold" TextColor="#4CAF50" />
+                                                        <Span Text="{Binding ProductDestinationDetail.Description}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <StackLayout Grid.Row="2"
+                                                         Grid.Column="0"
+                                                         Margin="0,20,0,0"
+                                                         Orientation="Horizontal"
+                                                         Spacing="5">
+                                                <Label FontSize="11" Text="{Binding ProductDestinationDetail.ProductType}" TextColor="#666666" />
+                                                <Label FontSize="11" FontAttributes="Bold" Text="{Binding ProductDestinationDetail.MachimbreDeckLabel}" TextColor="#4CAF50" />
+                                                <Label FontSize="11" Text="{Binding ProductDestinationDetail.MachimbreDeckSubLabel}" TextColor="#4CAF50" />
+                                                <Label FontSize="11" Text="{Binding ProductDestinationDetail.WoodState}" TextColor="#666666" />
+                                            </StackLayout>
+                                            
+                                            <!-- Operario asignado -->
+                                            <StackLayout Grid.Row="1"
+                                                         Grid.RowSpan="2"
+                                                         Grid.Column="1" 
+                                                         Spacing="6"
+                                                         HorizontalOptions="Center" 
+                                                         VerticalOptions="Center">
+                                                <Frame BackgroundColor="White"
+                                                       BorderColor="#4CAF50"
+                                                       CornerRadius="20"
+                                                       Padding="10"
+                                                       HasShadow="True"
+                                                       WidthRequest="48"
+                                                       HeightRequest="48">
+                                                    <Image Source="double_check.png" 
+                                                           WidthRequest="28" 
+                                                           HeightRequest="28"
+                                                           HorizontalOptions="Center"
+                                                           VerticalOptions="Center" />
+                                                </Frame>
+                                                <Label HorizontalTextAlignment="Center" 
+                                                       Text="{Binding OperatorName}" 
+                                                       FontSize="16" 
+                                                       FontAttributes="Bold"
+                                                       TextColor="#4CAF50"
+                                                       MaxLines="2"
+                                                       LineBreakMode="WordWrap" />
+                                            </StackLayout>
+                                        </Grid>
+                                    </Frame>
+                                </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                            <CollectionView.EmptyView>
+                                <StackLayout Spacing="10" Padding="20" VerticalOptions="Center">
+                                    <Label Text="✅"
+                                           FontSize="32"
+                                           TextColor="#CCCCCC"
+                                           HorizontalOptions="Center" />
+                                    <Label FontSize="14"
+                                           HorizontalOptions="Center"
+                                           Text="No hay tareas asignadas"
+                                           TextColor="#666666" />
+                                    <Label FontSize="12"
+                                           HorizontalOptions="Center"
+                                           Text="Las tareas asignadas aparecerán aquí"
+                                           TextColor="#999999" />
+                                </StackLayout>
+                            </CollectionView.EmptyView>
+                        </CollectionView>
+                    </ScrollView>
                 </Grid>
             </Grid>
         </Frame>
